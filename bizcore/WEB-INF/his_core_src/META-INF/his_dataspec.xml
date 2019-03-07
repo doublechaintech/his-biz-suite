@@ -1,0 +1,221 @@
+<?xml version='1.0'?>
+<root schema_name="his">
+
+	<table name="platform_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
+			<field name="introduction" type="string" checkType="StringLengthRange" min="19" max="288" description="Introduction" />
+			<field name="current_version" type="string" checkType="StringLengthRange" min="2" max="16" description="Current Version" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="doctor_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="profile_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
+			<field name="gender" type="string_gender" checkType="Gender" min="0" max="4" description="Gender" />
+			<field name="age" type="int" checkType="IntegerRange" min="0" max="100" description="Age" />
+			<field name="identification_number" type="string" checkType="StringLengthRange" min="4" max="52" description="Identification Number" />
+			<field name="mobile" type="string_china_mobile_phone" checkType="ChinaMobilePhone" min="5" max="44" description="Mobile" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="registration_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="title" type="string" checkType="StringLengthRange" min="2" max="16" description="Title" />
+			<field name="patient" type="reference" checkType="exist(profile)" description="Patient" />
+			<field name="register" type="reference" checkType="exist(profile)" description="Register" />
+			<field name="content" type="string_longtext" checkType="Longtext" min="0" max="1048576" description="Content" />
+			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Update Time" />
+			<field name="status" type="string" checkType="StringLengthRange" min="2" max="24" description="Status" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="user_domain_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="2" max="16" description="Name" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="user_white_list_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="user_identity" type="string" checkType="StringLengthRange" min="1" max="40" description="User Identity" />
+			<field name="user_special_functions" type="string" checkType="StringLengthRange" min="1" max="200" description="User Special Functions" />
+			<field name="domain" type="reference" checkType="exist(user_domain)" description="Domain" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="sec_user_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="login" type="string" checkType="StringLengthRange" min="2" max="20" description="Login" />
+			<field name="mobile" type="string_china_mobile_phone" checkType="ChinaMobilePhone" min="0" max="11" description="Mobile" />
+			<field name="email" type="string" checkType="StringLengthRange" min="0" max="76" description="Email" />
+			<field name="pwd" type="string_password" checkType="Password" min="3" max="28" description="Pwd" />
+			<field name="verification_code" type="int" checkType="IntegerRange" min="0" max="9999999" description="Verification Code" />
+			<field name="verification_code_expire" type="date_time" checkType="DateTime" min="1900-01-01T00:00:00" max="2099-12-31T09:09:09" description="Verification Code Expire" />
+			<field name="last_login_time" type="date_time" checkType="DateTime" min="1900-01-01T00:00:00" max="2099-12-31T09:09:09" description="Last Login Time" />
+			<field name="domain" type="reference" checkType="exist(user_domain)" description="Domain" />
+			<field name="blocking" type="reference" checkType="exist(sec_user_blocking)" description="Blocking" />
+			<field name="current_status" type="string" checkType="StringLengthRange" min="2" max="28" description="Current Status" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="sec_user_blocking_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="who" type="string" checkType="StringLengthRange" min="4" max="52" description="Who" />
+			<field name="block_time" type="date_time_create" checkType="DateTimeCreate" min="1900-01-01T00:00:00" max="createTime()" description="Block Time" />
+			<field name="comments" type="string" checkType="StringLengthRange" min="7" max="96" description="Comments" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="user_app_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="title" type="string" checkType="StringLengthRange" min="1" max="300" description="Title" />
+			<field name="sec_user" type="reference" checkType="exist(sec_user)" description="Sec User" />
+			<field name="app_icon" type="string" checkType="StringLengthRange" min="2" max="36" description="App Icon" />
+			<field name="full_access" type="bool" checkType="BooleanRange" min="0" max="true" description="Full Access" />
+			<field name="permission" type="string" checkType="StringLengthRange" min="2" max="16" description="Permission" />
+			<field name="object_type" type="string" checkType="StringLengthRange" min="5" max="108" description="Object Type" />
+			<field name="object_id" type="string" checkType="StringLengthRange" min="4" max="40" description="Object Id" />
+			<field name="location" type="string" checkType="StringLengthRange" min="4" max="48" description="Location" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="list_access_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="2" max="200" description="Name" />
+			<field name="internal_name" type="string" checkType="StringLengthRange" min="2" max="200" description="Internal Name" />
+			<field name="read_permission" type="bool" checkType="BooleanRange" min="0" max="true" description="Read Permission" />
+			<field name="create_permission" type="bool" checkType="BooleanRange" min="0" max="true" description="Create Permission" />
+			<field name="delete_permission" type="bool" checkType="BooleanRange" min="0" max="true" description="Delete Permission" />
+			<field name="update_permission" type="bool" checkType="BooleanRange" min="0" max="true" description="Update Permission" />
+			<field name="execution_permission" type="bool" checkType="BooleanRange" min="0" max="true" description="Execution Permission" />
+			<field name="app" type="reference" checkType="exist(user_app)" description="App" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="object_access_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="2" max="28" description="Name" />
+			<field name="object_type" type="string" checkType="StringLengthRange" min="5" max="112" description="Object Type" />
+			<field name="list1" type="string" checkType="StringLengthRange" min="5" max="80" description="List1" />
+			<field name="list2" type="string" checkType="StringLengthRange" min="5" max="80" description="List2" />
+			<field name="list3" type="string" checkType="StringLengthRange" min="5" max="80" description="List3" />
+			<field name="list4" type="string" checkType="StringLengthRange" min="5" max="80" description="List4" />
+			<field name="list5" type="string" checkType="StringLengthRange" min="5" max="80" description="List5" />
+			<field name="list6" type="string" checkType="StringLengthRange" min="5" max="80" description="List6" />
+			<field name="list7" type="string" checkType="StringLengthRange" min="5" max="80" description="List7" />
+			<field name="list8" type="string" checkType="StringLengthRange" min="5" max="80" description="List8" />
+			<field name="list9" type="string" checkType="StringLengthRange" min="5" max="80" description="List9" />
+			<field name="app" type="reference" checkType="exist(user_app)" description="App" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="login_history_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="login_time" type="date_time_create" checkType="DateTimeCreate" min="1900-01-01T00:00:00" max="createTime()" description="Login Time" />
+			<field name="from_ip" type="string" checkType="StringLengthRange" min="5" max="44" description="From Ip" />
+			<field name="description" type="string" checkType="StringLengthRange" min="2" max="16" description="Description" />
+			<field name="sec_user" type="reference" checkType="exist(sec_user)" description="Sec User" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="generic_form_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="title" type="string" checkType="StringLengthRange" min="2" max="20" description="Title" />
+			<field name="description" type="string" checkType="StringLengthRange" min="4" max="48" description="Description" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="form_message_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="title" type="string" checkType="StringLengthRange" min="2" max="24" description="Title" />
+			<field name="form" type="reference" checkType="exist(generic_form)" description="Form" />
+			<field name="level" type="string" checkType="StringLengthRange" min="2" max="28" description="Level" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="form_field_message_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="title" type="string" checkType="StringLengthRange" min="2" max="16" description="Title" />
+			<field name="parameter_name" type="string" checkType="StringLengthRange" min="2" max="16" description="Parameter Name" />
+			<field name="form" type="reference" checkType="exist(generic_form)" description="Form" />
+			<field name="level" type="string" checkType="StringLengthRange" min="2" max="28" description="Level" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="form_field_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="label" type="string" checkType="StringLengthRange" min="1" max="12" description="Label" />
+			<field name="locale_key" type="string" checkType="StringLengthRange" min="1" max="44" description="Locale Key" />
+			<field name="parameter_name" type="string" checkType="StringLengthRange" min="2" max="16" description="Parameter Name" />
+			<field name="type" type="string" checkType="StringLengthRange" min="1" max="36" description="Type" />
+			<field name="form" type="reference" checkType="exist(generic_form)" description="Form" />
+			<field name="placeholder" type="string" checkType="StringLengthRange" min="4" max="48" description="Placeholder" />
+			<field name="default_value" type="string" checkType="StringLengthRange" min="1" max="12" description="Default Value" />
+			<field name="description" type="string" checkType="StringLengthRange" min="4" max="48" description="Description" />
+			<field name="field_group" type="string" checkType="StringLengthRange" min="2" max="16" description="Field Group" />
+			<field name="minimum_value" type="string" checkType="StringLengthRange" min="4" max="60" description="Minimum Value" />
+			<field name="maximum_value" type="string" checkType="StringLengthRange" min="5" max="72" description="Maximum Value" />
+			<field name="required" type="bool" checkType="BooleanRange" min="0" max="true|false" description="Required" />
+			<field name="disabled" type="bool" checkType="BooleanRange" min="0" max="true|false" description="Disabled" />
+			<field name="custom_rendering" type="bool" checkType="BooleanRange" min="0" max="false" description="Custom Rendering" />
+			<field name="candidate_values" type="string" checkType="StringLengthRange" min="0" max="12" description="Candidate Values" />
+			<field name="suggest_values" type="string" checkType="StringLengthRange" min="0" max="12" description="Suggest Values" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="form_action_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="label" type="string" checkType="StringLengthRange" min="1" max="8" description="Label" />
+			<field name="locale_key" type="string" checkType="StringLengthRange" min="2" max="16" description="Locale Key" />
+			<field name="action_key" type="string" checkType="StringLengthRange" min="2" max="24" description="Action Key" />
+			<field name="level" type="string" checkType="StringLengthRange" min="3" max="28" description="Level" />
+			<field name="url" type="string" checkType="StringLengthRange" min="11" max="168" description="Url" />
+			<field name="form" type="reference" checkType="exist(generic_form)" description="Form" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+</root>

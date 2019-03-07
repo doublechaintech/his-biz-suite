@@ -1,0 +1,169 @@
+Summary|概览
+Platform|Platform
+Id|Id
+Name|Name
+Introduction|Introduction
+Current Version|Current Version
+Version|Version
+Doctor|Doctor
+Id|Id
+Name|Name
+Platform|Platform
+Version|Version
+Profile|Profile
+Id|Id
+Name|Name
+Gender|Gender
+Age|Age
+Identification Number|Identification Number
+Mobile|Mobile
+Platform|Platform
+Version|Version
+Registration|Registration
+Id|Id
+Title|Title
+Patient|Patient
+Register|Register
+Content|Content
+Update Time|Update Time
+Status|Status
+Platform|Platform
+Version|Version
+User Domain|User Domain
+Id|Id
+Name|Name
+Version|Version
+User White List|User White List
+Id|Id
+User Identity|User Identity
+User Special Functions|User Special Functions
+Domain|Domain
+Version|Version
+Sec User|Sec User
+Id|Id
+Login|Login
+Mobile|Mobile
+Email|Email
+Pwd|Pwd
+Verification Code|Verification Code
+Verification Code Expire|Verification Code Expire
+Last Login Time|Last Login Time
+Domain|Domain
+Blocking|Blocking
+Block|Block
+Current Status|Current Status
+Version|Version
+Sec User Blocking|Sec User Blocking
+Id|Id
+Who|Who
+Block Time|Block Time
+Comments|Comments
+Version|Version
+User App|User App
+Id|Id
+Title|Title
+Sec User|Sec User
+App Icon|App Icon
+Full Access|Full Access
+Permission|Permission
+Object Type|Object Type
+Object Id|Object Id
+Location|Location
+Version|Version
+List Access|List Access
+Id|Id
+Name|Name
+Internal Name|Internal Name
+Read Permission|Read Permission
+Create Permission|Create Permission
+Delete Permission|Delete Permission
+Update Permission|Update Permission
+Execution Permission|Execution Permission
+App|App
+Version|Version
+Object Access|Object Access
+Id|Id
+Name|Name
+Object Type|Object Type
+List1|List1
+List2|List2
+List3|List3
+List4|List4
+List5|List5
+List6|List6
+List7|List7
+List8|List8
+List9|List9
+App|App
+Version|Version
+Login History|Login History
+Id|Id
+Login Time|Login Time
+From Ip|From Ip
+Description|Description
+Sec User|Sec User
+Version|Version
+Generic Form|Generic Form
+Id|Id
+Title|Title
+Description|Description
+Version|Version
+Form Message|Form Message
+Id|Id
+Title|Title
+Form|Form
+Level|Level
+Version|Version
+Form Field Message|Form Field Message
+Id|Id
+Title|Title
+Parameter Name|Parameter Name
+Form|Form
+Level|Level
+Version|Version
+Form Field|Form Field
+Id|Id
+Label|Label
+Locale Key|Locale Key
+Parameter Name|Parameter Name
+Type|Type
+Form|Form
+Placeholder|Placeholder
+Default Value|Default Value
+Description|Description
+Field Group|Field Group
+Minimum Value|Minimum Value
+Maximum Value|Maximum Value
+Required|Required
+Disabled|Disabled
+Custom Rendering|Custom Rendering
+Candidate Values|Candidate Values
+Suggest Values|Suggest Values
+Version|Version
+Form Action|Form Action
+Id|Id
+Label|Label
+Locale Key|Locale Key
+Action Key|Action Key
+Level|Level
+Url|Url
+Form|Form
+Version|Version
+Transfer to Another Platform|Transfer to Another Platform
+Transfer to Another Doctor|Transfer to Another Doctor
+Transfer to Another Profile|Transfer to Another Profile
+Transfer to Another Registration|Transfer to Another Registration
+Transfer to Another User Domain|Transfer to Another User Domain
+Transfer to Another User White List|Transfer to Another User White List
+Transfer to Another Sec User|Transfer to Another Sec User
+Transfer to Another Sec User Blocking|Transfer to Another Sec User Blocking
+Transfer to Another User App|Transfer to Another User App
+Transfer to Another List Access|Transfer to Another List Access
+Transfer to Another Object Access|Transfer to Another Object Access
+Transfer to Another Login History|Transfer to Another Login History
+Transfer to Another Generic Form|Transfer to Another Generic Form
+Transfer to Another Form Message|Transfer to Another Form Message
+Transfer to Another Form Field Message|Transfer to Another Form Field Message
+Transfer to Another Form Field|Transfer to Another Form Field
+Transfer to Another Form Action|Transfer to Another Form Action
+

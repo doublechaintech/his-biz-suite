@@ -1,0 +1,56 @@
+<?xml version='1.0' ?>
+<root org="doublechaintech" 
+	chinese_name="Message Center Services" 
+	english_name="Message Center Services">
+
+	<platform
+		name="HIS"
+		introduction="new generation of eCommerce platform based on opensource and modern tech"
+		current_version="V1.0"
+		
+	
+	/>
+	
+	
+	<doctor
+		
+		name="张医生|刘医生"
+		platform="$(platform)"
+	/>
+	<profile
+		name="张喜来|刘利"
+		gender="男|女"
+		age="100"
+		identification_number="6501988098876"
+		mobile="13899998888"
+		platform="$(platform)"
+	/>
+	
+	
+	
+	
+	<registration
+		title="挂一个号"
+		
+		
+		patient="$(profile)"
+		register="$(profile)"
+		content="text()"
+		update_time="updateTime()"
+		status="UNREAD|READ"
+		platform="$(platform)"
+	/>
+	
+	
+	
+</root>
+ 
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,7 @@ const testValues = {};
 /*
 const testValues = {
   name: 'HIS',
-  introduction: 'new generation of eCommerce platform based on opensource and modern tech',
+  introduction: 'Hospital Information System',
   currentVersion: 'V1.0',
 }
 */

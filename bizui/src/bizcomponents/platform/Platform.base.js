@@ -74,7 +74,7 @@ const renderReferenceCell=(value, record)=>{
 const displayColumns = [
   { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'platform') },
   { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Introduction', debugtype: 'string', dataIndex: 'introduction', width: '76',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'Introduction', debugtype: 'string', dataIndex: 'introduction', width: '31',render: (text, record)=>renderTextCell(text,record) },
   { title: 'Current Version', debugtype: 'string', dataIndex: 'currentVersion', width: '8',render: (text, record)=>renderTextCell(text,record) },
 
 ]

@@ -1,11 +1,11 @@
 <?xml version='1.0' ?>
 <root org="doublechaintech" 
-	chinese_name="Message Center Services" 
-	english_name="Message Center Services">
+	chinese_name="Hospital Information System" 
+	english_name="Hospital Information System">
 
 	<platform
 		name="HIS"
-		introduction="new generation of eCommerce platform based on opensource and modern tech"
+		introduction="Hospital Information System"
 		current_version="V1.0"
 		
 	

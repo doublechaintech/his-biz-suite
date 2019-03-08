@@ -45,7 +45,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIntroductionOfPlatform(String introduction)
 	{
 		
-	 	checkStringLengthRange(introduction,19, 288,INTRODUCTION_OF_PLATFORM ); 		
+	 	checkStringLengthRange(introduction,7, 108,INTRODUCTION_OF_PLATFORM ); 		
 		
 		return this;
 	}	 			

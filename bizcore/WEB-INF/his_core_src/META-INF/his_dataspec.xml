@@ -5,7 +5,7 @@
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
-			<field name="introduction" type="string" checkType="StringLengthRange" min="19" max="288" description="Introduction" />
+			<field name="introduction" type="string" checkType="StringLengthRange" min="7" max="108" description="Introduction" />
 			<field name="current_version" type="string" checkType="StringLengthRange" min="2" max="16" description="Current Version" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>

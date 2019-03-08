@@ -347,7 +347,7 @@ class PlatformBizApp extends React.PureComponent {
   getPageTitle = () => {
     // const { location } = this.props
     // const { pathname } = location
-    const title = 'Message Center Services'
+    const title = 'Hospital Information System'
     return title
   }
  

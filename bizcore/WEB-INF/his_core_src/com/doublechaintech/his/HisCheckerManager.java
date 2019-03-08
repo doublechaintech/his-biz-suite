@@ -29,7 +29,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIntroductionOfPlatform(HisUserContext userContext, String introduction, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(introduction,19, 288,INTRODUCTION_OF_PLATFORM, messageList); 		
+	 	checkStringLengthRange(introduction,7, 108,INTRODUCTION_OF_PLATFORM, messageList); 		
 		
 	}	 			
 	

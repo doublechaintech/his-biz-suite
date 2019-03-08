@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190307T1430
+-- BUILD WITH MODEL TIME 190308T1020
 drop database  if exists his;
 create database his;
 alter  database his  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -8,7 +8,7 @@ drop table  if exists platform_data;
 create table platform_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	name                	varchar(12)                              comment 'Name',
-	introduction        	varchar(288)                             comment 'Introduction',
+	introduction        	varchar(108)                             comment 'Introduction',
 	current_version     	varchar(16)                              comment 'Current Version',
 	version             	int                                      comment 'Version',
 	primary key(id)
@@ -227,7 +227,7 @@ create table form_action_data (
 
 
 	
-insert into platform_data values ('P000001','HIS','new generation of eCommerce platform based on opensource and modern tech','V1.0','1');
+insert into platform_data values ('P000001','HIS','Hospital Information System','V1.0','1');
 
 	
 insert into doctor_data values ('D000001','张医生','P000001','1');
@@ -237,11 +237,11 @@ insert into doctor_data values ('D000004','刘医生','P000001','1');
 insert into doctor_data values ('D000005','张医生','P000001','1');
 
 	
-insert into profile_data values ('P000001','张喜来','男','91','6501988098876','13899998888','P000001','1');
-insert into profile_data values ('P000002','刘利','女','84','65019880988760002','13900000002','P000001','1');
-insert into profile_data values ('P000003','张喜来','男','73','65019880988760003','13900000003','P000001','1');
-insert into profile_data values ('P000004','刘利','女','99','65019880988760004','13900000004','P000001','1');
-insert into profile_data values ('P000005','张喜来','男','100','65019880988760005','13900000005','P000001','1');
+insert into profile_data values ('P000001','张喜来','男','80','6501988098876','13899998888','P000001','1');
+insert into profile_data values ('P000002','刘利','女','90','65019880988760002','13900000002','P000001','1');
+insert into profile_data values ('P000003','张喜来','男','91','65019880988760003','13900000003','P000001','1');
+insert into profile_data values ('P000004','刘利','女','85','65019880988760004','13900000004','P000001','1');
+insert into profile_data values ('P000005','张喜来','男','91','65019880988760005','13900000005','P000001','1');
 
 	
 insert into registration_data values ('R000001','挂一个号','P000001','P000001','    一段样例文字。
@@ -249,151 +249,151 @@ insert into registration_data values ('R000001','挂一个号','P000001','P00000
 
 可以空行。
 
-','2019-02-15 23:24:51','UNREAD','P000001','1');
+','2019-03-03 16:11:51','UNREAD','P000001','1');
 insert into registration_data values ('R000002','挂一个号0002','P000001','P000001','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-26 22:45:56','READ','P000001','1');
+','2019-03-02 18:53:23','READ','P000001','1');
 insert into registration_data values ('R000003','挂一个号0003','P000001','P000001','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-17 10:28:03','UNREAD','P000001','1');
+','2019-02-17 16:35:02','UNREAD','P000001','1');
 insert into registration_data values ('R000004','挂一个号0004','P000001','P000001','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-03 14:25:43','READ','P000001','1');
+','2019-02-20 10:48:07','READ','P000001','1');
 insert into registration_data values ('R000005','挂一个号0005','P000001','P000001','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-01 16:07:54','UNREAD','P000001','1');
+','2019-02-18 08:33:21','UNREAD','P000001','1');
 insert into registration_data values ('R000006','挂一个号0006','P000002','P000002','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-26 09:10:32','READ','P000001','1');
+','2019-03-02 08:42:34','READ','P000001','1');
 insert into registration_data values ('R000007','挂一个号0007','P000002','P000002','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-25 03:51:42','UNREAD','P000001','1');
+','2019-02-24 14:44:48','UNREAD','P000001','1');
 insert into registration_data values ('R000008','挂一个号0008','P000002','P000002','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-18 20:13:33','READ','P000001','1');
+','2019-03-02 04:56:46','READ','P000001','1');
 insert into registration_data values ('R000009','挂一个号0009','P000002','P000002','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-20 10:33:56','UNREAD','P000001','1');
+','2019-02-26 03:26:09','UNREAD','P000001','1');
 insert into registration_data values ('R000010','挂一个号0010','P000002','P000002','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-23 23:30:39','READ','P000001','1');
+','2019-02-18 14:26:02','READ','P000001','1');
 insert into registration_data values ('R000011','挂一个号0011','P000003','P000003','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-18 05:43:05','UNREAD','P000001','1');
+','2019-02-25 12:34:28','UNREAD','P000001','1');
 insert into registration_data values ('R000012','挂一个号0012','P000003','P000003','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-23 08:39:47','READ','P000001','1');
+','2019-02-17 21:11:28','READ','P000001','1');
 insert into registration_data values ('R000013','挂一个号0013','P000003','P000003','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-28 09:21:33','UNREAD','P000001','1');
+','2019-02-19 12:32:24','UNREAD','P000001','1');
 insert into registration_data values ('R000014','挂一个号0014','P000003','P000003','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-19 23:49:55','READ','P000001','1');
+','2019-02-24 00:34:43','READ','P000001','1');
 insert into registration_data values ('R000015','挂一个号0015','P000003','P000003','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-05 15:56:14','UNREAD','P000001','1');
+','2019-03-07 20:40:58','UNREAD','P000001','1');
 insert into registration_data values ('R000016','挂一个号0016','P000004','P000004','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-16 13:40:36','READ','P000001','1');
+','2019-02-23 00:10:08','READ','P000001','1');
 insert into registration_data values ('R000017','挂一个号0017','P000004','P000004','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-04 23:11:37','UNREAD','P000001','1');
+','2019-02-26 12:13:07','UNREAD','P000001','1');
 insert into registration_data values ('R000018','挂一个号0018','P000004','P000004','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-04 10:42:29','READ','P000001','1');
+','2019-03-04 17:53:40','READ','P000001','1');
 insert into registration_data values ('R000019','挂一个号0019','P000004','P000004','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-07 12:07:22','UNREAD','P000001','1');
+','2019-02-27 10:55:48','UNREAD','P000001','1');
 insert into registration_data values ('R000020','挂一个号0020','P000004','P000004','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-03-02 08:37:14','READ','P000001','1');
+','2019-02-27 06:52:11','READ','P000001','1');
 insert into registration_data values ('R000021','挂一个号0021','P000005','P000005','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-23 14:25:34','UNREAD','P000001','1');
+','2019-02-24 08:23:56','UNREAD','P000001','1');
 insert into registration_data values ('R000022','挂一个号0022','P000005','P000005','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-25 18:31:30','READ','P000001','1');
+','2019-02-26 03:45:44','READ','P000001','1');
 insert into registration_data values ('R000023','挂一个号0023','P000005','P000005','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-16 22:01:21','UNREAD','P000001','1');
+','2019-02-23 02:23:52','UNREAD','P000001','1');
 insert into registration_data values ('R000024','挂一个号0024','P000005','P000005','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-20 06:37:10','READ','P000001','1');
+','2019-02-17 20:14:18','READ','P000001','1');
 insert into registration_data values ('R000025','挂一个号0025','P000005','P000005','    一段样例文字。
 可以分段。
 
 可以空行。
 
-','2019-02-28 01:13:43','UNREAD','P000001','1');
+','2019-02-15 23:00:46','UNREAD','P000001','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -406,14 +406,14 @@ insert into user_white_list_data values ('UWL000004','13808188512','tester;ios-s
 insert into user_white_list_data values ('UWL000005','clariones','tester;ios-spokesperson0005','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-15 02:48:21','2019-03-05 05:15:08','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-05 15:51:13','2019-02-28 20:47:50','UD000001',NULL,'BLOCKED0002','1');
-insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-02-24 21:19:32','2019-03-03 18:57:42','UD000001',NULL,'BLOCKED0003','1');
-insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-02-15 19:14:56','2019-02-20 22:59:48','UD000001',NULL,'BLOCKED0004','1');
-insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-02-15 17:50:02','2019-02-26 01:49:12','UD000001',NULL,'BLOCKED0005','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-03-07 01:15:00','2019-02-18 08:57:41','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-01 21:35:30','2019-02-27 17:25:30','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-02-21 22:18:43','2019-02-21 12:03:58','UD000001',NULL,'BLOCKED0003','1');
+insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-02-24 12:50:54','2019-02-28 11:59:59','UD000001',NULL,'BLOCKED0004','1');
+insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-02-15 09:16:18','2019-03-07 04:52:42','UD000001',NULL,'BLOCKED0005','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-03-02 12:52:27','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-25 21:14:02','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -697,31 +697,31 @@ insert into object_access_data values ('OA000124','控制访问列表10124','Acc
 insert into object_access_data values ('OA000125','控制访问列表10125','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000025','1');
 
 	
-insert into login_history_data values ('LH000001','2019-02-19 23:01:07','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-03-01 09:38:41','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-02-14 11:12:47','192.168.1.1','登陆成功0003','SU000001','1');
-insert into login_history_data values ('LH000004','2019-02-22 09:37:11','192.168.1.2','登陆成功0004','SU000001','1');
-insert into login_history_data values ('LH000005','2019-02-23 13:41:14','192.168.1.1','登陆成功0005','SU000001','1');
-insert into login_history_data values ('LH000006','2019-02-22 05:25:30','192.168.1.2','登陆成功0006','SU000002','1');
-insert into login_history_data values ('LH000007','2019-03-06 07:31:15','192.168.1.1','登陆成功0007','SU000002','1');
-insert into login_history_data values ('LH000008','2019-03-03 15:12:48','192.168.1.2','登陆成功0008','SU000002','1');
-insert into login_history_data values ('LH000009','2019-03-05 16:06:09','192.168.1.1','登陆成功0009','SU000002','1');
-insert into login_history_data values ('LH000010','2019-03-07 06:49:35','192.168.1.2','登陆成功0010','SU000002','1');
-insert into login_history_data values ('LH000011','2019-03-06 04:42:30','192.168.1.1','登陆成功0011','SU000003','1');
-insert into login_history_data values ('LH000012','2019-02-26 19:32:38','192.168.1.2','登陆成功0012','SU000003','1');
-insert into login_history_data values ('LH000013','2019-02-24 17:49:02','192.168.1.1','登陆成功0013','SU000003','1');
-insert into login_history_data values ('LH000014','2019-03-07 00:19:01','192.168.1.2','登陆成功0014','SU000003','1');
-insert into login_history_data values ('LH000015','2019-02-19 10:17:03','192.168.1.1','登陆成功0015','SU000003','1');
-insert into login_history_data values ('LH000016','2019-03-03 17:36:34','192.168.1.2','登陆成功0016','SU000004','1');
-insert into login_history_data values ('LH000017','2019-02-26 07:27:29','192.168.1.1','登陆成功0017','SU000004','1');
-insert into login_history_data values ('LH000018','2019-03-07 06:55:46','192.168.1.2','登陆成功0018','SU000004','1');
-insert into login_history_data values ('LH000019','2019-02-22 21:30:07','192.168.1.1','登陆成功0019','SU000004','1');
-insert into login_history_data values ('LH000020','2019-02-14 12:21:10','192.168.1.2','登陆成功0020','SU000004','1');
-insert into login_history_data values ('LH000021','2019-02-25 08:26:33','192.168.1.1','登陆成功0021','SU000005','1');
-insert into login_history_data values ('LH000022','2019-03-01 10:00:48','192.168.1.2','登陆成功0022','SU000005','1');
-insert into login_history_data values ('LH000023','2019-03-01 10:56:45','192.168.1.1','登陆成功0023','SU000005','1');
-insert into login_history_data values ('LH000024','2019-02-27 09:51:19','192.168.1.2','登陆成功0024','SU000005','1');
-insert into login_history_data values ('LH000025','2019-02-28 12:37:23','192.168.1.1','登陆成功0025','SU000005','1');
+insert into login_history_data values ('LH000001','2019-02-17 11:24:47','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-02-27 18:50:41','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-02-28 01:22:04','192.168.1.1','登陆成功0003','SU000001','1');
+insert into login_history_data values ('LH000004','2019-02-16 21:03:03','192.168.1.2','登陆成功0004','SU000001','1');
+insert into login_history_data values ('LH000005','2019-03-04 17:49:05','192.168.1.1','登陆成功0005','SU000001','1');
+insert into login_history_data values ('LH000006','2019-02-21 09:16:14','192.168.1.2','登陆成功0006','SU000002','1');
+insert into login_history_data values ('LH000007','2019-02-24 23:16:43','192.168.1.1','登陆成功0007','SU000002','1');
+insert into login_history_data values ('LH000008','2019-02-24 02:02:06','192.168.1.2','登陆成功0008','SU000002','1');
+insert into login_history_data values ('LH000009','2019-02-15 20:29:01','192.168.1.1','登陆成功0009','SU000002','1');
+insert into login_history_data values ('LH000010','2019-03-02 09:41:00','192.168.1.2','登陆成功0010','SU000002','1');
+insert into login_history_data values ('LH000011','2019-03-08 03:47:08','192.168.1.1','登陆成功0011','SU000003','1');
+insert into login_history_data values ('LH000012','2019-02-18 19:22:54','192.168.1.2','登陆成功0012','SU000003','1');
+insert into login_history_data values ('LH000013','2019-02-24 08:40:42','192.168.1.1','登陆成功0013','SU000003','1');
+insert into login_history_data values ('LH000014','2019-02-22 14:01:26','192.168.1.2','登陆成功0014','SU000003','1');
+insert into login_history_data values ('LH000015','2019-02-21 15:40:49','192.168.1.1','登陆成功0015','SU000003','1');
+insert into login_history_data values ('LH000016','2019-03-02 02:19:07','192.168.1.2','登陆成功0016','SU000004','1');
+insert into login_history_data values ('LH000017','2019-02-23 20:19:51','192.168.1.1','登陆成功0017','SU000004','1');
+insert into login_history_data values ('LH000018','2019-03-05 11:59:27','192.168.1.2','登陆成功0018','SU000004','1');
+insert into login_history_data values ('LH000019','2019-03-02 00:13:22','192.168.1.1','登陆成功0019','SU000004','1');
+insert into login_history_data values ('LH000020','2019-03-02 12:06:38','192.168.1.2','登陆成功0020','SU000004','1');
+insert into login_history_data values ('LH000021','2019-03-06 10:00:25','192.168.1.1','登陆成功0021','SU000005','1');
+insert into login_history_data values ('LH000022','2019-02-25 18:45:54','192.168.1.2','登陆成功0022','SU000005','1');
+insert into login_history_data values ('LH000023','2019-03-05 18:41:52','192.168.1.1','登陆成功0023','SU000005','1');
+insert into login_history_data values ('LH000024','2019-02-23 20:13:27','192.168.1.2','登陆成功0024','SU000005','1');
+insert into login_history_data values ('LH000025','2019-02-16 04:44:52','192.168.1.1','登陆成功0025','SU000005','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');

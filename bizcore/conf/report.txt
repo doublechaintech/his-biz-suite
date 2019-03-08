@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190307T1430) @Thu Mar 07 14:35:38 CST 2019, 17 objects and 132 fields===========================
+=================Execute Report (Model Time 190308T1020) @Fri Mar 08 10:21:06 CST 2019, 17 objects and 132 fields===========================
 
 
 
@@ -53,7 +53,7 @@ platform{
 	fields(5){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('HIS'), verb: false, required: true;
-		string	introduction('new generation of eCommerce platform based on opensource and modern tech'), verb: false, required: true;
+		string	introduction('Hospital Information System'), verb: false, required: true;
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
@@ -112,7 +112,7 @@ platform{
 	fields(5){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('HIS'), verb: false, required: true;
-		string	introduction('new generation of eCommerce platform based on opensource and modern tech'), verb: false, required: true;
+		string	introduction('Hospital Information System'), verb: false, required: true;
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}

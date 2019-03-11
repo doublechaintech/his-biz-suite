@@ -1,12 +1,35 @@
 <?xml version='1.0'?>
 <root schema_name="his">
 
-	<table name="platform_data">
+	<table name="hospital_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="2" max="16" description="Name" />
+			<field name="address" type="string" checkType="StringLengthRange" min="2" max="24" description="Address" />
+			<field name="telephone" type="string" checkType="StringLengthRange" min="3" max="44" description="Telephone" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="expense_type_data">
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
-			<field name="introduction" type="string" checkType="StringLengthRange" min="7" max="108" description="Introduction" />
-			<field name="current_version" type="string" checkType="StringLengthRange" min="2" max="16" description="Current Version" />
+			<field name="helper_chars" type="string" checkType="StringLengthRange" min="1" max="12" description="Helper Chars" />
+			<field name="status" type="string" checkType="StringLengthRange" min="1" max="8" description="Status" />
+			<field name="hospital" type="reference" checkType="exist(hospital)" description="Hospital" />
+			<field name="description" type="string_longtext" checkType="Longtext" min="0" max="1048576" description="Description" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="expense_item_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="1" max="20" description="Name" />
+			<field name="price" type="money" checkType="MoneyAmount" min="0.0" max="99.00" description="Price" />
+			<field name="expense_type" type="reference" checkType="exist(expense_type)" description="Expense Type" />
+			<field name="hospital" type="reference" checkType="exist(hospital)" description="Hospital" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>
@@ -15,34 +38,41 @@
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
-			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="hospital" type="reference" checkType="exist(hospital)" description="Hospital" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>
 
-	<table name="profile_data">
+	<table name="department_data">
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="Name" />
-			<field name="gender" type="string_gender" checkType="Gender" min="0" max="4" description="Gender" />
-			<field name="age" type="int" checkType="IntegerRange" min="0" max="100" description="Age" />
-			<field name="identification_number" type="string" checkType="StringLengthRange" min="4" max="52" description="Identification Number" />
-			<field name="mobile" type="string_china_mobile_phone" checkType="ChinaMobilePhone" min="5" max="44" description="Mobile" />
-			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="hospital" type="reference" checkType="exist(hospital)" description="Hospital" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>
 
-	<table name="registration_data">
+	<table name="doctor_assignment_data">
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
-			<field name="title" type="string" checkType="StringLengthRange" min="2" max="16" description="Title" />
-			<field name="patient" type="reference" checkType="exist(profile)" description="Patient" />
-			<field name="register" type="reference" checkType="exist(profile)" description="Register" />
-			<field name="content" type="string_longtext" checkType="Longtext" min="0" max="1048576" description="Content" />
-			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Update Time" />
-			<field name="status" type="string" checkType="StringLengthRange" min="2" max="24" description="Status" />
-			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="name" type="string" checkType="StringLengthRange" min="3" max="40" description="Name" />
+			<field name="doctor" type="reference" checkType="exist(doctor)" description="Doctor" />
+			<field name="department" type="reference" checkType="exist(department)" description="Department" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="doctor_schedule_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="8" max="116" description="Name" />
+			<field name="schedule_date" type="date" checkType="DateRange" min="1900-01-01" max="2019-3-11" description="Schedule Date" />
+			<field name="period" type="string" checkType="StringLengthRange" min="1" max="8" description="Period" />
+			<field name="doctor" type="reference" checkType="exist(doctor)" description="Doctor" />
+			<field name="available" type="int" checkType="IntegerRange" min="0" max="20" description="Available" />
+			<field name="price" type="money" checkType="MoneyAmount" min="0.0" max="123.99" description="Price" />
+			<field name="expense_type" type="reference" checkType="exist(expense_type)" description="Expense Type" />
+			<field name="department" type="reference" checkType="exist(department)" description="Department" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>
 	</table>

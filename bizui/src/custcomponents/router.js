@@ -13,10 +13,13 @@ import GlobalComponents from './'
 
 function RouterConfig({ history }) {
 
-	const {PlatformBizApp} = GlobalComponents
+	const {HospitalBizApp} = GlobalComponents
+	const {ExpenseTypeBizApp} = GlobalComponents
+	const {ExpenseItemBizApp} = GlobalComponents
 	const {DoctorBizApp} = GlobalComponents
-	const {ProfileBizApp} = GlobalComponents
-	const {RegistrationBizApp} = GlobalComponents
+	const {DepartmentBizApp} = GlobalComponents
+	const {DoctorAssignmentBizApp} = GlobalComponents
+	const {DoctorScheduleBizApp} = GlobalComponents
 	const {UserDomainBizApp} = GlobalComponents
 	const {UserWhiteListBizApp} = GlobalComponents
 	const {SecUserBizApp} = GlobalComponents
@@ -34,10 +37,13 @@ function RouterConfig({ history }) {
         <Switch>
          <Route path="/home" component={Launcher} />
          <Route path="/forgetpass" component={ForgetPasswordForm} />
-          <Route path="/platform/" component={PlatformBizApp} />
+          <Route path="/hospital/" component={HospitalBizApp} />
+          <Route path="/expenseType/" component={ExpenseTypeBizApp} />
+          <Route path="/expenseItem/" component={ExpenseItemBizApp} />
           <Route path="/doctor/" component={DoctorBizApp} />
-          <Route path="/profile/" component={ProfileBizApp} />
-          <Route path="/registration/" component={RegistrationBizApp} />
+          <Route path="/department/" component={DepartmentBizApp} />
+          <Route path="/doctorAssignment/" component={DoctorAssignmentBizApp} />
+          <Route path="/doctorSchedule/" component={DoctorScheduleBizApp} />
           <Route path="/userDomain/" component={UserDomainBizApp} />
           <Route path="/userWhiteList/" component={UserWhiteListBizApp} />
           <Route path="/secUser/" component={SecUserBizApp} />

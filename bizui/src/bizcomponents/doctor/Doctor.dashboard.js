@@ -111,7 +111,7 @@ class DoctorDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName,  } = this.props.doctor
+    const { id,displayName, doctorAssignmentListMetaInfo, doctorScheduleListMetaInfo, doctorAssignmentCount, doctorScheduleCount } = this.props.doctor
     if(!this.props.doctor.class){
       return null
     }
@@ -120,6 +120,8 @@ class DoctorDashboard extends Component {
     const cardsData = {cardsName:"Doctor",cardsFor: "doctor",
     	cardsSource: this.props.doctor,returnURL,displayName,
   		subItems: [
+{name: 'doctorAssignmentList', displayName:'Doctor Assignment',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', metaInfo: doctorAssignmentListMetaInfo},
+{name: 'doctorScheduleList', displayName:'Doctor Schedule',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],
   	};

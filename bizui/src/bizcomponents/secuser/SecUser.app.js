@@ -294,7 +294,7 @@ class SecUserBizApp extends React.PureComponent {
   getPageTitle = () => {
     // const { location } = this.props
     // const { pathname } = location
-    const title = 'Hospital Information System'
+    const title = '医生排班系统'
     return title
   }
  

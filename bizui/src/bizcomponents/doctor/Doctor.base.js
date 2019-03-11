@@ -8,6 +8,8 @@ import appLocaleName from '../../common/Locale.tool'
 
 const menuData = {menuName:"Doctor", menuFor: "doctor",
   		subItems: [
+  {name: 'doctorAssignmentList', displayName:'Doctor Assignment', icon:'sign',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'doctorScheduleList', displayName:'Doctor Schedule', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -69,16 +71,16 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'doctor') },
   { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Platform', dataIndex: 'platform', render: (text, record) => renderReferenceCell(text, record)},
+  { title: 'Hospital', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
 const fieldLabels = {
   id: 'Id',
   name: 'Name',
-  platform: 'Platform',
+  hospital: 'Hospital',
 
 }
 

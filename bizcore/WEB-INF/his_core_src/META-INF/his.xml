@@ -32,39 +32,69 @@
 	</bean>
 
 	
-	<bean id="platformDAOBase" class="com.doublechaintech.his.platform.PlatformJDBCTemplateDAO">
+	<bean id="hospitalDAOBase" class="com.panfeng.his.hospital.HospitalJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" />
+		<property name="expenseTypeDAO" ref="expenseTypeDAO" />
+		
+		<property name="expenseItemDAO" ref="expenseItemDAO" />
+		
 		<property name="doctorDAO" ref="doctorDAO" />
 		
-		<property name="profileDAO" ref="profileDAO" />
-		
-		<property name="registrationDAO" ref="registrationDAO" />
+		<property name="departmentDAO" ref="departmentDAO" />
 		
 	</bean>
-	<bean id="platformDAO" parent="platformDAOBase"></bean>	
+	<bean id="hospitalDAO" parent="hospitalDAOBase"></bean>	
 	
 	
-	<bean id="doctorDAOBase" class="com.doublechaintech.his.doctor.DoctorJDBCTemplateDAO">
-		<property name="dataSource" ref="dataSource" /><property name="platformDAO" ref="platformDAO" />
+	<bean id="expenseTypeDAOBase" class="com.panfeng.his.expensetype.ExpenseTypeJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="hospitalDAO" ref="hospitalDAO" />
+		<property name="expenseItemDAO" ref="expenseItemDAO" />
+		
+		<property name="doctorScheduleDAO" ref="doctorScheduleDAO" />
+		
+	</bean>
+	<bean id="expenseTypeDAO" parent="expenseTypeDAOBase"></bean>	
+	
+	
+	<bean id="expenseItemDAOBase" class="com.panfeng.his.expenseitem.ExpenseItemJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="expenseTypeDAO" ref="expenseTypeDAO" /><property name="hospitalDAO" ref="hospitalDAO" />
+	</bean>
+	<bean id="expenseItemDAO" parent="expenseItemDAOBase"></bean>	
+	
+	
+	<bean id="doctorDAOBase" class="com.panfeng.his.doctor.DoctorJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="hospitalDAO" ref="hospitalDAO" />
+		<property name="doctorAssignmentDAO" ref="doctorAssignmentDAO" />
+		
+		<property name="doctorScheduleDAO" ref="doctorScheduleDAO" />
+		
 	</bean>
 	<bean id="doctorDAO" parent="doctorDAOBase"></bean>	
 	
 	
-	<bean id="profileDAOBase" class="com.doublechaintech.his.profile.ProfileJDBCTemplateDAO">
-		<property name="dataSource" ref="dataSource" /><property name="platformDAO" ref="platformDAO" />
-		<property name="registrationDAO" ref="registrationDAO" />
+	<bean id="departmentDAOBase" class="com.panfeng.his.department.DepartmentJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="hospitalDAO" ref="hospitalDAO" />
+		<property name="doctorAssignmentDAO" ref="doctorAssignmentDAO" />
+		
+		<property name="doctorScheduleDAO" ref="doctorScheduleDAO" />
 		
 	</bean>
-	<bean id="profileDAO" parent="profileDAOBase"></bean>	
+	<bean id="departmentDAO" parent="departmentDAOBase"></bean>	
 	
 	
-	<bean id="registrationDAOBase" class="com.doublechaintech.his.registration.RegistrationJDBCTemplateDAO">
-		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" /><property name="platformDAO" ref="platformDAO" />
+	<bean id="doctorAssignmentDAOBase" class="com.panfeng.his.doctorassignment.DoctorAssignmentJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="doctorDAO" ref="doctorDAO" /><property name="departmentDAO" ref="departmentDAO" />
 	</bean>
-	<bean id="registrationDAO" parent="registrationDAOBase"></bean>	
+	<bean id="doctorAssignmentDAO" parent="doctorAssignmentDAOBase"></bean>	
 	
 	
-	<bean id="userDomainDAOBase" class="com.doublechaintech.his.userdomain.UserDomainJDBCTemplateDAO">
+	<bean id="doctorScheduleDAOBase" class="com.panfeng.his.doctorschedule.DoctorScheduleJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="doctorDAO" ref="doctorDAO" /><property name="expenseTypeDAO" ref="expenseTypeDAO" /><property name="departmentDAO" ref="departmentDAO" />
+	</bean>
+	<bean id="doctorScheduleDAO" parent="doctorScheduleDAOBase"></bean>	
+	
+	
+	<bean id="userDomainDAOBase" class="com.panfeng.his.userdomain.UserDomainJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" />
 		<property name="userWhiteListDAO" ref="userWhiteListDAO" />
 		
@@ -74,13 +104,13 @@
 	<bean id="userDomainDAO" parent="userDomainDAOBase"></bean>	
 	
 	
-	<bean id="userWhiteListDAOBase" class="com.doublechaintech.his.userwhitelist.UserWhiteListJDBCTemplateDAO">
+	<bean id="userWhiteListDAOBase" class="com.panfeng.his.userwhitelist.UserWhiteListJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="userDomainDAO" ref="userDomainDAO" />
 	</bean>
 	<bean id="userWhiteListDAO" parent="userWhiteListDAOBase"></bean>	
 	
 	
-	<bean id="secUserDAOBase" class="com.doublechaintech.his.secuser.SecUserJDBCTemplateDAO">
+	<bean id="secUserDAOBase" class="com.panfeng.his.secuser.SecUserJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="secUserBlockingDAO" ref="secUserBlockingDAO" /><property name="userDomainDAO" ref="userDomainDAO" />
 		<property name="userAppDAO" ref="userAppDAO" />
 		
@@ -90,7 +120,7 @@
 	<bean id="secUserDAO" parent="secUserDAOBase"></bean>	
 	
 	
-	<bean id="secUserBlockingDAOBase" class="com.doublechaintech.his.secuserblocking.SecUserBlockingJDBCTemplateDAO">
+	<bean id="secUserBlockingDAOBase" class="com.panfeng.his.secuserblocking.SecUserBlockingJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" />
 		<property name="secUserDAO" ref="secUserDAO" />
 		
@@ -98,7 +128,7 @@
 	<bean id="secUserBlockingDAO" parent="secUserBlockingDAOBase"></bean>	
 	
 	
-	<bean id="userAppDAOBase" class="com.doublechaintech.his.userapp.UserAppJDBCTemplateDAO">
+	<bean id="userAppDAOBase" class="com.panfeng.his.userapp.UserAppJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="secUserDAO" ref="secUserDAO" />
 		<property name="listAccessDAO" ref="listAccessDAO" />
 		
@@ -108,25 +138,25 @@
 	<bean id="userAppDAO" parent="userAppDAOBase"></bean>	
 	
 	
-	<bean id="listAccessDAOBase" class="com.doublechaintech.his.listaccess.ListAccessJDBCTemplateDAO">
+	<bean id="listAccessDAOBase" class="com.panfeng.his.listaccess.ListAccessJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="userAppDAO" ref="userAppDAO" />
 	</bean>
 	<bean id="listAccessDAO" parent="listAccessDAOBase"></bean>	
 	
 	
-	<bean id="objectAccessDAOBase" class="com.doublechaintech.his.objectaccess.ObjectAccessJDBCTemplateDAO">
+	<bean id="objectAccessDAOBase" class="com.panfeng.his.objectaccess.ObjectAccessJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="userAppDAO" ref="userAppDAO" />
 	</bean>
 	<bean id="objectAccessDAO" parent="objectAccessDAOBase"></bean>	
 	
 	
-	<bean id="loginHistoryDAOBase" class="com.doublechaintech.his.loginhistory.LoginHistoryJDBCTemplateDAO">
+	<bean id="loginHistoryDAOBase" class="com.panfeng.his.loginhistory.LoginHistoryJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="secUserDAO" ref="secUserDAO" />
 	</bean>
 	<bean id="loginHistoryDAO" parent="loginHistoryDAOBase"></bean>	
 	
 	
-	<bean id="genericFormDAOBase" class="com.doublechaintech.his.genericform.GenericFormJDBCTemplateDAO">
+	<bean id="genericFormDAOBase" class="com.panfeng.his.genericform.GenericFormJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" />
 		<property name="formMessageDAO" ref="formMessageDAO" />
 		
@@ -140,36 +170,39 @@
 	<bean id="genericFormDAO" parent="genericFormDAOBase"></bean>	
 	
 	
-	<bean id="formMessageDAOBase" class="com.doublechaintech.his.formmessage.FormMessageJDBCTemplateDAO">
+	<bean id="formMessageDAOBase" class="com.panfeng.his.formmessage.FormMessageJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="genericFormDAO" ref="genericFormDAO" />
 	</bean>
 	<bean id="formMessageDAO" parent="formMessageDAOBase"></bean>	
 	
 	
-	<bean id="formFieldMessageDAOBase" class="com.doublechaintech.his.formfieldmessage.FormFieldMessageJDBCTemplateDAO">
+	<bean id="formFieldMessageDAOBase" class="com.panfeng.his.formfieldmessage.FormFieldMessageJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="genericFormDAO" ref="genericFormDAO" />
 	</bean>
 	<bean id="formFieldMessageDAO" parent="formFieldMessageDAOBase"></bean>	
 	
 	
-	<bean id="formFieldDAOBase" class="com.doublechaintech.his.formfield.FormFieldJDBCTemplateDAO">
+	<bean id="formFieldDAOBase" class="com.panfeng.his.formfield.FormFieldJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="genericFormDAO" ref="genericFormDAO" />
 	</bean>
 	<bean id="formFieldDAO" parent="formFieldDAOBase"></bean>	
 	
 	
-	<bean id="formActionDAOBase" class="com.doublechaintech.his.formaction.FormActionJDBCTemplateDAO">
+	<bean id="formActionDAOBase" class="com.panfeng.his.formaction.FormActionJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="genericFormDAO" ref="genericFormDAO" />
 	</bean>
 	<bean id="formActionDAO" parent="formActionDAOBase"></bean>	
 	
 
 
-	<bean id="DAOGroupBase" class="com.doublechaintech.his.DAOGroup">
-		<property name="platformDAO" ref="platformDAO"/>
+	<bean id="DAOGroupBase" class="com.panfeng.his.DAOGroup">
+		<property name="hospitalDAO" ref="hospitalDAO"/>
+		<property name="expenseTypeDAO" ref="expenseTypeDAO"/>
+		<property name="expenseItemDAO" ref="expenseItemDAO"/>
 		<property name="doctorDAO" ref="doctorDAO"/>
-		<property name="profileDAO" ref="profileDAO"/>
-		<property name="registrationDAO" ref="registrationDAO"/>
+		<property name="departmentDAO" ref="departmentDAO"/>
+		<property name="doctorAssignmentDAO" ref="doctorAssignmentDAO"/>
+		<property name="doctorScheduleDAO" ref="doctorScheduleDAO"/>
 		<property name="userDomainDAO" ref="userDomainDAO"/>
 		<property name="userWhiteListDAO" ref="userWhiteListDAO"/>
 		<property name="secUserDAO" ref="secUserDAO"/>

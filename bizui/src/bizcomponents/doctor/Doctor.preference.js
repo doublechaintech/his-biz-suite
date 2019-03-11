@@ -299,7 +299,7 @@ class DoctorPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName,  } = this.props.doctor
+    const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = this.props.doctor
     const cardsData = {cardsName:"Doctor",cardsFor: "doctor",cardsSource: this.props.doctor,
   		subItems: [
     

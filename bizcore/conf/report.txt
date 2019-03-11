@@ -1,166 +1,287 @@
 
 
 
-=================Execute Report (Model Time 190308T1020) @Fri Mar 08 10:21:06 CST 2019, 17 objects and 132 fields===========================
+=================Execute Report (Model Time 190311T1555) @Mon Mar 11 15:55:26 CST 2019, 20 objects and 147 fields===========================
 
 
 
- processing: platform
+ processing: hospital
+
+
+ processing: expense_type
+
+
+ processing: expense_type.hospital.hospital
+
+Info: Add virtual field [expense_types(es)] to <hospital>
+	expense_type.hospital
+
+
+ processing: expense_item
+
+
+ processing: expense_item.expense_type.expense_type
+
+Info: Add virtual field [expense_items(es)] to <expense_type>
+	expense_item.expense_type
+
+
+ processing: expense_item.hospital.hospital
+
+Info: Add virtual field [expense_items(es)] to <hospital>
+	expense_item.hospital
 
 
  processing: doctor
 
 
- processing: doctor.platform.platform
+ processing: doctor.hospital.hospital
 
-Info: Add virtual field [doctors(es)] to <platform>
-	doctor.platform
-
-
- processing: profile
+Info: Add virtual field [doctors(es)] to <hospital>
+	doctor.hospital
 
 
- processing: profile.platform.platform
-
-Info: Add virtual field [profiles(es)] to <platform>
-	profile.platform
+ processing: department
 
 
- processing: registration
+ processing: department.hospital.hospital
+
+Info: Add virtual field [departments(es)] to <hospital>
+	department.hospital
 
 
- processing: registration.profile.patient
-
-Info: Add virtual field [registrations(es)] to <profile>
-	registration.patient
+ processing: doctor_assignment
 
 
- processing: registration.profile.register
+ processing: doctor_assignment.doctor.doctor
 
-Info: Add virtual field [registrations(es)] to <profile>
-	registration.register
+Info: Add virtual field [doctor_assignments(es)] to <doctor>
+	doctor_assignment.doctor
 
 
- processing: registration.platform.platform
+ processing: doctor_assignment.department.department
 
-Info: Add virtual field [registrations(es)] to <platform>
-	registration.platform
+Info: Add virtual field [doctor_assignments(es)] to <department>
+	doctor_assignment.department
+
+
+ processing: doctor_schedule
+
+
+ processing: doctor_schedule.doctor.doctor
+
+Info: Add virtual field [doctor_schedules(es)] to <doctor>
+	doctor_schedule.doctor
+
+
+ processing: doctor_schedule.expense_type.expense_type
+
+Info: Add virtual field [doctor_schedules(es)] to <expense_type>
+	doctor_schedule.expense_type
+
+
+ processing: doctor_schedule.department.department
+
+Info: Add virtual field [doctor_schedules(es)] to <department>
+	doctor_schedule.department
 
 
 **************************************************
 
-platform{
+hospital{
 	fields(5){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	name('HIS'), verb: false, required: true;
-		string	introduction('Hospital Information System'), verb: false, required: true;
-		string	current_version('V1.0'), verb: false, required: true;
+		string	name('上和医院'), verb: false, required: true;
+		string	address('毕升路22号'), verb: false, required: true;
+		string	telephone('028-9123123'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(3){
-		doctorList	platform(基本信息)--platform;
-		profileList	platform(基本信息)--platform;
-		registrationList	platform(基本信息)--platform;
+	references field(4){
+		expenseTypeList	hospital(基本信息)--hospital;
+		expenseItemList	hospital(基本信息)--hospital;
+		doctorList	hospital(基本信息)--hospital;
+		departmentList	hospital(基本信息)--hospital;
 	}
 } depth=0; isRoot = true
 
-doctor{
-	fields(4){
+expense_type{
+	fields(7){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	name('张医生|刘医生'), verb: false, required: true;
-		platform	platform('$(object)'), verb: false, required: true, referenceBy: doctorList;
-		int	version('2147483647'), verb: false, required: true;
-	}
-	references field(0){
-	}
-} depth=1; isRoot = false
-
-profile{
-	fields(8){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	name('张喜来|刘利'), verb: false, required: true;
-		string_gender	gender('男|女'), verb: false, required: true;
-		int	age('100'), verb: false, required: true;
-		string	identification_number('6501988098876'), verb: false, required: true;
-		string_china_mobile_phone	mobile('13899998888'), verb: false, required: true;
-		platform	platform('$(object)'), verb: false, required: true, referenceBy: profileList;
+		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
+		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
+		string	status('正常|停用'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList;
+		string_longtext	description('text()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		registrationListAsPatient	patient(基本信息)--patient;
-		registrationListAsRegister	register(基本信息)--patient;
+		expenseItemList	expense_type(基本信息)--expense_type;
+		doctorScheduleList	expense_type(基本信息)--expense_type;
 	}
 } depth=1; isRoot = false
 
-registration{
-	fields(9){
+expense_item{
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	title('挂一个号'), verb: false, required: true;
-		profile	patient('$(object)'), verb: false, required: true, referenceBy: registrationListAsPatient;
-		profile	register('$(object)'), verb: false, required: true, referenceBy: registrationListAsRegister;
-		string_longtext	content('text()'), verb: false, required: true;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		string	status('UNREAD|READ'), verb: false, required: true;
-		platform	platform('$(object)'), verb: false, required: true, referenceBy: registrationList;
+		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
+		money	price('$99.00'), verb: false, required: true;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
-platform{
-	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	name('HIS'), verb: false, required: true;
-		string	introduction('Hospital Information System'), verb: false, required: true;
-		string	current_version('V1.0'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
-	}
-	references field(3){
-		doctorList	platform(基本信息)--platform;
-		profileList	platform(基本信息)--platform;
-		registrationList	platform(基本信息)--platform;
-	}
-} depth=0; isRoot = true
-
 doctor{
 	fields(4){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	name('张医生|刘医生'), verb: false, required: true;
-		platform	platform('$(object)'), verb: false, required: true, referenceBy: doctorList;
+		string	name('魏松全'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(2){
+		doctorAssignmentList	doctor(基本信息)--doctor;
+		doctorScheduleList	doctor(基本信息)--doctor;
+	}
+} depth=1; isRoot = false
+
+department{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('放射科'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(2){
+		doctorAssignmentList	department(基本信息)--department;
+		doctorScheduleList	department(基本信息)--department;
+	}
+} depth=1; isRoot = false
+
+doctor_assignment{
+	fields(5){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('魏松全在内分泌科室上'), verb: false, required: true;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
 	}
-} depth=1; isRoot = false
+} depth=2; isRoot = false
 
-profile{
-	fields(8){
+doctor_schedule{
+	fields(10){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	name('张喜来|刘利'), verb: false, required: true;
-		string_gender	gender('男|女'), verb: false, required: true;
-		int	age('100'), verb: false, required: true;
-		string	identification_number('6501988098876'), verb: false, required: true;
-		string_china_mobile_phone	mobile('13899998888'), verb: false, required: true;
-		platform	platform('$(object)'), verb: false, required: true, referenceBy: profileList;
+		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
+		date	schedule_date('2019-3-11'), verb: false, required: true;
+		string	period('上午|下午|夜班'), verb: false, required: true;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		int	available('20'), verb: false, required: true;
+		money	price('$123.99'), verb: false, required: true;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
+hospital{
+	fields(5){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('上和医院'), verb: false, required: true;
+		string	address('毕升路22号'), verb: false, required: true;
+		string	telephone('028-9123123'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(4){
+		expenseTypeList	hospital(基本信息)--hospital;
+		expenseItemList	hospital(基本信息)--hospital;
+		doctorList	hospital(基本信息)--hospital;
+		departmentList	hospital(基本信息)--hospital;
+	}
+} depth=0; isRoot = true
+
+expense_type{
+	fields(7){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
+		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
+		string	status('正常|停用'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList;
+		string_longtext	description('text()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		registrationListAsPatient	patient(基本信息)--patient;
-		registrationListAsRegister	register(基本信息)--patient;
+		expenseItemList	expense_type(基本信息)--expense_type;
+		doctorScheduleList	expense_type(基本信息)--expense_type;
 	}
 } depth=1; isRoot = false
 
-registration{
-	fields(9){
+expense_item{
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
-		string	title('挂一个号'), verb: false, required: true;
-		profile	patient('$(object)'), verb: false, required: true, referenceBy: registrationListAsPatient;
-		profile	register('$(object)'), verb: false, required: true, referenceBy: registrationListAsRegister;
-		string_longtext	content('text()'), verb: false, required: true;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		string	status('UNREAD|READ'), verb: false, required: true;
-		platform	platform('$(object)'), verb: false, required: true, referenceBy: registrationList;
+		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
+		money	price('$99.00'), verb: false, required: true;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
+doctor{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('魏松全'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(2){
+		doctorAssignmentList	doctor(基本信息)--doctor;
+		doctorScheduleList	doctor(基本信息)--doctor;
+	}
+} depth=1; isRoot = false
+
+department{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('放射科'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(2){
+		doctorAssignmentList	department(基本信息)--department;
+		doctorScheduleList	department(基本信息)--department;
+	}
+} depth=1; isRoot = false
+
+doctor_assignment{
+	fields(5){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('魏松全在内分泌科室上'), verb: false, required: true;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
+doctor_schedule{
+	fields(10){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
+		date	schedule_date('2019-3-11'), verb: false, required: true;
+		string	period('上午|下午|夜班'), verb: false, required: true;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		int	available('20'), verb: false, required: true;
+		money	price('$123.99'), verb: false, required: true;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){

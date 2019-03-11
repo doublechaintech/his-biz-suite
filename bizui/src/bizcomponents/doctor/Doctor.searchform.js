@@ -131,7 +131,7 @@ componentDidMount() {
      
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'id'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'name'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'platform'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'hospital'))
 
      
       console.log("the final parameter", paramList)
@@ -259,16 +259,16 @@ componentDidMount() {
             </FormItem>
           </Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="Platform">
-                  {getFieldDecorator('platform', {
-                    initialValue: tryinit('platform'),
+                    <Form.Item label="Hospital">
+                  {getFieldDecorator('hospital', {
+                    initialValue: tryinit('hospital'),
                    
                   })(
                   
                   <SelectObject 
-                    disabled={!availableForEdit('platform')}
-                    targetType={"platform"} 
-                    requestFunction={DoctorService.requestCandidatePlatform}/>
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={DoctorService.requestCandidateHospital}/>
                   
                  
                   )}

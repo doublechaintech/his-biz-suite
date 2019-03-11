@@ -2,19 +2,45 @@
 
 
 
-import PlatformBase from './platform/Platform.base';
-import PlatformBizApp from './platform/Platform.app';
-import PlatformModel from './platform/Platform.model';
-import PlatformDashboard from './platform/Platform.dashboard';
-import PlatformPreference from './platform/Platform.preference';
-import PlatformModalTable from './platform/Platform.modaltable';
-import PlatformSearch from './platform/Platform.search';
-import PlatformSearchForm from './platform/Platform.searchform';
-import PlatformCreateForm from './platform/Platform.createform';
-import PlatformAssociateForm from './platform/Platform.associateform';
-import PlatformTable from './platform/Platform.table';
-import PlatformService from './platform/Platform.service';
-import PlatformUpdateForm from './platform/Platform.updateform';
+import HospitalBase from './hospital/Hospital.base';
+import HospitalBizApp from './hospital/Hospital.app';
+import HospitalModel from './hospital/Hospital.model';
+import HospitalDashboard from './hospital/Hospital.dashboard';
+import HospitalPreference from './hospital/Hospital.preference';
+import HospitalModalTable from './hospital/Hospital.modaltable';
+import HospitalSearch from './hospital/Hospital.search';
+import HospitalSearchForm from './hospital/Hospital.searchform';
+import HospitalCreateForm from './hospital/Hospital.createform';
+import HospitalAssociateForm from './hospital/Hospital.associateform';
+import HospitalTable from './hospital/Hospital.table';
+import HospitalService from './hospital/Hospital.service';
+import HospitalUpdateForm from './hospital/Hospital.updateform';
+import ExpenseTypeBase from './expensetype/ExpenseType.base';
+import ExpenseTypeBizApp from './expensetype/ExpenseType.app';
+import ExpenseTypeModel from './expensetype/ExpenseType.model';
+import ExpenseTypeDashboard from './expensetype/ExpenseType.dashboard';
+import ExpenseTypePreference from './expensetype/ExpenseType.preference';
+import ExpenseTypeModalTable from './expensetype/ExpenseType.modaltable';
+import ExpenseTypeSearch from './expensetype/ExpenseType.search';
+import ExpenseTypeSearchForm from './expensetype/ExpenseType.searchform';
+import ExpenseTypeCreateForm from './expensetype/ExpenseType.createform';
+import ExpenseTypeAssociateForm from './expensetype/ExpenseType.associateform';
+import ExpenseTypeTable from './expensetype/ExpenseType.table';
+import ExpenseTypeService from './expensetype/ExpenseType.service';
+import ExpenseTypeUpdateForm from './expensetype/ExpenseType.updateform';
+import ExpenseItemBase from './expenseitem/ExpenseItem.base';
+import ExpenseItemBizApp from './expenseitem/ExpenseItem.app';
+import ExpenseItemModel from './expenseitem/ExpenseItem.model';
+import ExpenseItemDashboard from './expenseitem/ExpenseItem.dashboard';
+import ExpenseItemPreference from './expenseitem/ExpenseItem.preference';
+import ExpenseItemModalTable from './expenseitem/ExpenseItem.modaltable';
+import ExpenseItemSearch from './expenseitem/ExpenseItem.search';
+import ExpenseItemSearchForm from './expenseitem/ExpenseItem.searchform';
+import ExpenseItemCreateForm from './expenseitem/ExpenseItem.createform';
+import ExpenseItemAssociateForm from './expenseitem/ExpenseItem.associateform';
+import ExpenseItemTable from './expenseitem/ExpenseItem.table';
+import ExpenseItemService from './expenseitem/ExpenseItem.service';
+import ExpenseItemUpdateForm from './expenseitem/ExpenseItem.updateform';
 import DoctorBase from './doctor/Doctor.base';
 import DoctorBizApp from './doctor/Doctor.app';
 import DoctorModel from './doctor/Doctor.model';
@@ -28,32 +54,45 @@ import DoctorAssociateForm from './doctor/Doctor.associateform';
 import DoctorTable from './doctor/Doctor.table';
 import DoctorService from './doctor/Doctor.service';
 import DoctorUpdateForm from './doctor/Doctor.updateform';
-import ProfileBase from './profile/Profile.base';
-import ProfileBizApp from './profile/Profile.app';
-import ProfileModel from './profile/Profile.model';
-import ProfileDashboard from './profile/Profile.dashboard';
-import ProfilePreference from './profile/Profile.preference';
-import ProfileModalTable from './profile/Profile.modaltable';
-import ProfileSearch from './profile/Profile.search';
-import ProfileSearchForm from './profile/Profile.searchform';
-import ProfileCreateForm from './profile/Profile.createform';
-import ProfileAssociateForm from './profile/Profile.associateform';
-import ProfileTable from './profile/Profile.table';
-import ProfileService from './profile/Profile.service';
-import ProfileUpdateForm from './profile/Profile.updateform';
-import RegistrationBase from './registration/Registration.base';
-import RegistrationBizApp from './registration/Registration.app';
-import RegistrationModel from './registration/Registration.model';
-import RegistrationDashboard from './registration/Registration.dashboard';
-import RegistrationPreference from './registration/Registration.preference';
-import RegistrationModalTable from './registration/Registration.modaltable';
-import RegistrationSearch from './registration/Registration.search';
-import RegistrationSearchForm from './registration/Registration.searchform';
-import RegistrationCreateForm from './registration/Registration.createform';
-import RegistrationAssociateForm from './registration/Registration.associateform';
-import RegistrationTable from './registration/Registration.table';
-import RegistrationService from './registration/Registration.service';
-import RegistrationUpdateForm from './registration/Registration.updateform';
+import DepartmentBase from './department/Department.base';
+import DepartmentBizApp from './department/Department.app';
+import DepartmentModel from './department/Department.model';
+import DepartmentDashboard from './department/Department.dashboard';
+import DepartmentPreference from './department/Department.preference';
+import DepartmentModalTable from './department/Department.modaltable';
+import DepartmentSearch from './department/Department.search';
+import DepartmentSearchForm from './department/Department.searchform';
+import DepartmentCreateForm from './department/Department.createform';
+import DepartmentAssociateForm from './department/Department.associateform';
+import DepartmentTable from './department/Department.table';
+import DepartmentService from './department/Department.service';
+import DepartmentUpdateForm from './department/Department.updateform';
+import DoctorAssignmentBase from './doctorassignment/DoctorAssignment.base';
+import DoctorAssignmentBizApp from './doctorassignment/DoctorAssignment.app';
+import DoctorAssignmentModel from './doctorassignment/DoctorAssignment.model';
+import DoctorAssignmentDashboard from './doctorassignment/DoctorAssignment.dashboard';
+import DoctorAssignmentPreference from './doctorassignment/DoctorAssignment.preference';
+import DoctorAssignmentModalTable from './doctorassignment/DoctorAssignment.modaltable';
+import DoctorAssignmentSearch from './doctorassignment/DoctorAssignment.search';
+import DoctorAssignmentSearchForm from './doctorassignment/DoctorAssignment.searchform';
+import DoctorAssignmentCreateForm from './doctorassignment/DoctorAssignment.createform';
+import DoctorAssignmentAssociateForm from './doctorassignment/DoctorAssignment.associateform';
+import DoctorAssignmentTable from './doctorassignment/DoctorAssignment.table';
+import DoctorAssignmentService from './doctorassignment/DoctorAssignment.service';
+import DoctorAssignmentUpdateForm from './doctorassignment/DoctorAssignment.updateform';
+import DoctorScheduleBase from './doctorschedule/DoctorSchedule.base';
+import DoctorScheduleBizApp from './doctorschedule/DoctorSchedule.app';
+import DoctorScheduleModel from './doctorschedule/DoctorSchedule.model';
+import DoctorScheduleDashboard from './doctorschedule/DoctorSchedule.dashboard';
+import DoctorSchedulePreference from './doctorschedule/DoctorSchedule.preference';
+import DoctorScheduleModalTable from './doctorschedule/DoctorSchedule.modaltable';
+import DoctorScheduleSearch from './doctorschedule/DoctorSchedule.search';
+import DoctorScheduleSearchForm from './doctorschedule/DoctorSchedule.searchform';
+import DoctorScheduleCreateForm from './doctorschedule/DoctorSchedule.createform';
+import DoctorScheduleAssociateForm from './doctorschedule/DoctorSchedule.associateform';
+import DoctorScheduleTable from './doctorschedule/DoctorSchedule.table';
+import DoctorScheduleService from './doctorschedule/DoctorSchedule.service';
+import DoctorScheduleUpdateForm from './doctorschedule/DoctorSchedule.updateform';
 import UserDomainBase from './userdomain/UserDomain.base';
 import UserDomainBizApp from './userdomain/UserDomain.app';
 import UserDomainModel from './userdomain/UserDomain.model';
@@ -161,10 +200,13 @@ import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
 
 
 const BizModels = [
-	PlatformModel,
+	HospitalModel,
+	ExpenseTypeModel,
+	ExpenseItemModel,
 	DoctorModel,
-	ProfileModel,
-	RegistrationModel,
+	DepartmentModel,
+	DoctorAssignmentModel,
+	DoctorScheduleModel,
 	UserDomainModel,
 	UserWhiteListModel,
 	SecUserModel,
@@ -190,10 +232,13 @@ const unbindBizModels = (app) =>{
 
 const menuLibrary = []
 
-menuLibrary['platform'] = PlatformBase.menuData
+menuLibrary['hospital'] = HospitalBase.menuData
+menuLibrary['expenseType'] = ExpenseTypeBase.menuData
+menuLibrary['expenseItem'] = ExpenseItemBase.menuData
 menuLibrary['doctor'] = DoctorBase.menuData
-menuLibrary['profile'] = ProfileBase.menuData
-menuLibrary['registration'] = RegistrationBase.menuData
+menuLibrary['department'] = DepartmentBase.menuData
+menuLibrary['doctorAssignment'] = DoctorAssignmentBase.menuData
+menuLibrary['doctorSchedule'] = DoctorScheduleBase.menuData
 menuLibrary['userDomain'] = UserDomainBase.menuData
 menuLibrary['userWhiteList'] = UserWhiteListBase.menuData
 menuLibrary['secUser'] = SecUserBase.menuData
@@ -222,18 +267,21 @@ const menuDataOf=(type)=>{
 const ViewMapping = {
 
 
-  'com.doublechaintech.his.platform.Platform': {name:'platform'},
-  'com.doublechaintech.his.doctor.Doctor': {name:'doctor'},
-  'com.doublechaintech.his.profile.Profile': {name:'profile'},
-  'com.doublechaintech.his.registration.Registration': {name:'registration'},
-  'com.doublechaintech.his.userdomain.UserDomain': {name:'userDomain'},
-  'com.doublechaintech.his.userwhitelist.UserWhiteList': {name:'userWhiteList'},
-  'com.doublechaintech.his.secuser.SecUser': {name:'secUser'},
-  'com.doublechaintech.his.secuserblocking.SecUserBlocking': {name:'secUserBlocking'},
-  'com.doublechaintech.his.userapp.UserApp': {name:'userApp'},
-  'com.doublechaintech.his.listaccess.ListAccess': {name:'listAccess'},
-  'com.doublechaintech.his.objectaccess.ObjectAccess': {name:'objectAccess'},
-  'com.doublechaintech.his.loginhistory.LoginHistory': {name:'loginHistory'},
+  'com.panfeng.his.hospital.Hospital': {name:'hospital'},
+  'com.panfeng.his.expensetype.ExpenseType': {name:'expenseType'},
+  'com.panfeng.his.expenseitem.ExpenseItem': {name:'expenseItem'},
+  'com.panfeng.his.doctor.Doctor': {name:'doctor'},
+  'com.panfeng.his.department.Department': {name:'department'},
+  'com.panfeng.his.doctorassignment.DoctorAssignment': {name:'doctorAssignment'},
+  'com.panfeng.his.doctorschedule.DoctorSchedule': {name:'doctorSchedule'},
+  'com.panfeng.his.userdomain.UserDomain': {name:'userDomain'},
+  'com.panfeng.his.userwhitelist.UserWhiteList': {name:'userWhiteList'},
+  'com.panfeng.his.secuser.SecUser': {name:'secUser'},
+  'com.panfeng.his.secuserblocking.SecUserBlocking': {name:'secUserBlocking'},
+  'com.panfeng.his.userapp.UserApp': {name:'userApp'},
+  'com.panfeng.his.listaccess.ListAccess': {name:'listAccess'},
+  'com.panfeng.his.objectaccess.ObjectAccess': {name:'objectAccess'},
+  'com.panfeng.his.loginhistory.LoginHistory': {name:'loginHistory'},
 
 }
 
@@ -279,19 +327,45 @@ const calcMenuData=(clazz) => {
 
 
 const OOTBComponents={
-    PlatformBase,
-    PlatformBizApp,
-    PlatformModel,
-    PlatformDashboard,
-    PlatformPreference,
-    PlatformModalTable,
-    PlatformSearch,
-    PlatformSearchForm,
-    PlatformCreateForm,
-    PlatformAssociateForm,
-    PlatformTable,
-    PlatformService,
-    PlatformUpdateForm,
+    HospitalBase,
+    HospitalBizApp,
+    HospitalModel,
+    HospitalDashboard,
+    HospitalPreference,
+    HospitalModalTable,
+    HospitalSearch,
+    HospitalSearchForm,
+    HospitalCreateForm,
+    HospitalAssociateForm,
+    HospitalTable,
+    HospitalService,
+    HospitalUpdateForm,
+    ExpenseTypeBase,
+    ExpenseTypeBizApp,
+    ExpenseTypeModel,
+    ExpenseTypeDashboard,
+    ExpenseTypePreference,
+    ExpenseTypeModalTable,
+    ExpenseTypeSearch,
+    ExpenseTypeSearchForm,
+    ExpenseTypeCreateForm,
+    ExpenseTypeAssociateForm,
+    ExpenseTypeTable,
+    ExpenseTypeService,
+    ExpenseTypeUpdateForm,
+    ExpenseItemBase,
+    ExpenseItemBizApp,
+    ExpenseItemModel,
+    ExpenseItemDashboard,
+    ExpenseItemPreference,
+    ExpenseItemModalTable,
+    ExpenseItemSearch,
+    ExpenseItemSearchForm,
+    ExpenseItemCreateForm,
+    ExpenseItemAssociateForm,
+    ExpenseItemTable,
+    ExpenseItemService,
+    ExpenseItemUpdateForm,
     DoctorBase,
     DoctorBizApp,
     DoctorModel,
@@ -305,32 +379,45 @@ const OOTBComponents={
     DoctorTable,
     DoctorService,
     DoctorUpdateForm,
-    ProfileBase,
-    ProfileBizApp,
-    ProfileModel,
-    ProfileDashboard,
-    ProfilePreference,
-    ProfileModalTable,
-    ProfileSearch,
-    ProfileSearchForm,
-    ProfileCreateForm,
-    ProfileAssociateForm,
-    ProfileTable,
-    ProfileService,
-    ProfileUpdateForm,
-    RegistrationBase,
-    RegistrationBizApp,
-    RegistrationModel,
-    RegistrationDashboard,
-    RegistrationPreference,
-    RegistrationModalTable,
-    RegistrationSearch,
-    RegistrationSearchForm,
-    RegistrationCreateForm,
-    RegistrationAssociateForm,
-    RegistrationTable,
-    RegistrationService,
-    RegistrationUpdateForm,
+    DepartmentBase,
+    DepartmentBizApp,
+    DepartmentModel,
+    DepartmentDashboard,
+    DepartmentPreference,
+    DepartmentModalTable,
+    DepartmentSearch,
+    DepartmentSearchForm,
+    DepartmentCreateForm,
+    DepartmentAssociateForm,
+    DepartmentTable,
+    DepartmentService,
+    DepartmentUpdateForm,
+    DoctorAssignmentBase,
+    DoctorAssignmentBizApp,
+    DoctorAssignmentModel,
+    DoctorAssignmentDashboard,
+    DoctorAssignmentPreference,
+    DoctorAssignmentModalTable,
+    DoctorAssignmentSearch,
+    DoctorAssignmentSearchForm,
+    DoctorAssignmentCreateForm,
+    DoctorAssignmentAssociateForm,
+    DoctorAssignmentTable,
+    DoctorAssignmentService,
+    DoctorAssignmentUpdateForm,
+    DoctorScheduleBase,
+    DoctorScheduleBizApp,
+    DoctorScheduleModel,
+    DoctorScheduleDashboard,
+    DoctorSchedulePreference,
+    DoctorScheduleModalTable,
+    DoctorScheduleSearch,
+    DoctorScheduleSearchForm,
+    DoctorScheduleCreateForm,
+    DoctorScheduleAssociateForm,
+    DoctorScheduleTable,
+    DoctorScheduleService,
+    DoctorScheduleUpdateForm,
     UserDomainBase,
     UserDomainBizApp,
     UserDomainModel,

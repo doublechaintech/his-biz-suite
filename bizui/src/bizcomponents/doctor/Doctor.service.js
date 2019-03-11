@@ -18,16 +18,16 @@ const load = (targetObjectId, parameters) => {
 
 
 
-const requestCandidatePlatform = (ownerClass, id, filterKey, pageNo) => {
+const requestCandidateHospital = (ownerClass, id, filterKey, pageNo) => {
  
-  const url = `${PREFIX}doctorManager/requestCandidatePlatform/ownerClass/id/filterKey/pageNo/`
+  const url = `${PREFIX}doctorManager/requestCandidateHospital/ownerClass/id/filterKey/pageNo/`
   const requestParameters = {id, ownerClass,filterKey, pageNo}
   return postForm({url,requestParameters})
 }	
 
-const transferToAnotherPlatform = (id, parameters) => {
+const transferToAnotherHospital = (id, parameters) => {
   //const parametersExpr = joinParameters(parameters)
-  const url = `${PREFIX}doctorManager/transferToAnotherPlatform/id/anotherPlatformId/`
+  const url = `${PREFIX}doctorManager/transferToAnotherHospital/id/anotherHospitalId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
 }
@@ -37,9 +37,59 @@ const transferToAnotherPlatform = (id, parameters) => {
 
 
 
+
+const addDoctorAssignment = (targetObjectId, parameters) => {
+  const url = `${PREFIX}doctorManager/addDoctorAssignment/doctorId/name/departmentId/tokensExpr/`
+  const doctorId = targetObjectId
+  const requestParameters = { ...parameters, doctorId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateDoctorAssignment = (targetObjectId, parameters) => {
+  const url = `${PREFIX}doctorManager/updateDoctorAssignmentProperties/doctorId/id/name/tokensExpr/`
+  const doctorId = targetObjectId
+  const requestParameters = { ...parameters, doctorId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeDoctorAssignmentList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}doctorManager/removeDoctorAssignmentList/doctorId/doctorAssignmentIds/tokensExpr/`
+  const requestParameters = { ...parameters, doctorId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
+const addDoctorSchedule = (targetObjectId, parameters) => {
+  const url = `${PREFIX}doctorManager/addDoctorSchedule/doctorId/name/scheduleDate/period/available/price/expenseTypeId/departmentId/tokensExpr/`
+  const doctorId = targetObjectId
+  const requestParameters = { ...parameters, doctorId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateDoctorSchedule = (targetObjectId, parameters) => {
+  const url = `${PREFIX}doctorManager/updateDoctorScheduleProperties/doctorId/id/name/scheduleDate/period/available/price/tokensExpr/`
+  const doctorId = targetObjectId
+  const requestParameters = { ...parameters, doctorId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeDoctorScheduleList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}doctorManager/removeDoctorScheduleList/doctorId/doctorScheduleIds/tokensExpr/`
+  const requestParameters = { ...parameters, doctorId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const DoctorService = { view,
   load,
-  requestCandidatePlatform,
-  transferToAnotherPlatform }
+  addDoctorAssignment,
+  addDoctorSchedule,
+  updateDoctorAssignment,
+  updateDoctorSchedule,
+  removeDoctorAssignmentList,
+  removeDoctorScheduleList,
+  requestCandidateHospital,
+  transferToAnotherHospital }
 export default DoctorService
 

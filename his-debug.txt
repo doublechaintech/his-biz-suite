@@ -1,33 +1,51 @@
 Summary|概览
-Platform|Platform
+Hospital|Hospital
 Id|Id
 Name|Name
-Introduction|Introduction
-Current Version|Current Version
+Address|Address
+Telephone|Telephone
+Version|Version
+Expense Type|Expense Type
+Id|Id
+Name|Name
+Helper Chars|Helper Chars
+Status|Status
+Hospital|Hospital
+Description|Description
+Version|Version
+Expense Item|Expense Item
+Id|Id
+Name|Name
+Price|Price
+Expense Type|Expense Type
+Hospital|Hospital
 Version|Version
 Doctor|Doctor
 Id|Id
 Name|Name
-Platform|Platform
+Hospital|Hospital
 Version|Version
-Profile|Profile
+Department|Department
 Id|Id
 Name|Name
-Gender|Gender
-Age|Age
-Identification Number|Identification Number
-Mobile|Mobile
-Platform|Platform
+Hospital|Hospital
 Version|Version
-Registration|Registration
+Doctor Assignment|Doctor Assignment
 Id|Id
-Title|Title
-Patient|Patient
-Register|Register
-Content|Content
-Update Time|Update Time
-Status|Status
-Platform|Platform
+Name|Name
+Doctor|Doctor
+Department|Department
+Version|Version
+Doctor Schedule|Doctor Schedule
+Id|Id
+Name|Name
+Schedule Date|Schedule Date
+Period|Period
+Doctor|Doctor
+Available|Available
+Price|Price
+Expense Type|Expense Type
+Department|Department
 Version|Version
 User Domain|User Domain
 Id|Id
@@ -149,10 +167,13 @@ Level|Level
 Url|Url
 Form|Form
 Version|Version
-Transfer to Another Platform|Transfer to Another Platform
+Transfer to Another Hospital|Transfer to Another Hospital
+Transfer to Another Expense Type|Transfer to Another Expense Type
+Transfer to Another Expense Item|Transfer to Another Expense Item
 Transfer to Another Doctor|Transfer to Another Doctor
-Transfer to Another Profile|Transfer to Another Profile
-Transfer to Another Registration|Transfer to Another Registration
+Transfer to Another Department|Transfer to Another Department
+Transfer to Another Doctor Assignment|Transfer to Another Doctor Assignment
+Transfer to Another Doctor Schedule|Transfer to Another Doctor Schedule
 Transfer to Another User Domain|Transfer to Another User Domain
 Transfer to Another User White List|Transfer to Another User White List
 Transfer to Another Sec User|Transfer to Another Sec User

@@ -18,8 +18,8 @@ const { TextArea } = Input
 const testValues = {};
 /*
 const testValues = {
-  name: '张医生',
-  platformId: 'P000001',
+  name: '魏松全',
+  hospitalId: 'H000001',
 }
 */
 
@@ -73,6 +73,8 @@ class DoctorAssociateForm extends Component {
     const {DoctorService} = GlobalComponents
     const userContext = null
     
+ const {DoctorAssignmentModalTable} = GlobalComponents;
+ const {DoctorScheduleModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -161,15 +163,15 @@ class DoctorAssociateForm extends Component {
             <Row gutter={16}>
 
               <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.platform} {...formItemLayout}>
-                  {getFieldDecorator('platformId', {
-                  	initialValue: tryinit('platform'),
+                <Form.Item label={fieldLabels.hospital} {...formItemLayout}>
+                  {getFieldDecorator('hospitalId', {
+                  	initialValue: tryinit('hospital'),
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                 <SelectObject 
-                    disabled={!availableForEdit('platform')}
-                    targetType={"platform"} 
-                    requestFunction={DoctorService.requestCandidatePlatform}/>
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={DoctorService.requestCandidateHospital}/>
   
                   )}
                 </Form.Item>
@@ -186,6 +188,8 @@ class DoctorAssociateForm extends Component {
 			
         </Card>
         
+	<DoctorAssignmentModalTable data={data.doctorAssignmentList} owner={owner} />
+	<DoctorScheduleModalTable data={data.doctorScheduleList} owner={owner} />
         
         
         

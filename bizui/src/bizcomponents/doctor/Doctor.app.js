@@ -157,6 +157,104 @@ class DoctorBizApp extends React.PureComponent {
 
 
 
+  getDoctorAssignmentSearch = () => {
+    const {DoctorAssignmentSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Doctor Assignment",
+      role: "doctorAssignment",
+      data: state._doctor.doctorAssignmentList,
+      metaInfo: state._doctor.doctorAssignmentListMetaInfo,
+      count: state._doctor.doctorAssignmentCount,
+      currentPage: state._doctor.doctorAssignmentCurrentPageNumber,
+      searchFormParameters: state._doctor.doctorAssignmentSearchFormParameters,
+      searchParameters: {...state._doctor.searchParameters},
+      expandForm: state._doctor.expandForm,
+      loading: state._doctor.loading,
+      partialList: state._doctor.partialList,
+      owner: { type: '_doctor', id: state._doctor.id, 
+      referenceName: 'doctor', 
+      listName: 'doctorAssignmentList', ref:state._doctor, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(DoctorAssignmentSearch)
+  }
+  getDoctorAssignmentCreateForm = () => {
+   	const {DoctorAssignmentCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "doctorAssignment",
+      data: state._doctor.doctorAssignmentList,
+      metaInfo: state._doctor.doctorAssignmentListMetaInfo,
+      count: state._doctor.doctorAssignmentCount,
+      currentPage: state._doctor.doctorAssignmentCurrentPageNumber,
+      searchFormParameters: state._doctor.doctorAssignmentSearchFormParameters,
+      loading: state._doctor.loading,
+      owner: { type: '_doctor', id: state._doctor.id, referenceName: 'doctor', listName: 'doctorAssignmentList', ref:state._doctor, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(DoctorAssignmentCreateForm)
+  }
+  
+  getDoctorAssignmentUpdateForm = () => {
+    const userContext = null
+  	const {DoctorAssignmentUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._doctor.selectedRows,
+      role: "doctorAssignment",
+      currentUpdateIndex: state._doctor.currentUpdateIndex,
+      owner: { type: '_doctor', id: state._doctor.id, listName: 'doctorAssignmentList', ref:state._doctor, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(DoctorAssignmentUpdateForm)
+  }
+
+  getDoctorScheduleSearch = () => {
+    const {DoctorScheduleSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Doctor Schedule",
+      role: "doctorSchedule",
+      data: state._doctor.doctorScheduleList,
+      metaInfo: state._doctor.doctorScheduleListMetaInfo,
+      count: state._doctor.doctorScheduleCount,
+      currentPage: state._doctor.doctorScheduleCurrentPageNumber,
+      searchFormParameters: state._doctor.doctorScheduleSearchFormParameters,
+      searchParameters: {...state._doctor.searchParameters},
+      expandForm: state._doctor.expandForm,
+      loading: state._doctor.loading,
+      partialList: state._doctor.partialList,
+      owner: { type: '_doctor', id: state._doctor.id, 
+      referenceName: 'doctor', 
+      listName: 'doctorScheduleList', ref:state._doctor, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(DoctorScheduleSearch)
+  }
+  getDoctorScheduleCreateForm = () => {
+   	const {DoctorScheduleCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "doctorSchedule",
+      data: state._doctor.doctorScheduleList,
+      metaInfo: state._doctor.doctorScheduleListMetaInfo,
+      count: state._doctor.doctorScheduleCount,
+      currentPage: state._doctor.doctorScheduleCurrentPageNumber,
+      searchFormParameters: state._doctor.doctorScheduleSearchFormParameters,
+      loading: state._doctor.loading,
+      owner: { type: '_doctor', id: state._doctor.id, referenceName: 'doctor', listName: 'doctorScheduleList', ref:state._doctor, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(DoctorScheduleCreateForm)
+  }
+  
+  getDoctorScheduleUpdateForm = () => {
+    const userContext = null
+  	const {DoctorScheduleUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._doctor.selectedRows,
+      role: "doctorSchedule",
+      currentUpdateIndex: state._doctor.currentUpdateIndex,
+      owner: { type: '_doctor', id: state._doctor.id, listName: 'doctorScheduleList', ref:state._doctor, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(DoctorScheduleUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -169,7 +267,15 @@ class DoctorBizApp extends React.PureComponent {
   	{path:"/doctor/:id/preference", component: DoctorPreference},
   	
   	
-    	
+  	
+  	{path:"/doctor/:id/list/doctorAssignmentList", component: this.getDoctorAssignmentSearch()},
+  	{path:"/doctor/:id/list/doctorAssignmentCreateForm", component: this.getDoctorAssignmentCreateForm()},
+  	{path:"/doctor/:id/list/doctorAssignmentUpdateForm", component: this.getDoctorAssignmentUpdateForm()},
+   	
+  	{path:"/doctor/:id/list/doctorScheduleList", component: this.getDoctorScheduleSearch()},
+  	{path:"/doctor/:id/list/doctorScheduleCreateForm", component: this.getDoctorScheduleCreateForm()},
+  	{path:"/doctor/:id/list/doctorScheduleUpdateForm", component: this.getDoctorScheduleUpdateForm()},
+     	
   	
   	]
   	
@@ -188,7 +294,7 @@ class DoctorBizApp extends React.PureComponent {
   getPageTitle = () => {
     // const { location } = this.props
     // const { pathname } = location
-    const title = 'Hospital Information System'
+    const title = '医生排班系统'
     return title
   }
  

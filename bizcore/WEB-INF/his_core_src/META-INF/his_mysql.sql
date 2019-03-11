@@ -1,15 +1,38 @@
--- BUILD WITH MODEL TIME 190308T1020
+-- BUILD WITH MODEL TIME 190311T1555
 drop database  if exists his;
 create database his;
 alter  database his  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
 use his;
 
-drop table  if exists platform_data;
-create table platform_data (
+drop table  if exists hospital_data;
+create table hospital_data (
+	id                  	varchar(64)          not null            comment 'Id',
+	name                	varchar(16)                              comment 'Name',
+	address             	varchar(24)                              comment 'Address',
+	telephone           	varchar(44)                              comment 'Telephone',
+	version             	int                                      comment 'Version',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
+
+drop table  if exists expense_type_data;
+create table expense_type_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	name                	varchar(12)                              comment 'Name',
-	introduction        	varchar(108)                             comment 'Introduction',
-	current_version     	varchar(16)                              comment 'Current Version',
+	helper_chars        	varchar(12)                              comment 'Helper Chars',
+	status              	varchar(8)                               comment 'Status',
+	hospital            	varchar(48)                              comment 'Hospital',
+	description         	longtext                                 comment 'Description',
+	version             	int                                      comment 'Version',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
+
+drop table  if exists expense_item_data;
+create table expense_item_data (
+	id                  	varchar(64)          not null            comment 'Id',
+	name                	varchar(20)                              comment 'Name',
+	price               	numeric(6,2)                             comment 'Price',
+	expense_type        	varchar(48)                              comment 'Expense Type',
+	hospital            	varchar(48)                              comment 'Hospital',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
@@ -18,34 +41,41 @@ drop table  if exists doctor_data;
 create table doctor_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	name                	varchar(12)                              comment 'Name',
-	platform            	varchar(48)                              comment 'Platform',
+	hospital            	varchar(48)                              comment 'Hospital',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
-drop table  if exists profile_data;
-create table profile_data (
+drop table  if exists department_data;
+create table department_data (
 	id                  	varchar(64)          not null            comment 'Id',
 	name                	varchar(12)                              comment 'Name',
-	gender              	varchar(4)                               comment 'Gender',
-	age                 	int                                      comment 'Age',
-	identification_number	varchar(52)                              comment 'Identification Number',
-	mobile              	varchar(44)                              comment 'Mobile',
-	platform            	varchar(48)                              comment 'Platform',
+	hospital            	varchar(48)                              comment 'Hospital',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
-drop table  if exists registration_data;
-create table registration_data (
+drop table  if exists doctor_assignment_data;
+create table doctor_assignment_data (
 	id                  	varchar(64)          not null            comment 'Id',
-	title               	varchar(16)                              comment 'Title',
-	patient             	varchar(48)                              comment 'Patient',
-	register            	varchar(48)                              comment 'Register',
-	content             	longtext                                 comment 'Content',
-	update_time         	datetime                                 comment 'Update Time',
-	status              	varchar(24)                              comment 'Status',
-	platform            	varchar(48)                              comment 'Platform',
+	name                	varchar(40)                              comment 'Name',
+	doctor              	varchar(48)                              comment 'Doctor',
+	department          	varchar(48)                              comment 'Department',
+	version             	int                                      comment 'Version',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
+
+drop table  if exists doctor_schedule_data;
+create table doctor_schedule_data (
+	id                  	varchar(64)          not null            comment 'Id',
+	name                	varchar(116)                             comment 'Name',
+	schedule_date       	date                                     comment 'Schedule Date',
+	period              	varchar(8)                               comment 'Period',
+	doctor              	varchar(48)                              comment 'Doctor',
+	available           	int                                      comment 'Available',
+	price               	numeric(7,2)                             comment 'Price',
+	expense_type        	varchar(48)                              comment 'Expense Type',
+	department          	varchar(48)                              comment 'Department',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
@@ -227,173 +257,134 @@ create table form_action_data (
 
 
 	
-insert into platform_data values ('P000001','HIS','Hospital Information System','V1.0','1');
+insert into hospital_data values ('H000001','上和医院','毕升路22号','028-9123123','1');
 
 	
-insert into doctor_data values ('D000001','张医生','P000001','1');
-insert into doctor_data values ('D000002','刘医生','P000001','1');
-insert into doctor_data values ('D000003','张医生','P000001','1');
-insert into doctor_data values ('D000004','刘医生','P000001','1');
-insert into doctor_data values ('D000005','张医生','P000001','1');
+insert into expense_type_data values ('ET000001','诊疗费','zlf','正常','H000001','    一段样例文字。
+可以分段。
+
+可以空行。
+
+','1');
+insert into expense_type_data values ('ET000002','治疗费','zlf','停用','H000001','    一段样例文字。
+可以分段。
+
+可以空行。
+
+','1');
+insert into expense_type_data values ('ET000003','检查费','jcf','正常','H000001','    一段样例文字。
+可以分段。
+
+可以空行。
+
+','1');
+insert into expense_type_data values ('ET000004','诊疗费','zlf','停用','H000001','    一段样例文字。
+可以分段。
+
+可以空行。
+
+','1');
+insert into expense_type_data values ('ET000005','治疗费','zlf','正常','H000001','    一段样例文字。
+可以分段。
+
+可以空行。
+
+','1');
 
 	
-insert into profile_data values ('P000001','张喜来','男','80','6501988098876','13899998888','P000001','1');
-insert into profile_data values ('P000002','刘利','女','90','65019880988760002','13900000002','P000001','1');
-insert into profile_data values ('P000003','张喜来','男','91','65019880988760003','13900000003','P000001','1');
-insert into profile_data values ('P000004','刘利','女','85','65019880988760004','13900000004','P000001','1');
-insert into profile_data values ('P000005','张喜来','男','91','65019880988760005','13900000005','P000001','1');
+insert into expense_item_data values ('EI000001','专家诊疗费','75.71','ET000001','H000001','1');
+insert into expense_item_data values ('EI000002','血常规','93.93','ET000001','H000001','1');
+insert into expense_item_data values ('EI000003','煎药费','86.20','ET000001','H000001','1');
+insert into expense_item_data values ('EI000004','专家诊疗费','81.08','ET000001','H000001','1');
+insert into expense_item_data values ('EI000005','血常规','78.87','ET000001','H000001','1');
+insert into expense_item_data values ('EI000006','煎药费','82.92','ET000002','H000001','1');
+insert into expense_item_data values ('EI000007','专家诊疗费','86.04','ET000002','H000001','1');
+insert into expense_item_data values ('EI000008','血常规','76.84','ET000002','H000001','1');
+insert into expense_item_data values ('EI000009','煎药费','96.54','ET000002','H000001','1');
+insert into expense_item_data values ('EI000010','专家诊疗费','70.11','ET000002','H000001','1');
+insert into expense_item_data values ('EI000011','血常规','91.99','ET000003','H000001','1');
+insert into expense_item_data values ('EI000012','煎药费','94.50','ET000003','H000001','1');
+insert into expense_item_data values ('EI000013','专家诊疗费','81.39','ET000003','H000001','1');
+insert into expense_item_data values ('EI000014','血常规','84.31','ET000003','H000001','1');
+insert into expense_item_data values ('EI000015','煎药费','87.28','ET000003','H000001','1');
+insert into expense_item_data values ('EI000016','专家诊疗费','73.99','ET000004','H000001','1');
+insert into expense_item_data values ('EI000017','血常规','80.88','ET000004','H000001','1');
+insert into expense_item_data values ('EI000018','煎药费','97.54','ET000004','H000001','1');
+insert into expense_item_data values ('EI000019','专家诊疗费','94.64','ET000004','H000001','1');
+insert into expense_item_data values ('EI000020','血常规','75.34','ET000004','H000001','1');
+insert into expense_item_data values ('EI000021','煎药费','97.11','ET000005','H000001','1');
+insert into expense_item_data values ('EI000022','专家诊疗费','95.87','ET000005','H000001','1');
+insert into expense_item_data values ('EI000023','血常规','72.51','ET000005','H000001','1');
+insert into expense_item_data values ('EI000024','煎药费','80.57','ET000005','H000001','1');
+insert into expense_item_data values ('EI000025','专家诊疗费','93.89','ET000005','H000001','1');
 
 	
-insert into registration_data values ('R000001','挂一个号','P000001','P000001','    一段样例文字。
-可以分段。
+insert into doctor_data values ('D000001','魏松全','H000001','1');
+insert into doctor_data values ('D000002','魏松全0002','H000001','1');
+insert into doctor_data values ('D000003','魏松全0003','H000001','1');
+insert into doctor_data values ('D000004','魏松全0004','H000001','1');
+insert into doctor_data values ('D000005','魏松全0005','H000001','1');
 
-可以空行。
+	
+insert into department_data values ('D000001','放射科','H000001','1');
+insert into department_data values ('D000002','放射科0002','H000001','1');
+insert into department_data values ('D000003','放射科0003','H000001','1');
+insert into department_data values ('D000004','放射科0004','H000001','1');
+insert into department_data values ('D000005','放射科0005','H000001','1');
 
-','2019-03-03 16:11:51','UNREAD','P000001','1');
-insert into registration_data values ('R000002','挂一个号0002','P000001','P000001','    一段样例文字。
-可以分段。
+	
+insert into doctor_assignment_data values ('DA000001','魏松全在内分泌科室上','D000001','D000001','1');
+insert into doctor_assignment_data values ('DA000002','魏松全在内分泌科室上0002','D000001','D000001','1');
+insert into doctor_assignment_data values ('DA000003','魏松全在内分泌科室上0003','D000001','D000001','1');
+insert into doctor_assignment_data values ('DA000004','魏松全在内分泌科室上0004','D000001','D000001','1');
+insert into doctor_assignment_data values ('DA000005','魏松全在内分泌科室上0005','D000001','D000001','1');
+insert into doctor_assignment_data values ('DA000006','魏松全在内分泌科室上0006','D000002','D000002','1');
+insert into doctor_assignment_data values ('DA000007','魏松全在内分泌科室上0007','D000002','D000002','1');
+insert into doctor_assignment_data values ('DA000008','魏松全在内分泌科室上0008','D000002','D000002','1');
+insert into doctor_assignment_data values ('DA000009','魏松全在内分泌科室上0009','D000002','D000002','1');
+insert into doctor_assignment_data values ('DA000010','魏松全在内分泌科室上0010','D000002','D000002','1');
+insert into doctor_assignment_data values ('DA000011','魏松全在内分泌科室上0011','D000003','D000003','1');
+insert into doctor_assignment_data values ('DA000012','魏松全在内分泌科室上0012','D000003','D000003','1');
+insert into doctor_assignment_data values ('DA000013','魏松全在内分泌科室上0013','D000003','D000003','1');
+insert into doctor_assignment_data values ('DA000014','魏松全在内分泌科室上0014','D000003','D000003','1');
+insert into doctor_assignment_data values ('DA000015','魏松全在内分泌科室上0015','D000003','D000003','1');
+insert into doctor_assignment_data values ('DA000016','魏松全在内分泌科室上0016','D000004','D000004','1');
+insert into doctor_assignment_data values ('DA000017','魏松全在内分泌科室上0017','D000004','D000004','1');
+insert into doctor_assignment_data values ('DA000018','魏松全在内分泌科室上0018','D000004','D000004','1');
+insert into doctor_assignment_data values ('DA000019','魏松全在内分泌科室上0019','D000004','D000004','1');
+insert into doctor_assignment_data values ('DA000020','魏松全在内分泌科室上0020','D000004','D000004','1');
+insert into doctor_assignment_data values ('DA000021','魏松全在内分泌科室上0021','D000005','D000005','1');
+insert into doctor_assignment_data values ('DA000022','魏松全在内分泌科室上0022','D000005','D000005','1');
+insert into doctor_assignment_data values ('DA000023','魏松全在内分泌科室上0023','D000005','D000005','1');
+insert into doctor_assignment_data values ('DA000024','魏松全在内分泌科室上0024','D000005','D000005','1');
+insert into doctor_assignment_data values ('DA000025','魏松全在内分泌科室上0025','D000005','D000005','1');
 
-可以空行。
-
-','2019-03-02 18:53:23','READ','P000001','1');
-insert into registration_data values ('R000003','挂一个号0003','P000001','P000001','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-17 16:35:02','UNREAD','P000001','1');
-insert into registration_data values ('R000004','挂一个号0004','P000001','P000001','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-20 10:48:07','READ','P000001','1');
-insert into registration_data values ('R000005','挂一个号0005','P000001','P000001','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-18 08:33:21','UNREAD','P000001','1');
-insert into registration_data values ('R000006','挂一个号0006','P000002','P000002','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-03-02 08:42:34','READ','P000001','1');
-insert into registration_data values ('R000007','挂一个号0007','P000002','P000002','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-24 14:44:48','UNREAD','P000001','1');
-insert into registration_data values ('R000008','挂一个号0008','P000002','P000002','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-03-02 04:56:46','READ','P000001','1');
-insert into registration_data values ('R000009','挂一个号0009','P000002','P000002','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-26 03:26:09','UNREAD','P000001','1');
-insert into registration_data values ('R000010','挂一个号0010','P000002','P000002','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-18 14:26:02','READ','P000001','1');
-insert into registration_data values ('R000011','挂一个号0011','P000003','P000003','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-25 12:34:28','UNREAD','P000001','1');
-insert into registration_data values ('R000012','挂一个号0012','P000003','P000003','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-17 21:11:28','READ','P000001','1');
-insert into registration_data values ('R000013','挂一个号0013','P000003','P000003','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-19 12:32:24','UNREAD','P000001','1');
-insert into registration_data values ('R000014','挂一个号0014','P000003','P000003','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-24 00:34:43','READ','P000001','1');
-insert into registration_data values ('R000015','挂一个号0015','P000003','P000003','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-03-07 20:40:58','UNREAD','P000001','1');
-insert into registration_data values ('R000016','挂一个号0016','P000004','P000004','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-23 00:10:08','READ','P000001','1');
-insert into registration_data values ('R000017','挂一个号0017','P000004','P000004','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-26 12:13:07','UNREAD','P000001','1');
-insert into registration_data values ('R000018','挂一个号0018','P000004','P000004','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-03-04 17:53:40','READ','P000001','1');
-insert into registration_data values ('R000019','挂一个号0019','P000004','P000004','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-27 10:55:48','UNREAD','P000001','1');
-insert into registration_data values ('R000020','挂一个号0020','P000004','P000004','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-27 06:52:11','READ','P000001','1');
-insert into registration_data values ('R000021','挂一个号0021','P000005','P000005','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-24 08:23:56','UNREAD','P000001','1');
-insert into registration_data values ('R000022','挂一个号0022','P000005','P000005','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-26 03:45:44','READ','P000001','1');
-insert into registration_data values ('R000023','挂一个号0023','P000005','P000005','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-23 02:23:52','UNREAD','P000001','1');
-insert into registration_data values ('R000024','挂一个号0024','P000005','P000005','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-17 20:14:18','READ','P000001','1');
-insert into registration_data values ('R000025','挂一个号0025','P000005','P000005','    一段样例文字。
-可以分段。
-
-可以空行。
-
-','2019-02-15 23:00:46','UNREAD','P000001','1');
+	
+insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','2017-09-09','上午','D000001','19','106.36','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','2016-08-06','下午','D000001','18','102.15','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','2018-04-09','夜班','D000001','17','107.03','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','2017-06-27','上午','D000001','17','103.53','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000005','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100005','2017-03-01','下午','D000001','18','122.09','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000006','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100006','2016-07-22','夜班','D000002','16','90.91','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000007','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100007','2017-05-29','上午','D000002','16','116.65','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000008','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100008','2016-07-24','下午','D000002','19','121.11','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000009','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100009','2017-01-01','夜班','D000002','17','120.46','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000010','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100010','2016-04-28','上午','D000002','15','121.32','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000011','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100011','2018-03-28','下午','D000003','18','97.11','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000012','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100012','2017-12-10','夜班','D000003','18','92.99','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000013','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100013','2017-04-08','上午','D000003','16','98.52','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000014','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100014','2019-03-04','下午','D000003','15','93.88','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000015','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100015','2017-12-23','夜班','D000003','19','92.50','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000016','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100016','2017-08-29','上午','D000004','17','90.43','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000017','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100017','2017-06-24','下午','D000004','16','102.31','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000018','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100018','2017-03-28','夜班','D000004','18','88.02','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000019','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100019','2016-08-31','上午','D000004','16','118.20','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000020','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100020','2018-11-06','下午','D000004','18','116.34','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000021','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100021','2018-01-21','夜班','D000005','15','112.49','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000022','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100022','2018-12-08','上午','D000005','18','99.54','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000023','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100023','2017-11-10','下午','D000005','15','110.56','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000024','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100024','2018-12-14','夜班','D000005','20','101.71','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000025','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100025','2017-11-13','上午','D000005','19','109.51','ET000005','D000005','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -406,14 +397,14 @@ insert into user_white_list_data values ('UWL000004','13808188512','tester;ios-s
 insert into user_white_list_data values ('UWL000005','clariones','tester;ios-spokesperson0005','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-03-07 01:15:00','2019-02-18 08:57:41','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-01 21:35:30','2019-02-27 17:25:30','UD000001',NULL,'BLOCKED0002','1');
-insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-02-21 22:18:43','2019-02-21 12:03:58','UD000001',NULL,'BLOCKED0003','1');
-insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-02-24 12:50:54','2019-02-28 11:59:59','UD000001',NULL,'BLOCKED0004','1');
-insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-02-15 09:16:18','2019-03-07 04:52:42','UD000001',NULL,'BLOCKED0005','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-18 09:03:08','2019-03-11 06:13:30','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-11 01:58:49','2019-03-06 05:37:41','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-02-25 10:30:53','2019-03-07 03:55:03','UD000001',NULL,'BLOCKED0003','1');
+insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-02-26 16:03:26','2019-02-24 14:00:02','UD000001',NULL,'BLOCKED0004','1');
+insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-03-10 06:00:40','2019-03-05 18:37:24','UD000001',NULL,'BLOCKED0005','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-25 21:14:02','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-03-03 14:51:01','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -697,31 +688,31 @@ insert into object_access_data values ('OA000124','控制访问列表10124','Acc
 insert into object_access_data values ('OA000125','控制访问列表10125','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000025','1');
 
 	
-insert into login_history_data values ('LH000001','2019-02-17 11:24:47','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-02-27 18:50:41','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-02-28 01:22:04','192.168.1.1','登陆成功0003','SU000001','1');
-insert into login_history_data values ('LH000004','2019-02-16 21:03:03','192.168.1.2','登陆成功0004','SU000001','1');
-insert into login_history_data values ('LH000005','2019-03-04 17:49:05','192.168.1.1','登陆成功0005','SU000001','1');
-insert into login_history_data values ('LH000006','2019-02-21 09:16:14','192.168.1.2','登陆成功0006','SU000002','1');
-insert into login_history_data values ('LH000007','2019-02-24 23:16:43','192.168.1.1','登陆成功0007','SU000002','1');
-insert into login_history_data values ('LH000008','2019-02-24 02:02:06','192.168.1.2','登陆成功0008','SU000002','1');
-insert into login_history_data values ('LH000009','2019-02-15 20:29:01','192.168.1.1','登陆成功0009','SU000002','1');
-insert into login_history_data values ('LH000010','2019-03-02 09:41:00','192.168.1.2','登陆成功0010','SU000002','1');
-insert into login_history_data values ('LH000011','2019-03-08 03:47:08','192.168.1.1','登陆成功0011','SU000003','1');
-insert into login_history_data values ('LH000012','2019-02-18 19:22:54','192.168.1.2','登陆成功0012','SU000003','1');
-insert into login_history_data values ('LH000013','2019-02-24 08:40:42','192.168.1.1','登陆成功0013','SU000003','1');
-insert into login_history_data values ('LH000014','2019-02-22 14:01:26','192.168.1.2','登陆成功0014','SU000003','1');
-insert into login_history_data values ('LH000015','2019-02-21 15:40:49','192.168.1.1','登陆成功0015','SU000003','1');
-insert into login_history_data values ('LH000016','2019-03-02 02:19:07','192.168.1.2','登陆成功0016','SU000004','1');
-insert into login_history_data values ('LH000017','2019-02-23 20:19:51','192.168.1.1','登陆成功0017','SU000004','1');
-insert into login_history_data values ('LH000018','2019-03-05 11:59:27','192.168.1.2','登陆成功0018','SU000004','1');
-insert into login_history_data values ('LH000019','2019-03-02 00:13:22','192.168.1.1','登陆成功0019','SU000004','1');
-insert into login_history_data values ('LH000020','2019-03-02 12:06:38','192.168.1.2','登陆成功0020','SU000004','1');
-insert into login_history_data values ('LH000021','2019-03-06 10:00:25','192.168.1.1','登陆成功0021','SU000005','1');
-insert into login_history_data values ('LH000022','2019-02-25 18:45:54','192.168.1.2','登陆成功0022','SU000005','1');
-insert into login_history_data values ('LH000023','2019-03-05 18:41:52','192.168.1.1','登陆成功0023','SU000005','1');
-insert into login_history_data values ('LH000024','2019-02-23 20:13:27','192.168.1.2','登陆成功0024','SU000005','1');
-insert into login_history_data values ('LH000025','2019-02-16 04:44:52','192.168.1.1','登陆成功0025','SU000005','1');
+insert into login_history_data values ('LH000001','2019-02-18 01:36:04','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-03-06 04:19:01','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-02-24 07:21:25','192.168.1.1','登陆成功0003','SU000001','1');
+insert into login_history_data values ('LH000004','2019-02-26 12:45:31','192.168.1.2','登陆成功0004','SU000001','1');
+insert into login_history_data values ('LH000005','2019-03-04 00:02:55','192.168.1.1','登陆成功0005','SU000001','1');
+insert into login_history_data values ('LH000006','2019-02-26 19:46:04','192.168.1.2','登陆成功0006','SU000002','1');
+insert into login_history_data values ('LH000007','2019-02-21 23:12:17','192.168.1.1','登陆成功0007','SU000002','1');
+insert into login_history_data values ('LH000008','2019-03-02 14:41:27','192.168.1.2','登陆成功0008','SU000002','1');
+insert into login_history_data values ('LH000009','2019-03-04 20:13:54','192.168.1.1','登陆成功0009','SU000002','1');
+insert into login_history_data values ('LH000010','2019-03-06 18:28:20','192.168.1.2','登陆成功0010','SU000002','1');
+insert into login_history_data values ('LH000011','2019-02-28 20:40:55','192.168.1.1','登陆成功0011','SU000003','1');
+insert into login_history_data values ('LH000012','2019-02-25 10:12:27','192.168.1.2','登陆成功0012','SU000003','1');
+insert into login_history_data values ('LH000013','2019-03-02 16:29:31','192.168.1.1','登陆成功0013','SU000003','1');
+insert into login_history_data values ('LH000014','2019-03-10 05:54:01','192.168.1.2','登陆成功0014','SU000003','1');
+insert into login_history_data values ('LH000015','2019-02-26 02:55:32','192.168.1.1','登陆成功0015','SU000003','1');
+insert into login_history_data values ('LH000016','2019-02-22 23:53:28','192.168.1.2','登陆成功0016','SU000004','1');
+insert into login_history_data values ('LH000017','2019-03-04 01:31:07','192.168.1.1','登陆成功0017','SU000004','1');
+insert into login_history_data values ('LH000018','2019-02-26 02:32:46','192.168.1.2','登陆成功0018','SU000004','1');
+insert into login_history_data values ('LH000019','2019-03-03 15:15:36','192.168.1.1','登陆成功0019','SU000004','1');
+insert into login_history_data values ('LH000020','2019-03-11 13:04:19','192.168.1.2','登陆成功0020','SU000004','1');
+insert into login_history_data values ('LH000021','2019-02-22 04:43:24','192.168.1.1','登陆成功0021','SU000005','1');
+insert into login_history_data values ('LH000022','2019-02-25 10:20:55','192.168.1.2','登陆成功0022','SU000005','1');
+insert into login_history_data values ('LH000023','2019-03-07 10:06:50','192.168.1.1','登陆成功0023','SU000005','1');
+insert into login_history_data values ('LH000024','2019-02-26 03:34:34','192.168.1.2','登陆成功0024','SU000005','1');
+insert into login_history_data values ('LH000025','2019-02-20 10:10:08','192.168.1.1','登陆成功0025','SU000005','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');
@@ -759,24 +750,40 @@ Mysql innodb's foreign key has index automatically
 
 */
 
-create unique index idx_platform_version on platform_data(id, version);
+create unique index idx_hospital_version on hospital_data(id, version);
 
+create unique index idx_expense_type_version on expense_type_data(id, version);
+
+alter table expense_type_data add constraint expense_type4hospital_fk
+	foreign key(hospital) references hospital_data(id) on delete cascade on update cascade;
+create unique index idx_expense_item_version on expense_item_data(id, version);
+
+alter table expense_item_data add constraint expense_item4expense_type_fk
+	foreign key(expense_type) references expense_type_data(id) on delete cascade on update cascade;
+alter table expense_item_data add constraint expense_item4hospital_fk
+	foreign key(hospital) references hospital_data(id) on delete cascade on update cascade;
 create unique index idx_doctor_version on doctor_data(id, version);
 
-alter table doctor_data add constraint doctor4platform_fk
-	foreign key(platform) references platform_data(id) on delete cascade on update cascade;
-create unique index idx_profile_version on profile_data(id, version);
+alter table doctor_data add constraint doctor4hospital_fk
+	foreign key(hospital) references hospital_data(id) on delete cascade on update cascade;
+create unique index idx_department_version on department_data(id, version);
 
-alter table profile_data add constraint profile4platform_fk
-	foreign key(platform) references platform_data(id) on delete cascade on update cascade;
-create unique index idx_registration_version on registration_data(id, version);
+alter table department_data add constraint department4hospital_fk
+	foreign key(hospital) references hospital_data(id) on delete cascade on update cascade;
+create unique index idx_doctor_assignment_version on doctor_assignment_data(id, version);
 
-alter table registration_data add constraint registration4patient_fk
-	foreign key(patient) references profile_data(id) on delete cascade on update cascade;
-alter table registration_data add constraint registration4register_fk
-	foreign key(register) references profile_data(id) on delete cascade on update cascade;
-alter table registration_data add constraint registration4platform_fk
-	foreign key(platform) references platform_data(id) on delete cascade on update cascade;
+alter table doctor_assignment_data add constraint doctor_assignment4doctor_fk
+	foreign key(doctor) references doctor_data(id) on delete cascade on update cascade;
+alter table doctor_assignment_data add constraint doctor_assignment4department_fk
+	foreign key(department) references department_data(id) on delete cascade on update cascade;
+create unique index idx_doctor_schedule_version on doctor_schedule_data(id, version);
+
+alter table doctor_schedule_data add constraint doctor_schedule4doctor_fk
+	foreign key(doctor) references doctor_data(id) on delete cascade on update cascade;
+alter table doctor_schedule_data add constraint doctor_schedule4expense_type_fk
+	foreign key(expense_type) references expense_type_data(id) on delete cascade on update cascade;
+alter table doctor_schedule_data add constraint doctor_schedule4department_fk
+	foreign key(department) references department_data(id) on delete cascade on update cascade;
 create unique index idx_user_domain_version on user_domain_data(id, version);
 
 create unique index idx_user_white_list_version on user_white_list_data(id, version);
@@ -827,13 +834,17 @@ alter table form_action_data add constraint form_action4form_fk
 	foreign key(form) references generic_form_data(id) on delete cascade on update cascade;
 -- create extra index for time, number and mobile phone
 
-create index platform4version_idx on platform_data(version);
+create index hospital4version_idx on hospital_data(version);
+create index expense_type4version_idx on expense_type_data(version);
+create index expense_item4price_idx on expense_item_data(price);
+create index expense_item4version_idx on expense_item_data(version);
 create index doctor4version_idx on doctor_data(version);
-create index profile4age_idx on profile_data(age);
-create index profile4mobile_idx on profile_data(mobile);
-create index profile4version_idx on profile_data(version);
-create index registration4update_time_idx on registration_data(update_time);
-create index registration4version_idx on registration_data(version);
+create index department4version_idx on department_data(version);
+create index doctor_assignment4version_idx on doctor_assignment_data(version);
+create index doctor_schedule4schedule_date_idx on doctor_schedule_data(schedule_date);
+create index doctor_schedule4available_idx on doctor_schedule_data(available);
+create index doctor_schedule4price_idx on doctor_schedule_data(price);
+create index doctor_schedule4version_idx on doctor_schedule_data(version);
 create index user_domain4version_idx on user_domain_data(version);
 create index user_white_list4version_idx on user_white_list_data(version);
 create index sec_user4mobile_idx on sec_user_data(mobile);
@@ -889,8 +900,8 @@ delete from user_app_data;
 */
 
 insert into sec_user_data values('SU000001','User000001','13900000001','1000001@qq.com','258D9BB89BBC1F2A6CDDD3A4CB300E6CD9B83F3FC9984619DF1A59F6051F1F44','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
-insert into user_app_data values('UA000001','Platform','SU000001','at',1,'MXWR','Platform','P000001','/link/to/app','1'); -- REFER COUNT: 3
-insert into user_app_data values('UA000002','My Account','SU000001','lock',1,'MXWR','SecUser','SU000001','/link/to/app','1'); -- REFER COUNT: 3
+insert into user_app_data values('UA000001','Hospital','SU000001','hospital',1,'MXWR','Hospital','H000001','/link/to/app','1'); -- REFER COUNT: 4
+insert into user_app_data values('UA000002','My Account','SU000001','lock',1,'MXWR','SecUser','SU000001','/link/to/app','1'); -- REFER COUNT: 4
 insert into sec_user_data values('SU000002','User000002','13900000002','1000002@qq.com','7FEABCC19D638787655F9FFC2C22755D5771184D85D000147D643D22F6617F7B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
 insert into user_app_data values('UA000003','User Domain','SU000002','user',1,'MXWR','UserDomain','UD000001','/link/to/app','1'); -- REFER COUNT: 2
 insert into user_app_data values('UA000004','My Account','SU000002','lock',1,'MXWR','SecUser','SU000002','/link/to/app','1'); -- REFER COUNT: 2
@@ -904,7 +915,7 @@ insert into user_app_data values('UA000006','My Account','SU000003','lock',1,'MX
 /*
 | 角色        | 用户名           | 密码         |
 | ------------- |:-------------:|:-------------------:|
-|Platform|13900000001|DoubleChain!y1|
+|Hospital|13900000001|DoubleChain!y1|
 |User Domain|13900000002|DoubleChain!y1|
 |Sec User Blocking|13900000003|DoubleChain!y1|
 

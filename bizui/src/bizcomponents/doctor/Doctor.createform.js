@@ -17,8 +17,8 @@ const { TextArea } = Input
 const testValues = {};
 /*
 const testValues = {
-  name: '张医生',
-  platformId: 'P000001',
+  name: '魏松全',
+  hospitalId: 'H000001',
 }
 */
 
@@ -234,16 +234,16 @@ class DoctorCreateForm extends Component {
             <Row gutter={16}>
 
               <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.platform} {...formItemLayout}>
-                  {getFieldDecorator('platformId', {
-                  	initialValue: tryinit('platform'),
+                <Form.Item label={fieldLabels.hospital} {...formItemLayout}>
+                  {getFieldDecorator('hospitalId', {
+                  	initialValue: tryinit('hospital'),
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                   
                   <SelectObject 
-                    disabled={!availableForEdit('platform')}
-                    targetType={"platform"} 
-                    requestFunction={DoctorService.requestCandidatePlatform}/>
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={DoctorService.requestCandidateHospital}/>
                   
                  
                   )}

@@ -260,13 +260,13 @@ const internalSummaryOf = (loginHistory,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{loginHistory.id}</Description> 
-<Description term="Login Time">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 
-<Description term="From Ip">{loginHistory.fromIp}</Description> 
-<Description term="Description">{loginHistory.description}</Description> 
-<Description term="Sec User">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):loginHistory.secUser.displayName}
+<Description term="ID">{loginHistory.id}</Description> 
+<Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 
+<Description term="来自IP">{loginHistory.fromIp}</Description> 
+<Description term="描述">{loginHistory.description}</Description> 
+<Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):loginHistory.secUser.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Sec User","secUser","requestCandidateSecUser",
+  showTransferModel(targetComponent,"安全用户","secUser","requestCandidateSecUser",
 	      "transferToAnotherSecUser","anotherSecUserId",loginHistory.secUser?loginHistory.secUser.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
@@ -308,7 +308,7 @@ class LoginHistoryPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName,  } = this.props.loginHistory
-    const cardsData = {cardsName:"Login History",cardsFor: "loginHistory",cardsSource: this.props.loginHistory,
+    const cardsData = {cardsName:"登录历史",cardsFor: "loginHistory",cardsSource: this.props.loginHistory,
   		subItems: [
     
       	],

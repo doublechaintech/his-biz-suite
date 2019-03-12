@@ -556,7 +556,7 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
  
 		StatsItem verificationCodeExpireStatsItem = new StatsItem();
 		//SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY
-		verificationCodeExpireStatsItem.setDisplayName("Sec User");
+		verificationCodeExpireStatsItem.setDisplayName("安全用户");
 		verificationCodeExpireStatsItem.setInternalName(formatKeyForDateLine(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY));
 		verificationCodeExpireStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY),filterKey,emptyOptions));
 		info.addItem(verificationCodeExpireStatsItem);
@@ -606,7 +606,7 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
  
 		StatsItem verificationCodeExpireStatsItem = new StatsItem();
 		//SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY
-		verificationCodeExpireStatsItem.setDisplayName("Sec User");
+		verificationCodeExpireStatsItem.setDisplayName("安全用户");
 		verificationCodeExpireStatsItem.setInternalName(formatKeyForDateLine(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY));
 		verificationCodeExpireStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY),filterKey,emptyOptions));
 		info.addItem(verificationCodeExpireStatsItem);

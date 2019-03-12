@@ -261,7 +261,7 @@ class HospitalUpdateForm extends Component {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Id" disabled/>
+                    <Input placeholder="请输入ID" disabled/>
                     
                   )}
                 </Form.Item>
@@ -273,7 +273,7 @@ class HospitalUpdateForm extends Component {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Name" />
+                    <Input placeholder="请输入名称" />
                     
                   )}
                 </Form.Item>
@@ -285,7 +285,7 @@ class HospitalUpdateForm extends Component {
                     initialValue: selectedRow.address,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Address" />
+                    <Input placeholder="请输入地址" />
                     
                   )}
                 </Form.Item>
@@ -297,7 +297,7 @@ class HospitalUpdateForm extends Component {
                     initialValue: selectedRow.telephone,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Telephone" />
+                    <Input placeholder="请输入电话" />
                     
                   )}
                 </Form.Item>

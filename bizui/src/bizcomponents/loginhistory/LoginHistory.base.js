@@ -6,7 +6,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Login History", menuFor: "loginHistory",
+const menuData = {menuName:"登录历史", menuFor: "loginHistory",
   		subItems: [
   
   		],
@@ -69,20 +69,20 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Login Time', dataIndex: 'loginTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-  { title: 'From Ip', debugtype: 'string', dataIndex: 'fromIp', width: '15',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Description', debugtype: 'string', dataIndex: 'description', width: '8',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Sec User', dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record)},
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: '登录时间', dataIndex: 'loginTime', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: '来自IP', debugtype: 'string', dataIndex: 'fromIp', width: '15',render: (text, record)=>renderTextCell(text,record) },
+  { title: '描述', debugtype: 'string', dataIndex: 'description', width: '8',render: (text, record)=>renderTextCell(text,record) },
+  { title: '安全用户', dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  loginTime: 'Login Time',
-  fromIp: 'From Ip',
-  description: 'Description',
-  secUser: 'Sec User',
+  id: 'ID',
+  loginTime: '登录时间',
+  fromIp: '来自IP',
+  description: '描述',
+  secUser: '安全用户',
 
 }
 

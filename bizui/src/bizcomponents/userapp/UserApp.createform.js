@@ -212,7 +212,7 @@ class UserAppCreateForm extends Component {
                   {getFieldDecorator('title', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Title" />
+                    <Input placeholder="请输入标题" />
                   )}
                 </Form.Item>
               </Col>
@@ -222,7 +222,7 @@ class UserAppCreateForm extends Component {
                   {getFieldDecorator('appIcon', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入App Icon" />
+                    <Input placeholder="请输入应用程序图标" />
                   )}
                 </Form.Item>
               </Col>
@@ -232,7 +232,7 @@ class UserAppCreateForm extends Component {
                   {getFieldDecorator('permission', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Permission" />
+                    <Input placeholder="请输入许可" />
                   )}
                 </Form.Item>
               </Col>
@@ -242,7 +242,7 @@ class UserAppCreateForm extends Component {
                   {getFieldDecorator('objectType', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Object Type" />
+                    <Input placeholder="请输入访问对象类型" />
                   )}
                 </Form.Item>
               </Col>
@@ -252,7 +252,7 @@ class UserAppCreateForm extends Component {
                   {getFieldDecorator('objectId', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Object Id" />
+                    <Input placeholder="请输入对象ID" />
                   )}
                 </Form.Item>
               </Col>
@@ -262,7 +262,7 @@ class UserAppCreateForm extends Component {
                   {getFieldDecorator('location', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Location" />
+                    <Input placeholder="请输入位置" />
                   )}
                 </Form.Item>
               </Col>

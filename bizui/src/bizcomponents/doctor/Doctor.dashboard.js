@@ -79,8 +79,8 @@ const internalSummaryOf = (doctor,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{doctor.id}</Description> 
-<Description term="Name">{doctor.name}</Description> 
+<Description term="ID">{doctor.id}</Description> 
+<Description term="名称">{doctor.name}</Description> 
 	
         {buildTransferModal(doctor,targetComponent)}
       </DescriptionList>
@@ -117,11 +117,11 @@ class DoctorDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"Doctor",cardsFor: "doctor",
+    const cardsData = {cardsName:"医生",cardsFor: "doctor",
     	cardsSource: this.props.doctor,returnURL,displayName,
   		subItems: [
-{name: 'doctorAssignmentList', displayName:'Doctor Assignment',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', metaInfo: doctorAssignmentListMetaInfo},
-{name: 'doctorScheduleList', displayName:'Doctor Schedule',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
+{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', metaInfo: doctorAssignmentListMetaInfo},
+{name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],
   	};

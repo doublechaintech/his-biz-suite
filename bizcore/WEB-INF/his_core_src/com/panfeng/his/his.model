@@ -6,10 +6,10 @@
 	
     <hospital
 
-        name="上和医院"
+        name="上和医院|[1,200]"
         address="毕升路22号"
         telephone="028-9123123"
-
+    
     
     />
 	
@@ -33,7 +33,7 @@
         name="魏松全"
         hospital="$(hospital)"
     />
-
+	
     <department
         name="放射科"
         hospital="$(hospital)"
@@ -56,7 +56,7 @@
         expense_type="$(expense_type)"
         department="$(department)"
     />
-
+	
 
 </root>
  

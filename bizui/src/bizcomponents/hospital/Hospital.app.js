@@ -162,7 +162,7 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "Expense Type",
+      name: "费用类型",
       role: "expenseType",
       data: state._hospital.expenseTypeList,
       metaInfo: state._hospital.expenseTypeListMetaInfo,
@@ -211,7 +211,7 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "Expense Item",
+      name: "费用项目",
       role: "expenseItem",
       data: state._hospital.expenseItemList,
       metaInfo: state._hospital.expenseItemListMetaInfo,
@@ -260,7 +260,7 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "Doctor",
+      name: "医生",
       role: "doctor",
       data: state._hospital.doctorList,
       metaInfo: state._hospital.doctorListMetaInfo,
@@ -309,7 +309,7 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "Department",
+      name: "部门",
       role: "department",
       data: state._hospital.departmentList,
       metaInfo: state._hospital.departmentListMetaInfo,

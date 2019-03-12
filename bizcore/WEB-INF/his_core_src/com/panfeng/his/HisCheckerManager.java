@@ -21,7 +21,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkNameOfHospital(HisUserContext userContext, String name, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(name,2, 16,NAME_OF_HOSPITAL, messageList); 		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_HOSPITAL, messageList); 		
 		
 	}	 			
 	

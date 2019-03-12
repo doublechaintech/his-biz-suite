@@ -6,10 +6,10 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"User App", menuFor: "userApp",
+const menuData = {menuName:"用户应用程序", menuFor: "userApp",
   		subItems: [
-  {name: 'listAccessList', displayName:'List Access', icon:'list',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  {name: 'objectAccessList', displayName:'Object Access', icon:'accessible-icon',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'listAccessList', displayName:'访问列表', icon:'list',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'objectAccessList', displayName:'对象访问', icon:'accessible-icon',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -71,28 +71,28 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'userApp') },
-  { title: 'Title', debugtype: 'string', dataIndex: 'title', width: '8',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Sec User', dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'App Icon', debugtype: 'string', dataIndex: 'appIcon', width: '13',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Full Access', dataIndex: 'fullAccess', render: (text, record) =>renderBooleanCell(text, record) },
-  { title: 'Permission', debugtype: 'string', dataIndex: 'permission', width: '8',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Object Type', debugtype: 'string', dataIndex: 'objectType', width: '31',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Object Id', debugtype: 'string', dataIndex: 'objectId', width: '14',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Location', debugtype: 'string', dataIndex: 'location', width: '16',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'userApp') },
+  { title: '标题', debugtype: 'string', dataIndex: 'title', width: '8',render: (text, record)=>renderTextCell(text,record) },
+  { title: '安全用户', dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '应用程序图标', debugtype: 'string', dataIndex: 'appIcon', width: '13',render: (text, record)=>renderTextCell(text,record) },
+  { title: '完全访问', dataIndex: 'fullAccess', render: (text, record) =>renderBooleanCell(text, record) },
+  { title: '许可', debugtype: 'string', dataIndex: 'permission', width: '8',render: (text, record)=>renderTextCell(text,record) },
+  { title: '访问对象类型', debugtype: 'string', dataIndex: 'objectType', width: '31',render: (text, record)=>renderTextCell(text,record) },
+  { title: '对象ID', debugtype: 'string', dataIndex: 'objectId', width: '14',render: (text, record)=>renderTextCell(text,record) },
+  { title: '位置', debugtype: 'string', dataIndex: 'location', width: '16',render: (text, record)=>renderTextCell(text,record) },
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  title: 'Title',
-  secUser: 'Sec User',
-  appIcon: 'App Icon',
-  fullAccess: 'Full Access',
-  permission: 'Permission',
-  objectType: 'Object Type',
-  objectId: 'Object Id',
-  location: 'Location',
+  id: 'ID',
+  title: '标题',
+  secUser: '安全用户',
+  appIcon: '应用程序图标',
+  fullAccess: '完全访问',
+  permission: '许可',
+  objectType: '访问对象类型',
+  objectId: '对象ID',
+  location: '位置',
 
 }
 

@@ -52,7 +52,7 @@ const internalSettingListOf = (expenseType) =>defaultSettingListOf(expenseType, 
 const internalLargeTextOf = (expenseType) =>{
 
 	return(<div> 
-   <Card title={`Description`} ><pre>{expenseType.description}</pre></Card>
+   <Card title={`描述`} ><pre>{expenseType.description}</pre></Card>
 </div>)
 
 	
@@ -82,10 +82,10 @@ const internalSummaryOf = (expenseType,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{expenseType.id}</Description> 
-<Description term="Name">{expenseType.name}</Description> 
-<Description term="Helper Chars">{expenseType.helperChars}</Description> 
-<Description term="Status">{expenseType.status}</Description> 
+<Description term="ID">{expenseType.id}</Description> 
+<Description term="名称">{expenseType.name}</Description> 
+<Description term="辅助识字课">{expenseType.helperChars}</Description> 
+<Description term="状态">{expenseType.status}</Description> 
 	
         {buildTransferModal(expenseType,targetComponent)}
       </DescriptionList>
@@ -122,11 +122,11 @@ class ExpenseTypeDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"Expense Type",cardsFor: "expenseType",
+    const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",
     	cardsSource: this.props.expenseType,returnURL,displayName,
   		subItems: [
-{name: 'expenseItemList', displayName:'Expense Item',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
-{name: 'doctorScheduleList', displayName:'Doctor Schedule',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
+{name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],
   	};

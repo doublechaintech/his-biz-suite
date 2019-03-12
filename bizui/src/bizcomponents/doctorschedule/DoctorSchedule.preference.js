@@ -260,27 +260,27 @@ const internalSummaryOf = (doctorSchedule,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{doctorSchedule.id}</Description> 
-<Description term="Name">{doctorSchedule.name}</Description> 
-<Description term="Schedule Date">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
-<Description term="Period">{doctorSchedule.period}</Description> 
-<Description term="Doctor">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.doctor.displayName}
+<Description term="ID">{doctorSchedule.id}</Description> 
+<Description term="名称">{doctorSchedule.name}</Description> 
+<Description term="安排日期">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
+<Description term="期">{doctorSchedule.period}</Description> 
+<Description term="医生">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.doctor.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Doctor","doctor","requestCandidateDoctor",
+  showTransferModel(targetComponent,"医生","doctor","requestCandidateDoctor",
 	      "transferToAnotherDoctor","anotherDoctorId",doctorSchedule.doctor?doctorSchedule.doctor.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="Available">{doctorSchedule.available}</Description> 
-<Description term="Price">{doctorSchedule.price}</Description> 
-<Description term="Expense Type">{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.expenseType.displayName}
+<Description term="可用">{doctorSchedule.available}</Description> 
+<Description term="价格">{doctorSchedule.price}</Description> 
+<Description term="费用类型">{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.expenseType.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Expense Type","expenseType","requestCandidateExpenseType",
+  showTransferModel(targetComponent,"费用类型","expenseType","requestCandidateExpenseType",
 	      "transferToAnotherExpenseType","anotherExpenseTypeId",doctorSchedule.expenseType?doctorSchedule.expenseType.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="Department">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.department.displayName}
+<Description term="部门">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.department.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Department","department","requestCandidateDepartment",
+  showTransferModel(targetComponent,"部门","department","requestCandidateDepartment",
 	      "transferToAnotherDepartment","anotherDepartmentId",doctorSchedule.department?doctorSchedule.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
@@ -322,7 +322,7 @@ class DoctorSchedulePreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName,  } = this.props.doctorSchedule
-    const cardsData = {cardsName:"Doctor Schedule",cardsFor: "doctorSchedule",cardsSource: this.props.doctorSchedule,
+    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",cardsSource: this.props.doctorSchedule,
   		subItems: [
     
       	],

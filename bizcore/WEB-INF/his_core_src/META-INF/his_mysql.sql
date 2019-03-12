@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190311T1555
+-- BUILD WITH MODEL TIME 190312T1224
 drop database  if exists his;
 create database his;
 alter  database his  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -6,248 +6,248 @@ use his;
 
 drop table  if exists hospital_data;
 create table hospital_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(16)                              comment 'Name',
-	address             	varchar(24)                              comment 'Address',
-	telephone           	varchar(44)                              comment 'Telephone',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(200)                             comment '名称',
+	address             	varchar(24)                              comment '地址',
+	telephone           	varchar(44)                              comment '电话',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists expense_type_data;
 create table expense_type_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(12)                              comment 'Name',
-	helper_chars        	varchar(12)                              comment 'Helper Chars',
-	status              	varchar(8)                               comment 'Status',
-	hospital            	varchar(48)                              comment 'Hospital',
-	description         	longtext                                 comment 'Description',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(12)                              comment '名称',
+	helper_chars        	varchar(12)                              comment '辅助识字课',
+	status              	varchar(8)                               comment '状态',
+	hospital            	varchar(48)                              comment '医院',
+	description         	longtext                                 comment '描述',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists expense_item_data;
 create table expense_item_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(20)                              comment 'Name',
-	price               	numeric(6,2)                             comment 'Price',
-	expense_type        	varchar(48)                              comment 'Expense Type',
-	hospital            	varchar(48)                              comment 'Hospital',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(20)                              comment '名称',
+	price               	numeric(6,2)                             comment '价格',
+	expense_type        	varchar(48)                              comment '费用类型',
+	hospital            	varchar(48)                              comment '医院',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists doctor_data;
 create table doctor_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(12)                              comment 'Name',
-	hospital            	varchar(48)                              comment 'Hospital',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(12)                              comment '名称',
+	hospital            	varchar(48)                              comment '医院',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists department_data;
 create table department_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(12)                              comment 'Name',
-	hospital            	varchar(48)                              comment 'Hospital',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(12)                              comment '名称',
+	hospital            	varchar(48)                              comment '医院',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists doctor_assignment_data;
 create table doctor_assignment_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(40)                              comment 'Name',
-	doctor              	varchar(48)                              comment 'Doctor',
-	department          	varchar(48)                              comment 'Department',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(40)                              comment '名称',
+	doctor              	varchar(48)                              comment '医生',
+	department          	varchar(48)                              comment '部门',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists doctor_schedule_data;
 create table doctor_schedule_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(116)                             comment 'Name',
-	schedule_date       	date                                     comment 'Schedule Date',
-	period              	varchar(8)                               comment 'Period',
-	doctor              	varchar(48)                              comment 'Doctor',
-	available           	int                                      comment 'Available',
-	price               	numeric(7,2)                             comment 'Price',
-	expense_type        	varchar(48)                              comment 'Expense Type',
-	department          	varchar(48)                              comment 'Department',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(116)                             comment '名称',
+	schedule_date       	date                                     comment '安排日期',
+	period              	varchar(8)                               comment '期',
+	doctor              	varchar(48)                              comment '医生',
+	available           	int                                      comment '可用',
+	price               	numeric(7,2)                             comment '价格',
+	expense_type        	varchar(48)                              comment '费用类型',
+	department          	varchar(48)                              comment '部门',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists user_domain_data;
 create table user_domain_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(16)                              comment 'Name',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(16)                              comment '名称',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists user_white_list_data;
 create table user_white_list_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	user_identity       	varchar(40)                              comment 'User Identity',
-	user_special_functions	varchar(200)                             comment 'User Special Functions',
-	domain              	varchar(48)                              comment 'Domain',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	user_identity       	varchar(40)                              comment '用户身份',
+	user_special_functions	varchar(200)                             comment '用户特殊功能',
+	domain              	varchar(48)                              comment '域',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists sec_user_data;
 create table sec_user_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	login               	varchar(20)                              comment 'Login',
-	mobile              	varchar(11)                              comment 'Mobile',
-	email               	varchar(76)                              comment 'Email',
-	pwd                 	varchar(64)                              comment 'Pwd',
-	verification_code   	int                                      comment 'Verification Code',
-	verification_code_expire	datetime                                 comment 'Verification Code Expire',
-	last_login_time     	datetime                                 comment 'Last Login Time',
-	domain              	varchar(48)                              comment 'Domain',
-	blocking            	varchar(48)                              comment 'Blocking',
-	current_status      	varchar(28)                              comment 'Current Status',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	login               	varchar(20)                              comment '登录',
+	mobile              	varchar(11)                              comment '手机号码',
+	email               	varchar(76)                              comment '电子邮件',
+	pwd                 	varchar(64)                              comment '密码',
+	verification_code   	int                                      comment '验证码',
+	verification_code_expire	datetime                                 comment '验证码过期',
+	last_login_time     	datetime                                 comment '最后登录时间',
+	domain              	varchar(48)                              comment '域',
+	blocking            	varchar(48)                              comment '屏蔽',
+	current_status      	varchar(28)                              comment '当前状态',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists sec_user_blocking_data;
 create table sec_user_blocking_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	who                 	varchar(52)                              comment 'Who',
-	block_time          	datetime                                 comment 'Block Time',
-	comments            	varchar(96)                              comment 'Comments',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	who                 	varchar(52)                              comment '谁',
+	block_time          	datetime                                 comment '块时间',
+	comments            	varchar(96)                              comment '评论',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists user_app_data;
 create table user_app_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	title               	varchar(300)                             comment 'Title',
-	sec_user            	varchar(48)                              comment 'Sec User',
-	app_icon            	varchar(36)                              comment 'App Icon',
-	full_access         	tinyint                                  comment 'Full Access',
-	permission          	varchar(16)                              comment 'Permission',
-	object_type         	varchar(108)                             comment 'Object Type',
-	object_id           	varchar(40)                              comment 'Object Id',
-	location            	varchar(48)                              comment 'Location',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	title               	varchar(300)                             comment '标题',
+	sec_user            	varchar(48)                              comment '安全用户',
+	app_icon            	varchar(36)                              comment '应用程序图标',
+	full_access         	tinyint                                  comment '完全访问',
+	permission          	varchar(16)                              comment '许可',
+	object_type         	varchar(108)                             comment '访问对象类型',
+	object_id           	varchar(40)                              comment '对象ID',
+	location            	varchar(48)                              comment '位置',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists list_access_data;
 create table list_access_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(200)                             comment 'Name',
-	internal_name       	varchar(200)                             comment 'Internal Name',
-	read_permission     	tinyint                                  comment 'Read Permission',
-	create_permission   	tinyint                                  comment 'Create Permission',
-	delete_permission   	tinyint                                  comment 'Delete Permission',
-	update_permission   	tinyint                                  comment 'Update Permission',
-	execution_permission	tinyint                                  comment 'Execution Permission',
-	app                 	varchar(48)                              comment 'App',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(200)                             comment '名称',
+	internal_name       	varchar(200)                             comment '内部名称',
+	read_permission     	tinyint                                  comment '读权限',
+	create_permission   	tinyint                                  comment '创建权限',
+	delete_permission   	tinyint                                  comment '删除权限',
+	update_permission   	tinyint                                  comment '更新许可',
+	execution_permission	tinyint                                  comment '执行权限',
+	app                 	varchar(48)                              comment '应用程序',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists object_access_data;
 create table object_access_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	name                	varchar(28)                              comment 'Name',
-	object_type         	varchar(112)                             comment 'Object Type',
-	list1               	varchar(80)                              comment 'List1',
-	list2               	varchar(80)                              comment 'List2',
-	list3               	varchar(80)                              comment 'List3',
-	list4               	varchar(80)                              comment 'List4',
-	list5               	varchar(80)                              comment 'List5',
-	list6               	varchar(80)                              comment 'List6',
-	list7               	varchar(80)                              comment 'List7',
-	list8               	varchar(80)                              comment 'List8',
-	list9               	varchar(80)                              comment 'List9',
-	app                 	varchar(48)                              comment 'App',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	name                	varchar(28)                              comment '名称',
+	object_type         	varchar(112)                             comment '访问对象类型',
+	list1               	varchar(80)                              comment '列表1',
+	list2               	varchar(80)                              comment '列表2',
+	list3               	varchar(80)                              comment '列表3',
+	list4               	varchar(80)                              comment '列表4',
+	list5               	varchar(80)                              comment '列表5',
+	list6               	varchar(80)                              comment '列表6',
+	list7               	varchar(80)                              comment '列表7',
+	list8               	varchar(80)                              comment '列表8',
+	list9               	varchar(80)                              comment '列表9',
+	app                 	varchar(48)                              comment '应用程序',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists login_history_data;
 create table login_history_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	login_time          	datetime                                 comment 'Login Time',
-	from_ip             	varchar(44)                              comment 'From Ip',
-	description         	varchar(16)                              comment 'Description',
-	sec_user            	varchar(48)                              comment 'Sec User',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	login_time          	datetime                                 comment '登录时间',
+	from_ip             	varchar(44)                              comment '来自IP',
+	description         	varchar(16)                              comment '描述',
+	sec_user            	varchar(48)                              comment '安全用户',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists generic_form_data;
 create table generic_form_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	title               	varchar(20)                              comment 'Title',
-	description         	varchar(48)                              comment 'Description',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	title               	varchar(20)                              comment '标题',
+	description         	varchar(48)                              comment '描述',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists form_message_data;
 create table form_message_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	title               	varchar(24)                              comment 'Title',
-	form                	varchar(48)                              comment 'Form',
-	level               	varchar(28)                              comment 'Level',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	title               	varchar(24)                              comment '标题',
+	form                	varchar(48)                              comment '形式',
+	level               	varchar(28)                              comment '水平',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists form_field_message_data;
 create table form_field_message_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	title               	varchar(16)                              comment 'Title',
-	parameter_name      	varchar(16)                              comment 'Parameter Name',
-	form                	varchar(48)                              comment 'Form',
-	level               	varchar(28)                              comment 'Level',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	title               	varchar(16)                              comment '标题',
+	parameter_name      	varchar(16)                              comment '参数名称',
+	form                	varchar(48)                              comment '形式',
+	level               	varchar(28)                              comment '水平',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists form_field_data;
 create table form_field_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	label               	varchar(12)                              comment 'Label',
-	locale_key          	varchar(44)                              comment 'Locale Key',
-	parameter_name      	varchar(16)                              comment 'Parameter Name',
-	type                	varchar(36)                              comment 'Type',
-	form                	varchar(48)                              comment 'Form',
-	placeholder         	varchar(48)                              comment 'Placeholder',
-	default_value       	varchar(12)                              comment 'Default Value',
-	description         	varchar(48)                              comment 'Description',
-	field_group         	varchar(16)                              comment 'Field Group',
-	minimum_value       	varchar(60)                              comment 'Minimum Value',
-	maximum_value       	varchar(72)                              comment 'Maximum Value',
-	required            	tinyint                                  comment 'Required',
-	disabled            	tinyint                                  comment 'Disabled',
-	custom_rendering    	tinyint                                  comment 'Custom Rendering',
-	candidate_values    	varchar(12)                              comment 'Candidate Values',
-	suggest_values      	varchar(12)                              comment 'Suggest Values',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	label               	varchar(12)                              comment '标签',
+	locale_key          	varchar(44)                              comment '语言环境的关键',
+	parameter_name      	varchar(16)                              comment '参数名称',
+	type                	varchar(36)                              comment '类型',
+	form                	varchar(48)                              comment '形式',
+	placeholder         	varchar(48)                              comment '占位符',
+	default_value       	varchar(12)                              comment '默认值',
+	description         	varchar(48)                              comment '描述',
+	field_group         	varchar(16)                              comment '字段组',
+	minimum_value       	varchar(60)                              comment '最小值',
+	maximum_value       	varchar(72)                              comment '最大值',
+	required            	tinyint                                  comment '要求',
+	disabled            	tinyint                                  comment '禁用',
+	custom_rendering    	tinyint                                  comment '自定义渲染',
+	candidate_values    	varchar(12)                              comment '候选人的价值观',
+	suggest_values      	varchar(12)                              comment '建议值',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
 drop table  if exists form_action_data;
 create table form_action_data (
-	id                  	varchar(64)          not null            comment 'Id',
-	label               	varchar(8)                               comment 'Label',
-	locale_key          	varchar(16)                              comment 'Locale Key',
-	action_key          	varchar(24)                              comment 'Action Key',
-	level               	varchar(28)                              comment 'Level',
-	url                 	varchar(168)                             comment 'Url',
-	form                	varchar(48)                              comment 'Form',
-	version             	int                                      comment 'Version',
+	id                  	varchar(64)          not null            comment 'ID',
+	label               	varchar(8)                               comment '标签',
+	locale_key          	varchar(16)                              comment '语言环境的关键',
+	action_key          	varchar(24)                              comment '行动的关键',
+	level               	varchar(28)                              comment '水平',
+	url                 	varchar(168)                             comment 'url',
+	form                	varchar(48)                              comment '形式',
+	version             	int                                      comment '版本',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
 
@@ -292,31 +292,31 @@ insert into expense_type_data values ('ET000005','治疗费','zlf','正常','H00
 ','1');
 
 	
-insert into expense_item_data values ('EI000001','专家诊疗费','75.71','ET000001','H000001','1');
-insert into expense_item_data values ('EI000002','血常规','93.93','ET000001','H000001','1');
-insert into expense_item_data values ('EI000003','煎药费','86.20','ET000001','H000001','1');
-insert into expense_item_data values ('EI000004','专家诊疗费','81.08','ET000001','H000001','1');
-insert into expense_item_data values ('EI000005','血常规','78.87','ET000001','H000001','1');
-insert into expense_item_data values ('EI000006','煎药费','82.92','ET000002','H000001','1');
-insert into expense_item_data values ('EI000007','专家诊疗费','86.04','ET000002','H000001','1');
-insert into expense_item_data values ('EI000008','血常规','76.84','ET000002','H000001','1');
-insert into expense_item_data values ('EI000009','煎药费','96.54','ET000002','H000001','1');
-insert into expense_item_data values ('EI000010','专家诊疗费','70.11','ET000002','H000001','1');
-insert into expense_item_data values ('EI000011','血常规','91.99','ET000003','H000001','1');
-insert into expense_item_data values ('EI000012','煎药费','94.50','ET000003','H000001','1');
-insert into expense_item_data values ('EI000013','专家诊疗费','81.39','ET000003','H000001','1');
-insert into expense_item_data values ('EI000014','血常规','84.31','ET000003','H000001','1');
-insert into expense_item_data values ('EI000015','煎药费','87.28','ET000003','H000001','1');
-insert into expense_item_data values ('EI000016','专家诊疗费','73.99','ET000004','H000001','1');
-insert into expense_item_data values ('EI000017','血常规','80.88','ET000004','H000001','1');
-insert into expense_item_data values ('EI000018','煎药费','97.54','ET000004','H000001','1');
-insert into expense_item_data values ('EI000019','专家诊疗费','94.64','ET000004','H000001','1');
-insert into expense_item_data values ('EI000020','血常规','75.34','ET000004','H000001','1');
-insert into expense_item_data values ('EI000021','煎药费','97.11','ET000005','H000001','1');
-insert into expense_item_data values ('EI000022','专家诊疗费','95.87','ET000005','H000001','1');
-insert into expense_item_data values ('EI000023','血常规','72.51','ET000005','H000001','1');
-insert into expense_item_data values ('EI000024','煎药费','80.57','ET000005','H000001','1');
-insert into expense_item_data values ('EI000025','专家诊疗费','93.89','ET000005','H000001','1');
+insert into expense_item_data values ('EI000001','专家诊疗费','84.06','ET000001','H000001','1');
+insert into expense_item_data values ('EI000002','血常规','71.73','ET000001','H000001','1');
+insert into expense_item_data values ('EI000003','煎药费','94.26','ET000001','H000001','1');
+insert into expense_item_data values ('EI000004','专家诊疗费','90.14','ET000001','H000001','1');
+insert into expense_item_data values ('EI000005','血常规','88.66','ET000001','H000001','1');
+insert into expense_item_data values ('EI000006','煎药费','81.40','ET000002','H000001','1');
+insert into expense_item_data values ('EI000007','专家诊疗费','70.01','ET000002','H000001','1');
+insert into expense_item_data values ('EI000008','血常规','90.21','ET000002','H000001','1');
+insert into expense_item_data values ('EI000009','煎药费','74.37','ET000002','H000001','1');
+insert into expense_item_data values ('EI000010','专家诊疗费','75.63','ET000002','H000001','1');
+insert into expense_item_data values ('EI000011','血常规','87.47','ET000003','H000001','1');
+insert into expense_item_data values ('EI000012','煎药费','87.01','ET000003','H000001','1');
+insert into expense_item_data values ('EI000013','专家诊疗费','75.93','ET000003','H000001','1');
+insert into expense_item_data values ('EI000014','血常规','71.70','ET000003','H000001','1');
+insert into expense_item_data values ('EI000015','煎药费','92.61','ET000003','H000001','1');
+insert into expense_item_data values ('EI000016','专家诊疗费','86.13','ET000004','H000001','1');
+insert into expense_item_data values ('EI000017','血常规','75.99','ET000004','H000001','1');
+insert into expense_item_data values ('EI000018','煎药费','73.05','ET000004','H000001','1');
+insert into expense_item_data values ('EI000019','专家诊疗费','89.01','ET000004','H000001','1');
+insert into expense_item_data values ('EI000020','血常规','79.14','ET000004','H000001','1');
+insert into expense_item_data values ('EI000021','煎药费','76.35','ET000005','H000001','1');
+insert into expense_item_data values ('EI000022','专家诊疗费','92.15','ET000005','H000001','1');
+insert into expense_item_data values ('EI000023','血常规','80.15','ET000005','H000001','1');
+insert into expense_item_data values ('EI000024','煎药费','76.22','ET000005','H000001','1');
+insert into expense_item_data values ('EI000025','专家诊疗费','97.55','ET000005','H000001','1');
 
 	
 insert into doctor_data values ('D000001','魏松全','H000001','1');
@@ -360,31 +360,31 @@ insert into doctor_assignment_data values ('DA000024','魏松全在内分泌科�
 insert into doctor_assignment_data values ('DA000025','魏松全在内分泌科室上0025','D000005','D000005','1');
 
 	
-insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','2017-09-09','上午','D000001','19','106.36','ET000001','D000001','1');
-insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','2016-08-06','下午','D000001','18','102.15','ET000001','D000001','1');
-insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','2018-04-09','夜班','D000001','17','107.03','ET000001','D000001','1');
-insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','2017-06-27','上午','D000001','17','103.53','ET000001','D000001','1');
-insert into doctor_schedule_data values ('DS000005','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100005','2017-03-01','下午','D000001','18','122.09','ET000001','D000001','1');
-insert into doctor_schedule_data values ('DS000006','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100006','2016-07-22','夜班','D000002','16','90.91','ET000002','D000002','1');
-insert into doctor_schedule_data values ('DS000007','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100007','2017-05-29','上午','D000002','16','116.65','ET000002','D000002','1');
-insert into doctor_schedule_data values ('DS000008','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100008','2016-07-24','下午','D000002','19','121.11','ET000002','D000002','1');
-insert into doctor_schedule_data values ('DS000009','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100009','2017-01-01','夜班','D000002','17','120.46','ET000002','D000002','1');
-insert into doctor_schedule_data values ('DS000010','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100010','2016-04-28','上午','D000002','15','121.32','ET000002','D000002','1');
-insert into doctor_schedule_data values ('DS000011','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100011','2018-03-28','下午','D000003','18','97.11','ET000003','D000003','1');
-insert into doctor_schedule_data values ('DS000012','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100012','2017-12-10','夜班','D000003','18','92.99','ET000003','D000003','1');
-insert into doctor_schedule_data values ('DS000013','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100013','2017-04-08','上午','D000003','16','98.52','ET000003','D000003','1');
-insert into doctor_schedule_data values ('DS000014','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100014','2019-03-04','下午','D000003','15','93.88','ET000003','D000003','1');
-insert into doctor_schedule_data values ('DS000015','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100015','2017-12-23','夜班','D000003','19','92.50','ET000003','D000003','1');
-insert into doctor_schedule_data values ('DS000016','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100016','2017-08-29','上午','D000004','17','90.43','ET000004','D000004','1');
-insert into doctor_schedule_data values ('DS000017','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100017','2017-06-24','下午','D000004','16','102.31','ET000004','D000004','1');
-insert into doctor_schedule_data values ('DS000018','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100018','2017-03-28','夜班','D000004','18','88.02','ET000004','D000004','1');
-insert into doctor_schedule_data values ('DS000019','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100019','2016-08-31','上午','D000004','16','118.20','ET000004','D000004','1');
-insert into doctor_schedule_data values ('DS000020','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100020','2018-11-06','下午','D000004','18','116.34','ET000004','D000004','1');
-insert into doctor_schedule_data values ('DS000021','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100021','2018-01-21','夜班','D000005','15','112.49','ET000005','D000005','1');
-insert into doctor_schedule_data values ('DS000022','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100022','2018-12-08','上午','D000005','18','99.54','ET000005','D000005','1');
-insert into doctor_schedule_data values ('DS000023','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100023','2017-11-10','下午','D000005','15','110.56','ET000005','D000005','1');
-insert into doctor_schedule_data values ('DS000024','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100024','2018-12-14','夜班','D000005','20','101.71','ET000005','D000005','1');
-insert into doctor_schedule_data values ('DS000025','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100025','2017-11-13','上午','D000005','19','109.51','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','2018-03-21','上午','D000001','15','104.78','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','2017-10-14','下午','D000001','15','115.28','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','2018-03-08','夜班','D000001','19','99.60','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','2018-05-30','上午','D000001','17','111.44','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000005','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100005','2017-06-10','下午','D000001','19','104.39','ET000001','D000001','1');
+insert into doctor_schedule_data values ('DS000006','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100006','2017-01-29','夜班','D000002','17','112.71','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000007','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100007','2018-01-16','上午','D000002','15','107.62','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000008','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100008','2017-08-25','下午','D000002','17','108.43','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000009','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100009','2018-11-17','夜班','D000002','16','117.13','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000010','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100010','2017-04-23','上午','D000002','18','105.12','ET000002','D000002','1');
+insert into doctor_schedule_data values ('DS000011','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100011','2017-10-19','下午','D000003','16','118.88','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000012','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100012','2018-05-01','夜班','D000003','19','89.21','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000013','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100013','2017-05-10','上午','D000003','19','96.91','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000014','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100014','2018-01-30','下午','D000003','19','114.05','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000015','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100015','2016-11-28','夜班','D000003','15','91.40','ET000003','D000003','1');
+insert into doctor_schedule_data values ('DS000016','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100016','2017-06-06','上午','D000004','16','123.86','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000017','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100017','2019-01-01','下午','D000004','19','117.34','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000018','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100018','2018-09-30','夜班','D000004','19','106.43','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000019','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100019','2019-03-04','上午','D000004','16','96.41','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000020','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100020','2017-05-03','下午','D000004','17','98.08','ET000004','D000004','1');
+insert into doctor_schedule_data values ('DS000021','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100021','2016-09-12','夜班','D000005','16','110.44','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000022','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100022','2017-12-19','上午','D000005','17','92.47','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000023','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100023','2018-05-16','下午','D000005','17','94.97','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000024','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100024','2017-06-07','夜班','D000005','19','112.90','ET000005','D000005','1');
+insert into doctor_schedule_data values ('DS000025','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100025','2018-06-23','上午','D000005','17','110.17','ET000005','D000005','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -397,14 +397,14 @@ insert into user_white_list_data values ('UWL000004','13808188512','tester;ios-s
 insert into user_white_list_data values ('UWL000005','clariones','tester;ios-spokesperson0005','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-18 09:03:08','2019-03-11 06:13:30','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-11 01:58:49','2019-03-06 05:37:41','UD000001',NULL,'BLOCKED0002','1');
-insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-02-25 10:30:53','2019-03-07 03:55:03','UD000001',NULL,'BLOCKED0003','1');
-insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-02-26 16:03:26','2019-02-24 14:00:02','UD000001',NULL,'BLOCKED0004','1');
-insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-03-10 06:00:40','2019-03-05 18:37:24','UD000001',NULL,'BLOCKED0005','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-03-01 04:52:49','2019-03-01 19:34:47','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-02-28 18:28:46','2019-02-24 18:02:08','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-03-08 03:38:30','2019-02-20 15:25:36','UD000001',NULL,'BLOCKED0003','1');
+insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-02-21 04:46:48','2019-03-04 21:09:19','UD000001',NULL,'BLOCKED0004','1');
+insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-03-03 13:16:29','2019-03-11 19:48:54','UD000001',NULL,'BLOCKED0005','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-03-03 14:51:01','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-20 02:59:52','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -688,31 +688,31 @@ insert into object_access_data values ('OA000124','控制访问列表10124','Acc
 insert into object_access_data values ('OA000125','控制访问列表10125','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000025','1');
 
 	
-insert into login_history_data values ('LH000001','2019-02-18 01:36:04','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-03-06 04:19:01','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-02-24 07:21:25','192.168.1.1','登陆成功0003','SU000001','1');
-insert into login_history_data values ('LH000004','2019-02-26 12:45:31','192.168.1.2','登陆成功0004','SU000001','1');
-insert into login_history_data values ('LH000005','2019-03-04 00:02:55','192.168.1.1','登陆成功0005','SU000001','1');
-insert into login_history_data values ('LH000006','2019-02-26 19:46:04','192.168.1.2','登陆成功0006','SU000002','1');
-insert into login_history_data values ('LH000007','2019-02-21 23:12:17','192.168.1.1','登陆成功0007','SU000002','1');
-insert into login_history_data values ('LH000008','2019-03-02 14:41:27','192.168.1.2','登陆成功0008','SU000002','1');
-insert into login_history_data values ('LH000009','2019-03-04 20:13:54','192.168.1.1','登陆成功0009','SU000002','1');
-insert into login_history_data values ('LH000010','2019-03-06 18:28:20','192.168.1.2','登陆成功0010','SU000002','1');
-insert into login_history_data values ('LH000011','2019-02-28 20:40:55','192.168.1.1','登陆成功0011','SU000003','1');
-insert into login_history_data values ('LH000012','2019-02-25 10:12:27','192.168.1.2','登陆成功0012','SU000003','1');
-insert into login_history_data values ('LH000013','2019-03-02 16:29:31','192.168.1.1','登陆成功0013','SU000003','1');
-insert into login_history_data values ('LH000014','2019-03-10 05:54:01','192.168.1.2','登陆成功0014','SU000003','1');
-insert into login_history_data values ('LH000015','2019-02-26 02:55:32','192.168.1.1','登陆成功0015','SU000003','1');
-insert into login_history_data values ('LH000016','2019-02-22 23:53:28','192.168.1.2','登陆成功0016','SU000004','1');
-insert into login_history_data values ('LH000017','2019-03-04 01:31:07','192.168.1.1','登陆成功0017','SU000004','1');
-insert into login_history_data values ('LH000018','2019-02-26 02:32:46','192.168.1.2','登陆成功0018','SU000004','1');
-insert into login_history_data values ('LH000019','2019-03-03 15:15:36','192.168.1.1','登陆成功0019','SU000004','1');
-insert into login_history_data values ('LH000020','2019-03-11 13:04:19','192.168.1.2','登陆成功0020','SU000004','1');
-insert into login_history_data values ('LH000021','2019-02-22 04:43:24','192.168.1.1','登陆成功0021','SU000005','1');
-insert into login_history_data values ('LH000022','2019-02-25 10:20:55','192.168.1.2','登陆成功0022','SU000005','1');
-insert into login_history_data values ('LH000023','2019-03-07 10:06:50','192.168.1.1','登陆成功0023','SU000005','1');
-insert into login_history_data values ('LH000024','2019-02-26 03:34:34','192.168.1.2','登陆成功0024','SU000005','1');
-insert into login_history_data values ('LH000025','2019-02-20 10:10:08','192.168.1.1','登陆成功0025','SU000005','1');
+insert into login_history_data values ('LH000001','2019-03-03 03:30:54','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-03-02 16:12:17','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-02-22 11:32:59','192.168.1.1','登陆成功0003','SU000001','1');
+insert into login_history_data values ('LH000004','2019-03-08 11:18:23','192.168.1.2','登陆成功0004','SU000001','1');
+insert into login_history_data values ('LH000005','2019-03-05 21:13:48','192.168.1.1','登陆成功0005','SU000001','1');
+insert into login_history_data values ('LH000006','2019-03-02 06:30:42','192.168.1.2','登陆成功0006','SU000002','1');
+insert into login_history_data values ('LH000007','2019-03-09 05:02:19','192.168.1.1','登陆成功0007','SU000002','1');
+insert into login_history_data values ('LH000008','2019-03-09 05:03:39','192.168.1.2','登陆成功0008','SU000002','1');
+insert into login_history_data values ('LH000009','2019-03-02 03:56:29','192.168.1.1','登陆成功0009','SU000002','1');
+insert into login_history_data values ('LH000010','2019-03-04 06:03:33','192.168.1.2','登陆成功0010','SU000002','1');
+insert into login_history_data values ('LH000011','2019-03-02 10:05:46','192.168.1.1','登陆成功0011','SU000003','1');
+insert into login_history_data values ('LH000012','2019-03-10 08:32:29','192.168.1.2','登陆成功0012','SU000003','1');
+insert into login_history_data values ('LH000013','2019-03-10 18:52:46','192.168.1.1','登陆成功0013','SU000003','1');
+insert into login_history_data values ('LH000014','2019-03-03 08:56:56','192.168.1.2','登陆成功0014','SU000003','1');
+insert into login_history_data values ('LH000015','2019-02-26 16:48:07','192.168.1.1','登陆成功0015','SU000003','1');
+insert into login_history_data values ('LH000016','2019-03-11 05:26:11','192.168.1.2','登陆成功0016','SU000004','1');
+insert into login_history_data values ('LH000017','2019-02-21 21:24:54','192.168.1.1','登陆成功0017','SU000004','1');
+insert into login_history_data values ('LH000018','2019-03-08 14:58:06','192.168.1.2','登陆成功0018','SU000004','1');
+insert into login_history_data values ('LH000019','2019-02-21 00:51:41','192.168.1.1','登陆成功0019','SU000004','1');
+insert into login_history_data values ('LH000020','2019-02-20 09:49:27','192.168.1.2','登陆成功0020','SU000004','1');
+insert into login_history_data values ('LH000021','2019-02-19 07:14:44','192.168.1.1','登陆成功0021','SU000005','1');
+insert into login_history_data values ('LH000022','2019-03-01 09:44:04','192.168.1.2','登陆成功0022','SU000005','1');
+insert into login_history_data values ('LH000023','2019-03-10 15:25:43','192.168.1.1','登陆成功0023','SU000005','1');
+insert into login_history_data values ('LH000024','2019-03-11 15:02:23','192.168.1.2','登陆成功0024','SU000005','1');
+insert into login_history_data values ('LH000025','2019-03-11 04:35:20','192.168.1.1','登陆成功0025','SU000005','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');
@@ -900,13 +900,13 @@ delete from user_app_data;
 */
 
 insert into sec_user_data values('SU000001','User000001','13900000001','1000001@qq.com','258D9BB89BBC1F2A6CDDD3A4CB300E6CD9B83F3FC9984619DF1A59F6051F1F44','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
-insert into user_app_data values('UA000001','Hospital','SU000001','hospital',1,'MXWR','Hospital','H000001','/link/to/app','1'); -- REFER COUNT: 4
+insert into user_app_data values('UA000001','医院','SU000001','hospital',1,'MXWR','Hospital','H000001','/link/to/app','1'); -- REFER COUNT: 4
 insert into user_app_data values('UA000002','My Account','SU000001','lock',1,'MXWR','SecUser','SU000001','/link/to/app','1'); -- REFER COUNT: 4
 insert into sec_user_data values('SU000002','User000002','13900000002','1000002@qq.com','7FEABCC19D638787655F9FFC2C22755D5771184D85D000147D643D22F6617F7B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
-insert into user_app_data values('UA000003','User Domain','SU000002','user',1,'MXWR','UserDomain','UD000001','/link/to/app','1'); -- REFER COUNT: 2
+insert into user_app_data values('UA000003','用户域','SU000002','user',1,'MXWR','UserDomain','UD000001','/link/to/app','1'); -- REFER COUNT: 2
 insert into user_app_data values('UA000004','My Account','SU000002','lock',1,'MXWR','SecUser','SU000002','/link/to/app','1'); -- REFER COUNT: 2
 insert into sec_user_data values('SU000003','User000003','13900000003','1000003@qq.com','8169C17063461B0B0CC210CE5EF682E9517A19170F7DCA3C76170229D765DE7A','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
-insert into user_app_data values('UA000005','Sec User Blocking','SU000003','user',1,'MXWR','SecUserBlocking','SUB000001','/link/to/app','1'); -- REFER COUNT: 1
+insert into user_app_data values('UA000005','用户屏蔽','SU000003','user',1,'MXWR','SecUserBlocking','SUB000001','/link/to/app','1'); -- REFER COUNT: 1
 insert into user_app_data values('UA000006','My Account','SU000003','lock',1,'MXWR','SecUser','SU000003','/link/to/app','1'); -- REFER COUNT: 1
 
 
@@ -915,9 +915,9 @@ insert into user_app_data values('UA000006','My Account','SU000003','lock',1,'MX
 /*
 | 角色        | 用户名           | 密码         |
 | ------------- |:-------------:|:-------------------:|
-|Hospital|13900000001|DoubleChain!y1|
-|User Domain|13900000002|DoubleChain!y1|
-|Sec User Blocking|13900000003|DoubleChain!y1|
+|医院|13900000001|DoubleChain!y1|
+|用户域|13900000002|DoubleChain!y1|
+|用户屏蔽|13900000003|DoubleChain!y1|
 
 
 */
@@ -925,7 +925,7 @@ insert into user_app_data values('UA000006','My Account','SU000003','lock',1,'MX
 
 
 /* start with data patch */
-/* The sql file is not found from: /home/philip/resin-3.1.12/webapps/sky/data-patch/his.sql */
+/* The sql file is not found from: /Users/Philip/githome/web-code-generator/sky/data-patch/his.sql */
 
 
 /*

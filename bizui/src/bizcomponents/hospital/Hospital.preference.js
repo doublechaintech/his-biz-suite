@@ -260,10 +260,10 @@ const internalSummaryOf = (hospital,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{hospital.id}</Description> 
-<Description term="Name">{hospital.name}</Description> 
-<Description term="Address">{hospital.address}</Description> 
-<Description term="Telephone">{hospital.telephone}</Description> 
+<Description term="ID">{hospital.id}</Description> 
+<Description term="名称">{hospital.name}</Description> 
+<Description term="地址">{hospital.address}</Description> 
+<Description term="电话">{hospital.telephone}</Description> 
 	
         {buildTransferModal(hospital,targetComponent)}
       </DescriptionList>
@@ -302,7 +302,7 @@ class HospitalPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName, expenseTypeCount, expenseItemCount, doctorCount, departmentCount } = this.props.hospital
-    const cardsData = {cardsName:"Hospital",cardsFor: "hospital",cardsSource: this.props.hospital,
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: this.props.hospital,
   		subItems: [
     
       	],

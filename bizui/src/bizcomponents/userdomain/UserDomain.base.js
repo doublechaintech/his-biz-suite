@@ -6,9 +6,9 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"User Domain", menuFor: "userDomain",
+const menuData = {menuName:"用户域", menuFor: "userDomain",
   		subItems: [
-  {name: 'secUserList', displayName:'Sec User', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'secUserList', displayName:'安全用户', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -70,14 +70,14 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'userDomain') },
-  { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'userDomain') },
+  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record) },
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  name: 'Name',
+  id: 'ID',
+  name: '名称',
 
 }
 

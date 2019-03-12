@@ -18,10 +18,10 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-  scheduleDate: '2017-11-10',
+  scheduleDate: '2016-12-25',
   period: '上午',
-  available: '19',
-  price: '92.48',
+  available: '17',
+  price: '99.49',
   doctorId: 'D000001',
   expenseTypeId: 'ET000001',
   departmentId: 'D000001',
@@ -213,7 +213,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Name" />
+                    <Input placeholder="请输入名称" />
                   )}
                 </Form.Item>
               </Col>
@@ -223,7 +223,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('scheduleDate', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker format="YYYY-MM-DD" placeholder="请输入Schedule Date" />
+                    <DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />
                   )}
                 </Form.Item>
               </Col>
@@ -233,7 +233,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('period', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Period" />
+                    <Input placeholder="请输入期" />
                   )}
                 </Form.Item>
               </Col>
@@ -243,7 +243,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('available', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Available" />
+                    <Input placeholder="请输入可用" />
                   )}
                 </Form.Item>
               </Col>
@@ -253,7 +253,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('price', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Price" />
+                    <Input placeholder="请输入价格" />
                   )}
                 </Form.Item>
               </Col>

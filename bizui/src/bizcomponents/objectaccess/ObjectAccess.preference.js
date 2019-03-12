@@ -260,21 +260,21 @@ const internalSummaryOf = (objectAccess,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{objectAccess.id}</Description> 
-<Description term="Name">{objectAccess.name}</Description> 
-<Description term="Object Type">{objectAccess.objectType}</Description> 
-<Description term="List1">{objectAccess.list1}</Description> 
-<Description term="List2">{objectAccess.list2}</Description> 
-<Description term="List3">{objectAccess.list3}</Description> 
-<Description term="List4">{objectAccess.list4}</Description> 
-<Description term="List5">{objectAccess.list5}</Description> 
-<Description term="List6">{objectAccess.list6}</Description> 
-<Description term="List7">{objectAccess.list7}</Description> 
-<Description term="List8">{objectAccess.list8}</Description> 
-<Description term="List9">{objectAccess.list9}</Description> 
-<Description term="App">{objectAccess.app==null?appLocaleName(userContext,"NotAssigned"):objectAccess.app.displayName}
+<Description term="ID">{objectAccess.id}</Description> 
+<Description term="名称">{objectAccess.name}</Description> 
+<Description term="访问对象类型">{objectAccess.objectType}</Description> 
+<Description term="列表1">{objectAccess.list1}</Description> 
+<Description term="列表2">{objectAccess.list2}</Description> 
+<Description term="列表3">{objectAccess.list3}</Description> 
+<Description term="列表4">{objectAccess.list4}</Description> 
+<Description term="列表5">{objectAccess.list5}</Description> 
+<Description term="列表6">{objectAccess.list6}</Description> 
+<Description term="列表7">{objectAccess.list7}</Description> 
+<Description term="列表8">{objectAccess.list8}</Description> 
+<Description term="列表9">{objectAccess.list9}</Description> 
+<Description term="应用程序">{objectAccess.app==null?appLocaleName(userContext,"NotAssigned"):objectAccess.app.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"App","userApp","requestCandidateApp",
+  showTransferModel(targetComponent,"应用程序","userApp","requestCandidateApp",
 	      "transferToAnotherApp","anotherAppId",objectAccess.app?objectAccess.app.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
@@ -316,7 +316,7 @@ class ObjectAccessPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName,  } = this.props.objectAccess
-    const cardsData = {cardsName:"Object Access",cardsFor: "objectAccess",cardsSource: this.props.objectAccess,
+    const cardsData = {cardsName:"对象访问",cardsFor: "objectAccess",cardsSource: this.props.objectAccess,
   		subItems: [
     
       	],

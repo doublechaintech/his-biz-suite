@@ -79,17 +79,17 @@ const internalSummaryOf = (doctorAssignment,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{doctorAssignment.id}</Description> 
-<Description term="Name">{doctorAssignment.name}</Description> 
-<Description term="Doctor">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
+<Description term="ID">{doctorAssignment.id}</Description> 
+<Description term="名称">{doctorAssignment.name}</Description> 
+<Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Doctor","doctor",DoctorAssignmentService.requestCandidateDoctor,
+  showTransferModel(targetComponent,"医生","doctor",DoctorAssignmentService.requestCandidateDoctor,
 	      DoctorAssignmentService.transferToAnotherDoctor,"anotherDoctorId",doctorAssignment.doctor?doctorAssignment.doctor.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="Department">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
+<Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Department","department",DoctorAssignmentService.requestCandidateDepartment,
+  showTransferModel(targetComponent,"部门","department",DoctorAssignmentService.requestCandidateDepartment,
 	      DoctorAssignmentService.transferToAnotherDepartment,"anotherDepartmentId",doctorAssignment.department?doctorAssignment.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
@@ -129,7 +129,7 @@ class DoctorAssignmentDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"Doctor Assignment",cardsFor: "doctorAssignment",
+    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",
     	cardsSource: this.props.doctorAssignment,returnURL,displayName,
   		subItems: [
     

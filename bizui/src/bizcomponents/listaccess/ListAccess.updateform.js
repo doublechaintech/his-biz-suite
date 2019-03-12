@@ -261,7 +261,7 @@ class ListAccessUpdateForm extends Component {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Id" disabled/>
+                    <Input placeholder="请输入ID" disabled/>
                     
                   )}
                 </Form.Item>
@@ -273,7 +273,7 @@ class ListAccessUpdateForm extends Component {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Name" />
+                    <Input placeholder="请输入名称" />
                     
                   )}
                 </Form.Item>
@@ -285,7 +285,7 @@ class ListAccessUpdateForm extends Component {
                     initialValue: selectedRow.internalName,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Internal Name" />
+                    <Input placeholder="请输入内部名称" />
                     
                   )}
                 </Form.Item>

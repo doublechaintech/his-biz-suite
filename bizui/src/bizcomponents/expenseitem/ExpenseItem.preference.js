@@ -260,12 +260,12 @@ const internalSummaryOf = (expenseItem,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{expenseItem.id}</Description> 
-<Description term="Name">{expenseItem.name}</Description> 
-<Description term="Price">{expenseItem.price}</Description> 
-<Description term="Expense Type">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):expenseItem.expenseType.displayName}
+<Description term="ID">{expenseItem.id}</Description> 
+<Description term="名称">{expenseItem.name}</Description> 
+<Description term="价格">{expenseItem.price}</Description> 
+<Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):expenseItem.expenseType.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Expense Type","expenseType","requestCandidateExpenseType",
+  showTransferModel(targetComponent,"费用类型","expenseType","requestCandidateExpenseType",
 	      "transferToAnotherExpenseType","anotherExpenseTypeId",expenseItem.expenseType?expenseItem.expenseType.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
@@ -307,7 +307,7 @@ class ExpenseItemPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName,  } = this.props.expenseItem
-    const cardsData = {cardsName:"Expense Item",cardsFor: "expenseItem",cardsSource: this.props.expenseItem,
+    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",cardsSource: this.props.expenseItem,
   		subItems: [
     
       	],

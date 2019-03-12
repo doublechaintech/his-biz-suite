@@ -18,7 +18,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '专家诊疗费',
-  price: '92.13',
+  price: '80.65',
   expenseTypeId: 'ET000001',
   hospitalId: 'H000001',
 }
@@ -209,7 +209,7 @@ class ExpenseItemCreateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Name" />
+                    <Input placeholder="请输入名称" />
                   )}
                 </Form.Item>
               </Col>
@@ -219,7 +219,7 @@ class ExpenseItemCreateForm extends Component {
                   {getFieldDecorator('price', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Price" />
+                    <Input placeholder="请输入价格" />
                   )}
                 </Form.Item>
               </Col>

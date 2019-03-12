@@ -261,7 +261,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Id" disabled/>
+                    <Input placeholder="请输入ID" disabled/>
                     
                   )}
                 </Form.Item>
@@ -273,7 +273,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Name" />
+                    <Input placeholder="请输入名称" />
                     
                   )}
                 </Form.Item>
@@ -285,7 +285,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.helperChars,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Helper Chars" />
+                    <Input placeholder="请输入辅助识字课" />
                     
                   )}
                 </Form.Item>
@@ -297,7 +297,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.status,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Status" />
+                    <Input placeholder="请输入状态" />
                     
                   )}
                 </Form.Item>
@@ -311,7 +311,7 @@ class ExpenseTypeUpdateForm extends Component {
         
         
 
-        <Card title="Description" className={styles.card} bordered={false}>
+        <Card title="描述" className={styles.card} bordered={false}>
           <Form >
             <Row gutter={16}>
               <Col lg={24} md={24} sm={24}>

@@ -36,7 +36,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkNameOfHospital(String name)
 	{
 		
-	 	checkStringLengthRange(name,2, 16,NAME_OF_HOSPITAL ); 		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_HOSPITAL ); 		
 		
 		return this;
 	}	 			

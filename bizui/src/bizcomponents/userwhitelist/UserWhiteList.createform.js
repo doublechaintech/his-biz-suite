@@ -208,7 +208,7 @@ class UserWhiteListCreateForm extends Component {
                   {getFieldDecorator('userIdentity', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入User Identity" />
+                    <Input placeholder="请输入用户身份" />
                   )}
                 </Form.Item>
               </Col>
@@ -218,7 +218,7 @@ class UserWhiteListCreateForm extends Component {
                   {getFieldDecorator('userSpecialFunctions', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入User Special Functions" />
+                    <Input placeholder="请输入用户特殊功能" />
                   )}
                 </Form.Item>
               </Col>

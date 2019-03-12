@@ -6,9 +6,9 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Sec User Blocking", menuFor: "secUserBlocking",
+const menuData = {menuName:"用户屏蔽", menuFor: "secUserBlocking",
   		subItems: [
-  {name: 'secUserList', displayName:'Sec User', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'secUserList', displayName:'安全用户', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -70,18 +70,18 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'secUserBlocking') },
-  { title: 'Who', debugtype: 'string', dataIndex: 'who', width: '17',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Block Time', dataIndex: 'blockTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-  { title: 'Comments', debugtype: 'string', dataIndex: 'comments', width: '28',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'secUserBlocking') },
+  { title: '谁', debugtype: 'string', dataIndex: 'who', width: '17',render: (text, record)=>renderTextCell(text,record) },
+  { title: '块时间', dataIndex: 'blockTime', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: '评论', debugtype: 'string', dataIndex: 'comments', width: '28',render: (text, record)=>renderTextCell(text,record) },
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  who: 'Who',
-  blockTime: 'Block Time',
-  comments: 'Comments',
+  id: 'ID',
+  who: '谁',
+  blockTime: '块时间',
+  comments: '评论',
 
 }
 

@@ -6,7 +6,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Doctor Schedule", menuFor: "doctorSchedule",
+const menuData = {menuName:"医生安排", menuFor: "doctorSchedule",
   		subItems: [
   
   		],
@@ -69,28 +69,28 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '33',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Schedule Date', dataIndex: 'scheduleDate', render: (text, record) =>renderDateCell(text,record) },
-  { title: 'Period', debugtype: 'string', dataIndex: 'period', width: '6',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Doctor', dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Available', debugtype: 'int', dataIndex: 'available', width: '6',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Price', dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record) },
-  { title: 'Expense Type', dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Department', dataIndex: 'department', render: (text, record) => renderReferenceCell(text, record)},
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '33',render: (text, record)=>renderTextCell(text,record) },
+  { title: '安排日期', dataIndex: 'scheduleDate', render: (text, record) =>renderDateCell(text,record) },
+  { title: '期', debugtype: 'string', dataIndex: 'period', width: '6',render: (text, record)=>renderTextCell(text,record) },
+  { title: '医生', dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '可用', debugtype: 'int', dataIndex: 'available', width: '6',render: (text, record)=>renderTextCell(text,record) },
+  { title: '价格', dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record) },
+  { title: '费用类型', dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '部门', dataIndex: 'department', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  name: 'Name',
-  scheduleDate: 'Schedule Date',
-  period: 'Period',
-  doctor: 'Doctor',
-  available: 'Available',
-  price: 'Price',
-  expenseType: 'Expense Type',
-  department: 'Department',
+  id: 'ID',
+  name: '名称',
+  scheduleDate: '安排日期',
+  period: '期',
+  doctor: '医生',
+  available: '可用',
+  price: '价格',
+  expenseType: '费用类型',
+  department: '部门',
 
 }
 

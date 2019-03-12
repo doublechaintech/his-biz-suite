@@ -79,10 +79,10 @@ const internalSummaryOf = (hospital,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{hospital.id}</Description> 
-<Description term="Name">{hospital.name}</Description> 
-<Description term="Address">{hospital.address}</Description> 
-<Description term="Telephone">{hospital.telephone}</Description> 
+<Description term="ID">{hospital.id}</Description> 
+<Description term="名称">{hospital.name}</Description> 
+<Description term="地址">{hospital.address}</Description> 
+<Description term="电话">{hospital.telephone}</Description> 
 	
         {buildTransferModal(hospital,targetComponent)}
       </DescriptionList>
@@ -119,13 +119,13 @@ class HospitalDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"Hospital",cardsFor: "hospital",
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",
     	cardsSource: this.props.hospital,returnURL,displayName,
   		subItems: [
-{name: 'expenseTypeList', displayName:'Expense Type',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', metaInfo: expenseTypeListMetaInfo},
-{name: 'expenseItemList', displayName:'Expense Item',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
-{name: 'doctorList', displayName:'Doctor',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo},
-{name: 'departmentList', displayName:'Department',type:'department',count:departmentCount,addFunction: true, role: 'department', metaInfo: departmentListMetaInfo},
+{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', metaInfo: expenseTypeListMetaInfo},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
+{name: 'doctorList', displayName:'医生',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo},
+{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', metaInfo: departmentListMetaInfo},
     
       	],
   	};

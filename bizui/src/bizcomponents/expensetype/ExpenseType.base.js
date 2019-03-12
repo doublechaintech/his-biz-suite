@@ -6,10 +6,10 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Expense Type", menuFor: "expenseType",
+const menuData = {menuName:"费用类型", menuFor: "expenseType",
   		subItems: [
-  {name: 'expenseItemList', displayName:'Expense Item', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  {name: 'doctorScheduleList', displayName:'Doctor Schedule', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'expenseItemList', displayName:'费用项目', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'doctorScheduleList', displayName:'医生安排', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -71,22 +71,22 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'expenseType') },
-  { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Helper Chars', debugtype: 'string', dataIndex: 'helperChars', width: '7',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Status', debugtype: 'string', dataIndex: 'status', width: '6',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Hospital', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Description', debugtype: 'string_longtext', dataIndex: 'description', width: '10',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'expenseType') },
+  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record) },
+  { title: '辅助识字课', debugtype: 'string', dataIndex: 'helperChars', width: '7',render: (text, record)=>renderTextCell(text,record) },
+  { title: '状态', debugtype: 'string', dataIndex: 'status', width: '6',render: (text, record)=>renderTextCell(text,record) },
+  { title: '医院', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '描述', debugtype: 'string_longtext', dataIndex: 'description', width: '10',render: (text, record)=>renderTextCell(text,record) },
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  name: 'Name',
-  helperChars: 'Helper Chars',
-  status: 'Status',
-  hospital: 'Hospital',
-  description: 'Description',
+  id: 'ID',
+  name: '名称',
+  helperChars: '辅助识字课',
+  status: '状态',
+  hospital: '医院',
+  description: '描述',
 
 }
 

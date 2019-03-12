@@ -55,7 +55,7 @@ const internalImageListOf = (userApp) =>{
 const internalSettingListOf = (userApp) =>{
 	const userContext = null
 	const optionList = [ 
-	  {"title":'Full Access',"value":userApp.fullAccess,"parameterName":"fullAccess"},
+	  {"title":'完全访问',"value":userApp.fullAccess,"parameterName":"fullAccess"},
 ]
 	
   if(optionList.length===0){
@@ -261,19 +261,19 @@ const internalSummaryOf = (userApp,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{userApp.id}</Description> 
-<Description term="Title">{userApp.title}</Description> 
-<Description term="Sec User">{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):userApp.secUser.displayName}
+<Description term="ID">{userApp.id}</Description> 
+<Description term="标题">{userApp.title}</Description> 
+<Description term="安全用户">{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):userApp.secUser.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Sec User","secUser","requestCandidateSecUser",
+  showTransferModel(targetComponent,"安全用户","secUser","requestCandidateSecUser",
 	      "transferToAnotherSecUser","anotherSecUserId",userApp.secUser?userApp.secUser.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="App Icon">{userApp.appIcon}</Description> 
-<Description term="Permission">{userApp.permission}</Description> 
-<Description term="Object Type">{userApp.objectType}</Description> 
-<Description term="Object Id">{userApp.objectId}</Description> 
-<Description term="Location">{userApp.location}</Description> 
+<Description term="应用程序图标">{userApp.appIcon}</Description> 
+<Description term="许可">{userApp.permission}</Description> 
+<Description term="访问对象类型">{userApp.objectType}</Description> 
+<Description term="对象ID">{userApp.objectId}</Description> 
+<Description term="位置">{userApp.location}</Description> 
 	
         {buildTransferModal(userApp,targetComponent)}
       </DescriptionList>
@@ -312,7 +312,7 @@ class UserAppPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName, listAccessCount, objectAccessCount } = this.props.userApp
-    const cardsData = {cardsName:"User App",cardsFor: "userApp",cardsSource: this.props.userApp,
+    const cardsData = {cardsName:"用户应用程序",cardsFor: "userApp",cardsSource: this.props.userApp,
   		subItems: [
     
       	],

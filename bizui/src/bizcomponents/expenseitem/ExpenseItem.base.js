@@ -6,7 +6,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Expense Item", menuFor: "expenseItem",
+const menuData = {menuName:"费用项目", menuFor: "expenseItem",
   		subItems: [
   
   		],
@@ -69,20 +69,20 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '9',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Price', dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record) },
-  { title: 'Expense Type', dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Hospital', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '9',render: (text, record)=>renderTextCell(text,record) },
+  { title: '价格', dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record) },
+  { title: '费用类型', dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '医院', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  name: 'Name',
-  price: 'Price',
-  expenseType: 'Expense Type',
-  hospital: 'Hospital',
+  id: 'ID',
+  name: '名称',
+  price: '价格',
+  expenseType: '费用类型',
+  hospital: '医院',
 
 }
 

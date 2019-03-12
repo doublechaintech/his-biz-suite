@@ -162,7 +162,7 @@ class DepartmentBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "Doctor Assignment",
+      name: "医生的任务",
       role: "doctorAssignment",
       data: state._department.doctorAssignmentList,
       metaInfo: state._department.doctorAssignmentListMetaInfo,
@@ -211,7 +211,7 @@ class DepartmentBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "Doctor Schedule",
+      name: "医生安排",
       role: "doctorSchedule",
       data: state._department.doctorScheduleList,
       metaInfo: state._department.doctorScheduleListMetaInfo,

@@ -260,17 +260,17 @@ const internalSummaryOf = (doctorAssignment,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{doctorAssignment.id}</Description> 
-<Description term="Name">{doctorAssignment.name}</Description> 
-<Description term="Doctor">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
+<Description term="ID">{doctorAssignment.id}</Description> 
+<Description term="名称">{doctorAssignment.name}</Description> 
+<Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Doctor","doctor","requestCandidateDoctor",
+  showTransferModel(targetComponent,"医生","doctor","requestCandidateDoctor",
 	      "transferToAnotherDoctor","anotherDoctorId",doctorAssignment.doctor?doctorAssignment.doctor.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="Department">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
+<Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
  <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"Department","department","requestCandidateDepartment",
+  showTransferModel(targetComponent,"部门","department","requestCandidateDepartment",
 	      "transferToAnotherDepartment","anotherDepartmentId",doctorAssignment.department?doctorAssignment.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
@@ -312,7 +312,7 @@ class DoctorAssignmentPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName,  } = this.props.doctorAssignment
-    const cardsData = {cardsName:"Doctor Assignment",cardsFor: "doctorAssignment",cardsSource: this.props.doctorAssignment,
+    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: this.props.doctorAssignment,
   		subItems: [
     
       	],

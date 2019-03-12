@@ -260,8 +260,8 @@ const internalSummaryOf = (doctor,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="Id">{doctor.id}</Description> 
-<Description term="Name">{doctor.name}</Description> 
+<Description term="ID">{doctor.id}</Description> 
+<Description term="名称">{doctor.name}</Description> 
 	
         {buildTransferModal(doctor,targetComponent)}
       </DescriptionList>
@@ -300,7 +300,7 @@ class DoctorPreference extends Component {
   render() {
     // eslint-disable-next-line max-len
     const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = this.props.doctor
-    const cardsData = {cardsName:"Doctor",cardsFor: "doctor",cardsSource: this.props.doctor,
+    const cardsData = {cardsName:"医生",cardsFor: "doctor",cardsSource: this.props.doctor,
   		subItems: [
     
       	],

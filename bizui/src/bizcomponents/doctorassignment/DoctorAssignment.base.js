@@ -6,7 +6,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Doctor Assignment", menuFor: "doctorAssignment",
+const menuData = {menuName:"医生的任务", menuFor: "doctorAssignment",
   		subItems: [
   
   		],
@@ -69,18 +69,18 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Name', debugtype: 'string', dataIndex: 'name', width: '14',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Doctor', dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Department', dataIndex: 'department', render: (text, record) => renderReferenceCell(text, record)},
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '14',render: (text, record)=>renderTextCell(text,record) },
+  { title: '医生', dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '部门', dataIndex: 'department', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  name: 'Name',
-  doctor: 'Doctor',
-  department: 'Department',
+  id: 'ID',
+  name: '名称',
+  doctor: '医生',
+  department: '部门',
 
 }
 

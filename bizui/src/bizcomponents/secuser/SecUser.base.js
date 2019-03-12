@@ -6,10 +6,10 @@ import appLocaleName from '../../common/Locale.tool'
 
 
 
-const menuData = {menuName:"Sec User", menuFor: "secUser",
+const menuData = {menuName:"安全用户", menuFor: "secUser",
   		subItems: [
-  {name: 'userAppList', displayName:'User App', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  {name: 'loginHistoryList', displayName:'Login History', icon:'history',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'userAppList', displayName:'用户应用程序', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'loginHistoryList', displayName:'登录历史', icon:'history',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -71,32 +71,32 @@ const renderReferenceCell=(value, record)=>{
 }
 
 const displayColumns = [
-  { title: 'Id', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'secUser') },
-  { title: 'Login', debugtype: 'string', dataIndex: 'login', width: '9',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Mobile', debugtype: 'string_china_mobile_phone', dataIndex: 'mobile', width: '15',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Email', debugtype: 'string', dataIndex: 'email', width: '23',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Pwd', debugtype: 'string_password', dataIndex: 'pwd', width: '11',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Verification Code', debugtype: 'int', dataIndex: 'verificationCode', width: '11',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'Verification Code Expire', dataIndex: 'verificationCodeExpire', render: (text, record) =>renderDateTimeCell(text,record)  },
-  { title: 'Last Login Time', dataIndex: 'lastLoginTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-  { title: 'Domain', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Blocking', dataIndex: 'blocking', render: (text, record) => renderReferenceCell(text, record)},
-  { title: 'Current Status', debugtype: 'string', dataIndex: 'currentStatus', width: '11',render: (text, record)=>renderTextCell(text,record) },
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'secUser') },
+  { title: '登录', debugtype: 'string', dataIndex: 'login', width: '9',render: (text, record)=>renderTextCell(text,record) },
+  { title: '手机号码', debugtype: 'string_china_mobile_phone', dataIndex: 'mobile', width: '15',render: (text, record)=>renderTextCell(text,record) },
+  { title: '电子邮件', debugtype: 'string', dataIndex: 'email', width: '23',render: (text, record)=>renderTextCell(text,record) },
+  { title: '密码', debugtype: 'string_password', dataIndex: 'pwd', width: '11',render: (text, record)=>renderTextCell(text,record) },
+  { title: '验证码', debugtype: 'int', dataIndex: 'verificationCode', width: '11',render: (text, record)=>renderTextCell(text,record) },
+  { title: '验证码过期', dataIndex: 'verificationCodeExpire', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: '最后登录时间', dataIndex: 'lastLoginTime', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: '域', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '屏蔽', dataIndex: 'blocking', render: (text, record) => renderReferenceCell(text, record)},
+  { title: '当前状态', debugtype: 'string', dataIndex: 'currentStatus', width: '11',render: (text, record)=>renderTextCell(text,record) },
 
 ]
 
 const fieldLabels = {
-  id: 'Id',
-  login: 'Login',
-  mobile: 'Mobile',
-  email: 'Email',
-  pwd: 'Pwd',
-  verificationCode: 'Verification Code',
-  verificationCodeExpire: 'Verification Code Expire',
-  lastLoginTime: 'Last Login Time',
-  domain: 'Domain',
-  blocking: 'Blocking',
-  currentStatus: 'Current Status',
+  id: 'ID',
+  login: '登录',
+  mobile: '手机号码',
+  email: '电子邮件',
+  pwd: '密码',
+  verificationCode: '验证码',
+  verificationCodeExpire: '验证码过期',
+  lastLoginTime: '最后登录时间',
+  domain: '域',
+  blocking: '屏蔽',
+  currentStatus: '当前状态',
 
 }
 

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.math.BigDecimal;
 import com.doublechaintech.his.BaseRowMapper;
-import com.doublechaintech.his.platform.Platform;
+import com.doublechaintech.his.hospital.Hospital;
 
 public class DoctorMapper extends BaseRowMapper<Doctor>{
 	
@@ -14,7 +14,9 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 		 		
  		setId(doctor, rs, rowNumber); 		
  		setName(doctor, rs, rowNumber); 		
- 		setPlatform(doctor, rs, rowNumber); 		
+ 		setShotImage(doctor, rs, rowNumber); 		
+ 		setHospital(doctor, rs, rowNumber); 		
+ 		setUpdateTime(doctor, rs, rowNumber); 		
  		setVersion(doctor, rs, rowNumber);
 
 		return doctor;
@@ -47,25 +49,49 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 		
 		doctor.setName(name);
 	}
+		
+	protected void setShotImage(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
+	
+		//there will be issue when the type is double/int/long
+		String shotImage = rs.getString(DoctorTable.COLUMN_SHOT_IMAGE);
+		if(shotImage == null){
+			//do nothing when nothing found in database
+			return;
+		}
+		
+		doctor.setShotImage(shotImage);
+	}
 		 		
- 	protected void setPlatform(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
- 		String platformId = rs.getString(DoctorTable.COLUMN_PLATFORM);
- 		if( platformId == null){
+ 	protected void setHospital(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
+ 		String hospitalId = rs.getString(DoctorTable.COLUMN_HOSPITAL);
+ 		if( hospitalId == null){
  			return;
  		}
- 		if( platformId.isEmpty()){
+ 		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Platform platform = doctor.getPlatform();
- 		if( platform != null ){
+ 		Hospital hospital = doctor.getHospital();
+ 		if( hospital != null ){
  			//if the root object 'doctor' already have the property, just set the id for it;
- 			platform.setId(platformId);
+ 			hospital.setId(hospitalId);
  			
  			return;
  		}
- 		doctor.setPlatform(createEmptyPlatform(platformId));
+ 		doctor.setHospital(createEmptyHospital(hospitalId));
  	}
  	
+	protected void setUpdateTime(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
+	
+		//there will be issue when the type is double/int/long
+		Date updateTime = rs.getTimestamp(DoctorTable.COLUMN_UPDATE_TIME);
+		if(updateTime == null){
+			//do nothing when nothing found in database
+			return;
+		}
+		
+		doctor.setUpdateTime(convertToDateTime(updateTime));
+	}
+		
 	protected void setVersion(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
@@ -80,11 +106,11 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 		
 		
 
- 	protected Platform  createEmptyPlatform(String platformId){
- 		Platform platform = new Platform();
- 		platform.setId(platformId);
- 		platform.setVersion(Integer.MAX_VALUE);
- 		return platform;
+ 	protected Hospital  createEmptyHospital(String hospitalId){
+ 		Hospital hospital = new Hospital();
+ 		hospital.setId(hospitalId);
+ 		hospital.setVersion(Integer.MAX_VALUE);
+ 		return hospital;
  	}
  	
 }

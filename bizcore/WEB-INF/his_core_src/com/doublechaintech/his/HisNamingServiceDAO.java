@@ -19,10 +19,14 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 	private static Map<String, String[]>namingTableMap;
 	static {
 		namingTableMap = new HashMap<String, String[]>();
-		namingTableMap.put("Platform", new String[]{"platform_data","name"});
+		namingTableMap.put("Hospital", new String[]{"hospital_data","name"});
+		namingTableMap.put("ExpenseType", new String[]{"expense_type_data","name"});
+		namingTableMap.put("Period", new String[]{"period_data","name"});
+		namingTableMap.put("ExpenseItem", new String[]{"expense_item_data","name"});
 		namingTableMap.put("Doctor", new String[]{"doctor_data","name"});
-		namingTableMap.put("Profile", new String[]{"profile_data","name"});
-		namingTableMap.put("Registration", new String[]{"registration_data","title"});
+		namingTableMap.put("Department", new String[]{"department_data","name"});
+		namingTableMap.put("DoctorAssignment", new String[]{"doctor_assignment_data","name"});
+		namingTableMap.put("DoctorSchedule", new String[]{"doctor_schedule_data","name"});
 		namingTableMap.put("UserDomain", new String[]{"user_domain_data","name"});
 		namingTableMap.put("UserWhiteList", new String[]{"user_white_list_data","user_identity"});
 		namingTableMap.put("SecUser", new String[]{"sec_user_data","login"});

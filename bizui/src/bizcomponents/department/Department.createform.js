@@ -207,7 +207,7 @@ class DepartmentCreateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入Name" />
+                    <Input placeholder="请输入名称" />
                   )}
                 </Form.Item>
               </Col>

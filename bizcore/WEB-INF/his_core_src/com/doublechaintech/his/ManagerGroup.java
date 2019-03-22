@@ -1,13 +1,21 @@
 package com.doublechaintech.his;
 
 
-import com.doublechaintech.his.platform.PlatformManager;
+import com.doublechaintech.his.hospital.HospitalManager;
+
+import com.doublechaintech.his.expensetype.ExpenseTypeManager;
+
+import com.doublechaintech.his.period.PeriodManager;
+
+import com.doublechaintech.his.expenseitem.ExpenseItemManager;
 
 import com.doublechaintech.his.doctor.DoctorManager;
 
-import com.doublechaintech.his.profile.ProfileManager;
+import com.doublechaintech.his.department.DepartmentManager;
 
-import com.doublechaintech.his.registration.RegistrationManager;
+import com.doublechaintech.his.doctorassignment.DoctorAssignmentManager;
+
+import com.doublechaintech.his.doctorschedule.DoctorScheduleManager;
 
 import com.doublechaintech.his.userdomain.UserDomainManager;
 
@@ -38,13 +46,21 @@ import com.doublechaintech.his.formaction.FormActionManager;
 
 public class ManagerGroup {
 
-	protected PlatformManager platformManager;
+	protected HospitalManager hospitalManager;
+
+	protected ExpenseTypeManager expenseTypeManager;
+
+	protected PeriodManager periodManager;
+
+	protected ExpenseItemManager expenseItemManager;
 
 	protected DoctorManager doctorManager;
 
-	protected ProfileManager profileManager;
+	protected DepartmentManager departmentManager;
 
-	protected RegistrationManager registrationManager;
+	protected DoctorAssignmentManager doctorAssignmentManager;
+
+	protected DoctorScheduleManager doctorScheduleManager;
 
 	protected UserDomainManager userDomainManager;
 
@@ -74,11 +90,35 @@ public class ManagerGroup {
 
 	
 
-	public PlatformManager getPlatformManager(){
-		return this.platformManager;
+	public HospitalManager getHospitalManager(){
+		return this.hospitalManager;
 	}
-	public void setPlatformManager(PlatformManager manager){
-		this.platformManager = manager;
+	public void setHospitalManager(HospitalManager manager){
+		this.hospitalManager = manager;
+	}
+
+
+	public ExpenseTypeManager getExpenseTypeManager(){
+		return this.expenseTypeManager;
+	}
+	public void setExpenseTypeManager(ExpenseTypeManager manager){
+		this.expenseTypeManager = manager;
+	}
+
+
+	public PeriodManager getPeriodManager(){
+		return this.periodManager;
+	}
+	public void setPeriodManager(PeriodManager manager){
+		this.periodManager = manager;
+	}
+
+
+	public ExpenseItemManager getExpenseItemManager(){
+		return this.expenseItemManager;
+	}
+	public void setExpenseItemManager(ExpenseItemManager manager){
+		this.expenseItemManager = manager;
 	}
 
 
@@ -90,19 +130,27 @@ public class ManagerGroup {
 	}
 
 
-	public ProfileManager getProfileManager(){
-		return this.profileManager;
+	public DepartmentManager getDepartmentManager(){
+		return this.departmentManager;
 	}
-	public void setProfileManager(ProfileManager manager){
-		this.profileManager = manager;
+	public void setDepartmentManager(DepartmentManager manager){
+		this.departmentManager = manager;
 	}
 
 
-	public RegistrationManager getRegistrationManager(){
-		return this.registrationManager;
+	public DoctorAssignmentManager getDoctorAssignmentManager(){
+		return this.doctorAssignmentManager;
 	}
-	public void setRegistrationManager(RegistrationManager manager){
-		this.registrationManager = manager;
+	public void setDoctorAssignmentManager(DoctorAssignmentManager manager){
+		this.doctorAssignmentManager = manager;
+	}
+
+
+	public DoctorScheduleManager getDoctorScheduleManager(){
+		return this.doctorScheduleManager;
+	}
+	public void setDoctorScheduleManager(DoctorScheduleManager manager){
+		this.doctorScheduleManager = manager;
 	}
 
 

@@ -79,10 +79,10 @@ public class BaseForm extends GenericForm{
 	}
 
 
-	protected FormField idFromPlatform(String parameterName, String initValue){
+	protected FormField idFromHospital(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("ID");
-		field.setLocaleKey("platform.id");
+		field.setLocaleKey("hospital.id");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
@@ -92,10 +92,10 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
-	protected FormField nameFromPlatform(String parameterName, String initValue){
+	protected FormField nameFromHospital(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("名称");
-		field.setLocaleKey("platform.name");
+		field.setLocaleKey("hospital.name");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
@@ -105,29 +105,237 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
-	protected FormField introductionFromPlatform(String parameterName, String initValue){
+	protected FormField addressFromHospital(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("介绍");
-		field.setLocaleKey("platform.introduction");
+		field.setLabel("地址");
+		field.setLocaleKey("hospital.address");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
 		field.setType("text");
 		field.setRequired(true);
-		field.setPlaceholder("请填写介绍");
+		field.setPlaceholder("请填写地址");
 		return field;
 	}
 
-	protected FormField currentVersionFromPlatform(String parameterName, String initValue){
+	protected FormField telephoneFromHospital(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("当前版本");
-		field.setLocaleKey("platform.current_version");
+		field.setLabel("电话");
+		field.setLocaleKey("hospital.telephone");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
 		field.setType("text");
 		field.setRequired(true);
-		field.setPlaceholder("请填写当前版本");
+		field.setPlaceholder("请填写电话");
+		return field;
+	}
+
+	protected FormField idFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("expense_type.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("expense_type.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField helperCharsFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("辅助识字课");
+		field.setLocaleKey("expense_type.helper_chars");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写辅助识字课");
+		return field;
+	}
+
+	protected FormField statusFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("状态");
+		field.setLocaleKey("expense_type.status");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写状态");
+		return field;
+	}
+
+	protected FormField hospitalIdFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医院");
+		field.setLocaleKey("expense_type.hospital");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Hospital");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医院");
+		return field;
+	}
+
+	protected FormField descriptionFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("描述");
+		field.setLocaleKey("expense_type.description");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("longtext");
+		field.setRequired(true);
+		field.setPlaceholder("请填写描述");
+		return field;
+	}
+
+	protected FormField updateTimeFromExpenseType(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("更新时间");
+		field.setLocaleKey("expense_type.update_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写更新时间");
+		return field;
+	}
+
+	protected FormField idFromPeriod(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("period.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromPeriod(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("period.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField hospitalIdFromPeriod(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医院");
+		field.setLocaleKey("period.hospital");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Hospital");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医院");
+		return field;
+	}
+
+	protected FormField idFromExpenseItem(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("expense_item.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromExpenseItem(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("expense_item.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField priceFromExpenseItem(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("价格");
+		field.setLocaleKey("expense_item.price");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("money");
+		field.setRequired(true);
+		field.setPlaceholder("请填写价格");
+		return field;
+	}
+
+	protected FormField expenseTypeIdFromExpenseItem(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("费用类型");
+		field.setLocaleKey("expense_item.expense_type");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("ExpenseType");
+		field.setRequired(true);
+		field.setPlaceholder("请填写费用类型");
+		return field;
+	}
+
+	protected FormField hospitalIdFromExpenseItem(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医院");
+		field.setLocaleKey("expense_item.hospital");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Hospital");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医院");
+		return field;
+	}
+
+	protected FormField updateTimeFromExpenseItem(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("更新时间");
+		field.setLocaleKey("expense_item.update_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写更新时间");
 		return field;
 	}
 
@@ -157,179 +365,36 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
-	protected FormField platformIdFromDoctor(String parameterName, String initValue){
+	protected FormField shotImageFromDoctor(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("平台");
-		field.setLocaleKey("doctor.platform");
+		field.setLabel("拍摄的图像");
+		field.setLocaleKey("doctor.shot_image");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
-		field.setType("Platform");
+		field.setType("image");
 		field.setRequired(true);
-		field.setPlaceholder("请填写平台");
+		field.setPlaceholder("请填写拍摄的图像");
 		return field;
 	}
 
-	protected FormField idFromProfile(String parameterName, String initValue){
+	protected FormField hospitalIdFromDoctor(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("ID");
-		field.setLocaleKey("profile.id");
+		field.setLabel("医院");
+		field.setLocaleKey("doctor.hospital");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
-		field.setType("text");
+		field.setType("Hospital");
 		field.setRequired(true);
-		field.setPlaceholder("请填写ID");
+		field.setPlaceholder("请填写医院");
 		return field;
 	}
 
-	protected FormField nameFromProfile(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("名称");
-		field.setLocaleKey("profile.name");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("text");
-		field.setRequired(true);
-		field.setPlaceholder("请填写名称");
-		return field;
-	}
-
-	protected FormField genderFromProfile(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("性别");
-		field.setLocaleKey("profile.gender");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("text");
-		field.setRequired(true);
-		field.setPlaceholder("请填写性别");
-		return field;
-	}
-
-	protected FormField ageFromProfile(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("年龄");
-		field.setLocaleKey("profile.age");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("number");
-		field.setRequired(true);
-		field.setPlaceholder("请填写年龄");
-		return field;
-	}
-
-	protected FormField identificationNumberFromProfile(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("身份证号码");
-		field.setLocaleKey("profile.identification_number");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("text");
-		field.setRequired(true);
-		field.setPlaceholder("请填写身份证号码");
-		return field;
-	}
-
-	protected FormField mobileFromProfile(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("手机号码");
-		field.setLocaleKey("profile.mobile");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("mobile");
-		field.setRequired(true);
-		field.setPlaceholder("请填写手机号码");
-		return field;
-	}
-
-	protected FormField platformIdFromProfile(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("平台");
-		field.setLocaleKey("profile.platform");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("Platform");
-		field.setRequired(true);
-		field.setPlaceholder("请填写平台");
-		return field;
-	}
-
-	protected FormField idFromRegistration(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("ID");
-		field.setLocaleKey("registration.id");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("text");
-		field.setRequired(true);
-		field.setPlaceholder("请填写ID");
-		return field;
-	}
-
-	protected FormField titleFromRegistration(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("标题");
-		field.setLocaleKey("registration.title");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("text");
-		field.setRequired(true);
-		field.setPlaceholder("请填写标题");
-		return field;
-	}
-
-	protected FormField patientIdFromRegistration(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("病人");
-		field.setLocaleKey("registration.patient");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("Profile");
-		field.setRequired(true);
-		field.setPlaceholder("请填写病人");
-		return field;
-	}
-
-	protected FormField registerIdFromRegistration(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("注册");
-		field.setLocaleKey("registration.register");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("Profile");
-		field.setRequired(true);
-		field.setPlaceholder("请填写注册");
-		return field;
-	}
-
-	protected FormField contentFromRegistration(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("内容");
-		field.setLocaleKey("registration.content");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("longtext");
-		field.setRequired(true);
-		field.setPlaceholder("请填写内容");
-		return field;
-	}
-
-	protected FormField updateTimeFromRegistration(String parameterName, String initValue){
+	protected FormField updateTimeFromDoctor(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("更新时间");
-		field.setLocaleKey("registration.update_time");
+		field.setLocaleKey("doctor.update_time");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
@@ -339,29 +404,276 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
-	protected FormField statusFromRegistration(String parameterName, String initValue){
+	protected FormField idFromDepartment(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("状态");
-		field.setLocaleKey("registration.status");
+		field.setLabel("ID");
+		field.setLocaleKey("department.id");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
 		field.setType("text");
 		field.setRequired(true);
-		field.setPlaceholder("请填写状态");
+		field.setPlaceholder("请填写ID");
 		return field;
 	}
 
-	protected FormField platformIdFromRegistration(String parameterName, String initValue){
+	protected FormField nameFromDepartment(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("平台");
-		field.setLocaleKey("registration.platform");
+		field.setLabel("名称");
+		field.setLocaleKey("department.name");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
-		field.setType("Platform");
+		field.setType("text");
 		field.setRequired(true);
-		field.setPlaceholder("请填写平台");
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField hospitalIdFromDepartment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医院");
+		field.setLocaleKey("department.hospital");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Hospital");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医院");
+		return field;
+	}
+
+	protected FormField updateTimeFromDepartment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("更新时间");
+		field.setLocaleKey("department.update_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写更新时间");
+		return field;
+	}
+
+	protected FormField idFromDoctorAssignment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("doctor_assignment.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromDoctorAssignment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("doctor_assignment.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField doctorIdFromDoctorAssignment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医生");
+		field.setLocaleKey("doctor_assignment.doctor");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Doctor");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医生");
+		return field;
+	}
+
+	protected FormField departmentIdFromDoctorAssignment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("部门");
+		field.setLocaleKey("doctor_assignment.department");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Department");
+		field.setRequired(true);
+		field.setPlaceholder("请填写部门");
+		return field;
+	}
+
+	protected FormField updateTimeFromDoctorAssignment(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("更新时间");
+		field.setLocaleKey("doctor_assignment.update_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写更新时间");
+		return field;
+	}
+
+	protected FormField idFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("doctor_schedule.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("doctor_schedule.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField doctorIdFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医生");
+		field.setLocaleKey("doctor_schedule.doctor");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Doctor");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医生");
+		return field;
+	}
+
+	protected FormField scheduleDateFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("安排日期");
+		field.setLocaleKey("doctor_schedule.schedule_date");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date");
+		field.setRequired(true);
+		field.setPlaceholder("请填写安排日期");
+		return field;
+	}
+
+	protected FormField periodIdFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("期");
+		field.setLocaleKey("doctor_schedule.period");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Period");
+		field.setRequired(true);
+		field.setPlaceholder("请填写期");
+		return field;
+	}
+
+	protected FormField departmentIdFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("部门");
+		field.setLocaleKey("doctor_schedule.department");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Department");
+		field.setRequired(true);
+		field.setPlaceholder("请填写部门");
+		return field;
+	}
+
+	protected FormField availableFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("可用");
+		field.setLocaleKey("doctor_schedule.available");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("number");
+		field.setRequired(true);
+		field.setPlaceholder("请填写可用");
+		return field;
+	}
+
+	protected FormField priceFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("价格");
+		field.setLocaleKey("doctor_schedule.price");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("money");
+		field.setRequired(true);
+		field.setPlaceholder("请填写价格");
+		return field;
+	}
+
+	protected FormField expenseTypeIdFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("费用类型");
+		field.setLocaleKey("doctor_schedule.expense_type");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("ExpenseType");
+		field.setRequired(true);
+		field.setPlaceholder("请填写费用类型");
+		return field;
+	}
+
+	protected FormField createTimeFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("创建时间");
+		field.setLocaleKey("doctor_schedule.create_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写创建时间");
+		return field;
+	}
+
+	protected FormField updateTimeFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("更新时间");
+		field.setLocaleKey("doctor_schedule.update_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写更新时间");
+		return field;
+	}
+
+	protected FormField hospitalIdFromDoctorSchedule(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("医院");
+		field.setLocaleKey("doctor_schedule.hospital");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Hospital");
+		field.setRequired(true);
+		field.setPlaceholder("请填写医院");
 		return field;
 	}
 

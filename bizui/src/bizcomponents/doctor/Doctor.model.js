@@ -137,7 +137,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/doctor/${id}/list/\DoctorAssignmentList/Doctor Assignment+${appLocaleName(userContext,'List')}`, state: newState }
+      const location = { pathname: `/doctor/${id}/list/\DoctorAssignmentList/医生的任务+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateDoctorAssignment({ payload }, { call, put }) {
@@ -159,7 +159,7 @@ export default {
       if (continueNext) {
         return
       }
-      const location = { pathname: `/doctor/${id}/list/\DoctorAssignmentList/Doctor Assignment列表`, state: newPlayload }
+      const location = { pathname: `/doctor/${id}/list/\DoctorAssignmentList/医生的任务列表`, state: newPlayload }
       yield put(routerRedux.push(location))
     },
     *gotoNextDoctorAssignmentUpdateRow({ payload }, { call, put }) {
@@ -206,7 +206,7 @@ export default {
       }
       const partialList = true
       const newState = {...data, partialList}
-      const location = { pathname: `/doctor/${id}/list/\DoctorScheduleList/Doctor Schedule+${appLocaleName(userContext,'List')}`, state: newState }
+      const location = { pathname: `/doctor/${id}/list/\DoctorScheduleList/医生安排+${appLocaleName(userContext,'List')}`, state: newState }
       yield put(routerRedux.push(location))
     },
     *updateDoctorSchedule({ payload }, { call, put }) {
@@ -228,7 +228,7 @@ export default {
       if (continueNext) {
         return
       }
-      const location = { pathname: `/doctor/${id}/list/\DoctorScheduleList/Doctor Schedule列表`, state: newPlayload }
+      const location = { pathname: `/doctor/${id}/list/\DoctorScheduleList/医生安排列表`, state: newPlayload }
       yield put(routerRedux.push(location))
     },
     *gotoNextDoctorScheduleUpdateRow({ payload }, { call, put }) {

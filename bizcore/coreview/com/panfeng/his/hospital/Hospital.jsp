@@ -105,6 +105,7 @@
 			<li><a data-toggle="tab" href="#expenseItemList" class="disabled"> ${userContext.localeMap['expense_item']}</a></li>
 			<li><a data-toggle="tab" href="#doctorList" class="disabled"> ${userContext.localeMap['doctor']}</a></li>
 			<li><a data-toggle="tab" href="#departmentList" class="disabled"> ${userContext.localeMap['department']}</a></li>
+			<li><a data-toggle="tab" href="#doctorScheduleList" class="disabled"> ${userContext.localeMap['doctor_schedule']}</a></li>
  
 	</ul>
 	</div>
@@ -177,6 +178,14 @@
 		<c:set var="departmentListName" value="departmentList" scope="request"/>
 		<div id="departmentList" class="tab-pane fade sublist" refer-name="hospital">
 			<sky:include page="com/panfeng/his/department/Department$List.jsp"
+					referName="hospital"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["doctorScheduleList"] or ignoreListAccessControl}'>
+		<c:set var="doctorScheduleList" value="${result.doctorScheduleList}" scope="request"/>
+		<c:set var="doctorScheduleListName" value="doctorScheduleList" scope="request"/>
+		<div id="doctorScheduleList" class="tab-pane fade sublist" refer-name="hospital">
+			<sky:include page="com/panfeng/his/doctorschedule/DoctorSchedule$List.jsp"
 					referName="hospital"/>
 		</div>
 	</c:if>

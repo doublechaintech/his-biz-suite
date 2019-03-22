@@ -130,11 +130,14 @@
 <c:set var="doctor" value="${ result.doctor}" scope="request" />
 <sky:include page="com/panfeng/his/doctor/Doctor$Info.jsp" />
 
+<c:set var="department" value="${ result.department}" scope="request" />
+<sky:include page="com/panfeng/his/department/Department$Info.jsp" />
+
 <c:set var="expenseType" value="${ result.expenseType}" scope="request" />
 <sky:include page="com/panfeng/his/expensetype/ExpenseType$Info.jsp" />
 
-<c:set var="department" value="${ result.department}" scope="request" />
-<sky:include page="com/panfeng/his/department/Department$Info.jsp" />
+<c:set var="hospital" value="${ result.hospital}" scope="request" />
+<sky:include page="com/panfeng/his/hospital/Hospital$Info.jsp" />
 
 </div>
 

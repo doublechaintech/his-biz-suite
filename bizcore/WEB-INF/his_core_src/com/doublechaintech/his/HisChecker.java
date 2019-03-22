@@ -23,47 +23,200 @@ public class HisChecker extends BaseChecker{
 
 	
 
-	public static final String  ID_OF_PLATFORM ="platform.id";
-	public HisChecker checkIdOfPlatform(String id)
+	public static final String  ID_OF_HOSPITAL ="hospital.id";
+	public HisChecker checkIdOfHospital(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_PLATFORM ); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_HOSPITAL ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  NAME_OF_PLATFORM ="platform.name";
-	public HisChecker checkNameOfPlatform(String name)
+	public static final String  NAME_OF_HOSPITAL ="hospital.name";
+	public HisChecker checkNameOfHospital(String name)
 	{
 		
-	 	checkStringLengthRange(name,1, 12,NAME_OF_PLATFORM ); 		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_HOSPITAL ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  INTRODUCTION_OF_PLATFORM ="platform.introduction";
-	public HisChecker checkIntroductionOfPlatform(String introduction)
+	public static final String  ADDRESS_OF_HOSPITAL ="hospital.address";
+	public HisChecker checkAddressOfHospital(String address)
 	{
 		
-	 	checkStringLengthRange(introduction,7, 108,INTRODUCTION_OF_PLATFORM ); 		
+	 	checkStringLengthRange(address,2, 24,ADDRESS_OF_HOSPITAL ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  CURRENT_VERSION_OF_PLATFORM ="platform.current_version";
-	public HisChecker checkCurrentVersionOfPlatform(String currentVersion)
+	public static final String  TELEPHONE_OF_HOSPITAL ="hospital.telephone";
+	public HisChecker checkTelephoneOfHospital(String telephone)
 	{
 		
-	 	checkStringLengthRange(currentVersion,2, 16,CURRENT_VERSION_OF_PLATFORM ); 		
+	 	checkStringLengthRange(telephone,3, 44,TELEPHONE_OF_HOSPITAL ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  VERSION_OF_PLATFORM ="platform.version";
-	public HisChecker checkVersionOfPlatform(int version)
+	public static final String  VERSION_OF_HOSPITAL ="hospital.version";
+	public HisChecker checkVersionOfHospital(int version)
 	{
 		
-	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PLATFORM ); 		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_HOSPITAL ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_EXPENSE_TYPE ="expense_type.id";
+	public HisChecker checkIdOfExpenseType(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_TYPE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_EXPENSE_TYPE ="expense_type.name";
+	public HisChecker checkNameOfExpenseType(String name)
+	{
+		
+	 	checkStringLengthRange(name,1, 12,NAME_OF_EXPENSE_TYPE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  HELPER_CHARS_OF_EXPENSE_TYPE ="expense_type.helper_chars";
+	public HisChecker checkHelperCharsOfExpenseType(String helperChars)
+	{
+		
+	 	checkStringLengthRange(helperChars,1, 12,HELPER_CHARS_OF_EXPENSE_TYPE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  STATUS_OF_EXPENSE_TYPE ="expense_type.status";
+	public HisChecker checkStatusOfExpenseType(String status)
+	{
+		
+	 	checkStringLengthRange(status,1, 8,STATUS_OF_EXPENSE_TYPE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  HOSPITAL_OF_EXPENSE_TYPE ="expense_type.hospital";
+	public HisChecker checkHospitalIdOfExpenseType(String hospitalId)
+	{
+		
+	 	checkIdOfExpenseType(hospitalId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  DESCRIPTION_OF_EXPENSE_TYPE ="expense_type.description";
+	public HisChecker checkDescriptionOfExpenseType(String description)
+	{
+		
+	 	checkLongtext(description,0, 1048576,DESCRIPTION_OF_EXPENSE_TYPE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_EXPENSE_TYPE ="expense_type.version";
+	public HisChecker checkVersionOfExpenseType(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_EXPENSE_TYPE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_PERIOD ="period.id";
+	public HisChecker checkIdOfPeriod(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PERIOD ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_PERIOD ="period.name";
+	public HisChecker checkNameOfPeriod(String name)
+	{
+		
+	 	checkStringLengthRange(name,1, 8,NAME_OF_PERIOD ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  HOSPITAL_OF_PERIOD ="period.hospital";
+	public HisChecker checkHospitalIdOfPeriod(String hospitalId)
+	{
+		
+	 	checkIdOfPeriod(hospitalId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_PERIOD ="period.version";
+	public HisChecker checkVersionOfPeriod(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PERIOD ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_EXPENSE_ITEM ="expense_item.id";
+	public HisChecker checkIdOfExpenseItem(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_ITEM ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_EXPENSE_ITEM ="expense_item.name";
+	public HisChecker checkNameOfExpenseItem(String name)
+	{
+		
+	 	checkStringLengthRange(name,1, 20,NAME_OF_EXPENSE_ITEM ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRICE_OF_EXPENSE_ITEM ="expense_item.price";
+	public HisChecker checkPriceOfExpenseItem(BigDecimal price)
+	{
+		
+	 	checkMoneyAmount(price,0.00, 99999999999.00,PRICE_OF_EXPENSE_ITEM ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  EXPENSE_TYPE_OF_EXPENSE_ITEM ="expense_item.expense_type";
+	public HisChecker checkExpenseTypeIdOfExpenseItem(String expenseTypeId)
+	{
+		
+	 	checkIdOfExpenseItem(expenseTypeId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  HOSPITAL_OF_EXPENSE_ITEM ="expense_item.hospital";
+	public HisChecker checkHospitalIdOfExpenseItem(String hospitalId)
+	{
+		
+	 	checkIdOfExpenseItem(hospitalId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_EXPENSE_ITEM ="expense_item.version";
+	public HisChecker checkVersionOfExpenseItem(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_EXPENSE_ITEM ); 		
 		
 		return this;
 	}	 			
@@ -86,11 +239,20 @@ public class HisChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  PLATFORM_OF_DOCTOR ="doctor.platform";
-	public HisChecker checkPlatformIdOfDoctor(String platformId)
+	public static final String  SHOT_IMAGE_OF_DOCTOR ="doctor.shot_image";
+	public HisChecker checkShotImageOfDoctor(String shotImage)
 	{
 		
-	 	checkIdOfDoctor(platformId ); 		
+	 	checkImage(shotImage,0, 512,SHOT_IMAGE_OF_DOCTOR ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  HOSPITAL_OF_DOCTOR ="doctor.hospital";
+	public HisChecker checkHospitalIdOfDoctor(String hospitalId)
+	{
+		
+	 	checkIdOfDoctor(hospitalId ); 		
 		
 		return this;
 	}	 			
@@ -104,146 +266,182 @@ public class HisChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  ID_OF_PROFILE ="profile.id";
-	public HisChecker checkIdOfProfile(String id)
+	public static final String  ID_OF_DEPARTMENT ="department.id";
+	public HisChecker checkIdOfDepartment(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_PROFILE ); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_DEPARTMENT ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  NAME_OF_PROFILE ="profile.name";
-	public HisChecker checkNameOfProfile(String name)
+	public static final String  NAME_OF_DEPARTMENT ="department.name";
+	public HisChecker checkNameOfDepartment(String name)
 	{
 		
-	 	checkStringLengthRange(name,1, 12,NAME_OF_PROFILE ); 		
+	 	checkStringLengthRange(name,1, 12,NAME_OF_DEPARTMENT ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  GENDER_OF_PROFILE ="profile.gender";
-	public HisChecker checkGenderOfProfile(String gender)
+	public static final String  HOSPITAL_OF_DEPARTMENT ="department.hospital";
+	public HisChecker checkHospitalIdOfDepartment(String hospitalId)
 	{
 		
-	 	checkGender(gender,0, 4,GENDER_OF_PROFILE ); 		
+	 	checkIdOfDepartment(hospitalId ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  AGE_OF_PROFILE ="profile.age";
-	public HisChecker checkAgeOfProfile(int age)
+	public static final String  VERSION_OF_DEPARTMENT ="department.version";
+	public HisChecker checkVersionOfDepartment(int version)
 	{
 		
-	 	checkIntegerRange(age,0, 100,AGE_OF_PROFILE ); 		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_DEPARTMENT ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  IDENTIFICATION_NUMBER_OF_PROFILE ="profile.identification_number";
-	public HisChecker checkIdentificationNumberOfProfile(String identificationNumber)
+	public static final String  ID_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.id";
+	public HisChecker checkIdOfDoctorAssignment(String id)
 	{
 		
-	 	checkStringLengthRange(identificationNumber,4, 52,IDENTIFICATION_NUMBER_OF_PROFILE ); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_ASSIGNMENT ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  MOBILE_OF_PROFILE ="profile.mobile";
-	public HisChecker checkMobileOfProfile(String mobile)
+	public static final String  NAME_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.name";
+	public HisChecker checkNameOfDoctorAssignment(String name)
 	{
 		
-	 	checkChinaMobilePhone(mobile,5, 44,MOBILE_OF_PROFILE ); 		
+	 	checkStringLengthRange(name,3, 40,NAME_OF_DOCTOR_ASSIGNMENT ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  PLATFORM_OF_PROFILE ="profile.platform";
-	public HisChecker checkPlatformIdOfProfile(String platformId)
+	public static final String  DOCTOR_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.doctor";
+	public HisChecker checkDoctorIdOfDoctorAssignment(String doctorId)
 	{
 		
-	 	checkIdOfProfile(platformId ); 		
+	 	checkIdOfDoctorAssignment(doctorId ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  VERSION_OF_PROFILE ="profile.version";
-	public HisChecker checkVersionOfProfile(int version)
+	public static final String  DEPARTMENT_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.department";
+	public HisChecker checkDepartmentIdOfDoctorAssignment(String departmentId)
 	{
 		
-	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PROFILE ); 		
+	 	checkIdOfDoctorAssignment(departmentId ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  ID_OF_REGISTRATION ="registration.id";
-	public HisChecker checkIdOfRegistration(String id)
+	public static final String  VERSION_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.version";
+	public HisChecker checkVersionOfDoctorAssignment(int version)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_REGISTRATION ); 		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_DOCTOR_ASSIGNMENT ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  TITLE_OF_REGISTRATION ="registration.title";
-	public HisChecker checkTitleOfRegistration(String title)
+	public static final String  ID_OF_DOCTOR_SCHEDULE ="doctor_schedule.id";
+	public HisChecker checkIdOfDoctorSchedule(String id)
 	{
 		
-	 	checkStringLengthRange(title,2, 16,TITLE_OF_REGISTRATION ); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_SCHEDULE ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  PATIENT_OF_REGISTRATION ="registration.patient";
-	public HisChecker checkPatientIdOfRegistration(String patientId)
+	public static final String  NAME_OF_DOCTOR_SCHEDULE ="doctor_schedule.name";
+	public HisChecker checkNameOfDoctorSchedule(String name)
 	{
 		
-	 	checkIdOfRegistration(patientId ); 		
+	 	checkStringLengthRange(name,8, 116,NAME_OF_DOCTOR_SCHEDULE ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  REGISTER_OF_REGISTRATION ="registration.register";
-	public HisChecker checkRegisterIdOfRegistration(String registerId)
+	public static final String  DOCTOR_OF_DOCTOR_SCHEDULE ="doctor_schedule.doctor";
+	public HisChecker checkDoctorIdOfDoctorSchedule(String doctorId)
 	{
 		
-	 	checkIdOfRegistration(registerId ); 		
+	 	checkIdOfDoctorSchedule(doctorId ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  CONTENT_OF_REGISTRATION ="registration.content";
-	public HisChecker checkContentOfRegistration(String content)
+	public static final String  SCHEDULE_DATE_OF_DOCTOR_SCHEDULE ="doctor_schedule.schedule_date";
+	public HisChecker checkScheduleDateOfDoctorSchedule(Date scheduleDate)
 	{
 		
-	 	checkLongtext(content,0, 1048576,CONTENT_OF_REGISTRATION ); 		
+	 	checkDateRange(scheduleDate,parseDate("1900-01-01"), parseDate("2019-3-11"),SCHEDULE_DATE_OF_DOCTOR_SCHEDULE ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  STATUS_OF_REGISTRATION ="registration.status";
-	public HisChecker checkStatusOfRegistration(String status)
+	public static final String  PERIOD_OF_DOCTOR_SCHEDULE ="doctor_schedule.period";
+	public HisChecker checkPeriodIdOfDoctorSchedule(String periodId)
 	{
 		
-	 	checkStringLengthRange(status,2, 24,STATUS_OF_REGISTRATION ); 		
+	 	checkIdOfDoctorSchedule(periodId ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  PLATFORM_OF_REGISTRATION ="registration.platform";
-	public HisChecker checkPlatformIdOfRegistration(String platformId)
+	public static final String  DEPARTMENT_OF_DOCTOR_SCHEDULE ="doctor_schedule.department";
+	public HisChecker checkDepartmentIdOfDoctorSchedule(String departmentId)
 	{
 		
-	 	checkIdOfRegistration(platformId ); 		
+	 	checkIdOfDoctorSchedule(departmentId ); 		
 		
 		return this;
 	}	 			
 
-	public static final String  VERSION_OF_REGISTRATION ="registration.version";
-	public HisChecker checkVersionOfRegistration(int version)
+	public static final String  AVAILABLE_OF_DOCTOR_SCHEDULE ="doctor_schedule.available";
+	public HisChecker checkAvailableOfDoctorSchedule(int available)
 	{
 		
-	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_REGISTRATION ); 		
+	 	checkIntegerRange(available,0, 20,AVAILABLE_OF_DOCTOR_SCHEDULE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PRICE_OF_DOCTOR_SCHEDULE ="doctor_schedule.price";
+	public HisChecker checkPriceOfDoctorSchedule(BigDecimal price)
+	{
+		
+	 	checkMoneyAmount(price,0.00, 123.99,PRICE_OF_DOCTOR_SCHEDULE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  EXPENSE_TYPE_OF_DOCTOR_SCHEDULE ="doctor_schedule.expense_type";
+	public HisChecker checkExpenseTypeIdOfDoctorSchedule(String expenseTypeId)
+	{
+		
+	 	checkIdOfDoctorSchedule(expenseTypeId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  HOSPITAL_OF_DOCTOR_SCHEDULE ="doctor_schedule.hospital";
+	public HisChecker checkHospitalIdOfDoctorSchedule(String hospitalId)
+	{
+		
+	 	checkIdOfDoctorSchedule(hospitalId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_DOCTOR_SCHEDULE ="doctor_schedule.version";
+	public HisChecker checkVersionOfDoctorSchedule(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_DOCTOR_SCHEDULE ); 		
 		
 		return this;
 	}	 			

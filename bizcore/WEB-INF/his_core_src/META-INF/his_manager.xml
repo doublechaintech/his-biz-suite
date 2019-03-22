@@ -6,72 +6,76 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<bean id="checker" class="com.panfeng.his.HisChecker" scope="prototype"></bean>
+	<bean id="checker" class="com.doublechaintech.his.HisChecker" scope="prototype"></bean>
 
-	<bean id="hospitalManagerBase" class="com.panfeng.his.hospital.HospitalManagerImpl"/>
-	<bean id="hospitalManager" class="com.panfeng.his.hospital.HospitalCustomManagerImpl" parent="hospitalManagerBase" ></bean>
+	<bean id="hospitalManagerBase" class="com.doublechaintech.his.hospital.HospitalManagerImpl"/>
+	<bean id="hospitalManager" class="com.doublechaintech.his.hospital.HospitalCustomManagerImpl" parent="hospitalManagerBase" ></bean>
 	
-	<bean id="expenseTypeManagerBase" class="com.panfeng.his.expensetype.ExpenseTypeManagerImpl"/>
-	<bean id="expenseTypeManager" class="com.panfeng.his.expensetype.ExpenseTypeCustomManagerImpl" parent="expenseTypeManagerBase" ></bean>
+	<bean id="expenseTypeManagerBase" class="com.doublechaintech.his.expensetype.ExpenseTypeManagerImpl"/>
+	<bean id="expenseTypeManager" class="com.doublechaintech.his.expensetype.ExpenseTypeCustomManagerImpl" parent="expenseTypeManagerBase" ></bean>
 	
-	<bean id="expenseItemManagerBase" class="com.panfeng.his.expenseitem.ExpenseItemManagerImpl"/>
-	<bean id="expenseItemManager" class="com.panfeng.his.expenseitem.ExpenseItemManagerImpl" parent="expenseItemManagerBase" ></bean>
+	<bean id="periodManagerBase" class="com.doublechaintech.his.period.PeriodManagerImpl"/>
+	<bean id="periodManager" class="com.doublechaintech.his.period.PeriodManagerImpl" parent="periodManagerBase" ></bean>
 	
-	<bean id="doctorManagerBase" class="com.panfeng.his.doctor.DoctorManagerImpl"/>
-	<bean id="doctorManager" class="com.panfeng.his.doctor.DoctorCustomManagerImpl" parent="doctorManagerBase" ></bean>
+	<bean id="expenseItemManagerBase" class="com.doublechaintech.his.expenseitem.ExpenseItemManagerImpl"/>
+	<bean id="expenseItemManager" class="com.doublechaintech.his.expenseitem.ExpenseItemManagerImpl" parent="expenseItemManagerBase" ></bean>
 	
-	<bean id="departmentManagerBase" class="com.panfeng.his.department.DepartmentManagerImpl"/>
-	<bean id="departmentManager" class="com.panfeng.his.department.DepartmentCustomManagerImpl" parent="departmentManagerBase" ></bean>
+	<bean id="doctorManagerBase" class="com.doublechaintech.his.doctor.DoctorManagerImpl"/>
+	<bean id="doctorManager" class="com.doublechaintech.his.doctor.DoctorCustomManagerImpl" parent="doctorManagerBase" ></bean>
 	
-	<bean id="doctorAssignmentManagerBase" class="com.panfeng.his.doctorassignment.DoctorAssignmentManagerImpl"/>
-	<bean id="doctorAssignmentManager" class="com.panfeng.his.doctorassignment.DoctorAssignmentManagerImpl" parent="doctorAssignmentManagerBase" ></bean>
+	<bean id="departmentManagerBase" class="com.doublechaintech.his.department.DepartmentManagerImpl"/>
+	<bean id="departmentManager" class="com.doublechaintech.his.department.DepartmentCustomManagerImpl" parent="departmentManagerBase" ></bean>
 	
-	<bean id="doctorScheduleManagerBase" class="com.panfeng.his.doctorschedule.DoctorScheduleManagerImpl"/>
-	<bean id="doctorScheduleManager" class="com.panfeng.his.doctorschedule.DoctorScheduleManagerImpl" parent="doctorScheduleManagerBase" ></bean>
+	<bean id="doctorAssignmentManagerBase" class="com.doublechaintech.his.doctorassignment.DoctorAssignmentManagerImpl"/>
+	<bean id="doctorAssignmentManager" class="com.doublechaintech.his.doctorassignment.DoctorAssignmentManagerImpl" parent="doctorAssignmentManagerBase" ></bean>
 	
-	<bean id="userDomainManagerBase" class="com.panfeng.his.userdomain.UserDomainManagerImpl"/>
-	<bean id="userDomainManager" class="com.panfeng.his.userdomain.UserDomainCustomManagerImpl" parent="userDomainManagerBase" ></bean>
+	<bean id="doctorScheduleManagerBase" class="com.doublechaintech.his.doctorschedule.DoctorScheduleManagerImpl"/>
+	<bean id="doctorScheduleManager" class="com.doublechaintech.his.doctorschedule.DoctorScheduleManagerImpl" parent="doctorScheduleManagerBase" ></bean>
 	
-	<bean id="userWhiteListManagerBase" class="com.panfeng.his.userwhitelist.UserWhiteListManagerImpl"/>
-	<bean id="userWhiteListManager" class="com.panfeng.his.userwhitelist.UserWhiteListManagerImpl" parent="userWhiteListManagerBase" ></bean>
+	<bean id="userDomainManagerBase" class="com.doublechaintech.his.userdomain.UserDomainManagerImpl"/>
+	<bean id="userDomainManager" class="com.doublechaintech.his.userdomain.UserDomainCustomManagerImpl" parent="userDomainManagerBase" ></bean>
 	
-	<bean id="secUserManagerBase" class="com.panfeng.his.secuser.SecUserManagerImpl"/>
-	<bean id="secUserManager" class="com.panfeng.his.secuser.SecUserCustomManagerImpl" parent="secUserManagerBase" ></bean>
+	<bean id="userWhiteListManagerBase" class="com.doublechaintech.his.userwhitelist.UserWhiteListManagerImpl"/>
+	<bean id="userWhiteListManager" class="com.doublechaintech.his.userwhitelist.UserWhiteListManagerImpl" parent="userWhiteListManagerBase" ></bean>
 	
-	<bean id="secUserBlockingManagerBase" class="com.panfeng.his.secuserblocking.SecUserBlockingManagerImpl"/>
-	<bean id="secUserBlockingManager" class="com.panfeng.his.secuserblocking.SecUserBlockingCustomManagerImpl" parent="secUserBlockingManagerBase" ></bean>
+	<bean id="secUserManagerBase" class="com.doublechaintech.his.secuser.SecUserManagerImpl"/>
+	<bean id="secUserManager" class="com.doublechaintech.his.secuser.SecUserCustomManagerImpl" parent="secUserManagerBase" ></bean>
 	
-	<bean id="userAppManagerBase" class="com.panfeng.his.userapp.UserAppManagerImpl"/>
-	<bean id="userAppManager" class="com.panfeng.his.userapp.UserAppCustomManagerImpl" parent="userAppManagerBase" ></bean>
+	<bean id="secUserBlockingManagerBase" class="com.doublechaintech.his.secuserblocking.SecUserBlockingManagerImpl"/>
+	<bean id="secUserBlockingManager" class="com.doublechaintech.his.secuserblocking.SecUserBlockingManagerImpl" parent="secUserBlockingManagerBase" ></bean>
 	
-	<bean id="listAccessManagerBase" class="com.panfeng.his.listaccess.ListAccessManagerImpl"/>
-	<bean id="listAccessManager" class="com.panfeng.his.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
+	<bean id="userAppManagerBase" class="com.doublechaintech.his.userapp.UserAppManagerImpl"/>
+	<bean id="userAppManager" class="com.doublechaintech.his.userapp.UserAppCustomManagerImpl" parent="userAppManagerBase" ></bean>
 	
-	<bean id="objectAccessManagerBase" class="com.panfeng.his.objectaccess.ObjectAccessManagerImpl"/>
-	<bean id="objectAccessManager" class="com.panfeng.his.objectaccess.ObjectAccessManagerImpl" parent="objectAccessManagerBase" ></bean>
+	<bean id="listAccessManagerBase" class="com.doublechaintech.his.listaccess.ListAccessManagerImpl"/>
+	<bean id="listAccessManager" class="com.doublechaintech.his.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
 	
-	<bean id="loginHistoryManagerBase" class="com.panfeng.his.loginhistory.LoginHistoryManagerImpl"/>
-	<bean id="loginHistoryManager" class="com.panfeng.his.loginhistory.LoginHistoryManagerImpl" parent="loginHistoryManagerBase" ></bean>
+	<bean id="objectAccessManagerBase" class="com.doublechaintech.his.objectaccess.ObjectAccessManagerImpl"/>
+	<bean id="objectAccessManager" class="com.doublechaintech.his.objectaccess.ObjectAccessManagerImpl" parent="objectAccessManagerBase" ></bean>
 	
-	<bean id="genericFormManagerBase" class="com.panfeng.his.genericform.GenericFormManagerImpl"/>
-	<bean id="genericFormManager" class="com.panfeng.his.genericform.GenericFormCustomManagerImpl" parent="genericFormManagerBase" ></bean>
+	<bean id="loginHistoryManagerBase" class="com.doublechaintech.his.loginhistory.LoginHistoryManagerImpl"/>
+	<bean id="loginHistoryManager" class="com.doublechaintech.his.loginhistory.LoginHistoryManagerImpl" parent="loginHistoryManagerBase" ></bean>
 	
-	<bean id="formMessageManagerBase" class="com.panfeng.his.formmessage.FormMessageManagerImpl"/>
-	<bean id="formMessageManager" class="com.panfeng.his.formmessage.FormMessageManagerImpl" parent="formMessageManagerBase" ></bean>
+	<bean id="genericFormManagerBase" class="com.doublechaintech.his.genericform.GenericFormManagerImpl"/>
+	<bean id="genericFormManager" class="com.doublechaintech.his.genericform.GenericFormCustomManagerImpl" parent="genericFormManagerBase" ></bean>
 	
-	<bean id="formFieldMessageManagerBase" class="com.panfeng.his.formfieldmessage.FormFieldMessageManagerImpl"/>
-	<bean id="formFieldMessageManager" class="com.panfeng.his.formfieldmessage.FormFieldMessageManagerImpl" parent="formFieldMessageManagerBase" ></bean>
+	<bean id="formMessageManagerBase" class="com.doublechaintech.his.formmessage.FormMessageManagerImpl"/>
+	<bean id="formMessageManager" class="com.doublechaintech.his.formmessage.FormMessageManagerImpl" parent="formMessageManagerBase" ></bean>
 	
-	<bean id="formFieldManagerBase" class="com.panfeng.his.formfield.FormFieldManagerImpl"/>
-	<bean id="formFieldManager" class="com.panfeng.his.formfield.FormFieldManagerImpl" parent="formFieldManagerBase" ></bean>
+	<bean id="formFieldMessageManagerBase" class="com.doublechaintech.his.formfieldmessage.FormFieldMessageManagerImpl"/>
+	<bean id="formFieldMessageManager" class="com.doublechaintech.his.formfieldmessage.FormFieldMessageManagerImpl" parent="formFieldMessageManagerBase" ></bean>
 	
-	<bean id="formActionManagerBase" class="com.panfeng.his.formaction.FormActionManagerImpl"/>
-	<bean id="formActionManager" class="com.panfeng.his.formaction.FormActionManagerImpl" parent="formActionManagerBase" ></bean>
+	<bean id="formFieldManagerBase" class="com.doublechaintech.his.formfield.FormFieldManagerImpl"/>
+	<bean id="formFieldManager" class="com.doublechaintech.his.formfield.FormFieldManagerImpl" parent="formFieldManagerBase" ></bean>
+	
+	<bean id="formActionManagerBase" class="com.doublechaintech.his.formaction.FormActionManagerImpl"/>
+	<bean id="formActionManager" class="com.doublechaintech.his.formaction.FormActionManagerImpl" parent="formActionManagerBase" ></bean>
 	
 
-	<bean id="managerGroupBase" class="com.panfeng.his.ManagerGroup">
+	<bean id="managerGroupBase" class="com.doublechaintech.his.ManagerGroup">
 		<property name="hospitalManager" ref="hospitalManager"/>
 		<property name="expenseTypeManager" ref="expenseTypeManager"/>
+		<property name="periodManager" ref="periodManager"/>
 		<property name="expenseItemManager" ref="expenseItemManager"/>
 		<property name="doctorManager" ref="doctorManager"/>
 		<property name="departmentManager" ref="departmentManager"/>

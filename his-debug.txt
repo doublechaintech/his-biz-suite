@@ -1,190 +1,205 @@
 Summary|概览
-Hospital|Hospital
-Id|Id
-Name|Name
-Address|Address
-Telephone|Telephone
-Version|Version
-Expense Type|Expense Type
-Id|Id
-Name|Name
-Helper Chars|Helper Chars
-Status|Status
-Hospital|Hospital
-Description|Description
-Version|Version
-Expense Item|Expense Item
-Id|Id
-Name|Name
-Price|Price
-Expense Type|Expense Type
-Hospital|Hospital
-Version|Version
-Doctor|Doctor
-Id|Id
-Name|Name
-Hospital|Hospital
-Version|Version
-Department|Department
-Id|Id
-Name|Name
-Hospital|Hospital
-Version|Version
-Doctor Assignment|Doctor Assignment
-Id|Id
-Name|Name
-Doctor|Doctor
-Department|Department
-Version|Version
-Doctor Schedule|Doctor Schedule
-Id|Id
-Name|Name
-Schedule Date|Schedule Date
-Period|Period
-Doctor|Doctor
-Available|Available
-Price|Price
-Expense Type|Expense Type
-Department|Department
-Version|Version
-User Domain|User Domain
-Id|Id
-Name|Name
-Version|Version
-User White List|User White List
-Id|Id
-User Identity|User Identity
-User Special Functions|User Special Functions
-Domain|Domain
-Version|Version
-Sec User|Sec User
-Id|Id
-Login|Login
-Mobile|Mobile
-Email|Email
-Pwd|Pwd
-Verification Code|Verification Code
-Verification Code Expire|Verification Code Expire
-Last Login Time|Last Login Time
-Domain|Domain
-Blocking|Blocking
-Block|Block
-Current Status|Current Status
-Version|Version
-Sec User Blocking|Sec User Blocking
-Id|Id
-Who|Who
-Block Time|Block Time
-Comments|Comments
-Version|Version
-User App|User App
-Id|Id
-Title|Title
-Sec User|Sec User
-App Icon|App Icon
-Full Access|Full Access
-Permission|Permission
-Object Type|Object Type
-Object Id|Object Id
-Location|Location
-Version|Version
-List Access|List Access
-Id|Id
-Name|Name
-Internal Name|Internal Name
-Read Permission|Read Permission
-Create Permission|Create Permission
-Delete Permission|Delete Permission
-Update Permission|Update Permission
-Execution Permission|Execution Permission
-App|App
-Version|Version
-Object Access|Object Access
-Id|Id
-Name|Name
-Object Type|Object Type
-List1|List1
-List2|List2
-List3|List3
-List4|List4
-List5|List5
-List6|List6
-List7|List7
-List8|List8
-List9|List9
-App|App
-Version|Version
-Login History|Login History
-Id|Id
-Login Time|Login Time
-From Ip|From Ip
-Description|Description
-Sec User|Sec User
-Version|Version
-Generic Form|Generic Form
-Id|Id
-Title|Title
-Description|Description
-Version|Version
-Form Message|Form Message
-Id|Id
-Title|Title
-Form|Form
-Level|Level
-Version|Version
-Form Field Message|Form Field Message
-Id|Id
-Title|Title
-Parameter Name|Parameter Name
-Form|Form
-Level|Level
-Version|Version
-Form Field|Form Field
-Id|Id
-Label|Label
-Locale Key|Locale Key
-Parameter Name|Parameter Name
-Type|Type
-Form|Form
-Placeholder|Placeholder
-Default Value|Default Value
-Description|Description
-Field Group|Field Group
-Minimum Value|Minimum Value
-Maximum Value|Maximum Value
-Required|Required
-Disabled|Disabled
-Custom Rendering|Custom Rendering
-Candidate Values|Candidate Values
-Suggest Values|Suggest Values
-Version|Version
-Form Action|Form Action
-Id|Id
-Label|Label
-Locale Key|Locale Key
-Action Key|Action Key
-Level|Level
-Url|Url
-Form|Form
-Version|Version
-Transfer to Another Hospital|Transfer to Another Hospital
-Transfer to Another Expense Type|Transfer to Another Expense Type
-Transfer to Another Expense Item|Transfer to Another Expense Item
-Transfer to Another Doctor|Transfer to Another Doctor
-Transfer to Another Department|Transfer to Another Department
-Transfer to Another Doctor Assignment|Transfer to Another Doctor Assignment
-Transfer to Another Doctor Schedule|Transfer to Another Doctor Schedule
-Transfer to Another User Domain|Transfer to Another User Domain
-Transfer to Another User White List|Transfer to Another User White List
-Transfer to Another Sec User|Transfer to Another Sec User
-Transfer to Another Sec User Blocking|Transfer to Another Sec User Blocking
-Transfer to Another User App|Transfer to Another User App
-Transfer to Another List Access|Transfer to Another List Access
-Transfer to Another Object Access|Transfer to Another Object Access
-Transfer to Another Login History|Transfer to Another Login History
-Transfer to Another Generic Form|Transfer to Another Generic Form
-Transfer to Another Form Message|Transfer to Another Form Message
-Transfer to Another Form Field Message|Transfer to Another Form Field Message
-Transfer to Another Form Field|Transfer to Another Form Field
-Transfer to Another Form Action|Transfer to Another Form Action
+Hospital|医院
+Id|ID
+Name|名称
+Address|地址
+Telephone|电话
+Version|版本
+Expense Type|费用类型
+Id|ID
+Name|名称
+Helper Chars|辅助识字课
+Status|状态
+Hospital|医院
+Description|描述
+Update Time|更新时间
+Version|版本
+Period|期
+Id|ID
+Name|名称
+Hospital|医院
+Version|版本
+Expense Item|费用项目
+Id|ID
+Name|名称
+Price|价格
+Expense Type|费用类型
+Hospital|医院
+Update Time|更新时间
+Version|版本
+Doctor|医生
+Id|ID
+Name|名称
+Shot Image|拍摄的图像
+Hospital|医院
+Update Time|更新时间
+Version|版本
+Department|部门
+Id|ID
+Name|名称
+Hospital|医院
+Update Time|更新时间
+Version|版本
+Doctor Assignment|医生的任务
+Id|ID
+Name|名称
+Doctor|医生
+Department|部门
+Update Time|更新时间
+Version|版本
+Doctor Schedule|医生安排
+Id|ID
+Name|名称
+Doctor|医生
+Schedule Date|安排日期
+Period|期
+Department|部门
+Available|可用
+Price|价格
+Expense Type|费用类型
+Create Time|创建时间
+Update Time|更新时间
+Hospital|医院
+Version|版本
+User Domain|用户域
+Id|ID
+Name|名称
+Version|版本
+User White List|用户白名单
+Id|ID
+User Identity|用户身份
+User Special Functions|用户特殊功能
+Domain|域
+Version|版本
+Sec User|安全用户
+Id|ID
+Login|登录
+Mobile|手机号码
+Email|电子邮件
+Pwd|密码
+Verification Code|验证码
+Verification Code Expire|验证码过期
+Last Login Time|最后登录时间
+Domain|域
+Blocking|屏蔽
+Block|屏蔽
+Current Status|当前状态
+Version|版本
+Sec User Blocking|用户屏蔽
+Id|ID
+Who|谁
+Block Time|块时间
+Comments|评论
+Version|版本
+User App|用户应用程序
+Id|ID
+Title|标题
+Sec User|安全用户
+App Icon|应用程序图标
+Full Access|完全访问
+Permission|许可
+Object Type|访问对象类型
+Object Id|对象ID
+Location|位置
+Version|版本
+List Access|访问列表
+Id|ID
+Name|名称
+Internal Name|内部名称
+Read Permission|读权限
+Create Permission|创建权限
+Delete Permission|删除权限
+Update Permission|更新许可
+Execution Permission|执行权限
+App|应用程序
+Version|版本
+Object Access|对象访问
+Id|ID
+Name|名称
+Object Type|访问对象类型
+List1|列表1
+List2|列表2
+List3|列表3
+List4|列表4
+List5|列表5
+List6|列表6
+List7|列表7
+List8|列表8
+List9|列表9
+App|应用程序
+Version|版本
+Login History|登录历史
+Id|ID
+Login Time|登录时间
+From Ip|来自IP
+Description|描述
+Sec User|安全用户
+Version|版本
+Generic Form|通用的形式
+Id|ID
+Title|标题
+Description|描述
+Version|版本
+Form Message|表单信息
+Id|ID
+Title|标题
+Form|形式
+Level|水平
+Version|版本
+Form Field Message|表单字段的信息
+Id|ID
+Title|标题
+Parameter Name|参数名称
+Form|形式
+Level|水平
+Version|版本
+Form Field|表单字段
+Id|ID
+Label|标签
+Locale Key|语言环境的关键
+Parameter Name|参数名称
+Type|类型
+Form|形式
+Placeholder|占位符
+Default Value|默认值
+Description|描述
+Field Group|字段组
+Minimum Value|最小值
+Maximum Value|最大值
+Required|要求
+Disabled|禁用
+Custom Rendering|自定义渲染
+Candidate Values|候选人的价值观
+Suggest Values|建议值
+Version|版本
+Form Action|表单动作
+Id|ID
+Label|标签
+Locale Key|语言环境的关键
+Action Key|行动的关键
+Level|水平
+Url|url
+Form|形式
+Version|版本
+Transfer to Another Hospital|转到另一家医院
+Transfer to Another Expense Type|转移到另一种费用类型
+Transfer to Another Period|转到另一个时期
+Transfer to Another Expense Item|转到其他费用项目
+Transfer to Another Doctor|转到另一位医生那里
+Transfer to Another Department|调到另一个部门
+Transfer to Another Doctor Assignment|转到另一个医生的任务
+Transfer to Another Doctor Schedule|转移到另一个医生的时间表
+Transfer to Another User Domain|转移到另一个用户域
+Transfer to Another User White List|转移到另一个用户白名单
+Transfer to Another Sec User|转移到另一个SEC用户
+Transfer to Another Sec User Blocking|转移到另一个SEC用户阻塞
+Transfer to Another User App|转移到另一个用户应用程序
+Transfer to Another List Access|转移到另一个列表访问
+Transfer to Another Object Access|转移到另一个对象访问
+Transfer to Another Login History|转移到另一个登录历史
+Transfer to Another Generic Form|转移到另一个通用表单
+Transfer to Another Form Message|转到另一个表单消息
+Transfer to Another Form Field Message|转到另一个表单字段消息
+Transfer to Another Form Field|转到另一个表单字段
+Transfer to Another Form Action|转移到另一个表单动作
 

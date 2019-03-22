@@ -3,18 +3,30 @@ package com.doublechaintech.his;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.doublechaintech.his.platform.Platform;
-import com.doublechaintech.his.platform.PlatformDAO;
-import com.doublechaintech.his.platform.PlatformTokens;
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.hospital.HospitalDAO;
+import com.doublechaintech.his.hospital.HospitalTokens;
+import com.doublechaintech.his.expensetype.ExpenseType;
+import com.doublechaintech.his.expensetype.ExpenseTypeDAO;
+import com.doublechaintech.his.expensetype.ExpenseTypeTokens;
+import com.doublechaintech.his.period.Period;
+import com.doublechaintech.his.period.PeriodDAO;
+import com.doublechaintech.his.period.PeriodTokens;
+import com.doublechaintech.his.expenseitem.ExpenseItem;
+import com.doublechaintech.his.expenseitem.ExpenseItemDAO;
+import com.doublechaintech.his.expenseitem.ExpenseItemTokens;
 import com.doublechaintech.his.doctor.Doctor;
 import com.doublechaintech.his.doctor.DoctorDAO;
 import com.doublechaintech.his.doctor.DoctorTokens;
-import com.doublechaintech.his.profile.Profile;
-import com.doublechaintech.his.profile.ProfileDAO;
-import com.doublechaintech.his.profile.ProfileTokens;
-import com.doublechaintech.his.registration.Registration;
-import com.doublechaintech.his.registration.RegistrationDAO;
-import com.doublechaintech.his.registration.RegistrationTokens;
+import com.doublechaintech.his.department.Department;
+import com.doublechaintech.his.department.DepartmentDAO;
+import com.doublechaintech.his.department.DepartmentTokens;
+import com.doublechaintech.his.doctorassignment.DoctorAssignment;
+import com.doublechaintech.his.doctorassignment.DoctorAssignmentDAO;
+import com.doublechaintech.his.doctorassignment.DoctorAssignmentTokens;
+import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
+import com.doublechaintech.his.doctorschedule.DoctorScheduleTokens;
 import com.doublechaintech.his.userdomain.UserDomain;
 import com.doublechaintech.his.userdomain.UserDomainDAO;
 import com.doublechaintech.his.userdomain.UserDomainTokens;
@@ -57,13 +69,21 @@ import com.doublechaintech.his.formaction.FormActionTokens;
 
 public class DAOGroup {
 
-	protected PlatformDAO platformDAO;
+	protected HospitalDAO hospitalDAO;
+
+	protected ExpenseTypeDAO expenseTypeDAO;
+
+	protected PeriodDAO periodDAO;
+
+	protected ExpenseItemDAO expenseItemDAO;
 
 	protected DoctorDAO doctorDAO;
 
-	protected ProfileDAO profileDAO;
+	protected DepartmentDAO departmentDAO;
 
-	protected RegistrationDAO registrationDAO;
+	protected DoctorAssignmentDAO doctorAssignmentDAO;
+
+	protected DoctorScheduleDAO doctorScheduleDAO;
 
 	protected UserDomainDAO userDomainDAO;
 
@@ -93,11 +113,35 @@ public class DAOGroup {
 
 	
 
-	public PlatformDAO getPlatformDAO(){
-		return this.platformDAO;
+	public HospitalDAO getHospitalDAO(){
+		return this.hospitalDAO;
 	}
-	public void setPlatformDAO(PlatformDAO dao){
-		this.platformDAO = dao;
+	public void setHospitalDAO(HospitalDAO dao){
+		this.hospitalDAO = dao;
+	}
+
+
+	public ExpenseTypeDAO getExpenseTypeDAO(){
+		return this.expenseTypeDAO;
+	}
+	public void setExpenseTypeDAO(ExpenseTypeDAO dao){
+		this.expenseTypeDAO = dao;
+	}
+
+
+	public PeriodDAO getPeriodDAO(){
+		return this.periodDAO;
+	}
+	public void setPeriodDAO(PeriodDAO dao){
+		this.periodDAO = dao;
+	}
+
+
+	public ExpenseItemDAO getExpenseItemDAO(){
+		return this.expenseItemDAO;
+	}
+	public void setExpenseItemDAO(ExpenseItemDAO dao){
+		this.expenseItemDAO = dao;
 	}
 
 
@@ -109,19 +153,27 @@ public class DAOGroup {
 	}
 
 
-	public ProfileDAO getProfileDAO(){
-		return this.profileDAO;
+	public DepartmentDAO getDepartmentDAO(){
+		return this.departmentDAO;
 	}
-	public void setProfileDAO(ProfileDAO dao){
-		this.profileDAO = dao;
+	public void setDepartmentDAO(DepartmentDAO dao){
+		this.departmentDAO = dao;
 	}
 
 
-	public RegistrationDAO getRegistrationDAO(){
-		return this.registrationDAO;
+	public DoctorAssignmentDAO getDoctorAssignmentDAO(){
+		return this.doctorAssignmentDAO;
 	}
-	public void setRegistrationDAO(RegistrationDAO dao){
-		this.registrationDAO = dao;
+	public void setDoctorAssignmentDAO(DoctorAssignmentDAO dao){
+		this.doctorAssignmentDAO = dao;
+	}
+
+
+	public DoctorScheduleDAO getDoctorScheduleDAO(){
+		return this.doctorScheduleDAO;
+	}
+	public void setDoctorScheduleDAO(DoctorScheduleDAO dao){
+		this.doctorScheduleDAO = dao;
 	}
 
 
@@ -238,18 +290,63 @@ public class DAOGroup {
 	static {
 		internalLoaderMap = new HashMap<String, BasicLoader>();
 
-		internalLoaderMap.put("Platform", new BasicLoader() {
+		internalLoaderMap.put("Hospital", new BasicLoader() {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
-				return daoGoup.getPlatformDAO().load(id, PlatformTokens.withoutLists());
+				return daoGoup.getHospitalDAO().load(id, HospitalTokens.withoutLists());
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getPlatformDAO().load(id, tokens);
+				return daoGoup.getHospitalDAO().load(id, tokens);
 			}
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getPlatformDAO().present((Platform)data, tokens);
+				return daoGoup.getHospitalDAO().present((Hospital)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("ExpenseType", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getExpenseTypeDAO().load(id, ExpenseTypeTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getExpenseTypeDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getExpenseTypeDAO().present((ExpenseType)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("Period", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getPeriodDAO().load(id, PeriodTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getPeriodDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getPeriodDAO().present((Period)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("ExpenseItem", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getExpenseItemDAO().load(id, ExpenseItemTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getExpenseItemDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getExpenseItemDAO().present((ExpenseItem)data, tokens);
 			}
 		});
 
@@ -268,33 +365,48 @@ public class DAOGroup {
 			}
 		});
 
-		internalLoaderMap.put("Profile", new BasicLoader() {
+		internalLoaderMap.put("Department", new BasicLoader() {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
-				return daoGoup.getProfileDAO().load(id, ProfileTokens.withoutLists());
+				return daoGoup.getDepartmentDAO().load(id, DepartmentTokens.withoutLists());
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getProfileDAO().load(id, tokens);
+				return daoGoup.getDepartmentDAO().load(id, tokens);
 			}
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getProfileDAO().present((Profile)data, tokens);
+				return daoGoup.getDepartmentDAO().present((Department)data, tokens);
 			}
 		});
 
-		internalLoaderMap.put("Registration", new BasicLoader() {
+		internalLoaderMap.put("DoctorAssignment", new BasicLoader() {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
-				return daoGoup.getRegistrationDAO().load(id, RegistrationTokens.withoutLists());
+				return daoGoup.getDoctorAssignmentDAO().load(id, DoctorAssignmentTokens.withoutLists());
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getRegistrationDAO().load(id, tokens);
+				return daoGoup.getDoctorAssignmentDAO().load(id, tokens);
 			}
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getRegistrationDAO().present((Registration)data, tokens);
+				return daoGoup.getDoctorAssignmentDAO().present((DoctorAssignment)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("DoctorSchedule", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getDoctorScheduleDAO().load(id, DoctorScheduleTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getDoctorScheduleDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getDoctorScheduleDAO().present((DoctorSchedule)data, tokens);
 			}
 		});
 

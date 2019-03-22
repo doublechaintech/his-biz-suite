@@ -23,6 +23,8 @@
 <li><span>${userContext.localeMap['doctor_schedule.period']}</span> ${doctorSchedule.period}</li>
 <li><span>${userContext.localeMap['doctor_schedule.available']}</span> ${doctorSchedule.available}</li>
 <li><span>${userContext.localeMap['doctor_schedule.price']}</span> <fmt:formatNumber type="currency"  value="${doctorSchedule.price}" /></li>
+<li><span>${userContext.localeMap['doctor_schedule.create_time']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${doctorSchedule.createTime}" /></li>
+<li><span>${userContext.localeMap['doctor_schedule.update_time']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${doctorSchedule.updateTime}" /></li>
 
 	
 	</ul>

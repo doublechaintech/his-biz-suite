@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.terapico.caf.viewcomponent.BaseViewComponent;
 import com.terapico.caf.viewcomponent.ButtonViewComponent;
 import com.terapico.caf.viewcomponent.FilterTabsViewComponent;
+import com.terapico.caf.viewcomponent.PopupViewComponent;
 import com.terapico.caf.viewpage.SerializeScope;
 import com.terapico.utils.MapUtil;
 import com.terapico.utils.TextUtil;
@@ -52,7 +54,6 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	public Object doRender(HisUserContext userContext) {
 		this.userContext = userContext;
 		beforeDoRendering();
-		addFieldToOwner(this, null, "pageTitle", this.getPageTitle());
 		doRendering();
 		this.userContext.forceResponseXClassHeader(this.getClass().getName());
 		afterDoRendering();
@@ -60,7 +61,8 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	}
 
 	protected void beforeDoRendering() {
-		// By default, nothing to do
+		userContext.setResponseHeader("x-actor-class", this.getClass().getName());
+		addFieldToOwner(this, null, "pageTitle", this.getPageTitle());
 	}
 
 	protected void afterDoRendering() {
@@ -197,6 +199,9 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		}
 		if (value instanceof BaseEntity) {
 			return doRenderingBaseEntity(fieldScope, (BaseEntity) value, path);
+		}
+		if (value instanceof BaseViewComponent) {
+			return ((BaseViewComponent) value).toMap();
 		}
 		// 最后了，没办法了
 		if (fieldScope.isRevers()) {
@@ -337,7 +342,12 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		}
 		*/
 		if (object instanceof ButtonViewComponent) {
+			// action 是特别定制的序列化
 			return new ButtonViewComponentSerializer();
+		}
+		if (object instanceof PopupViewComponent) {
+			// popup 也是特别定制的的
+			return new PopupViewComponentSerializer();
 		}
 		return null;
 	}
@@ -398,6 +408,29 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 			addFieldToOwner(resultData, fieldScope, "linkToUrl", btn.getLinkToUrl());
 			addFieldToOwner(resultData, fieldScope, "code", btn.getTag());
 			addFieldToOwner(resultData, fieldScope, "type", btn.getType());
+			return resultData;
+		}
+	}
+	
+	protected class PopupViewComponentSerializer implements CustomSerializer {
+		@Override
+		public Object serialize(SerializeScope serializeScope, Object value, String path) {
+			PopupViewComponent popup = (PopupViewComponent) value;
+			SerializeScope fieldScope = SerializeScope.EXCLUDE();
+			Map<String, Object> resultData = new HashMap<>();
+			addFieldToOwner(resultData, fieldScope, "title", popup.getTitle());
+			addFieldToOwner(resultData, fieldScope, "text", popup.getText());
+			addFieldToOwner(resultData, fieldScope, "closeActionText", popup.getCloseActionText());
+			List<ButtonViewComponent> actionList = popup.getActionList();
+			if (actionList == null || actionList.isEmpty()) {
+				return resultData;
+			}
+			List<Object> actionsSrst = new ArrayList<>();
+			ButtonViewComponentSerializer btnSer = new ButtonViewComponentSerializer();
+			for(ButtonViewComponent action: actionList) {
+				actionsSrst.add(btnSer.serialize(serializeScope, action, path+action.hashCode()+"/"));
+			}
+			addFieldToOwner(resultData, fieldScope, "actionList", actionsSrst);
 			return resultData;
 		}
 	}

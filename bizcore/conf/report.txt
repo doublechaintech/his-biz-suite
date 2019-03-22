@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190311T1555) @Mon Mar 11 15:55:26 CST 2019, 20 objects and 147 fields===========================
+=================Execute Report (Model Time 190321T1712) @Fri Mar 22 12:20:12 CST 2019, 21 objects and 160 fields===========================
 
 
 
@@ -15,6 +15,15 @@
 
 Info: Add virtual field [expense_types(es)] to <hospital>
 	expense_type.hospital
+
+
+ processing: period
+
+
+ processing: period.hospital.hospital
+
+Info: Add virtual field [periods(es)] to <hospital>
+	period.hospital
 
 
  processing: expense_item
@@ -74,16 +83,28 @@ Info: Add virtual field [doctor_schedules(es)] to <doctor>
 	doctor_schedule.doctor
 
 
- processing: doctor_schedule.expense_type.expense_type
+ processing: doctor_schedule.period.period
 
-Info: Add virtual field [doctor_schedules(es)] to <expense_type>
-	doctor_schedule.expense_type
+Info: Add virtual field [doctor_schedules(es)] to <period>
+	doctor_schedule.period
 
 
  processing: doctor_schedule.department.department
 
 Info: Add virtual field [doctor_schedules(es)] to <department>
 	doctor_schedule.department
+
+
+ processing: doctor_schedule.expense_type.expense_type
+
+Info: Add virtual field [doctor_schedules(es)] to <expense_type>
+	doctor_schedule.expense_type
+
+
+ processing: doctor_schedule.hospital.hospital
+
+Info: Add virtual field [doctor_schedules(es)] to <hospital>
+	doctor_schedule.hospital
 
 
 **************************************************
@@ -96,22 +117,25 @@ hospital{
 		string	telephone('028-9123123'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(4){
+	references field(6){
 		expenseTypeList	hospital(基本信息)--hospital;
+		periodList	hospital(基本信息)--hospital;
 		expenseItemList	hospital(基本信息)--hospital;
 		doctorList	hospital(基本信息)--hospital;
 		departmentList	hospital(基本信息)--hospital;
+		doctorScheduleList	hospital(基本信息)--hospital;
 	}
 } depth=0; isRoot = true
 
 expense_type{
-	fields(7){
+	fields(8){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
 		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
 		string	status('正常|停用'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList;
 		string_longtext	description('text()'), verb: false, required: true;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -120,13 +144,26 @@ expense_type{
 	}
 } depth=1; isRoot = false
 
+period{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('上午|下午|夜班'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		doctorScheduleList	period(基本信息)--period;
+	}
+} depth=1; isRoot = false
+
 expense_item{
-	fields(6){
+	fields(7){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
-		money	price('$99.00'), verb: false, required: true;
+		money	price('$99999999999.00'), verb: false, required: true;
 		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -134,10 +171,12 @@ expense_item{
 } depth=2; isRoot = false
 
 doctor{
-	fields(4){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('魏松全'), verb: false, required: true;
+		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -147,10 +186,11 @@ doctor{
 } depth=1; isRoot = false
 
 department{
-	fields(4){
+	fields(5){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('放射科'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -160,11 +200,12 @@ department{
 } depth=1; isRoot = false
 
 doctor_assignment{
-	fields(5){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('魏松全在内分泌科室上'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
 		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -172,16 +213,19 @@ doctor_assignment{
 } depth=2; isRoot = false
 
 doctor_schedule{
-	fields(10){
+	fields(13){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
-		date	schedule_date('2019-3-11'), verb: false, required: true;
-		string	period('上午|下午|夜班'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		date	schedule_date('2019-3-11'), verb: false, required: true;
+		period	period('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		int	available('20'), verb: false, required: true;
 		money	price('$123.99'), verb: false, required: true;
 		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		date_time_create	create_time('createTime()'), verb: false, required: true;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -196,22 +240,25 @@ hospital{
 		string	telephone('028-9123123'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(4){
+	references field(6){
 		expenseTypeList	hospital(基本信息)--hospital;
+		periodList	hospital(基本信息)--hospital;
 		expenseItemList	hospital(基本信息)--hospital;
 		doctorList	hospital(基本信息)--hospital;
 		departmentList	hospital(基本信息)--hospital;
+		doctorScheduleList	hospital(基本信息)--hospital;
 	}
 } depth=0; isRoot = true
 
 expense_type{
-	fields(7){
+	fields(8){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
 		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
 		string	status('正常|停用'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList;
 		string_longtext	description('text()'), verb: false, required: true;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -220,13 +267,26 @@ expense_type{
 	}
 } depth=1; isRoot = false
 
+period{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('上午|下午|夜班'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		doctorScheduleList	period(基本信息)--period;
+	}
+} depth=1; isRoot = false
+
 expense_item{
-	fields(6){
+	fields(7){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
-		money	price('$99.00'), verb: false, required: true;
+		money	price('$99999999999.00'), verb: false, required: true;
 		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -234,10 +294,12 @@ expense_item{
 } depth=2; isRoot = false
 
 doctor{
-	fields(4){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('魏松全'), verb: false, required: true;
+		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -247,10 +309,11 @@ doctor{
 } depth=1; isRoot = false
 
 department{
-	fields(4){
+	fields(5){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('放射科'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
@@ -260,11 +323,12 @@ department{
 } depth=1; isRoot = false
 
 doctor_assignment{
-	fields(5){
+	fields(6){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('魏松全在内分泌科室上'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
 		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -272,16 +336,19 @@ doctor_assignment{
 } depth=2; isRoot = false
 
 doctor_schedule{
-	fields(10){
+	fields(13){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
-		date	schedule_date('2019-3-11'), verb: false, required: true;
-		string	period('上午|下午|夜班'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		date	schedule_date('2019-3-11'), verb: false, required: true;
+		period	period('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		int	available('20'), verb: false, required: true;
 		money	price('$123.99'), verb: false, required: true;
 		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
+		date_time_create	create_time('createTime()'), verb: false, required: true;
+		date_time_update	update_time('updateTime()'), verb: false, required: true;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){

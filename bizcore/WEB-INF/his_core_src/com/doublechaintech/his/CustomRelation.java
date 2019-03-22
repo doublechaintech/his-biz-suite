@@ -9,11 +9,7 @@ public class CustomRelation extends BaseRelation{
 	{
 		super.prepareRelation();
 		//Uncomment to make any change to the relation type
-		//replaceGenericRelation("Doctor"                                , BaseRelation.TRUST_CHAIN_ALL, "platform");
-		//replaceGenericRelation("Profile"                               , BaseRelation.TRUST_CHAIN_ALL, "platform");
-		//replaceGenericRelation("Registration"                          , BaseRelation.TRUST_CHAIN_ALL, "patient");
-		//replaceGenericRelation("Registration"                          , BaseRelation.TRUST_CHAIN_ALL, "register");
-		//replaceGenericRelation("Registration"                          , BaseRelation.TRUST_CHAIN_ALL, "platform");
+		//replaceGenericRelation("Doctor"                                , BaseRelation.TRUST_CHAIN_ALL, "hospital");
 		//replaceGenericRelation("UserWhiteList"                         , BaseRelation.TRUST_CHAIN_ALL, "domain");
 		//replaceGenericRelation("SecUser"                               , BaseRelation.TRUST_CHAIN_ALL, "domain");
 		//replaceGenericRelation("UserApp"                               , BaseRelation.TRUST_CHAIN_ALL, "secUser");
@@ -36,14 +32,8 @@ public class CustomRelation extends BaseRelation{
 		Just uncomment the definition line and replaceRelationIndex line to replace existing one.
 		
 		*/
-		//String [] doctorRelatedObjectNames = {"platform:Platform"};
+		//String [] doctorRelatedObjectNames = {"hospital:Hospital"};
 		//replaceRelationIndex("Doctor",doctorRelatedObjectNames);
-
-		//String [] profileRelatedObjectNames = {"platform:Platform"};
-		//replaceRelationIndex("Profile",profileRelatedObjectNames);
-
-		//String [] registrationRelatedObjectNames = {"patient:Profile","register:Profile","platform:Platform"};
-		//replaceRelationIndex("Registration",registrationRelatedObjectNames);
 
 		//String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		//replaceRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);

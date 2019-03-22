@@ -2,10 +2,14 @@
 package com.doublechaintech.his;
 import java.util.Map;
 
-import com.doublechaintech.his.platform.Platform;
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.expensetype.ExpenseType;
+import com.doublechaintech.his.period.Period;
+import com.doublechaintech.his.expenseitem.ExpenseItem;
 import com.doublechaintech.his.doctor.Doctor;
-import com.doublechaintech.his.profile.Profile;
-import com.doublechaintech.his.registration.Registration;
+import com.doublechaintech.his.department.Department;
+import com.doublechaintech.his.doctorassignment.DoctorAssignment;
+import com.doublechaintech.his.doctorschedule.DoctorSchedule;
 import com.doublechaintech.his.userdomain.UserDomain;
 import com.doublechaintech.his.userwhitelist.UserWhiteList;
 import com.doublechaintech.his.secuser.SecUser;
@@ -23,8 +27,23 @@ import com.doublechaintech.his.formaction.FormAction;
 public class BeanFactoryImpl{
 
 
-	public Platform createPlatform(Map<String,Object> options){
-		return new Platform();
+	public Hospital createHospital(Map<String,Object> options){
+		return new Hospital();
+	}
+
+
+	public ExpenseType createExpenseType(Map<String,Object> options){
+		return new ExpenseType();
+	}
+
+
+	public Period createPeriod(Map<String,Object> options){
+		return new Period();
+	}
+
+
+	public ExpenseItem createExpenseItem(Map<String,Object> options){
+		return new ExpenseItem();
 	}
 
 
@@ -33,13 +52,18 @@ public class BeanFactoryImpl{
 	}
 
 
-	public Profile createProfile(Map<String,Object> options){
-		return new Profile();
+	public Department createDepartment(Map<String,Object> options){
+		return new Department();
 	}
 
 
-	public Registration createRegistration(Map<String,Object> options){
-		return new Registration();
+	public DoctorAssignment createDoctorAssignment(Map<String,Object> options){
+		return new DoctorAssignment();
+	}
+
+
+	public DoctorSchedule createDoctorSchedule(Map<String,Object> options){
+		return new DoctorSchedule();
 	}
 
 

@@ -109,14 +109,26 @@ public class BaseRelation{
 	{
 		
 		
-		String [] doctorRelatedObjectNames = {"platform:Platform"};
+		String [] expenseTypeRelatedObjectNames = {"hospital:Hospital"};
+		addRelationIndex("ExpenseType",expenseTypeRelatedObjectNames);
+
+		String [] periodRelatedObjectNames = {"hospital:Hospital"};
+		addRelationIndex("Period",periodRelatedObjectNames);
+
+		String [] expenseItemRelatedObjectNames = {"expense_type:ExpenseType","hospital:Hospital"};
+		addRelationIndex("ExpenseItem",expenseItemRelatedObjectNames);
+
+		String [] doctorRelatedObjectNames = {"hospital:Hospital"};
 		addRelationIndex("Doctor",doctorRelatedObjectNames);
 
-		String [] profileRelatedObjectNames = {"platform:Platform"};
-		addRelationIndex("Profile",profileRelatedObjectNames);
+		String [] departmentRelatedObjectNames = {"hospital:Hospital"};
+		addRelationIndex("Department",departmentRelatedObjectNames);
 
-		String [] registrationRelatedObjectNames = {"patient:Profile","register:Profile","platform:Platform"};
-		addRelationIndex("Registration",registrationRelatedObjectNames);
+		String [] doctorAssignmentRelatedObjectNames = {"doctor:Doctor","department:Department"};
+		addRelationIndex("DoctorAssignment",doctorAssignmentRelatedObjectNames);
+
+		String [] doctorScheduleRelatedObjectNames = {"doctor:Doctor","period:Period","department:Department","expense_type:ExpenseType","hospital:Hospital"};
+		addRelationIndex("DoctorSchedule",doctorScheduleRelatedObjectNames);
 
 		String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		addRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);
@@ -168,11 +180,19 @@ public class BaseRelation{
 	//default for reading trust chain, the default sequence are MXWR, the order is not affect the result
 	protected void prepareRelation()
 	{
-		addGenericRelation("Doctor"                                ,TRUST_CHAIN_READ,"platform");
-		addGenericRelation("Profile"                               ,TRUST_CHAIN_READ,"platform");
-		addGenericRelation("Registration"                          ,TRUST_CHAIN_READ,"patient");
-		addGenericRelation("Registration"                          ,TRUST_CHAIN_READ,"register");
-		addGenericRelation("Registration"                          ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("ExpenseType"                           ,TRUST_CHAIN_READ,"hospital");
+		addGenericRelation("Period"                                ,TRUST_CHAIN_READ,"hospital");
+		addGenericRelation("ExpenseItem"                           ,TRUST_CHAIN_READ,"expenseType");
+		addGenericRelation("ExpenseItem"                           ,TRUST_CHAIN_READ,"hospital");
+		addGenericRelation("Doctor"                                ,TRUST_CHAIN_READ,"hospital");
+		addGenericRelation("Department"                            ,TRUST_CHAIN_READ,"hospital");
+		addGenericRelation("DoctorAssignment"                      ,TRUST_CHAIN_READ,"doctor");
+		addGenericRelation("DoctorAssignment"                      ,TRUST_CHAIN_READ,"department");
+		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"doctor");
+		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"period");
+		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"department");
+		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"expenseType");
+		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"hospital");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("UserApp"                               ,TRUST_CHAIN_READ,"secUser");

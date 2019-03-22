@@ -9,43 +9,179 @@ public class HisCheckerManager extends BaseManagerImpl {
 	/*
 	
 	
-	public static final String  ID_OF_PLATFORM ="platform.id";
-	protected void checkIdOfPlatform(HisUserContext userContext, String id, List<Message> messageList)
+	public static final String  ID_OF_HOSPITAL ="hospital.id";
+	protected void checkIdOfHospital(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_PLATFORM, messageList); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_HOSPITAL, messageList); 		
 		
 	}	 			
 	
-	public static final String  NAME_OF_PLATFORM ="platform.name";
-	protected void checkNameOfPlatform(HisUserContext userContext, String name, List<Message> messageList)
+	public static final String  NAME_OF_HOSPITAL ="hospital.name";
+	protected void checkNameOfHospital(HisUserContext userContext, String name, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(name,1, 12,NAME_OF_PLATFORM, messageList); 		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_HOSPITAL, messageList); 		
 		
 	}	 			
 	
-	public static final String  INTRODUCTION_OF_PLATFORM ="platform.introduction";
-	protected void checkIntroductionOfPlatform(HisUserContext userContext, String introduction, List<Message> messageList)
+	public static final String  ADDRESS_OF_HOSPITAL ="hospital.address";
+	protected void checkAddressOfHospital(HisUserContext userContext, String address, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(introduction,7, 108,INTRODUCTION_OF_PLATFORM, messageList); 		
+	 	checkStringLengthRange(address,2, 24,ADDRESS_OF_HOSPITAL, messageList); 		
 		
 	}	 			
 	
-	public static final String  CURRENT_VERSION_OF_PLATFORM ="platform.current_version";
-	protected void checkCurrentVersionOfPlatform(HisUserContext userContext, String currentVersion, List<Message> messageList)
+	public static final String  TELEPHONE_OF_HOSPITAL ="hospital.telephone";
+	protected void checkTelephoneOfHospital(HisUserContext userContext, String telephone, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(currentVersion,2, 16,CURRENT_VERSION_OF_PLATFORM, messageList); 		
+	 	checkStringLengthRange(telephone,3, 44,TELEPHONE_OF_HOSPITAL, messageList); 		
 		
 	}	 			
 	
-	public static final String  VERSION_OF_PLATFORM ="platform.version";
-	protected void checkVersionOfPlatform(HisUserContext userContext, int version, List<Message> messageList)
+	public static final String  VERSION_OF_HOSPITAL ="hospital.version";
+	protected void checkVersionOfHospital(HisUserContext userContext, int version, List<Message> messageList)
 	{
 		
-	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PLATFORM, messageList); 		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_HOSPITAL, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_EXPENSE_TYPE ="expense_type.id";
+	protected void checkIdOfExpenseType(HisUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_TYPE, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_EXPENSE_TYPE ="expense_type.name";
+	protected void checkNameOfExpenseType(HisUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,1, 12,NAME_OF_EXPENSE_TYPE, messageList); 		
+		
+	}	 			
+	
+	public static final String  HELPER_CHARS_OF_EXPENSE_TYPE ="expense_type.helper_chars";
+	protected void checkHelperCharsOfExpenseType(HisUserContext userContext, String helperChars, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(helperChars,1, 12,HELPER_CHARS_OF_EXPENSE_TYPE, messageList); 		
+		
+	}	 			
+	
+	public static final String  STATUS_OF_EXPENSE_TYPE ="expense_type.status";
+	protected void checkStatusOfExpenseType(HisUserContext userContext, String status, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(status,1, 8,STATUS_OF_EXPENSE_TYPE, messageList); 		
+		
+	}	 			
+	
+	public static final String  HOSPITAL_OF_EXPENSE_TYPE ="expense_type.hospital";
+	protected void checkHospitalIdOfExpenseType(HisUserContext userContext, String hospitalId, List<Message> messageList)
+	{
+		
+	 	checkIdOfExpenseType(userContext,hospitalId, messageList); 		
+		
+	}	 			
+	
+	public static final String  DESCRIPTION_OF_EXPENSE_TYPE ="expense_type.description";
+	protected void checkDescriptionOfExpenseType(HisUserContext userContext, String description, List<Message> messageList)
+	{
+		
+	 	checkLongtext(description,0, 1048576,DESCRIPTION_OF_EXPENSE_TYPE, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_EXPENSE_TYPE ="expense_type.version";
+	protected void checkVersionOfExpenseType(HisUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_EXPENSE_TYPE, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_PERIOD ="period.id";
+	protected void checkIdOfPeriod(HisUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PERIOD, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_PERIOD ="period.name";
+	protected void checkNameOfPeriod(HisUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,1, 8,NAME_OF_PERIOD, messageList); 		
+		
+	}	 			
+	
+	public static final String  HOSPITAL_OF_PERIOD ="period.hospital";
+	protected void checkHospitalIdOfPeriod(HisUserContext userContext, String hospitalId, List<Message> messageList)
+	{
+		
+	 	checkIdOfPeriod(userContext,hospitalId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_PERIOD ="period.version";
+	protected void checkVersionOfPeriod(HisUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PERIOD, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_EXPENSE_ITEM ="expense_item.id";
+	protected void checkIdOfExpenseItem(HisUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_ITEM, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_EXPENSE_ITEM ="expense_item.name";
+	protected void checkNameOfExpenseItem(HisUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,1, 20,NAME_OF_EXPENSE_ITEM, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRICE_OF_EXPENSE_ITEM ="expense_item.price";
+	protected void checkPriceOfExpenseItem(HisUserContext userContext, BigDecimal price, List<Message> messageList)
+	{
+		
+	 	checkMoneyAmount(price,0.00, 99999999999.00,PRICE_OF_EXPENSE_ITEM, messageList); 		
+		
+	}	 			
+	
+	public static final String  EXPENSE_TYPE_OF_EXPENSE_ITEM ="expense_item.expense_type";
+	protected void checkExpenseTypeIdOfExpenseItem(HisUserContext userContext, String expenseTypeId, List<Message> messageList)
+	{
+		
+	 	checkIdOfExpenseItem(userContext,expenseTypeId, messageList); 		
+		
+	}	 			
+	
+	public static final String  HOSPITAL_OF_EXPENSE_ITEM ="expense_item.hospital";
+	protected void checkHospitalIdOfExpenseItem(HisUserContext userContext, String hospitalId, List<Message> messageList)
+	{
+		
+	 	checkIdOfExpenseItem(userContext,hospitalId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_EXPENSE_ITEM ="expense_item.version";
+	protected void checkVersionOfExpenseItem(HisUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_EXPENSE_ITEM, messageList); 		
 		
 	}	 			
 	
@@ -65,11 +201,19 @@ public class HisCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
-	public static final String  PLATFORM_OF_DOCTOR ="doctor.platform";
-	protected void checkPlatformIdOfDoctor(HisUserContext userContext, String platformId, List<Message> messageList)
+	public static final String  SHOT_IMAGE_OF_DOCTOR ="doctor.shot_image";
+	protected void checkShotImageOfDoctor(HisUserContext userContext, String shotImage, List<Message> messageList)
 	{
 		
-	 	checkIdOfDoctor(userContext,platformId, messageList); 		
+	 	checkImage(shotImage,0, 512,SHOT_IMAGE_OF_DOCTOR, messageList); 		
+		
+	}	 			
+	
+	public static final String  HOSPITAL_OF_DOCTOR ="doctor.hospital";
+	protected void checkHospitalIdOfDoctor(HisUserContext userContext, String hospitalId, List<Message> messageList)
+	{
+		
+	 	checkIdOfDoctor(userContext,hospitalId, messageList); 		
 		
 	}	 			
 	
@@ -81,131 +225,163 @@ public class HisCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
-	public static final String  ID_OF_PROFILE ="profile.id";
-	protected void checkIdOfProfile(HisUserContext userContext, String id, List<Message> messageList)
+	public static final String  ID_OF_DEPARTMENT ="department.id";
+	protected void checkIdOfDepartment(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_PROFILE, messageList); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_DEPARTMENT, messageList); 		
 		
 	}	 			
 	
-	public static final String  NAME_OF_PROFILE ="profile.name";
-	protected void checkNameOfProfile(HisUserContext userContext, String name, List<Message> messageList)
+	public static final String  NAME_OF_DEPARTMENT ="department.name";
+	protected void checkNameOfDepartment(HisUserContext userContext, String name, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(name,1, 12,NAME_OF_PROFILE, messageList); 		
+	 	checkStringLengthRange(name,1, 12,NAME_OF_DEPARTMENT, messageList); 		
 		
 	}	 			
 	
-	public static final String  GENDER_OF_PROFILE ="profile.gender";
-	protected void checkGenderOfProfile(HisUserContext userContext, String gender, List<Message> messageList)
+	public static final String  HOSPITAL_OF_DEPARTMENT ="department.hospital";
+	protected void checkHospitalIdOfDepartment(HisUserContext userContext, String hospitalId, List<Message> messageList)
 	{
 		
-	 	checkGender(gender,0, 4,GENDER_OF_PROFILE, messageList); 		
+	 	checkIdOfDepartment(userContext,hospitalId, messageList); 		
 		
 	}	 			
 	
-	public static final String  AGE_OF_PROFILE ="profile.age";
-	protected void checkAgeOfProfile(HisUserContext userContext, int age, List<Message> messageList)
+	public static final String  VERSION_OF_DEPARTMENT ="department.version";
+	protected void checkVersionOfDepartment(HisUserContext userContext, int version, List<Message> messageList)
 	{
 		
-	 	checkIntegerRange(age,0, 100,AGE_OF_PROFILE, messageList); 		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_DEPARTMENT, messageList); 		
 		
 	}	 			
 	
-	public static final String  IDENTIFICATION_NUMBER_OF_PROFILE ="profile.identification_number";
-	protected void checkIdentificationNumberOfProfile(HisUserContext userContext, String identificationNumber, List<Message> messageList)
+	public static final String  ID_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.id";
+	protected void checkIdOfDoctorAssignment(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(identificationNumber,4, 52,IDENTIFICATION_NUMBER_OF_PROFILE, messageList); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_ASSIGNMENT, messageList); 		
 		
 	}	 			
 	
-	public static final String  MOBILE_OF_PROFILE ="profile.mobile";
-	protected void checkMobileOfProfile(HisUserContext userContext, String mobile, List<Message> messageList)
+	public static final String  NAME_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.name";
+	protected void checkNameOfDoctorAssignment(HisUserContext userContext, String name, List<Message> messageList)
 	{
 		
-	 	checkChinaMobilePhone(mobile,5, 44,MOBILE_OF_PROFILE, messageList); 		
+	 	checkStringLengthRange(name,3, 40,NAME_OF_DOCTOR_ASSIGNMENT, messageList); 		
 		
 	}	 			
 	
-	public static final String  PLATFORM_OF_PROFILE ="profile.platform";
-	protected void checkPlatformIdOfProfile(HisUserContext userContext, String platformId, List<Message> messageList)
+	public static final String  DOCTOR_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.doctor";
+	protected void checkDoctorIdOfDoctorAssignment(HisUserContext userContext, String doctorId, List<Message> messageList)
 	{
 		
-	 	checkIdOfProfile(userContext,platformId, messageList); 		
+	 	checkIdOfDoctorAssignment(userContext,doctorId, messageList); 		
 		
 	}	 			
 	
-	public static final String  VERSION_OF_PROFILE ="profile.version";
-	protected void checkVersionOfProfile(HisUserContext userContext, int version, List<Message> messageList)
+	public static final String  DEPARTMENT_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.department";
+	protected void checkDepartmentIdOfDoctorAssignment(HisUserContext userContext, String departmentId, List<Message> messageList)
 	{
 		
-	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PROFILE, messageList); 		
+	 	checkIdOfDoctorAssignment(userContext,departmentId, messageList); 		
 		
 	}	 			
 	
-	public static final String  ID_OF_REGISTRATION ="registration.id";
-	protected void checkIdOfRegistration(HisUserContext userContext, String id, List<Message> messageList)
+	public static final String  VERSION_OF_DOCTOR_ASSIGNMENT ="doctor_assignment.version";
+	protected void checkVersionOfDoctorAssignment(HisUserContext userContext, int version, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_REGISTRATION, messageList); 		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_DOCTOR_ASSIGNMENT, messageList); 		
 		
 	}	 			
 	
-	public static final String  TITLE_OF_REGISTRATION ="registration.title";
-	protected void checkTitleOfRegistration(HisUserContext userContext, String title, List<Message> messageList)
+	public static final String  ID_OF_DOCTOR_SCHEDULE ="doctor_schedule.id";
+	protected void checkIdOfDoctorSchedule(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(title,2, 16,TITLE_OF_REGISTRATION, messageList); 		
+	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_SCHEDULE, messageList); 		
 		
 	}	 			
 	
-	public static final String  PATIENT_OF_REGISTRATION ="registration.patient";
-	protected void checkPatientIdOfRegistration(HisUserContext userContext, String patientId, List<Message> messageList)
+	public static final String  NAME_OF_DOCTOR_SCHEDULE ="doctor_schedule.name";
+	protected void checkNameOfDoctorSchedule(HisUserContext userContext, String name, List<Message> messageList)
 	{
 		
-	 	checkIdOfRegistration(userContext,patientId, messageList); 		
+	 	checkStringLengthRange(name,8, 116,NAME_OF_DOCTOR_SCHEDULE, messageList); 		
 		
 	}	 			
 	
-	public static final String  REGISTER_OF_REGISTRATION ="registration.register";
-	protected void checkRegisterIdOfRegistration(HisUserContext userContext, String registerId, List<Message> messageList)
+	public static final String  DOCTOR_OF_DOCTOR_SCHEDULE ="doctor_schedule.doctor";
+	protected void checkDoctorIdOfDoctorSchedule(HisUserContext userContext, String doctorId, List<Message> messageList)
 	{
 		
-	 	checkIdOfRegistration(userContext,registerId, messageList); 		
+	 	checkIdOfDoctorSchedule(userContext,doctorId, messageList); 		
 		
 	}	 			
 	
-	public static final String  CONTENT_OF_REGISTRATION ="registration.content";
-	protected void checkContentOfRegistration(HisUserContext userContext, String content, List<Message> messageList)
+	public static final String  SCHEDULE_DATE_OF_DOCTOR_SCHEDULE ="doctor_schedule.schedule_date";
+	protected void checkScheduleDateOfDoctorSchedule(HisUserContext userContext, Date scheduleDate, List<Message> messageList)
 	{
 		
-	 	checkLongtext(content,0, 1048576,CONTENT_OF_REGISTRATION, messageList); 		
+	 	checkDateRange(scheduleDate,parseDate("1900-01-01"), parseDate("2019-3-11"),SCHEDULE_DATE_OF_DOCTOR_SCHEDULE, messageList); 		
 		
 	}	 			
 	
-	public static final String  STATUS_OF_REGISTRATION ="registration.status";
-	protected void checkStatusOfRegistration(HisUserContext userContext, String status, List<Message> messageList)
+	public static final String  PERIOD_OF_DOCTOR_SCHEDULE ="doctor_schedule.period";
+	protected void checkPeriodIdOfDoctorSchedule(HisUserContext userContext, String periodId, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(status,2, 24,STATUS_OF_REGISTRATION, messageList); 		
+	 	checkIdOfDoctorSchedule(userContext,periodId, messageList); 		
 		
 	}	 			
 	
-	public static final String  PLATFORM_OF_REGISTRATION ="registration.platform";
-	protected void checkPlatformIdOfRegistration(HisUserContext userContext, String platformId, List<Message> messageList)
+	public static final String  DEPARTMENT_OF_DOCTOR_SCHEDULE ="doctor_schedule.department";
+	protected void checkDepartmentIdOfDoctorSchedule(HisUserContext userContext, String departmentId, List<Message> messageList)
 	{
 		
-	 	checkIdOfRegistration(userContext,platformId, messageList); 		
+	 	checkIdOfDoctorSchedule(userContext,departmentId, messageList); 		
 		
 	}	 			
 	
-	public static final String  VERSION_OF_REGISTRATION ="registration.version";
-	protected void checkVersionOfRegistration(HisUserContext userContext, int version, List<Message> messageList)
+	public static final String  AVAILABLE_OF_DOCTOR_SCHEDULE ="doctor_schedule.available";
+	protected void checkAvailableOfDoctorSchedule(HisUserContext userContext, int available, List<Message> messageList)
 	{
 		
-	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_REGISTRATION, messageList); 		
+	 	checkIntegerRange(available,0, 20,AVAILABLE_OF_DOCTOR_SCHEDULE, messageList); 		
+		
+	}	 			
+	
+	public static final String  PRICE_OF_DOCTOR_SCHEDULE ="doctor_schedule.price";
+	protected void checkPriceOfDoctorSchedule(HisUserContext userContext, BigDecimal price, List<Message> messageList)
+	{
+		
+	 	checkMoneyAmount(price,0.00, 123.99,PRICE_OF_DOCTOR_SCHEDULE, messageList); 		
+		
+	}	 			
+	
+	public static final String  EXPENSE_TYPE_OF_DOCTOR_SCHEDULE ="doctor_schedule.expense_type";
+	protected void checkExpenseTypeIdOfDoctorSchedule(HisUserContext userContext, String expenseTypeId, List<Message> messageList)
+	{
+		
+	 	checkIdOfDoctorSchedule(userContext,expenseTypeId, messageList); 		
+		
+	}	 			
+	
+	public static final String  HOSPITAL_OF_DOCTOR_SCHEDULE ="doctor_schedule.hospital";
+	protected void checkHospitalIdOfDoctorSchedule(HisUserContext userContext, String hospitalId, List<Message> messageList)
+	{
+		
+	 	checkIdOfDoctorSchedule(userContext,hospitalId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_DOCTOR_SCHEDULE ="doctor_schedule.version";
+	protected void checkVersionOfDoctorSchedule(HisUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_DOCTOR_SCHEDULE, messageList); 		
 		
 	}	 			
 	

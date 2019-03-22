@@ -11,7 +11,9 @@ import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.doublechaintech.his.platform.Platform;
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+import com.doublechaintech.his.doctorassignment.DoctorAssignment;
 
 @JsonSerialize(using = DoctorSerializer.class)
 public class Doctor extends BaseEntity implements  java.io.Serializable{
@@ -19,9 +21,13 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	
 	public static final String ID_PROPERTY                    = "id"                ;
 	public static final String NAME_PROPERTY                  = "name"              ;
-	public static final String PLATFORM_PROPERTY              = "platform"          ;
+	public static final String SHOT_IMAGE_PROPERTY            = "shotImage"         ;
+	public static final String HOSPITAL_PROPERTY              = "hospital"          ;
+	public static final String UPDATE_TIME_PROPERTY           = "updateTime"        ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
+	public static final String DOCTOR_ASSIGNMENT_LIST                   = "doctorAssignmentList";
+	public static final String DOCTOR_SCHEDULE_LIST                     = "doctorScheduleList";
 
 	public static final String INTERNAL_TYPE="Doctor";
 	public String getInternalType(){
@@ -44,10 +50,14 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 
 	protected		String              	mId                 ;
 	protected		String              	mName               ;
-	protected		Platform            	mPlatform           ;
+	protected		String              	mShotImage          ;
+	protected		Hospital            	mHospital           ;
+	protected		DateTime            	mUpdateTime         ;
 	protected		int                 	mVersion            ;
 	
 	
+	protected		SmartList<DoctorAssignment>	mDoctorAssignmentList;
+	protected		SmartList<DoctorSchedule>	mDoctorScheduleList ;
 	
 		
 	public 	Doctor(){
@@ -55,16 +65,20 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	}
 	//disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
-		setPlatform( null );
+		setHospital( null );
 
 		this.changed = true;
 	}
 	
-	public 	Doctor(String name, Platform platform)
+	public 	Doctor(String name, String shotImage, Hospital hospital, DateTime updateTime)
 	{
 		setName(name);
-		setPlatform(platform);
-	
+		setShotImage(shotImage);
+		setHospital(hospital);
+		setUpdateTime(updateTime);
+
+		this.mDoctorAssignmentList = new SmartList<DoctorAssignment>();
+		this.mDoctorScheduleList = new SmartList<DoctorSchedule>();	
 	}
 	
 	//Support for changing the property
@@ -73,6 +87,12 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
      	
 		if(NAME_PROPERTY.equals(property)){
 			changeNameProperty(newValueExpr);
+		}
+		if(SHOT_IMAGE_PROPERTY.equals(property)){
+			changeShotImageProperty(newValueExpr);
+		}
+		if(UPDATE_TIME_PROPERTY.equals(property)){
+			changeUpdateTimeProperty(newValueExpr);
 		}
 
       
@@ -88,6 +108,36 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 		//they are surely different each other
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
+		return;
+  
+	}
+			
+			
+			
+	protected void changeShotImageProperty(String newValueExpr){
+		String oldValue = getShotImage();
+		String newValue = parseString(newValueExpr);
+		if(equalsString(oldValue , newValue)){
+			return;//they can be both null, or exact the same object, this is much faster than equals function
+		}
+		//they are surely different each other
+		updateShotImage(newValue);
+		this.onChangeProperty(SHOT_IMAGE_PROPERTY, oldValue, newValue);
+		return;
+  
+	}
+			
+			
+			
+	protected void changeUpdateTimeProperty(String newValueExpr){
+		DateTime oldValue = getUpdateTime();
+		DateTime newValue = parseTimestamp(newValueExpr);
+		if(equalsTimestamp(oldValue , newValue)){
+			return;//they can be both null, or exact the same object, this is much faster than equals function
+		}
+		//they are surely different each other
+		updateUpdateTime(newValue);
+		this.onChangeProperty(UPDATE_TIME_PROPERTY, oldValue, newValue);
 		return;
   
 	}
@@ -131,26 +181,58 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	}
 	
 	
-	public void setPlatform(Platform platform){
-		this.mPlatform = platform;;
+	public void setShotImage(String shotImage){
+		this.mShotImage = trimString(encodeUrl(shotImage));;
 	}
-	public Platform getPlatform(){
-		return this.mPlatform;
+	public String getShotImage(){
+		return this.mShotImage;
 	}
-	public Doctor updatePlatform(Platform platform){
-		this.mPlatform = platform;;
+	public Doctor updateShotImage(String shotImage){
+		this.mShotImage = trimString(encodeUrl(shotImage));;
 		this.changed = true;
 		return this;
 	}
-	public void mergePlatform(Platform platform){
-		if(platform != null) { setPlatform(platform);}
+	public void mergeShotImage(String shotImage){
+		if(shotImage != null) { setShotImage(shotImage);}
 	}
 	
 	
-	public void clearPlatform(){
-		setPlatform ( null );
+	public void setHospital(Hospital hospital){
+		this.mHospital = hospital;;
+	}
+	public Hospital getHospital(){
+		return this.mHospital;
+	}
+	public Doctor updateHospital(Hospital hospital){
+		this.mHospital = hospital;;
+		this.changed = true;
+		return this;
+	}
+	public void mergeHospital(Hospital hospital){
+		if(hospital != null) { setHospital(hospital);}
+	}
+	
+	
+	public void clearHospital(){
+		setHospital ( null );
 		this.changed = true;
 	}
+	
+	public void setUpdateTime(DateTime updateTime){
+		this.mUpdateTime = updateTime;;
+	}
+	public DateTime getUpdateTime(){
+		return this.mUpdateTime;
+	}
+	public Doctor updateUpdateTime(DateTime updateTime){
+		this.mUpdateTime = updateTime;;
+		this.changed = true;
+		return this;
+	}
+	public void mergeUpdateTime(DateTime updateTime){
+		setUpdateTime(updateTime);
+	}
+	
 	
 	public void setVersion(int version){
 		this.mVersion = version;;
@@ -169,9 +251,223 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	
 	
 
+	public  SmartList<DoctorAssignment> getDoctorAssignmentList(){
+		if(this.mDoctorAssignmentList == null){
+			this.mDoctorAssignmentList = new SmartList<DoctorAssignment>();
+			this.mDoctorAssignmentList.setListInternalName (DOCTOR_ASSIGNMENT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mDoctorAssignmentList;	
+	}
+	public  void setDoctorAssignmentList(SmartList<DoctorAssignment> doctorAssignmentList){
+		for( DoctorAssignment doctorAssignment:doctorAssignmentList){
+			doctorAssignment.setDoctor(this);
+		}
+
+		this.mDoctorAssignmentList = doctorAssignmentList;
+		this.mDoctorAssignmentList.setListInternalName (DOCTOR_ASSIGNMENT_LIST );
+		
+	}
+	
+	public  void addDoctorAssignment(DoctorAssignment doctorAssignment){
+		doctorAssignment.setDoctor(this);
+		getDoctorAssignmentList().add(doctorAssignment);
+	}
+	public  void addDoctorAssignmentList(SmartList<DoctorAssignment> doctorAssignmentList){
+		for( DoctorAssignment doctorAssignment:doctorAssignmentList){
+			doctorAssignment.setDoctor(this);
+		}
+		getDoctorAssignmentList().addAll(doctorAssignmentList);
+	}
+	public  void mergeDoctorAssignmentList(SmartList<DoctorAssignment> doctorAssignmentList){
+		if(doctorAssignmentList==null){
+			return;
+		}
+		if(doctorAssignmentList.isEmpty()){
+			return;
+		}
+		addDoctorAssignmentList( doctorAssignmentList );
+		
+	}
+	public  DoctorAssignment removeDoctorAssignment(DoctorAssignment doctorAssignmentIndex){
+		
+		int index = getDoctorAssignmentList().indexOf(doctorAssignmentIndex);
+        if(index < 0){
+        	String message = "DoctorAssignment("+doctorAssignmentIndex.getId()+") with version='"+doctorAssignmentIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        DoctorAssignment doctorAssignment = getDoctorAssignmentList().get(index);        
+        // doctorAssignment.clearDoctor(); //disconnect with Doctor
+        doctorAssignment.clearFromAll(); //disconnect with Doctor
+		
+		boolean result = getDoctorAssignmentList().planToRemove(doctorAssignment);
+        if(!result){
+        	String message = "DoctorAssignment("+doctorAssignmentIndex.getId()+") with version='"+doctorAssignmentIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return doctorAssignment;
+        
+	
+	}
+	//断舍离
+	public  void breakWithDoctorAssignment(DoctorAssignment doctorAssignment){
+		
+		if(doctorAssignment == null){
+			return;
+		}
+		doctorAssignment.setDoctor(null);
+		//getDoctorAssignmentList().remove();
+	
+	}
+	
+	public  boolean hasDoctorAssignment(DoctorAssignment doctorAssignment){
+	
+		return getDoctorAssignmentList().contains(doctorAssignment);
+  
+	}
+	
+	public void copyDoctorAssignmentFrom(DoctorAssignment doctorAssignment) {
+
+		DoctorAssignment doctorAssignmentInList = findTheDoctorAssignment(doctorAssignment);
+		DoctorAssignment newDoctorAssignment = new DoctorAssignment();
+		doctorAssignmentInList.copyTo(newDoctorAssignment);
+		newDoctorAssignment.setVersion(0);//will trigger copy
+		getDoctorAssignmentList().add(newDoctorAssignment);
+		addItemToFlexiableObject(COPIED_CHILD, newDoctorAssignment);
+	}
+	
+	public  DoctorAssignment findTheDoctorAssignment(DoctorAssignment doctorAssignment){
+		
+		int index =  getDoctorAssignmentList().indexOf(doctorAssignment);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "DoctorAssignment("+doctorAssignment.getId()+") with version='"+doctorAssignment.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getDoctorAssignmentList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpDoctorAssignmentList(){
+		getDoctorAssignmentList().clear();
+	}
+	
+	
+	
+
+
+	public  SmartList<DoctorSchedule> getDoctorScheduleList(){
+		if(this.mDoctorScheduleList == null){
+			this.mDoctorScheduleList = new SmartList<DoctorSchedule>();
+			this.mDoctorScheduleList.setListInternalName (DOCTOR_SCHEDULE_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mDoctorScheduleList;	
+	}
+	public  void setDoctorScheduleList(SmartList<DoctorSchedule> doctorScheduleList){
+		for( DoctorSchedule doctorSchedule:doctorScheduleList){
+			doctorSchedule.setDoctor(this);
+		}
+
+		this.mDoctorScheduleList = doctorScheduleList;
+		this.mDoctorScheduleList.setListInternalName (DOCTOR_SCHEDULE_LIST );
+		
+	}
+	
+	public  void addDoctorSchedule(DoctorSchedule doctorSchedule){
+		doctorSchedule.setDoctor(this);
+		getDoctorScheduleList().add(doctorSchedule);
+	}
+	public  void addDoctorScheduleList(SmartList<DoctorSchedule> doctorScheduleList){
+		for( DoctorSchedule doctorSchedule:doctorScheduleList){
+			doctorSchedule.setDoctor(this);
+		}
+		getDoctorScheduleList().addAll(doctorScheduleList);
+	}
+	public  void mergeDoctorScheduleList(SmartList<DoctorSchedule> doctorScheduleList){
+		if(doctorScheduleList==null){
+			return;
+		}
+		if(doctorScheduleList.isEmpty()){
+			return;
+		}
+		addDoctorScheduleList( doctorScheduleList );
+		
+	}
+	public  DoctorSchedule removeDoctorSchedule(DoctorSchedule doctorScheduleIndex){
+		
+		int index = getDoctorScheduleList().indexOf(doctorScheduleIndex);
+        if(index < 0){
+        	String message = "DoctorSchedule("+doctorScheduleIndex.getId()+") with version='"+doctorScheduleIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        DoctorSchedule doctorSchedule = getDoctorScheduleList().get(index);        
+        // doctorSchedule.clearDoctor(); //disconnect with Doctor
+        doctorSchedule.clearFromAll(); //disconnect with Doctor
+		
+		boolean result = getDoctorScheduleList().planToRemove(doctorSchedule);
+        if(!result){
+        	String message = "DoctorSchedule("+doctorScheduleIndex.getId()+") with version='"+doctorScheduleIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return doctorSchedule;
+        
+	
+	}
+	//断舍离
+	public  void breakWithDoctorSchedule(DoctorSchedule doctorSchedule){
+		
+		if(doctorSchedule == null){
+			return;
+		}
+		doctorSchedule.setDoctor(null);
+		//getDoctorScheduleList().remove();
+	
+	}
+	
+	public  boolean hasDoctorSchedule(DoctorSchedule doctorSchedule){
+	
+		return getDoctorScheduleList().contains(doctorSchedule);
+  
+	}
+	
+	public void copyDoctorScheduleFrom(DoctorSchedule doctorSchedule) {
+
+		DoctorSchedule doctorScheduleInList = findTheDoctorSchedule(doctorSchedule);
+		DoctorSchedule newDoctorSchedule = new DoctorSchedule();
+		doctorScheduleInList.copyTo(newDoctorSchedule);
+		newDoctorSchedule.setVersion(0);//will trigger copy
+		getDoctorScheduleList().add(newDoctorSchedule);
+		addItemToFlexiableObject(COPIED_CHILD, newDoctorSchedule);
+	}
+	
+	public  DoctorSchedule findTheDoctorSchedule(DoctorSchedule doctorSchedule){
+		
+		int index =  getDoctorScheduleList().indexOf(doctorSchedule);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "DoctorSchedule("+doctorSchedule.getId()+") with version='"+doctorSchedule.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getDoctorScheduleList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpDoctorScheduleList(){
+		getDoctorScheduleList().clear();
+	}
+	
+	
+	
+
+
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
-		addToEntityList(this, entityList, getPlatform(), internalType);
+		addToEntityList(this, entityList, getHospital(), internalType);
 
 		
 	}
@@ -179,6 +475,8 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	public List<BaseEntity>  collectRefercencesFromLists(String internalType){
 		
 		List<BaseEntity> entityList = new ArrayList<BaseEntity>();
+		collectFromList(this, entityList, getDoctorAssignmentList(), internalType);
+		collectFromList(this, entityList, getDoctorScheduleList(), internalType);
 
 		return entityList;
 	}
@@ -186,6 +484,8 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	public  List<SmartList<?>> getAllRelatedLists() {
 		List<SmartList<?>> listOfList = new ArrayList<SmartList<?>>();
 		
+		listOfList.add( getDoctorAssignmentList());
+		listOfList.add( getDoctorScheduleList());
 			
 
 		return listOfList;
@@ -197,8 +497,20 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 
 		appendKeyValuePair(result, ID_PROPERTY, getId());
 		appendKeyValuePair(result, NAME_PROPERTY, getName());
-		appendKeyValuePair(result, PLATFORM_PROPERTY, getPlatform());
+		appendKeyValuePair(result, SHOT_IMAGE_PROPERTY, getShotImage());
+		appendKeyValuePair(result, HOSPITAL_PROPERTY, getHospital());
+		appendKeyValuePair(result, UPDATE_TIME_PROPERTY, getUpdateTime());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
+		appendKeyValuePair(result, DOCTOR_ASSIGNMENT_LIST, getDoctorAssignmentList());
+		if(!getDoctorAssignmentList().isEmpty()){
+			appendKeyValuePair(result, "doctorAssignmentCount", getDoctorAssignmentList().getTotalCount());
+			appendKeyValuePair(result, "doctorAssignmentCurrentPageNumber", getDoctorAssignmentList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, DOCTOR_SCHEDULE_LIST, getDoctorScheduleList());
+		if(!getDoctorScheduleList().isEmpty()){
+			appendKeyValuePair(result, "doctorScheduleCount", getDoctorScheduleList().getTotalCount());
+			appendKeyValuePair(result, "doctorScheduleCurrentPageNumber", getDoctorScheduleList().getCurrentPageNumber());
+		}
 
 		
 		return result;
@@ -215,8 +527,12 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 		
 			dest.setId(getId());
 			dest.setName(getName());
-			dest.setPlatform(getPlatform());
+			dest.setShotImage(getShotImage());
+			dest.setHospital(getHospital());
+			dest.setUpdateTime(getUpdateTime());
 			dest.setVersion(getVersion());
+			dest.setDoctorAssignmentList(getDoctorAssignmentList());
+			dest.setDoctorScheduleList(getDoctorScheduleList());
 
 		}
 		super.copyTo(baseDest);
@@ -232,8 +548,12 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 		
 			dest.mergeId(getId());
 			dest.mergeName(getName());
-			dest.mergePlatform(getPlatform());
+			dest.mergeShotImage(getShotImage());
+			dest.mergeHospital(getHospital());
+			dest.mergeUpdateTime(getUpdateTime());
 			dest.mergeVersion(getVersion());
+			dest.mergeDoctorAssignmentList(getDoctorAssignmentList());
+			dest.mergeDoctorScheduleList(getDoctorScheduleList());
 
 		}
 		super.copyTo(baseDest);
@@ -246,9 +566,11 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 		stringBuilder.append("Doctor{");
 		stringBuilder.append("\tid='"+getId()+"';");
 		stringBuilder.append("\tname='"+getName()+"';");
-		if(getPlatform() != null ){
- 			stringBuilder.append("\tplatform='Platform("+getPlatform().getId()+")';");
+		stringBuilder.append("\tshotImage='"+getShotImage()+"';");
+		if(getHospital() != null ){
+ 			stringBuilder.append("\thospital='Hospital("+getHospital().getId()+")';");
  		}
+		stringBuilder.append("\tupdateTime='"+getUpdateTime()+"';");
 		stringBuilder.append("\tversion='"+getVersion()+"';");
 		stringBuilder.append("}");
 

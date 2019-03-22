@@ -19,14 +19,16 @@ public class DoctorTable{
 	static final String TABLE_NAME="doctor_data";
 	static final String COLUMN_ID = "id";
 	static final String COLUMN_NAME = "name";
-	static final String COLUMN_PLATFORM = "platform";
+	static final String COLUMN_SHOT_IMAGE = "shot_image";
+	static final String COLUMN_HOSPITAL = "hospital";
+	static final String COLUMN_UPDATE_TIME = "update_time";
 	static final String COLUMN_VERSION = "version";
  
 	static final String []ALL_CLOUMNS = {COLUMN_ID, 
-		COLUMN_NAME, COLUMN_PLATFORM, 
+		COLUMN_NAME, COLUMN_SHOT_IMAGE, COLUMN_HOSPITAL, COLUMN_UPDATE_TIME, 
 		COLUMN_VERSION};
 	static final String []NORMAL_CLOUMNS = {
-		COLUMN_NAME, COLUMN_PLATFORM
+		COLUMN_NAME, COLUMN_SHOT_IMAGE, COLUMN_HOSPITAL, COLUMN_UPDATE_TIME
 		};
 	
 	

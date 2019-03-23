@@ -101,8 +101,14 @@
 <c:if test="${param.referName ne 'name'}">
 	<th>${userContext.localeMap['doctor.name']}</th>
 </c:if>
-<c:if test="${param.referName ne 'platform'}">
-	<th>${userContext.localeMap['doctor.platform']}</th>
+<c:if test="${param.referName ne 'shotImage'}">
+	<th>${userContext.localeMap['doctor.shot_image']}</th>
+</c:if>
+<c:if test="${param.referName ne 'hospital'}">
+	<th>${userContext.localeMap['doctor.hospital']}</th>
+</c:if>
+<c:if test="${param.referName ne 'updateTime'}">
+	<th>${userContext.localeMap['doctor.update_time']}</th>
 </c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
@@ -111,16 +117,17 @@
 			<c:forEach var="item" items="${doctorList}">
 				<tr currentVersion='${item.version}' id="doctor-${item.id}" ><td><a class="link-action-removed" href="./doctorManager/view/${item.id}/"> ${item.id}</a></td>
 <c:if test="${param.referName ne 'name'}">	<td contenteditable='true' class='edit-value'  propertyToChange='name' storedCellValue='${item.name}' prefix='${ownerBeanName}Manager/updateDoctor/${result.id}/${item.id}/'>${item.name}</td>
-</c:if><c:if test="${param.referName ne 'platform'}">
+</c:if><c:if test="${param.referName ne 'shotImage'}">	<td contenteditable='true' class='edit-value'  propertyToChange='shotImage' storedCellValue='${item.shotImage}' prefix='${ownerBeanName}Manager/updateDoctor/${result.id}/${item.id}/'>${item.shotImage}</td>
+</c:if><c:if test="${param.referName ne 'hospital'}">
 	<td class="select_candidate_td"
-			data-candidate-method="./doctorManager/requestCandidatePlatform/${ownerBeanName}/${item.id}/"
-			data-switch-method="./doctorManager/transferToAnotherPlatform/${item.id}/"
-			data-link-template="./platformManager/view/${'$'}{ID}/">
+			data-candidate-method="./doctorManager/requestCandidateHospital/${ownerBeanName}/${item.id}/"
+			data-switch-method="./doctorManager/transferToAnotherHospital/${item.id}/"
+			data-link-template="./hospitalManager/view/${'$'}{ID}/">
 		<span class="display_span">
-			<c:if test="${not empty  item.platform}">
-			<a href='./platformManager/view/${item.platform.id}/'>${item.platform.displayName}</a>
+			<c:if test="${not empty  item.hospital}">
+			<a href='./hospitalManager/view/${item.hospital.id}/'>${item.hospital.displayName}</a>
 			</c:if>
-			<c:if test="${empty  item.platform}">
+			<c:if test="${empty  item.hospital}">
 			<a href='#'></a>
 			</c:if>
 			<button class="btn btn-link candidate-action">...</button>
@@ -130,7 +137,8 @@
 		</div>
 	</td>
 </c:if>
-
+<c:if test="${param.referName ne 'updateTime'}">	<td contenteditable='true' class='edit-value'  propertyToChange='updateTime' storedCellValue='${item.updateTime}' prefix='${ownerBeanName}Manager/updateDoctor/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.updateTime}" /></td>
+</c:if>
 				<td>
 
 				<a href='#${ownerBeanName}Manager/removeDoctor/${result.id}/${item.id}/' class='delete-action btn btn-danger btn-xs'><i class="fa fa-trash-o fa-lg"></i> ${userContext.localeMap['@delete']}</a>

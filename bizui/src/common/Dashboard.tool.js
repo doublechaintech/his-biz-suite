@@ -54,8 +54,8 @@ const topColResponsiveProps = {
   xs: 8,
   sm: 6,
   md: 6,
-  lg: 4,
-  xl: 4,
+  lg: 6,
+  xl: 6,
   style: { marginBottom: 24 },
 };
 
@@ -74,30 +74,56 @@ const renderForNumbers = aggregatedData => {
   }
   // <MiniArea color="#975FE4" data={visitData} />
 
+  const colors = [
+    'red',
+    '#e6194b',
+    '#3cb44b',
+    '#ffe119',
+    '#4363d8',
+    '#f58231',
+    '#911eb4',
+    '#46f0f0',
+    '#f032e6',
+    '#bcf60c',
+    '#fabebe',
+    '#008080',
+    '#e6beff',
+    '#9a6324',
+    '#fffac8',
+    '#800000',
+    '#aaffc3',
+    '#808000',
+    '#ffd8b1',
+    '#000075',
+    '#808080',
+    '#ffffff',
+    '#000000',
+  ];
+
   return (
     <Row gutter={24}>
-      {data.dimensions.map(item => {
+      {data.dimensions.map((item, itemIndex) => {
         const visitData = [];
         let itemTotal = 0;
         const weekData = { lastWeek: 0, thisWeek: 0, lastWeekCount: 7, change: 0 };
 
         data.dataArray
-          .filter(dateItem => dateItem.date != '未分配')
+          .filter(dateItem => dateItem.date !== '未分配')
           .filter(dateItem => dateItem[item] > 0)
           .map(dateItem => {
             visitData.push({ x: dateItem.date, y: dateItem[item] });
             const weeknumber = moment(dateItem.date, 'YYYY/MM/DD').week();
             const thisweeknumber = moment().week();
-            if (thisweeknumber - weeknumber == 1) {
-              //last week
+            if (thisweeknumber - weeknumber === 1) {
+              // last week
               weekData.lastWeek += dateItem[item];
             }
-            if (thisweeknumber - weeknumber == 0) {
-              //this week
+            if (thisweeknumber - weeknumber === 0) {
+              // this week
               weekData.thisWeek += dateItem[item];
             }
 
-            //console.log("week of the year for ", dateItem.date, " week number",weeknumber)
+            // console.log("week of the year for ", dateItem.date, " week number",weeknumber)
             itemTotal += dateItem[item];
           });
 
@@ -108,12 +134,14 @@ const renderForNumbers = aggregatedData => {
         if (visitData.length < 5) {
           return null;
         }
-        var ChartComp = MiniArea;
+        let ChartComp = MiniArea;
 
-        if (visitData.length < 3) {
+        if (visitData.length < 10) {
           ChartComp = MiniBar;
         }
+        console.log('index: ', itemIndex, colors[itemIndex % colors.length]);
 
+        const chartColor = colors[itemIndex % colors.length];
         return (
           <Col key={item} {...topColResponsiveProps}>
             <ChartCard
@@ -137,7 +165,7 @@ const renderForNumbers = aggregatedData => {
               }
               contentHeight={46}
             >
-              <ChartComp color="#975FE4" data={visitData} />
+              <ChartComp color={chartColor} data={visitData} />
             </ChartCard>
           </Col>
         );

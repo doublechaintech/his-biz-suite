@@ -259,7 +259,6 @@ const buildTransferModal = (objectAccess, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
 const internalRenderExtraHeader = objectAccess => {
   return null;
 };
@@ -343,62 +342,6 @@ const internalSummaryOf = (objectAccess, targetComponent) => {
     </DescriptionList>
   );
 };
-=======
-
-
-const internalRenderExtraHeader = (objectAccess) =>{
-	return null
-}
-const internalRenderExtraFooter = (objectAccess) =>{
-	return null
-}
-const internalSubListsOf = (cardsData) =>{
-	const {id} = cardsData.cardsSource;
-	const userContext = null
-	return (<Row gutter={24}>
-
-           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
-            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
-              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
-              
-              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
-              
-              </p>         
-          </Card> 
-            </Col>))}
-          </Row>)
-}
-
-const internalSummaryOf = (objectAccess,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{objectAccess.id}</Description> 
-<Description term="名称">{objectAccess.name}</Description> 
-<Description term="访问对象类型">{objectAccess.objectType}</Description> 
-<Description term="列表1">{objectAccess.list1}</Description> 
-<Description term="列表2">{objectAccess.list2}</Description> 
-<Description term="列表3">{objectAccess.list3}</Description> 
-<Description term="列表4">{objectAccess.list4}</Description> 
-<Description term="列表5">{objectAccess.list5}</Description> 
-<Description term="列表6">{objectAccess.list6}</Description> 
-<Description term="列表7">{objectAccess.list7}</Description> 
-<Description term="列表8">{objectAccess.list8}</Description> 
-<Description term="列表9">{objectAccess.list9}</Description> 
-<Description term="应用程序">{objectAccess.app==null?appLocaleName(userContext,"NotAssigned"):objectAccess.app.displayName}
- <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"应用程序","userApp","requestCandidateApp",
-	      "transferToAnotherApp","anotherAppId",objectAccess.app?objectAccess.app.id:"")} 
-  style={{fontSize: 20,color:"red"}} />
-</Description>
-	
-        {buildTransferModal(objectAccess,targetComponent)}
-      </DescriptionList>
-	)
-
-}
-
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = objectAccess => {
   const { ObjectAccessBase } = GlobalComponents;
@@ -420,7 +363,6 @@ class ObjectAccessPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-<<<<<<< HEAD
     const { id, displayName } = this.props.objectAccess;
     const cardsData = {
       cardsName: '对象访问',
@@ -428,14 +370,6 @@ class ObjectAccessPreference extends Component {
       cardsSource: this.props.objectAccess,
       subItems: [],
     };
-=======
-    const { id,displayName,  } = this.props.objectAccess
-    const cardsData = {cardsName:"对象访问",cardsFor: "objectAccess",cardsSource: this.props.objectAccess,
-  		subItems: [
-    
-      	],
-  	};
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

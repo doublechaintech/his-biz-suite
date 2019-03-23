@@ -273,16 +273,8 @@ class SecUserBlockingUpdateForm extends Component {
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入ID" disabled />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入ID" disabled/>
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -290,16 +282,8 @@ class SecUserBlockingUpdateForm extends Component {
                 <Form.Item label={fieldLabels.who} {...formItemLayout}>
                   {getFieldDecorator('who', {
                     initialValue: selectedRow.who,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入谁" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入谁" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -307,16 +291,8 @@ class SecUserBlockingUpdateForm extends Component {
                 <Form.Item label={fieldLabels.comments} {...formItemLayout}>
                   {getFieldDecorator('comments', {
                     initialValue: selectedRow.comments,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入评论" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入评论" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

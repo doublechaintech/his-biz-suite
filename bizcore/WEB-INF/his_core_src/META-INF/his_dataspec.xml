@@ -19,7 +19,6 @@
 			<field name="status" type="string" checkType="StringLengthRange" min="1" max="8" description="状态" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
 			<field name="description" type="string_longtext" checkType="Longtext" min="0" max="1048576" description="描述" />
-<<<<<<< HEAD
 			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="更新时间" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
@@ -30,8 +29,6 @@
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="ID" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="8" description="名称" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>
@@ -40,16 +37,10 @@
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="ID" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="20" description="名称" />
-<<<<<<< HEAD
 			<field name="price" type="money" checkType="MoneyAmount" min="0.0" max="99999999999.00" description="价格" />
 			<field name="expense_type" type="reference" checkType="exist(expense_type)" description="费用类型" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
 			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="更新时间" />
-=======
-			<field name="price" type="money" checkType="MoneyAmount" min="0.0" max="99.00" description="价格" />
-			<field name="expense_type" type="reference" checkType="exist(expense_type)" description="费用类型" />
-			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>
@@ -58,13 +49,9 @@
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="ID" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="名称" />
-<<<<<<< HEAD
 			<field name="shot_image" type="string_image" checkType="Image" min="0" max="512" description="拍摄的图像" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
 			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="更新时间" />
-=======
-			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>
@@ -74,10 +61,7 @@
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="ID" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="12" description="名称" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
-<<<<<<< HEAD
 			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="更新时间" />
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>
@@ -88,10 +72,7 @@
 			<field name="name" type="string" checkType="StringLengthRange" min="3" max="40" description="名称" />
 			<field name="doctor" type="reference" checkType="exist(doctor)" description="医生" />
 			<field name="department" type="reference" checkType="exist(department)" description="部门" />
-<<<<<<< HEAD
 			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="更新时间" />
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>
@@ -100,7 +81,6 @@
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="ID" />
 			<field name="name" type="string" checkType="StringLengthRange" min="8" max="116" description="名称" />
-<<<<<<< HEAD
 			<field name="doctor" type="reference" checkType="exist(doctor)" description="医生" />
 			<field name="schedule_date" type="date" checkType="DateRange" min="1900-01-01" max="2019-3-11" description="安排日期" />
 			<field name="period" type="reference" checkType="exist(period)" description="期" />
@@ -111,15 +91,6 @@
 			<field name="create_time" type="date_time_create" checkType="DateTimeCreate" min="1900-01-01T00:00:00" max="createTime()" description="创建时间" />
 			<field name="update_time" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="更新时间" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
-=======
-			<field name="schedule_date" type="date" checkType="DateRange" min="1900-01-01" max="2019-3-11" description="安排日期" />
-			<field name="period" type="string" checkType="StringLengthRange" min="1" max="8" description="期" />
-			<field name="doctor" type="reference" checkType="exist(doctor)" description="医生" />
-			<field name="available" type="int" checkType="IntegerRange" min="0" max="20" description="可用" />
-			<field name="price" type="money" checkType="MoneyAmount" min="0.0" max="123.99" description="价格" />
-			<field name="expense_type" type="reference" checkType="exist(expense_type)" description="费用类型" />
-			<field name="department" type="reference" checkType="exist(department)" description="部门" />
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>

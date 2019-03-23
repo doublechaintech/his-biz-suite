@@ -140,7 +140,7 @@ const renderForNumbers = aggregatedData => {
         }
         colorIndex +=1
         console.log('index: ', colorIndex, colors[colorIndex % colors.length]);
-        
+
         const chartColor = colors[itemIndex % colors.length];
         return (
           <Col key={item} {...topColResponsiveProps}>

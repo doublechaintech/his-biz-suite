@@ -138,9 +138,9 @@ const renderForNumbers = aggregatedData => {
         if (visitData.length < 10) {
           ChartComp = MiniBar;
         }
-        colorIndex +=1
+        colorIndex++
         console.log('index: ', colorIndex, colors[colorIndex % colors.length]);
-        
+
         const chartColor = colors[itemIndex % colors.length];
         return (
           <Col key={item} {...topColResponsiveProps}>

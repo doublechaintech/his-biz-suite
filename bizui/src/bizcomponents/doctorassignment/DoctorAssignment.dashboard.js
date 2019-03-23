@@ -64,6 +64,7 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
+<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -161,6 +162,75 @@ const internalSummaryOf = (doctorAssignment, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
+const { Option } = Select
+
+
+const imageList =(doctorAssignment)=>{return [
+	 ]}
+
+const internalImageListOf = (doctorAssignment) =>defaultImageListOf(doctorAssignment,imageList)
+
+const optionList =(doctorAssignment)=>{return [ 
+	]}
+
+const buildTransferModal = defaultBuildTransferModal
+const showTransferModel = defaultShowTransferModel
+const internalSettingListOf = (doctorAssignment) =>defaultSettingListOf(doctorAssignment, optionList)
+const internalLargeTextOf = (doctorAssignment) =>{
+
+	return null
+	
+
+}
+
+
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
+
+}
+
+
+const internalSummaryOf = (doctorAssignment,targetComponent) =>{
+	
+	
+	const {DoctorAssignmentService} = GlobalComponents
+	const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{doctorAssignment.id}</Description> 
+<Description term="名称">{doctorAssignment.name}</Description> 
+<Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"医生","doctor",DoctorAssignmentService.requestCandidateDoctor,
+	      DoctorAssignmentService.transferToAnotherDoctor,"anotherDoctorId",doctorAssignment.doctor?doctorAssignment.doctor.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"部门","department",DoctorAssignmentService.requestCandidateDepartment,
+	      DoctorAssignmentService.transferToAnotherDepartment,"anotherDepartmentId",doctorAssignment.department?doctorAssignment.department.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(doctorAssignment,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class DoctorAssignmentDashboard extends Component {
   state = {
@@ -182,6 +252,7 @@ class DoctorAssignmentDashboard extends Component {
     if (!this.props.doctorAssignment.class) {
       return null;
     }
+<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -201,6 +272,25 @@ class DoctorAssignmentDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
+=======
+    const returnURL = this.props.returnURL
+    
+    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",
+    	cardsSource: this.props.doctorAssignment,returnURL,displayName,
+  		subItems: [
+    
+      	],
+  	};
+    
+    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
+    const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

@@ -259,6 +259,7 @@ const buildTransferModal = (loginHistory, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = loginHistory => {
   return null;
 };
@@ -336,6 +337,54 @@ const internalSummaryOf = (loginHistory, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (loginHistory) =>{
+	return null
+}
+const internalRenderExtraFooter = (loginHistory) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (loginHistory,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{loginHistory.id}</Description> 
+<Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 
+<Description term="来自IP">{loginHistory.fromIp}</Description> 
+<Description term="描述">{loginHistory.description}</Description> 
+<Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):loginHistory.secUser.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"安全用户","secUser","requestCandidateSecUser",
+	      "transferToAnotherSecUser","anotherSecUserId",loginHistory.secUser?loginHistory.secUser.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(loginHistory,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = loginHistory => {
   const { LoginHistoryBase } = GlobalComponents;
@@ -357,6 +406,7 @@ class LoginHistoryPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName } = this.props.loginHistory;
     const cardsData = {
       cardsName: '登录历史',
@@ -364,6 +414,14 @@ class LoginHistoryPreference extends Component {
       cardsSource: this.props.loginHistory,
       subItems: [],
     };
+=======
+    const { id,displayName,  } = this.props.loginHistory
+    const cardsData = {cardsName:"登录历史",cardsFor: "loginHistory",cardsSource: this.props.loginHistory,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

@@ -156,8 +156,13 @@ class SecUserBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '用户应用程序',
       role: 'userApp',
+=======
+      name: "用户应用程序",
+      role: "userApp",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._secUser.userAppList,
       metaInfo: state._secUser.userAppListMetaInfo,
       count: state._secUser.userAppCount,
@@ -222,8 +227,13 @@ class SecUserBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '登录历史',
       role: 'loginHistory',
+=======
+      name: "登录历史",
+      role: "loginHistory",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._secUser.loginHistoryList,
       metaInfo: state._secUser.loginHistoryListMetaInfo,
       count: state._secUser.loginHistoryCount,

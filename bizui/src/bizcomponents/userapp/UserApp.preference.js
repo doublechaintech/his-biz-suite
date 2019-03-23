@@ -67,6 +67,7 @@ const internalImageListOf = userApp => {
     return null;
   }
 
+<<<<<<< HEAD
   return (
     <Card title={appLocaleName(userContext, 'ImageList')} className={styles.card}>
       <Row type="flex" justify="start" align="bottom">
@@ -94,6 +95,23 @@ const internalSettingListOf = userApp => {
 
   if (optionList.length === 0) {
     return null;
+=======
+  return(<Card title={appLocaleName(userContext,"ImageList")} className={styles.card}><Row type="flex" justify="start" align="bottom">
+  {
+      filteredList.map((item,index)=>(<Col span={4} key={index}><ImagePreview imageTitle ={item.title} showTitleUnderImage={true} imageLocation={item.imageLocation} >{item.title}</ImagePreview></Col>))
+  }</Row></Card> )
+
+}
+
+const internalSettingListOf = (userApp) =>{
+	const userContext = null
+	const optionList = [ 
+	  {"title":'完全访问',"value":userApp.fullAccess,"parameterName":"fullAccess"},
+]
+	
+  if(optionList.length===0){
+    return null
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
   }
   return (
     <Card title={appLocaleName(userContext, 'Switchers')} className={styles.card}>
@@ -261,6 +279,7 @@ const buildTransferModal = (userApp, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = userApp => {
   return null;
 };
@@ -339,6 +358,57 @@ const internalSummaryOf = (userApp, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (userApp) =>{
+	return null
+}
+const internalRenderExtraFooter = (userApp) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (userApp,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{userApp.id}</Description> 
+<Description term="标题">{userApp.title}</Description> 
+<Description term="安全用户">{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):userApp.secUser.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"安全用户","secUser","requestCandidateSecUser",
+	      "transferToAnotherSecUser","anotherSecUserId",userApp.secUser?userApp.secUser.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="应用程序图标">{userApp.appIcon}</Description> 
+<Description term="许可">{userApp.permission}</Description> 
+<Description term="访问对象类型">{userApp.objectType}</Description> 
+<Description term="对象ID">{userApp.objectId}</Description> 
+<Description term="位置">{userApp.location}</Description> 
+	
+        {buildTransferModal(userApp,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = userApp => {
   const { UserAppBase } = GlobalComponents;
@@ -360,6 +430,7 @@ class UserAppPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName, listAccessCount, objectAccessCount } = this.props.userApp;
     const cardsData = {
       cardsName: '用户应用程序',
@@ -367,6 +438,14 @@ class UserAppPreference extends Component {
       cardsSource: this.props.userApp,
       subItems: [],
     };
+=======
+    const { id,displayName, listAccessCount, objectAccessCount } = this.props.userApp
+    const cardsData = {cardsName:"用户应用程序",cardsFor: "userApp",cardsSource: this.props.userApp,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

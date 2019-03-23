@@ -156,8 +156,13 @@ class UserDomainBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '用户白名单',
       role: 'userWhiteList',
+=======
+      name: "用户白名单",
+      role: "userWhiteList",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._userDomain.userWhiteListList,
       metaInfo: state._userDomain.userWhiteListListMetaInfo,
       count: state._userDomain.userWhiteListCount,
@@ -222,8 +227,13 @@ class UserDomainBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '安全用户',
       role: 'secUser',
+=======
+      name: "安全用户",
+      role: "secUser",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._userDomain.secUserList,
       metaInfo: state._userDomain.secUserListMetaInfo,
       count: state._userDomain.secUserCount,

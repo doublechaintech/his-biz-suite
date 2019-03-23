@@ -64,6 +64,7 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
+<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -141,6 +142,70 @@ const internalSummaryOf = (expenseItem, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
+const { Option } = Select
+
+
+const imageList =(expenseItem)=>{return [
+	 ]}
+
+const internalImageListOf = (expenseItem) =>defaultImageListOf(expenseItem,imageList)
+
+const optionList =(expenseItem)=>{return [ 
+	]}
+
+const buildTransferModal = defaultBuildTransferModal
+const showTransferModel = defaultShowTransferModel
+const internalSettingListOf = (expenseItem) =>defaultSettingListOf(expenseItem, optionList)
+const internalLargeTextOf = (expenseItem) =>{
+
+	return null
+	
+
+}
+
+
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
+
+}
+
+
+const internalSummaryOf = (expenseItem,targetComponent) =>{
+	
+	
+	const {ExpenseItemService} = GlobalComponents
+	const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{expenseItem.id}</Description> 
+<Description term="名称">{expenseItem.name}</Description> 
+<Description term="价格">{expenseItem.price}</Description> 
+<Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):expenseItem.expenseType.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"费用类型","expenseType",ExpenseItemService.requestCandidateExpenseType,
+	      ExpenseItemService.transferToAnotherExpenseType,"anotherExpenseTypeId",expenseItem.expenseType?expenseItem.expenseType.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(expenseItem,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class ExpenseItemDashboard extends Component {
   state = {
@@ -162,6 +227,7 @@ class ExpenseItemDashboard extends Component {
     if (!this.props.expenseItem.class) {
       return null;
     }
+<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -181,6 +247,25 @@ class ExpenseItemDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
+=======
+    const returnURL = this.props.returnURL
+    
+    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",
+    	cardsSource: this.props.expenseItem,returnURL,displayName,
+  		subItems: [
+    
+      	],
+  	};
+    
+    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
+    const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

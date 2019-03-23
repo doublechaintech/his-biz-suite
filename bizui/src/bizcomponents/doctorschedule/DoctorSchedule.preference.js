@@ -259,6 +259,7 @@ const buildTransferModal = (doctorSchedule, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = doctorSchedule => {
   return null;
 };
@@ -403,6 +404,68 @@ const internalSummaryOf = (doctorSchedule, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (doctorSchedule) =>{
+	return null
+}
+const internalRenderExtraFooter = (doctorSchedule) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (doctorSchedule,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{doctorSchedule.id}</Description> 
+<Description term="名称">{doctorSchedule.name}</Description> 
+<Description term="安排日期">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
+<Description term="期">{doctorSchedule.period}</Description> 
+<Description term="医生">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.doctor.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"医生","doctor","requestCandidateDoctor",
+	      "transferToAnotherDoctor","anotherDoctorId",doctorSchedule.doctor?doctorSchedule.doctor.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="可用">{doctorSchedule.available}</Description> 
+<Description term="价格">{doctorSchedule.price}</Description> 
+<Description term="费用类型">{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.expenseType.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"费用类型","expenseType","requestCandidateExpenseType",
+	      "transferToAnotherExpenseType","anotherExpenseTypeId",doctorSchedule.expenseType?doctorSchedule.expenseType.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="部门">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.department.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"部门","department","requestCandidateDepartment",
+	      "transferToAnotherDepartment","anotherDepartmentId",doctorSchedule.department?doctorSchedule.department.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(doctorSchedule,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = doctorSchedule => {
   const { DoctorScheduleBase } = GlobalComponents;
@@ -424,6 +487,7 @@ class DoctorSchedulePreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName } = this.props.doctorSchedule;
     const cardsData = {
       cardsName: '医生安排',
@@ -431,6 +495,14 @@ class DoctorSchedulePreference extends Component {
       cardsSource: this.props.doctorSchedule,
       subItems: [],
     };
+=======
+    const { id,displayName,  } = this.props.doctorSchedule
+    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",cardsSource: this.props.doctorSchedule,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

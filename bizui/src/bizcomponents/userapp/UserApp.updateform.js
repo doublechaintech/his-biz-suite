@@ -272,16 +272,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入ID" disabled />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入ID" disabled/>
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -289,16 +281,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.title} {...formItemLayout}>
                   {getFieldDecorator('title', {
                     initialValue: selectedRow.title,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入标题" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入标题" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -306,16 +290,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.appIcon} {...formItemLayout}>
                   {getFieldDecorator('appIcon', {
                     initialValue: selectedRow.appIcon,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入应用程序图标" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入应用程序图标" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -323,16 +299,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.permission} {...formItemLayout}>
                   {getFieldDecorator('permission', {
                     initialValue: selectedRow.permission,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入许可" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入许可" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -340,16 +308,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.objectType} {...formItemLayout}>
                   {getFieldDecorator('objectType', {
                     initialValue: selectedRow.objectType,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入访问对象类型" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入访问对象类型" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -357,16 +317,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.objectId} {...formItemLayout}>
                   {getFieldDecorator('objectId', {
                     initialValue: selectedRow.objectId,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入对象ID" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入对象ID" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -374,16 +326,8 @@ class UserAppUpdateForm extends Component {
                 <Form.Item label={fieldLabels.location} {...formItemLayout}>
                   {getFieldDecorator('location', {
                     initialValue: selectedRow.location,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入位置" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入位置" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

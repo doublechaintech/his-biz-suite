@@ -35,13 +35,8 @@ const testValues = {
   email: '',
   pwd: 'C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95',
   verificationCode: '0',
-<<<<<<< HEAD
-  verificationCodeExpire: '2019-03-19 06:33:34',
-  lastLoginTime: '2019-03-12 09:11:43',
-=======
-  verificationCodeExpire: '2019-03-09 16:10:19',
-  lastLoginTime: '2019-03-01 01:31:08',
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
+  verificationCodeExpire: '2019-03-20 17:01:19',
+  lastLoginTime: '2019-03-09 21:19:55',
   domainId: 'UD000001',
 }
 */
@@ -216,77 +211,42 @@ class SecUserCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.login} {...formItemLayout}>
                   {getFieldDecorator('login', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入登录" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入登录" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.mobile} {...formItemLayout}>
                   {getFieldDecorator('mobile', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入手机号码" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入手机号码" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.email} {...formItemLayout}>
                   {getFieldDecorator('email', {
-<<<<<<< HEAD
                     rules: [
                       { required: false, message: appLocaleName(userContext, 'PleaseInput') },
                     ],
                   })(<Input placeholder="请输入电子邮件" />)}
-=======
-                    rules: [{ required: false, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入电子邮件" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.pwd} {...formItemLayout}>
                   {getFieldDecorator('pwd', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入密码" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入密码" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.verificationCode} {...formItemLayout}>
                   {getFieldDecorator('verificationCode', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入验证码" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入验证码" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -295,16 +255,12 @@ class SecUserCreateForm extends Component {
                   {getFieldDecorator('verificationCodeExpire', {
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(
-<<<<<<< HEAD
                     <DatePicker
                       showTime
                       format="YYYY-MM-DD HH:mm"
                       minuteStep={5}
                       placeholder="请输入验证码过期"
                     />
-=======
-                    <DatePicker showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="请输入验证码过期" />
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                   )}
                 </Form.Item>
               </Col>
@@ -314,16 +270,12 @@ class SecUserCreateForm extends Component {
                   {getFieldDecorator('lastLoginTime', {
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(
-<<<<<<< HEAD
                     <DatePicker
                       showTime
                       format="YYYY-MM-DD HH:mm"
                       minuteStep={5}
                       placeholder="请输入最后登录时间"
                     />
-=======
-                    <DatePicker showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="请输入最后登录时间" />
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                   )}
                 </Form.Item>
               </Col>

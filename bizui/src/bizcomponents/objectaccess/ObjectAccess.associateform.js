@@ -151,165 +151,88 @@ class ObjectAccessAssociateForm extends Component {
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入名称" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入名称" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.objectType} {...formItemLayout}>
                   {getFieldDecorator('objectType', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入访问对象类型" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入访问对象类型" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list1} {...formItemLayout}>
                   {getFieldDecorator('list1', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表1" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表1" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list2} {...formItemLayout}>
                   {getFieldDecorator('list2', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表2" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表2" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list3} {...formItemLayout}>
                   {getFieldDecorator('list3', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表3" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表3" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list4} {...formItemLayout}>
                   {getFieldDecorator('list4', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表4" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表4" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list5} {...formItemLayout}>
                   {getFieldDecorator('list5', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表5" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表5" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list6} {...formItemLayout}>
                   {getFieldDecorator('list6', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表6" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表6" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list7} {...formItemLayout}>
                   {getFieldDecorator('list7', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表7" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表7" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list8} {...formItemLayout}>
                   {getFieldDecorator('list8', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表8" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表8" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.list9} {...formItemLayout}>
                   {getFieldDecorator('list9', {
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入列表9" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入列表9" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

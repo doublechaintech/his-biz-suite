@@ -220,7 +220,6 @@ class UserAppSearchForm extends PureComponent {
             </FormItem>
           </Col>
 
-<<<<<<< HEAD
           <Col md={8} sm={24}>
             <FormItem label="标题">
               {getFieldDecorator('title')(
@@ -228,23 +227,6 @@ class UserAppSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
-=======
-       <Col md={8} sm={24}>
-         <FormItem label="ID">
-           {getFieldDecorator('id')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
-
-       <Col md={8} sm={24}>
-         <FormItem label="标题">
-           {getFieldDecorator('title')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
@@ -304,7 +286,6 @@ class UserAppSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
-<<<<<<< HEAD
           <Col md={8} sm={24}>
             <Form.Item label="安全用户">
               {getFieldDecorator('secUser', {
@@ -318,23 +299,6 @@ class UserAppSearchForm extends PureComponent {
               )}
             </Form.Item>
           </Col>
-=======
- <Col md={8} sm={24}>
-                    <Form.Item label="安全用户">
-                  {getFieldDecorator('secUser', {
-                    initialValue: tryinit('secUser'),
-                   
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('secUser')}
-                    targetType={"secUser"} 
-                    requestFunction={UserAppService.requestCandidateSecUser}/>
-                  
-                 
-                  )}
-                </Form.Item></Col>
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <FormItem label="应用程序图标">

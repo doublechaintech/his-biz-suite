@@ -64,7 +64,6 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
-<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -118,63 +117,6 @@ const internalSummaryOf = (userDomain, targetComponent) => {
     </DescriptionList>
   );
 };
-=======
-const { TabPane } = Tabs
-const { RangePicker } = DatePicker
-const { Option } = Select
-
-
-const imageList =(userDomain)=>{return [
-	 ]}
-
-const internalImageListOf = (userDomain) =>defaultImageListOf(userDomain,imageList)
-
-const optionList =(userDomain)=>{return [ 
-	]}
-
-const buildTransferModal = defaultBuildTransferModal
-const showTransferModel = defaultShowTransferModel
-const internalSettingListOf = (userDomain) =>defaultSettingListOf(userDomain, optionList)
-const internalLargeTextOf = (userDomain) =>{
-
-	return null
-	
-
-}
-
-
-const internalRenderExtraHeader = defaultRenderExtraHeader
-
-const internalRenderExtraFooter = defaultRenderExtraFooter
-const internalSubListsOf = defaultSubListsOf
-
-
-const internalRenderTitle = (cardsData,targetComponent) =>{
-  
-  
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
-  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
-
-}
-
-
-const internalSummaryOf = (userDomain,targetComponent) =>{
-	
-	
-	const {UserDomainService} = GlobalComponents
-	const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{userDomain.id}</Description> 
-<Description term="名称">{userDomain.name}</Description> 
-	
-        {buildTransferModal(userDomain,targetComponent)}
-      </DescriptionList>
-	)
-
-}
-
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class UserDomainDashboard extends Component {
   state = {
@@ -203,7 +145,6 @@ class UserDomainDashboard extends Component {
     if (!this.props.userDomain.class) {
       return null;
     }
-<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -233,26 +174,6 @@ class UserDomainDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
-=======
-    const returnURL = this.props.returnURL
-    
-    const cardsData = {cardsName:"用户域",cardsFor: "userDomain",
-    	cardsSource: this.props.userDomain,returnURL,displayName,
-  		subItems: [
-{name: 'secUserList', displayName:'安全用户',type:'secUser',count:secUserCount,addFunction: true, role: 'secUser', metaInfo: secUserListMetaInfo},
-    
-      	],
-  	};
-    
-    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const settingListOf = this.props.settingListOf || internalSettingListOf
-    const imageListOf = this.props.imageListOf || internalImageListOf
-    const subListsOf = this.props.subListsOf || internalSubListsOf
-    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
-    const summaryOf = this.props.summaryOf || internalSummaryOf
-    const renderTitle = this.props.renderTitle || internalRenderTitle
-    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

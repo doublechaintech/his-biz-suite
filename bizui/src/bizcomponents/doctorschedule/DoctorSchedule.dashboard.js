@@ -64,6 +64,7 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
+<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -208,6 +209,85 @@ const internalSummaryOf = (doctorSchedule, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
+const { Option } = Select
+
+
+const imageList =(doctorSchedule)=>{return [
+	 ]}
+
+const internalImageListOf = (doctorSchedule) =>defaultImageListOf(doctorSchedule,imageList)
+
+const optionList =(doctorSchedule)=>{return [ 
+	]}
+
+const buildTransferModal = defaultBuildTransferModal
+const showTransferModel = defaultShowTransferModel
+const internalSettingListOf = (doctorSchedule) =>defaultSettingListOf(doctorSchedule, optionList)
+const internalLargeTextOf = (doctorSchedule) =>{
+
+	return null
+	
+
+}
+
+
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
+
+}
+
+
+const internalSummaryOf = (doctorSchedule,targetComponent) =>{
+	
+	
+	const {DoctorScheduleService} = GlobalComponents
+	const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{doctorSchedule.id}</Description> 
+<Description term="名称">{doctorSchedule.name}</Description> 
+<Description term="安排日期">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
+<Description term="期">{doctorSchedule.period}</Description> 
+<Description term="医生">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.doctor.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"医生","doctor",DoctorScheduleService.requestCandidateDoctor,
+	      DoctorScheduleService.transferToAnotherDoctor,"anotherDoctorId",doctorSchedule.doctor?doctorSchedule.doctor.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="可用">{doctorSchedule.available}</Description> 
+<Description term="价格">{doctorSchedule.price}</Description> 
+<Description term="费用类型">{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.expenseType.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"费用类型","expenseType",DoctorScheduleService.requestCandidateExpenseType,
+	      DoctorScheduleService.transferToAnotherExpenseType,"anotherExpenseTypeId",doctorSchedule.expenseType?doctorSchedule.expenseType.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="部门">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.department.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"部门","department",DoctorScheduleService.requestCandidateDepartment,
+	      DoctorScheduleService.transferToAnotherDepartment,"anotherDepartmentId",doctorSchedule.department?doctorSchedule.department.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(doctorSchedule,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class DoctorScheduleDashboard extends Component {
   state = {
@@ -229,6 +309,7 @@ class DoctorScheduleDashboard extends Component {
     if (!this.props.doctorSchedule.class) {
       return null;
     }
+<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -248,6 +329,25 @@ class DoctorScheduleDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
+=======
+    const returnURL = this.props.returnURL
+    
+    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",
+    	cardsSource: this.props.doctorSchedule,returnURL,displayName,
+  		subItems: [
+    
+      	],
+  	};
+    
+    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
+    const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

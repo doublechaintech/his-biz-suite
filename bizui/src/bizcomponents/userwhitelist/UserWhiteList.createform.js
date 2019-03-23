@@ -210,16 +210,30 @@ class UserWhiteListCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.userIdentity} {...formItemLayout}>
                   {getFieldDecorator('userIdentity', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入用户身份" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入用户身份" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.userSpecialFunctions} {...formItemLayout}>
                   {getFieldDecorator('userSpecialFunctions', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入用户特殊功能" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入用户特殊功能" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

@@ -156,8 +156,13 @@ class ExpenseTypeBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '费用项目',
       role: 'expenseItem',
+=======
+      name: "费用项目",
+      role: "expenseItem",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._expenseType.expenseItemList,
       metaInfo: state._expenseType.expenseItemListMetaInfo,
       count: state._expenseType.expenseItemCount,
@@ -222,8 +227,13 @@ class ExpenseTypeBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '医生安排',
       role: 'doctorSchedule',
+=======
+      name: "医生安排",
+      role: "doctorSchedule",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._expenseType.doctorScheduleList,
       metaInfo: state._expenseType.doctorScheduleListMetaInfo,
       count: state._expenseType.doctorScheduleCount,

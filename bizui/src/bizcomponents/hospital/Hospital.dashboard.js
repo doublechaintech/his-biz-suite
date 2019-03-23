@@ -64,6 +64,7 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
+<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -119,6 +120,65 @@ const internalSummaryOf = (hospital, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
+const { Option } = Select
+
+
+const imageList =(hospital)=>{return [
+	 ]}
+
+const internalImageListOf = (hospital) =>defaultImageListOf(hospital,imageList)
+
+const optionList =(hospital)=>{return [ 
+	]}
+
+const buildTransferModal = defaultBuildTransferModal
+const showTransferModel = defaultShowTransferModel
+const internalSettingListOf = (hospital) =>defaultSettingListOf(hospital, optionList)
+const internalLargeTextOf = (hospital) =>{
+
+	return null
+	
+
+}
+
+
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
+
+}
+
+
+const internalSummaryOf = (hospital,targetComponent) =>{
+	
+	
+	const {HospitalService} = GlobalComponents
+	const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{hospital.id}</Description> 
+<Description term="名称">{hospital.name}</Description> 
+<Description term="地址">{hospital.address}</Description> 
+<Description term="电话">{hospital.telephone}</Description> 
+	
+        {buildTransferModal(hospital,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class HospitalDashboard extends Component {
   state = {
@@ -155,6 +215,7 @@ class HospitalDashboard extends Component {
     if (!this.props.hospital.class) {
       return null;
     }
+<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -193,6 +254,29 @@ class HospitalDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
+=======
+    const returnURL = this.props.returnURL
+    
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",
+    	cardsSource: this.props.hospital,returnURL,displayName,
+  		subItems: [
+{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', metaInfo: expenseTypeListMetaInfo},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
+{name: 'doctorList', displayName:'医生',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo},
+{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', metaInfo: departmentListMetaInfo},
+    
+      	],
+  	};
+    
+    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
+    const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

@@ -259,6 +259,7 @@ const buildTransferModal = (doctorAssignment, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = doctorAssignment => {
   return null;
 };
@@ -355,6 +356,58 @@ const internalSummaryOf = (doctorAssignment, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (doctorAssignment) =>{
+	return null
+}
+const internalRenderExtraFooter = (doctorAssignment) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (doctorAssignment,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{doctorAssignment.id}</Description> 
+<Description term="名称">{doctorAssignment.name}</Description> 
+<Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"医生","doctor","requestCandidateDoctor",
+	      "transferToAnotherDoctor","anotherDoctorId",doctorAssignment.doctor?doctorAssignment.doctor.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"部门","department","requestCandidateDepartment",
+	      "transferToAnotherDepartment","anotherDepartmentId",doctorAssignment.department?doctorAssignment.department.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(doctorAssignment,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = doctorAssignment => {
   const { DoctorAssignmentBase } = GlobalComponents;
@@ -378,6 +431,7 @@ class DoctorAssignmentPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName } = this.props.doctorAssignment;
     const cardsData = {
       cardsName: '医生的任务',
@@ -385,6 +439,14 @@ class DoctorAssignmentPreference extends Component {
       cardsSource: this.props.doctorAssignment,
       subItems: [],
     };
+=======
+    const { id,displayName,  } = this.props.doctorAssignment
+    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: this.props.doctorAssignment,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

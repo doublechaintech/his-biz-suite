@@ -124,6 +124,7 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const partialList = true;
       const newState = { ...data, partialList };
       const location = {
@@ -134,6 +135,12 @@ export default {
         state: newState,
       };
       yield put(routerRedux.push(location));
+=======
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/userDomain/${id}/list/\UserWhiteListList/用户白名单+${appLocaleName(userContext,'List')}`, state: newState }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *updateUserWhiteList({ payload }, { call, put }) {
       const userContext = null;
@@ -154,11 +161,16 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const location = {
         pathname: `/userDomain/${id}/list/\UserWhiteListList/用户白名单列表`,
         state: newPlayload,
       };
       yield put(routerRedux.push(location));
+=======
+      const location = { pathname: `/userDomain/${id}/list/\UserWhiteListList/用户白名单列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *gotoNextUserWhiteListUpdateRow({ payload }, { call, put }) {
       const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload;
@@ -199,6 +211,7 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const partialList = true;
       const newState = { ...data, partialList };
       const location = {
@@ -209,6 +222,12 @@ export default {
         state: newState,
       };
       yield put(routerRedux.push(location));
+=======
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/userDomain/${id}/list/\SecUserList/安全用户+${appLocaleName(userContext,'List')}`, state: newState }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *updateSecUser({ payload }, { call, put }) {
       const userContext = null;
@@ -229,11 +248,16 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const location = {
         pathname: `/userDomain/${id}/list/\SecUserList/安全用户列表`,
         state: newPlayload,
       };
       yield put(routerRedux.push(location));
+=======
+      const location = { pathname: `/userDomain/${id}/list/\SecUserList/安全用户列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *gotoNextSecUserUpdateRow({ payload }, { call, put }) {
       const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload;

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import ImagePreview from '../../components/ImagePreview';
 import { Link } from 'dva/router';
 import moment from 'moment';
@@ -92,13 +93,104 @@ const displayColumns = [
   },
   { title: '域', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record) },
 ];
+=======
+
+import ImagePreview from '../../components/ImagePreview'
+import { Link } from 'dva/router'
+import moment from 'moment'
+import appLocaleName from '../../common/Locale.tool'
+
+
+
+const menuData = {menuName:"用户白名单", menuFor: "userWhiteList",
+  		subItems: [
+  
+  		],
+}
+
+const renderTextCell=(value, record)=>{
+	const userContext = null
+	if(!value){
+		return '';
+	}
+	if(value==null){
+		return '';
+	}
+	if(value.length>15){
+		return value.substring(0,15)+"...("+value.length+appLocaleName(userContext,"Chars")+")"
+	}
+	return value
+	
+}
+
+const renderIdentifier=(value, record, targtObjectType)=>{
+
+	return (<Link to={`/${targtObjectType}/${value}/dashboard`}>{value}</Link>)
+	
+}
+
+const renderDateCell=(value, record)=>{
+	return moment(value).format('YYYY-MM-DD');
+}
+const renderDateTimeCell=(value, record)=>{
+	return moment(value).format('YYYY-MM-DD HH:mm');	
+}
+
+const renderImageCell=(value, record, title)=>{
+	return (<ImagePreview imageTitle={title} imageLocation={value} />)	
+}
+
+const renderMoneyCell=(value, record)=>{
+	const userContext = null
+	if(!value){
+		return appLocaleName(userContext,"Empty")
+	}
+	if(value == null){
+		return appLocaleName(userContext,"Empty")
+	}
+	return (`${appLocaleName(userContext,"Currency")}${value.toFixed(2)}`)
+}
+
+const renderBooleanCell=(value, record)=>{
+	const userContext = null
+
+	return  (value? appLocaleName(userContext,"Yes") : appLocaleName(userContext,"No"))
+
+}
+
+const renderReferenceCell=(value, record)=>{
+	const userContext = null
+	return (value ? value.displayName : appLocaleName(userContext,"NotAssigned")) 
+
+}
+
+const displayColumns = [
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: '用户身份', debugtype: 'string', dataIndex: 'userIdentity', width: '15',render: (text, record)=>renderTextCell(text,record) },
+  { title: '用户特殊功能', debugtype: 'string', dataIndex: 'userSpecialFunctions', width: '27',render: (text, record)=>renderTextCell(text,record) },
+  { title: '域', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record)},
+
+]
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const fieldLabels = {
   id: 'ID',
   userIdentity: '用户身份',
   userSpecialFunctions: '用户特殊功能',
   domain: '域',
+<<<<<<< HEAD
 };
 
 const UserWhiteListBase = { menuData, displayColumns, fieldLabels };
 export default UserWhiteListBase;
+=======
+
+}
+
+
+const UserWhiteListBase={menuData,displayColumns,fieldLabels}
+export default UserWhiteListBase
+
+
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89

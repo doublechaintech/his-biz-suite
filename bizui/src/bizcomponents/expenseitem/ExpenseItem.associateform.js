@@ -33,7 +33,11 @@ const testValues = {};
 /*
 const testValues = {
   name: '专家诊疗费',
+<<<<<<< HEAD
   price: '94159233024.00',
+=======
+  price: '71.30',
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
   expenseTypeId: 'ET000001',
   hospitalId: 'H000001',
 }
@@ -143,16 +147,30 @@ class ExpenseItemAssociateForm extends Component {
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入名称" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入名称" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.price} {...formItemLayout}>
                   {getFieldDecorator('price', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入价格" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入价格" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

@@ -64,6 +64,7 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
+<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -121,6 +122,65 @@ const internalSummaryOf = (secUserBlocking, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
+const { Option } = Select
+
+
+const imageList =(secUserBlocking)=>{return [
+	 ]}
+
+const internalImageListOf = (secUserBlocking) =>defaultImageListOf(secUserBlocking,imageList)
+
+const optionList =(secUserBlocking)=>{return [ 
+	]}
+
+const buildTransferModal = defaultBuildTransferModal
+const showTransferModel = defaultShowTransferModel
+const internalSettingListOf = (secUserBlocking) =>defaultSettingListOf(secUserBlocking, optionList)
+const internalLargeTextOf = (secUserBlocking) =>{
+
+	return null
+	
+
+}
+
+
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
+
+}
+
+
+const internalSummaryOf = (secUserBlocking,targetComponent) =>{
+	
+	
+	const {SecUserBlockingService} = GlobalComponents
+	const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{secUserBlocking.id}</Description> 
+<Description term="谁">{secUserBlocking.who}</Description> 
+<Description term="块时间">{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD')}</Description> 
+<Description term="评论">{secUserBlocking.comments}</Description> 
+	
+        {buildTransferModal(secUserBlocking,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class SecUserBlockingDashboard extends Component {
   state = {
@@ -142,6 +202,7 @@ class SecUserBlockingDashboard extends Component {
     if (!this.props.secUserBlocking.class) {
       return null;
     }
+<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -171,6 +232,26 @@ class SecUserBlockingDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
+=======
+    const returnURL = this.props.returnURL
+    
+    const cardsData = {cardsName:"用户屏蔽",cardsFor: "secUserBlocking",
+    	cardsSource: this.props.secUserBlocking,returnURL,displayName,
+  		subItems: [
+{name: 'secUserList', displayName:'安全用户',type:'secUser',count:secUserCount,addFunction: true, role: 'secUser', metaInfo: secUserListMetaInfo},
+    
+      	],
+  	};
+    
+    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
+    const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

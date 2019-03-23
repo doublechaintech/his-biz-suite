@@ -273,8 +273,16 @@ class ExpenseTypeUpdateForm extends Component {
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入ID" disabled />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入ID" disabled/>
+                    
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -282,8 +290,16 @@ class ExpenseTypeUpdateForm extends Component {
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
                     initialValue: selectedRow.name,
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入名称" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入名称" />
+                    
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -291,8 +307,16 @@ class ExpenseTypeUpdateForm extends Component {
                 <Form.Item label={fieldLabels.helperChars} {...formItemLayout}>
                   {getFieldDecorator('helperChars', {
                     initialValue: selectedRow.helperChars,
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入辅助识字课" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入辅助识字课" />
+                    
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -300,8 +324,16 @@ class ExpenseTypeUpdateForm extends Component {
                 <Form.Item label={fieldLabels.status} {...formItemLayout}>
                   {getFieldDecorator('status', {
                     initialValue: selectedRow.status,
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入状态" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入状态" />
+                    
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>
@@ -309,7 +341,11 @@ class ExpenseTypeUpdateForm extends Component {
         </Card>
 
         <Card title="描述" className={styles.card} bordered={false}>
+<<<<<<< HEAD
           <Form>
+=======
+          <Form >
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
             <Row gutter={16}>
               <Col lg={24} md={24} sm={24}>
                 <Form.Item>

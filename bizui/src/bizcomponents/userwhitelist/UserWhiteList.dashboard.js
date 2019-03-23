@@ -64,6 +64,7 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
+<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -118,6 +119,64 @@ const internalSummaryOf = (userWhiteList, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
+const { Option } = Select
+
+
+const imageList =(userWhiteList)=>{return [
+	 ]}
+
+const internalImageListOf = (userWhiteList) =>defaultImageListOf(userWhiteList,imageList)
+
+const optionList =(userWhiteList)=>{return [ 
+	]}
+
+const buildTransferModal = defaultBuildTransferModal
+const showTransferModel = defaultShowTransferModel
+const internalSettingListOf = (userWhiteList) =>defaultSettingListOf(userWhiteList, optionList)
+const internalLargeTextOf = (userWhiteList) =>{
+
+	return null
+	
+
+}
+
+
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
+
+}
+
+
+const internalSummaryOf = (userWhiteList,targetComponent) =>{
+	
+	
+	const {UserWhiteListService} = GlobalComponents
+	const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{userWhiteList.id}</Description> 
+<Description term="用户身份">{userWhiteList.userIdentity}</Description> 
+<Description term="用户特殊功能">{userWhiteList.userSpecialFunctions}</Description> 
+	
+        {buildTransferModal(userWhiteList,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class UserWhiteListDashboard extends Component {
   state = {
@@ -139,6 +198,7 @@ class UserWhiteListDashboard extends Component {
     if (!this.props.userWhiteList.class) {
       return null;
     }
+<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -158,6 +218,25 @@ class UserWhiteListDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
+=======
+    const returnURL = this.props.returnURL
+    
+    const cardsData = {cardsName:"用户白名单",cardsFor: "userWhiteList",
+    	cardsSource: this.props.userWhiteList,returnURL,displayName,
+  		subItems: [
+    
+      	],
+  	};
+    
+    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
+    const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

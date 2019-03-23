@@ -204,6 +204,7 @@ class DoctorScheduleSearchForm extends PureComponent {
             </FormItem>
           </Col>
 
+<<<<<<< HEAD
           <Col md={8} sm={24}>
             <FormItem label="名称">
               {getFieldDecorator('name')(
@@ -211,6 +212,23 @@ class DoctorScheduleSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
+=======
+       <Col md={8} sm={24}>
+         <FormItem label="ID">
+           {getFieldDecorator('id')(
+             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+           )}
+         </FormItem>
+       </Col>
+
+       <Col md={8} sm={24}>
+         <FormItem label="名称">
+           {getFieldDecorator('name')(
+             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+           )}
+         </FormItem>
+       </Col>
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
@@ -271,6 +289,7 @@ class DoctorScheduleSearchForm extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
+<<<<<<< HEAD
             <Form.Item label="医生">
               {getFieldDecorator('doctor', {
                 initialValue: tryinit('doctor'),
@@ -280,6 +299,11 @@ class DoctorScheduleSearchForm extends PureComponent {
                   targetType={'doctor'}
                   requestFunction={DoctorScheduleService.requestCandidateDoctor}
                 />
+=======
+            <FormItem label="期">
+              {getFieldDecorator('period')(
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
               )}
             </Form.Item>
           </Col>
@@ -335,6 +359,55 @@ class DoctorScheduleSearchForm extends PureComponent {
               )}
             </Form.Item>
           </Col>
+<<<<<<< HEAD
+=======
+ <Col md={8} sm={24}>
+                    <Form.Item label="医生">
+                  {getFieldDecorator('doctor', {
+                    initialValue: tryinit('doctor'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('doctor')}
+                    targetType={"doctor"} 
+                    requestFunction={DoctorScheduleService.requestCandidateDoctor}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+ <Col md={8} sm={24}>
+                    <Form.Item label="费用类型">
+                  {getFieldDecorator('expenseType', {
+                    initialValue: tryinit('expenseType'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('expenseType')}
+                    targetType={"expenseType"} 
+                    requestFunction={DoctorScheduleService.requestCandidateExpenseType}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+ <Col md={8} sm={24}>
+                    <Form.Item label="部门">
+                  {getFieldDecorator('department', {
+                    initialValue: tryinit('department'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('department')}
+                    targetType={"department"} 
+                    requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>

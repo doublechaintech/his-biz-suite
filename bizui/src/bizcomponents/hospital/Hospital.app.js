@@ -156,8 +156,13 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '费用类型',
       role: 'expenseType',
+=======
+      name: "费用类型",
+      role: "expenseType",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._hospital.expenseTypeList,
       metaInfo: state._hospital.expenseTypeListMetaInfo,
       count: state._hospital.expenseTypeCount,
@@ -288,8 +293,13 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '费用项目',
       role: 'expenseItem',
+=======
+      name: "费用项目",
+      role: "expenseItem",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._hospital.expenseItemList,
       metaInfo: state._hospital.expenseItemListMetaInfo,
       count: state._hospital.expenseItemCount,
@@ -354,8 +364,13 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '医生',
       role: 'doctor',
+=======
+      name: "医生",
+      role: "doctor",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._hospital.doctorList,
       metaInfo: state._hospital.doctorListMetaInfo,
       count: state._hospital.doctorCount,
@@ -420,8 +435,13 @@ class HospitalBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
+<<<<<<< HEAD
       name: '部门',
       role: 'department',
+=======
+      name: "部门",
+      role: "department",
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._hospital.departmentList,
       metaInfo: state._hospital.departmentListMetaInfo,
       count: state._hospital.departmentCount,

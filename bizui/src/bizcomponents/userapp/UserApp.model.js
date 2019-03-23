@@ -124,6 +124,7 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const partialList = true;
       const newState = { ...data, partialList };
       const location = {
@@ -134,6 +135,12 @@ export default {
         state: newState,
       };
       yield put(routerRedux.push(location));
+=======
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/userApp/${id}/list/\ListAccessList/访问列表+${appLocaleName(userContext,'List')}`, state: newState }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *updateListAccess({ payload }, { call, put }) {
       const userContext = null;
@@ -154,11 +161,16 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const location = {
         pathname: `/userApp/${id}/list/\ListAccessList/访问列表列表`,
         state: newPlayload,
       };
       yield put(routerRedux.push(location));
+=======
+      const location = { pathname: `/userApp/${id}/list/\ListAccessList/访问列表列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *gotoNextListAccessUpdateRow({ payload }, { call, put }) {
       const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload;
@@ -199,6 +211,7 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const partialList = true;
       const newState = { ...data, partialList };
       const location = {
@@ -209,6 +222,12 @@ export default {
         state: newState,
       };
       yield put(routerRedux.push(location));
+=======
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/userApp/${id}/list/\ObjectAccessList/对象访问+${appLocaleName(userContext,'List')}`, state: newState }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *updateObjectAccess({ payload }, { call, put }) {
       const userContext = null;
@@ -229,11 +248,16 @@ export default {
       if (continueNext) {
         return;
       }
+<<<<<<< HEAD
       const location = {
         pathname: `/userApp/${id}/list/\ObjectAccessList/对象访问列表`,
         state: newPlayload,
       };
       yield put(routerRedux.push(location));
+=======
+      const location = { pathname: `/userApp/${id}/list/\ObjectAccessList/对象访问列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     },
     *gotoNextObjectAccessUpdateRow({ payload }, { call, put }) {
       const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload;

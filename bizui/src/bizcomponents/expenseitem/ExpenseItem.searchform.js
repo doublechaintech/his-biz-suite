@@ -201,6 +201,7 @@ class ExpenseItemSearchForm extends PureComponent {
             </FormItem>
           </Col>
 
+<<<<<<< HEAD
           <Col md={8} sm={24}>
             <FormItem label="名称">
               {getFieldDecorator('name')(
@@ -208,6 +209,23 @@ class ExpenseItemSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
+=======
+       <Col md={8} sm={24}>
+         <FormItem label="ID">
+           {getFieldDecorator('id')(
+             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+           )}
+         </FormItem>
+       </Col>
+
+       <Col md={8} sm={24}>
+         <FormItem label="名称">
+           {getFieldDecorator('name')(
+             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+           )}
+         </FormItem>
+       </Col>
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
@@ -267,6 +285,7 @@ class ExpenseItemSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
+<<<<<<< HEAD
           <Col md={8} sm={24}>
             <Form.Item label="费用类型">
               {getFieldDecorator('expenseType', {
@@ -293,6 +312,39 @@ class ExpenseItemSearchForm extends PureComponent {
               )}
             </Form.Item>
           </Col>
+=======
+ <Col md={8} sm={24}>
+                    <Form.Item label="费用类型">
+                  {getFieldDecorator('expenseType', {
+                    initialValue: tryinit('expenseType'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('expenseType')}
+                    targetType={"expenseType"} 
+                    requestFunction={ExpenseItemService.requestCandidateExpenseType}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+ <Col md={8} sm={24}>
+                    <Form.Item label="医院">
+                  {getFieldDecorator('hospital', {
+                    initialValue: tryinit('hospital'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={ExpenseItemService.requestCandidateHospital}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>

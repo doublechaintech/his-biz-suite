@@ -259,6 +259,7 @@ const buildTransferModal = (secUserBlocking, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = secUserBlocking => {
   return null;
 };
@@ -316,6 +317,48 @@ const internalSummaryOf = (secUserBlocking, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (secUserBlocking) =>{
+	return null
+}
+const internalRenderExtraFooter = (secUserBlocking) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (secUserBlocking,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{secUserBlocking.id}</Description> 
+<Description term="谁">{secUserBlocking.who}</Description> 
+<Description term="块时间">{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD')}</Description> 
+<Description term="评论">{secUserBlocking.comments}</Description> 
+	
+        {buildTransferModal(secUserBlocking,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = secUserBlocking => {
   const { SecUserBlockingBase } = GlobalComponents;
@@ -339,6 +382,7 @@ class SecUserBlockingPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName, secUserCount } = this.props.secUserBlocking;
     const cardsData = {
       cardsName: '用户屏蔽',
@@ -346,6 +390,14 @@ class SecUserBlockingPreference extends Component {
       cardsSource: this.props.secUserBlocking,
       subItems: [],
     };
+=======
+    const { id,displayName, secUserCount } = this.props.secUserBlocking
+    const cardsData = {cardsName:"用户屏蔽",cardsFor: "secUserBlocking",cardsSource: this.props.secUserBlocking,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

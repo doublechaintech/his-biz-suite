@@ -67,6 +67,7 @@ const internalImageListOf = listAccess => {
     return null;
   }
 
+<<<<<<< HEAD
   return (
     <Card title={appLocaleName(userContext, 'ImageList')} className={styles.card}>
       <Row type="flex" justify="start" align="bottom">
@@ -102,6 +103,27 @@ const internalSettingListOf = listAccess => {
 
   if (optionList.length === 0) {
     return null;
+=======
+  return(<Card title={appLocaleName(userContext,"ImageList")} className={styles.card}><Row type="flex" justify="start" align="bottom">
+  {
+      filteredList.map((item,index)=>(<Col span={4} key={index}><ImagePreview imageTitle ={item.title} showTitleUnderImage={true} imageLocation={item.imageLocation} >{item.title}</ImagePreview></Col>))
+  }</Row></Card> )
+
+}
+
+const internalSettingListOf = (listAccess) =>{
+	const userContext = null
+	const optionList = [ 
+	  {"title":'读权限',"value":listAccess.readPermission,"parameterName":"readPermission"},
+  {"title":'创建权限',"value":listAccess.createPermission,"parameterName":"createPermission"},
+  {"title":'删除权限',"value":listAccess.deletePermission,"parameterName":"deletePermission"},
+  {"title":'更新许可',"value":listAccess.updatePermission,"parameterName":"updatePermission"},
+  {"title":'执行权限',"value":listAccess.executionPermission,"parameterName":"executionPermission"},
+]
+	
+  if(optionList.length===0){
+    return null
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
   }
   return (
     <Card title={appLocaleName(userContext, 'Switchers')} className={styles.card}>
@@ -269,6 +291,7 @@ const buildTransferModal = (listAccess, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = listAccess => {
   return null;
 };
@@ -343,6 +366,53 @@ const internalSummaryOf = (listAccess, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (listAccess) =>{
+	return null
+}
+const internalRenderExtraFooter = (listAccess) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (listAccess,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{listAccess.id}</Description> 
+<Description term="名称">{listAccess.name}</Description> 
+<Description term="内部名称">{listAccess.internalName}</Description> 
+<Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):listAccess.app.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"应用程序","userApp","requestCandidateApp",
+	      "transferToAnotherApp","anotherAppId",listAccess.app?listAccess.app.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(listAccess,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = listAccess => {
   const { ListAccessBase } = GlobalComponents;
@@ -364,6 +434,7 @@ class ListAccessPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName } = this.props.listAccess;
     const cardsData = {
       cardsName: '访问列表',
@@ -371,6 +442,14 @@ class ListAccessPreference extends Component {
       cardsSource: this.props.listAccess,
       subItems: [],
     };
+=======
+    const { id,displayName,  } = this.props.listAccess
+    const cardsData = {cardsName:"访问列表",cardsFor: "listAccess",cardsSource: this.props.listAccess,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

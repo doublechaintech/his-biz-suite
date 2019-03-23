@@ -93,6 +93,7 @@ const internalSettingListOf = expenseType => {
   if (optionList.length === 0) {
     return null;
   }
+<<<<<<< HEAD
   return (
     <Card title={appLocaleName(userContext, 'Switchers')} className={styles.card}>
       {optionList.map(item => (
@@ -120,6 +121,33 @@ const internalLargeTextOf = expenseType => {
     </div>
   );
 };
+=======
+  return(<Card title={appLocaleName(userContext,"Switchers")} className={styles.card}>
+  	
+  	{
+  	  optionList.map((item)=><Col key={item.parameterName} span={6} style={{"height":"60px"}}>
+       <Switch  title={item.title} checked={item.value} type={item.value?"success":"error"} checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")} />
+       <span style={{"margin":"10px"}}>{item.title}</span>
+       </Col>)
+  	}
+
+
+</Card> )
+	
+
+
+}
+
+const internalLargeTextOf = (expenseType) =>{
+
+	return(<div> 
+   <Card title={`描述`} ><pre>{expenseType.description}</pre></Card>
+</div>)
+
+	
+
+}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 /////////////////////////////////////// BUILD FOR TRANSFERRING TO ANOTHER OBJECT////////////////////////////////////////////////
 
@@ -265,6 +293,7 @@ const buildTransferModal = (expenseType, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 const internalRenderExtraHeader = expenseType => {
   return null;
 };
@@ -323,6 +352,48 @@ const internalSummaryOf = (expenseType, targetComponent) => {
     </DescriptionList>
   );
 };
+=======
+
+
+const internalRenderExtraHeader = (expenseType) =>{
+	return null
+}
+const internalRenderExtraFooter = (expenseType) =>{
+	return null
+}
+const internalSubListsOf = (cardsData) =>{
+	const {id} = cardsData.cardsSource;
+	const userContext = null
+	return (<Row gutter={24}>
+
+           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
+            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
+              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
+              
+              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
+              
+              </p>         
+          </Card> 
+            </Col>))}
+          </Row>)
+}
+
+const internalSummaryOf = (expenseType,targetComponent) =>{
+    const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{expenseType.id}</Description> 
+<Description term="名称">{expenseType.name}</Description> 
+<Description term="辅助识字课">{expenseType.helperChars}</Description> 
+<Description term="状态">{expenseType.status}</Description> 
+	
+        {buildTransferModal(expenseType,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = expenseType => {
   const { ExpenseTypeBase } = GlobalComponents;
@@ -344,6 +415,7 @@ class ExpenseTypePreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
+<<<<<<< HEAD
     const { id, displayName, expenseItemCount, doctorScheduleCount } = this.props.expenseType;
     const cardsData = {
       cardsName: '费用类型',
@@ -360,6 +432,14 @@ class ExpenseTypePreference extends Component {
         },
       ],
     };
+=======
+    const { id,displayName, expenseItemCount, doctorScheduleCount } = this.props.expenseType
+    const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",cardsSource: this.props.expenseType,
+  		subItems: [
+    
+      	],
+  	};
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

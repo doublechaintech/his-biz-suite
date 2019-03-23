@@ -1,0 +1,71 @@
+<?xml version='1.0' ?>
+<root org="panfeng" 
+	chinese_name="医生排班系统" 
+	english_name="Doctor Scheduling System">
+
+	
+    <hospital
+
+        name="上和医院|[1,200]"
+        address="毕升路22号"
+        telephone="028-9123123"
+    
+    
+    />
+	
+    <expense_type
+        name="诊疗费|治疗费|检查费"
+        helper_chars="zlf|zlf|jcf"
+        status="正常|停用"
+        hospital="$(hospital)"
+        description="text()"
+
+    />
+
+     <expense_item
+        name="专家诊疗费|血常规|煎药费"
+        price="$99.00"
+        expense_type="$(expense_type)"
+        hospital="$(hospital)"
+    />
+
+    <doctor
+        name="魏松全"
+        hospital="$(hospital)"
+    />
+	
+    <department
+        name="放射科"
+        hospital="$(hospital)"
+
+    />
+    
+    <doctor_assignment
+        name="魏松全在内分泌科室上"
+        doctor="$(doctor)"
+        department="$(department)"
+        
+    />
+    <doctor_schedule
+        name="2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10"
+        schedule_date="2019-3-11"
+        period="上午|下午|夜班"
+        doctor="$(doctor)"
+        available="20"
+        price="$123.99"
+        expense_type="$(expense_type)"
+        department="$(department)"
+    />
+	
+
+</root>
+ 
+
+
+
+
+
+
+
+
+

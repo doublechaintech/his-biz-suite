@@ -31,9 +31,16 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
+<<<<<<< HEAD
   scheduleDate: '2016-10-25',
   available: '19',
   price: '114.01',
+=======
+  scheduleDate: '2016-12-25',
+  period: '上午',
+  available: '17',
+  price: '99.49',
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
   doctorId: 'D000001',
   periodId: 'P000001',
   departmentId: 'D000001',
@@ -216,32 +223,70 @@ class DoctorScheduleCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入名称" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入名称" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.scheduleDate} {...formItemLayout}>
                   {getFieldDecorator('scheduleDate', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.period} {...formItemLayout}>
+                  {getFieldDecorator('period', {
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入期" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.available} {...formItemLayout}>
                   {getFieldDecorator('available', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入可用" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入可用" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.price} {...formItemLayout}>
                   {getFieldDecorator('price', {
+<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入价格" />)}
+=======
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input placeholder="请输入价格" />
+                  )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

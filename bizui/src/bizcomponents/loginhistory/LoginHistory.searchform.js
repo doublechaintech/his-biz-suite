@@ -204,6 +204,7 @@ class LoginHistorySearchForm extends PureComponent {
             </FormItem>
           </Col>
 
+<<<<<<< HEAD
           <Col md={8} sm={24}>
             <FormItem label="来自IP">
               {getFieldDecorator('fromIp')(
@@ -211,6 +212,23 @@ class LoginHistorySearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
+=======
+       <Col md={8} sm={24}>
+         <FormItem label="ID">
+           {getFieldDecorator('id')(
+             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+           )}
+         </FormItem>
+       </Col>
+
+       <Col md={8} sm={24}>
+         <FormItem label="来自IP">
+           {getFieldDecorator('fromIp')(
+             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+           )}
+         </FormItem>
+       </Col>
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
@@ -278,6 +296,7 @@ class LoginHistorySearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
+<<<<<<< HEAD
           <Col md={8} sm={24}>
             <Form.Item label="安全用户">
               {getFieldDecorator('secUser', {
@@ -291,6 +310,24 @@ class LoginHistorySearchForm extends PureComponent {
               )}
             </Form.Item>
           </Col>
+=======
+ <Col md={8} sm={24}>
+                    <Form.Item label="安全用户">
+                  {getFieldDecorator('secUser', {
+                    initialValue: tryinit('secUser'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('secUser')}
+                    targetType={"secUser"} 
+                    requestFunction={LoginHistoryService.requestCandidateSecUser}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>

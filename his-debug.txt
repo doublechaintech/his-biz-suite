@@ -12,15 +12,12 @@ Helper Chars|辅助识字课
 Status|状态
 Hospital|医院
 Description|描述
-<<<<<<< HEAD
 Update Time|更新时间
 Version|版本
 Period|期
 Id|ID
 Name|名称
 Hospital|医院
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Version|版本
 Expense Item|费用项目
 Id|ID
@@ -28,45 +25,31 @@ Name|名称
 Price|价格
 Expense Type|费用类型
 Hospital|医院
-<<<<<<< HEAD
 Update Time|更新时间
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Version|版本
 Doctor|医生
 Id|ID
 Name|名称
-<<<<<<< HEAD
 Shot Image|拍摄的图像
 Hospital|医院
 Update Time|更新时间
-=======
-Hospital|医院
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Version|版本
 Department|部门
 Id|ID
 Name|名称
 Hospital|医院
-<<<<<<< HEAD
 Update Time|更新时间
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Version|版本
 Doctor Assignment|医生的任务
 Id|ID
 Name|名称
 Doctor|医生
 Department|部门
-<<<<<<< HEAD
 Update Time|更新时间
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Version|版本
 Doctor Schedule|医生安排
 Id|ID
 Name|名称
-<<<<<<< HEAD
 Doctor|医生
 Schedule Date|安排日期
 Period|期
@@ -77,15 +60,6 @@ Expense Type|费用类型
 Create Time|创建时间
 Update Time|更新时间
 Hospital|医院
-=======
-Schedule Date|安排日期
-Period|期
-Doctor|医生
-Available|可用
-Price|价格
-Expense Type|费用类型
-Department|部门
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Version|版本
 User Domain|用户域
 Id|ID
@@ -209,10 +183,7 @@ Form|形式
 Version|版本
 Transfer to Another Hospital|转到另一家医院
 Transfer to Another Expense Type|转移到另一种费用类型
-<<<<<<< HEAD
 Transfer to Another Period|转到另一个时期
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 Transfer to Another Expense Item|转到其他费用项目
 Transfer to Another Doctor|转到另一位医生那里
 Transfer to Another Department|调到另一个部门

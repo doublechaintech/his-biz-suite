@@ -207,7 +207,6 @@ class UserWhiteListSearchForm extends PureComponent {
             </FormItem>
           </Col>
 
-<<<<<<< HEAD
           <Col md={8} sm={24}>
             <FormItem label="用户身份">
               {getFieldDecorator('userIdentity')(
@@ -215,23 +214,6 @@ class UserWhiteListSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
-=======
-       <Col md={8} sm={24}>
-         <FormItem label="ID">
-           {getFieldDecorator('id')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
-
-       <Col md={8} sm={24}>
-         <FormItem label="用户身份">
-           {getFieldDecorator('userIdentity')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>
@@ -299,7 +281,6 @@ class UserWhiteListSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
-<<<<<<< HEAD
           <Col md={8} sm={24}>
             <Form.Item label="域">
               {getFieldDecorator('domain', {
@@ -313,24 +294,6 @@ class UserWhiteListSearchForm extends PureComponent {
               )}
             </Form.Item>
           </Col>
-=======
- <Col md={8} sm={24}>
-                    <Form.Item label="域">
-                  {getFieldDecorator('domain', {
-                    initialValue: tryinit('domain'),
-                   
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('domain')}
-                    targetType={"domain"} 
-                    requestFunction={UserWhiteListService.requestCandidateDomain}/>
-                  
-                 
-                  )}
-                </Form.Item></Col>
-
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <span style={{ float: 'right', marginBottom: 24 }}>

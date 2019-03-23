@@ -64,7 +64,6 @@ const {
 } = DashboardTool;
 
 const { Description } = DescriptionList;
-<<<<<<< HEAD
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -129,70 +128,6 @@ const internalSummaryOf = (secUser, targetComponent) => {
     </DescriptionList>
   );
 };
-=======
-const { TabPane } = Tabs
-const { RangePicker } = DatePicker
-const { Option } = Select
-
-
-const imageList =(secUser)=>{return [
-	 ]}
-
-const internalImageListOf = (secUser) =>defaultImageListOf(secUser,imageList)
-
-const optionList =(secUser)=>{return [ 
-	]}
-
-const buildTransferModal = defaultBuildTransferModal
-const showTransferModel = defaultShowTransferModel
-const internalSettingListOf = (secUser) =>defaultSettingListOf(secUser, optionList)
-const internalLargeTextOf = (secUser) =>{
-
-	return null
-	
-
-}
-
-
-const internalRenderExtraHeader = defaultRenderExtraHeader
-
-const internalRenderExtraFooter = defaultRenderExtraFooter
-const internalSubListsOf = defaultSubListsOf
-
-
-const internalRenderTitle = (cardsData,targetComponent) =>{
-  
-  
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
-  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
-
-}
-
-
-const internalSummaryOf = (secUser,targetComponent) =>{
-	
-	
-	const {SecUserService} = GlobalComponents
-	const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{secUser.id}</Description> 
-<Description term="登录">{secUser.login}</Description> 
-<Description term="手机号码">{secUser.mobile}</Description> 
-<Description term="电子邮件">{secUser.email}</Description> 
-<Description term="密码">{secUser.pwd}</Description> 
-<Description term="验证码">{secUser.verificationCode}</Description> 
-<Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
-<Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
-<Description term="当前状态">{secUser.currentStatus}</Description> 
-	
-        {buildTransferModal(secUser,targetComponent)}
-      </DescriptionList>
-	)
-
-}
-
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 class SecUserDashboard extends Component {
   state = {
@@ -221,7 +156,6 @@ class SecUserDashboard extends Component {
     if (!this.props.secUser.class) {
       return null;
     }
-<<<<<<< HEAD
     const returnURL = this.props.returnURL;
 
     const cardsData = {
@@ -260,27 +194,6 @@ class SecUserDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf;
     const renderTitle = this.props.renderTitle || internalRenderTitle;
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter;
-=======
-    const returnURL = this.props.returnURL
-    
-    const cardsData = {cardsName:"安全用户",cardsFor: "secUser",
-    	cardsSource: this.props.secUser,returnURL,displayName,
-  		subItems: [
-{name: 'userAppList', displayName:'用户应用程序',type:'userApp',count:userAppCount,addFunction: true, role: 'userApp', metaInfo: userAppListMetaInfo},
-{name: 'loginHistoryList', displayName:'登录历史',type:'loginHistory',count:loginHistoryCount,addFunction: true, role: 'loginHistory', metaInfo: loginHistoryListMetaInfo},
-    
-      	],
-  	};
-    
-    const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const settingListOf = this.props.settingListOf || internalSettingListOf
-    const imageListOf = this.props.imageListOf || internalImageListOf
-    const subListsOf = this.props.subListsOf || internalSubListsOf
-    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
-    const summaryOf = this.props.summaryOf || internalSummaryOf
-    const renderTitle = this.props.renderTitle || internalRenderTitle
-    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     return (
       <PageHeaderLayout
         title={renderTitle(cardsData, this)}

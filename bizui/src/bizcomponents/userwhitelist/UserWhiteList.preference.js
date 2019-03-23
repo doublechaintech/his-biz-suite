@@ -259,7 +259,6 @@ const buildTransferModal = (userWhiteList, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
 const internalRenderExtraHeader = userWhiteList => {
   return null;
 };
@@ -314,47 +313,6 @@ const internalSummaryOf = (userWhiteList, targetComponent) => {
     </DescriptionList>
   );
 };
-=======
-
-
-const internalRenderExtraHeader = (userWhiteList) =>{
-	return null
-}
-const internalRenderExtraFooter = (userWhiteList) =>{
-	return null
-}
-const internalSubListsOf = (cardsData) =>{
-	const {id} = cardsData.cardsSource;
-	const userContext = null
-	return (<Row gutter={24}>
-
-           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
-            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
-              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
-              
-              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
-              
-              </p>         
-          </Card> 
-            </Col>))}
-          </Row>)
-}
-
-const internalSummaryOf = (userWhiteList,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{userWhiteList.id}</Description> 
-<Description term="用户身份">{userWhiteList.userIdentity}</Description> 
-<Description term="用户特殊功能">{userWhiteList.userSpecialFunctions}</Description> 
-	
-        {buildTransferModal(userWhiteList,targetComponent)}
-      </DescriptionList>
-	)
-
-}
-
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = userWhiteList => {
   const { UserWhiteListBase } = GlobalComponents;
@@ -376,7 +334,6 @@ class UserWhiteListPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-<<<<<<< HEAD
     const { id, displayName } = this.props.userWhiteList;
     const cardsData = {
       cardsName: '用户白名单',
@@ -384,14 +341,6 @@ class UserWhiteListPreference extends Component {
       cardsSource: this.props.userWhiteList,
       subItems: [],
     };
-=======
-    const { id,displayName,  } = this.props.userWhiteList
-    const cardsData = {cardsName:"用户白名单",cardsFor: "userWhiteList",cardsSource: this.props.userWhiteList,
-  		subItems: [
-    
-      	],
-  	};
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

@@ -75,7 +75,6 @@ const renderForNumbers = aggregatedData => {
   // <MiniArea color="#975FE4" data={visitData} />
 
   const colors = [
-    'red',
     '#e6194b',
     '#3cb44b',
     '#ffe119',
@@ -99,10 +98,10 @@ const renderForNumbers = aggregatedData => {
     '#ffffff',
     '#000000',
   ];
-
+  let colorIndex = 0
   return (
     <Row gutter={24}>
-      {data.dimensions.map((item, itemIndex) => {
+      {data.dimensions.map((item) => {
         const visitData = [];
         let itemTotal = 0;
         const weekData = { lastWeek: 0, thisWeek: 0, lastWeekCount: 7, change: 0 };
@@ -139,8 +138,9 @@ const renderForNumbers = aggregatedData => {
         if (visitData.length < 10) {
           ChartComp = MiniBar;
         }
-        console.log('index: ', itemIndex, colors[itemIndex % colors.length]);
-
+        colorIndex +=1
+        console.log('index: ', colorIndex, colors[colorIndex % colors.length]);
+        
         const chartColor = colors[itemIndex % colors.length];
         return (
           <Col key={item} {...topColResponsiveProps}>

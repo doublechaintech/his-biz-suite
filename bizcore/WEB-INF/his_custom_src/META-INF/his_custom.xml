@@ -17,9 +17,9 @@
 	<import resource="classpath*:/META-INF/his.xml" />
 	<import resource="classpath*:/META-INF/his_manager.xml" />
 	
-	<bean id="checker" class="com.panfeng.his.CustomHisChecker" scope="prototype"></bean>
+	<bean id="checker" class="com.doublechaintech.his.CustomHisChecker" scope="prototype"></bean>
 	
-	<bean id="secUserManager" class="com.panfeng.his.secuser.SecUserCustomManagerImpl">
+	<bean id="secUserManager" class="com.doublechaintech.his.secuser.SecUserCustomManagerImpl">
 	 	<property name="cacheService" ref="cacheService" />
 	 	<property name="esClient" ref="elasticsearchClient" />
 	 	<property name="smtpService" ref="smtpService" />

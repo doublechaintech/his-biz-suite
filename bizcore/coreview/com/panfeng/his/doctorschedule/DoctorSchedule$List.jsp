@@ -101,14 +101,17 @@
 <c:if test="${param.referName ne 'name'}">
 	<th>${userContext.localeMap['doctor_schedule.name']}</th>
 </c:if>
+<c:if test="${param.referName ne 'doctor'}">
+	<th>${userContext.localeMap['doctor_schedule.doctor']}</th>
+</c:if>
 <c:if test="${param.referName ne 'scheduleDate'}">
 	<th>${userContext.localeMap['doctor_schedule.schedule_date']}</th>
 </c:if>
 <c:if test="${param.referName ne 'period'}">
 	<th>${userContext.localeMap['doctor_schedule.period']}</th>
 </c:if>
-<c:if test="${param.referName ne 'doctor'}">
-	<th>${userContext.localeMap['doctor_schedule.doctor']}</th>
+<c:if test="${param.referName ne 'department'}">
+	<th>${userContext.localeMap['doctor_schedule.department']}</th>
 </c:if>
 <c:if test="${param.referName ne 'available'}">
 	<th>${userContext.localeMap['doctor_schedule.available']}</th>
@@ -119,8 +122,14 @@
 <c:if test="${param.referName ne 'expenseType'}">
 	<th>${userContext.localeMap['doctor_schedule.expense_type']}</th>
 </c:if>
-<c:if test="${param.referName ne 'department'}">
-	<th>${userContext.localeMap['doctor_schedule.department']}</th>
+<c:if test="${param.referName ne 'createTime'}">
+	<th>${userContext.localeMap['doctor_schedule.create_time']}</th>
+</c:if>
+<c:if test="${param.referName ne 'updateTime'}">
+	<th>${userContext.localeMap['doctor_schedule.update_time']}</th>
+</c:if>
+<c:if test="${param.referName ne 'hospital'}">
+	<th>${userContext.localeMap['doctor_schedule.hospital']}</th>
 </c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
@@ -129,8 +138,6 @@
 			<c:forEach var="item" items="${doctorScheduleList}">
 				<tr currentVersion='${item.version}' id="doctorSchedule-${item.id}" ><td><a class="link-action-removed" href="./doctorScheduleManager/view/${item.id}/"> ${item.id}</a></td>
 <c:if test="${param.referName ne 'name'}">	<td contenteditable='true' class='edit-value'  propertyToChange='name' storedCellValue='${item.name}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'>${item.name}</td>
-</c:if><c:if test="${param.referName ne 'scheduleDate'}">	<td contenteditable='true' class='edit-value'  propertyToChange='scheduleDate' storedCellValue='${item.scheduleDate}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd" value="${item.scheduleDate}" /></td>
-</c:if><c:if test="${param.referName ne 'period'}">	<td contenteditable='true' class='edit-value'  propertyToChange='period' storedCellValue='${item.period}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'>${item.period}</td>
 </c:if><c:if test="${param.referName ne 'doctor'}">
 	<td class="select_candidate_td"
 			data-candidate-method="./doctorScheduleManager/requestCandidateDoctor/${ownerBeanName}/${item.id}/"
@@ -141,6 +148,27 @@
 			<a href='./doctorManager/view/${item.doctor.id}/'>${item.doctor.displayName}</a>
 			</c:if>
 			<c:if test="${empty  item.doctor}">
+			<a href='#'></a>
+			</c:if>
+			<button class="btn btn-link candidate-action">...</button>
+		</span>
+		<div class="candidate_span" style="display:none;">
+			<input type="text" data-provide="typeahead" class="input-sm form-control candidate-filter-input" autocomplete="off" />
+		</div>
+	</td>
+</c:if>
+<c:if test="${param.referName ne 'scheduleDate'}">	<td contenteditable='true' class='edit-value'  propertyToChange='scheduleDate' storedCellValue='${item.scheduleDate}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd" value="${item.scheduleDate}" /></td>
+</c:if><c:if test="${param.referName ne 'period'}">	<td contenteditable='true' class='edit-value'  propertyToChange='period' storedCellValue='${item.period}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'>${item.period}</td>
+</c:if><c:if test="${param.referName ne 'department'}">
+	<td class="select_candidate_td"
+			data-candidate-method="./doctorScheduleManager/requestCandidateDepartment/${ownerBeanName}/${item.id}/"
+			data-switch-method="./doctorScheduleManager/transferToAnotherDepartment/${item.id}/"
+			data-link-template="./departmentManager/view/${'$'}{ID}/">
+		<span class="display_span">
+			<c:if test="${not empty  item.department}">
+			<a href='./departmentManager/view/${item.department.id}/'>${item.department.displayName}</a>
+			</c:if>
+			<c:if test="${empty  item.department}">
 			<a href='#'></a>
 			</c:if>
 			<button class="btn btn-link candidate-action">...</button>
@@ -171,16 +199,18 @@
 		</div>
 	</td>
 </c:if>
-<c:if test="${param.referName ne 'department'}">
+<c:if test="${param.referName ne 'createTime'}">	<td contenteditable='true' class='edit-value'  propertyToChange='createTime' storedCellValue='${item.createTime}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.createTime}" /></td>
+</c:if><c:if test="${param.referName ne 'updateTime'}">	<td contenteditable='true' class='edit-value'  propertyToChange='updateTime' storedCellValue='${item.updateTime}' prefix='${ownerBeanName}Manager/updateDoctorSchedule/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.updateTime}" /></td>
+</c:if><c:if test="${param.referName ne 'hospital'}">
 	<td class="select_candidate_td"
-			data-candidate-method="./doctorScheduleManager/requestCandidateDepartment/${ownerBeanName}/${item.id}/"
-			data-switch-method="./doctorScheduleManager/transferToAnotherDepartment/${item.id}/"
-			data-link-template="./departmentManager/view/${'$'}{ID}/">
+			data-candidate-method="./doctorScheduleManager/requestCandidateHospital/${ownerBeanName}/${item.id}/"
+			data-switch-method="./doctorScheduleManager/transferToAnotherHospital/${item.id}/"
+			data-link-template="./hospitalManager/view/${'$'}{ID}/">
 		<span class="display_span">
-			<c:if test="${not empty  item.department}">
-			<a href='./departmentManager/view/${item.department.id}/'>${item.department.displayName}</a>
+			<c:if test="${not empty  item.hospital}">
+			<a href='./hospitalManager/view/${item.hospital.id}/'>${item.hospital.displayName}</a>
 			</c:if>
-			<c:if test="${empty  item.department}">
+			<c:if test="${empty  item.hospital}">
 			<a href='#'></a>
 			</c:if>
 			<button class="btn btn-link candidate-action">...</button>

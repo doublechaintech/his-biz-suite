@@ -1,7 +1,3 @@
-
-
-
-
 import HospitalBase from './hospital/Hospital.base';
 import HospitalBizApp from './hospital/Hospital.app';
 import HospitalModel from './hospital/Hospital.model';
@@ -28,6 +24,19 @@ import ExpenseTypeAssociateForm from './expensetype/ExpenseType.associateform';
 import ExpenseTypeTable from './expensetype/ExpenseType.table';
 import ExpenseTypeService from './expensetype/ExpenseType.service';
 import ExpenseTypeUpdateForm from './expensetype/ExpenseType.updateform';
+import PeriodBase from './period/Period.base';
+import PeriodBizApp from './period/Period.app';
+import PeriodModel from './period/Period.model';
+import PeriodDashboard from './period/Period.dashboard';
+import PeriodPreference from './period/Period.preference';
+import PeriodModalTable from './period/Period.modaltable';
+import PeriodSearch from './period/Period.search';
+import PeriodSearchForm from './period/Period.searchform';
+import PeriodCreateForm from './period/Period.createform';
+import PeriodAssociateForm from './period/Period.associateform';
+import PeriodTable from './period/Period.table';
+import PeriodService from './period/Period.service';
+import PeriodUpdateForm from './period/Period.updateform';
 import ExpenseItemBase from './expenseitem/ExpenseItem.base';
 import ExpenseItemBizApp from './expenseitem/ExpenseItem.app';
 import ExpenseItemModel from './expenseitem/ExpenseItem.model';
@@ -198,340 +207,329 @@ import LoginHistoryTable from './loginhistory/LoginHistory.table';
 import LoginHistoryService from './loginhistory/LoginHistory.service';
 import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
 
-
 const BizModels = [
-	HospitalModel,
-	ExpenseTypeModel,
-	ExpenseItemModel,
-	DoctorModel,
-	DepartmentModel,
-	DoctorAssignmentModel,
-	DoctorScheduleModel,
-	UserDomainModel,
-	UserWhiteListModel,
-	SecUserModel,
-	SecUserBlockingModel,
-	UserAppModel,
-	ListAccessModel,
-	ObjectAccessModel,
-	LoginHistoryModel,
+  HospitalModel,
+  ExpenseTypeModel,
+  PeriodModel,
+  ExpenseItemModel,
+  DoctorModel,
+  DepartmentModel,
+  DoctorAssignmentModel,
+  DoctorScheduleModel,
+  UserDomainModel,
+  UserWhiteListModel,
+  SecUserModel,
+  SecUserBlockingModel,
+  UserAppModel,
+  ListAccessModel,
+  ObjectAccessModel,
+  LoginHistoryModel,
+];
 
-]
+const bindBizModels = app => {
+  BizModels.map(model => app.model(model));
+};
+const unbindBizModels = app => {
+  BizModels.map(model => app.unmodel(model));
+};
 
+const menuLibrary = [];
 
-const bindBizModels = (app) =>{
+menuLibrary['hospital'] = HospitalBase.menuData;
+menuLibrary['expenseType'] = ExpenseTypeBase.menuData;
+menuLibrary['period'] = PeriodBase.menuData;
+menuLibrary['expenseItem'] = ExpenseItemBase.menuData;
+menuLibrary['doctor'] = DoctorBase.menuData;
+menuLibrary['department'] = DepartmentBase.menuData;
+menuLibrary['doctorAssignment'] = DoctorAssignmentBase.menuData;
+menuLibrary['doctorSchedule'] = DoctorScheduleBase.menuData;
+menuLibrary['userDomain'] = UserDomainBase.menuData;
+menuLibrary['userWhiteList'] = UserWhiteListBase.menuData;
+menuLibrary['secUser'] = SecUserBase.menuData;
+menuLibrary['secUserBlocking'] = SecUserBlockingBase.menuData;
+menuLibrary['userApp'] = UserAppBase.menuData;
+menuLibrary['listAccess'] = ListAccessBase.menuData;
+menuLibrary['objectAccess'] = ObjectAccessBase.menuData;
+menuLibrary['loginHistory'] = LoginHistoryBase.menuData;
 
-	BizModels.map((model)=>app.model(model))
+const menuDataOf = type => {
+  const menu = menuLibrary[type];
 
-}
-const unbindBizModels = (app) =>{
+  if (menu) {
+    return menu;
+  }
+  console.error(`Not able to find corresponding menu for ${type}`);
 
-	BizModels.map((model)=>app.unmodel(model))
-
-}
-
-const menuLibrary = []
-
-menuLibrary['hospital'] = HospitalBase.menuData
-menuLibrary['expenseType'] = ExpenseTypeBase.menuData
-menuLibrary['expenseItem'] = ExpenseItemBase.menuData
-menuLibrary['doctor'] = DoctorBase.menuData
-menuLibrary['department'] = DepartmentBase.menuData
-menuLibrary['doctorAssignment'] = DoctorAssignmentBase.menuData
-menuLibrary['doctorSchedule'] = DoctorScheduleBase.menuData
-menuLibrary['userDomain'] = UserDomainBase.menuData
-menuLibrary['userWhiteList'] = UserWhiteListBase.menuData
-menuLibrary['secUser'] = SecUserBase.menuData
-menuLibrary['secUserBlocking'] = SecUserBlockingBase.menuData
-menuLibrary['userApp'] = UserAppBase.menuData
-menuLibrary['listAccess'] = ListAccessBase.menuData
-menuLibrary['objectAccess'] = ObjectAccessBase.menuData
-menuLibrary['loginHistory'] = LoginHistoryBase.menuData
-
-
-const menuDataOf=(type)=>{
-	
-	const menu = menuLibrary[type]
-	
-	if(menu){
-		return menu;
-	}
-	console.error(`Not able to find corresponding menu for ${type}`);
-
-	return null;
-
-}
-
-
+  return null;
+};
 
 const ViewMapping = {
-
-
-  'com.panfeng.his.hospital.Hospital': {name:'hospital'},
-  'com.panfeng.his.expensetype.ExpenseType': {name:'expenseType'},
-  'com.panfeng.his.expenseitem.ExpenseItem': {name:'expenseItem'},
-  'com.panfeng.his.doctor.Doctor': {name:'doctor'},
-  'com.panfeng.his.department.Department': {name:'department'},
-  'com.panfeng.his.doctorassignment.DoctorAssignment': {name:'doctorAssignment'},
-  'com.panfeng.his.doctorschedule.DoctorSchedule': {name:'doctorSchedule'},
-  'com.panfeng.his.userdomain.UserDomain': {name:'userDomain'},
-  'com.panfeng.his.userwhitelist.UserWhiteList': {name:'userWhiteList'},
-  'com.panfeng.his.secuser.SecUser': {name:'secUser'},
-  'com.panfeng.his.secuserblocking.SecUserBlocking': {name:'secUserBlocking'},
-  'com.panfeng.his.userapp.UserApp': {name:'userApp'},
-  'com.panfeng.his.listaccess.ListAccess': {name:'listAccess'},
-  'com.panfeng.his.objectaccess.ObjectAccess': {name:'objectAccess'},
-  'com.panfeng.his.loginhistory.LoginHistory': {name:'loginHistory'},
-
-}
-
-
+  'com.doublechaintech.his.hospital.Hospital': { name: 'hospital' },
+  'com.doublechaintech.his.expensetype.ExpenseType': { name: 'expenseType' },
+  'com.doublechaintech.his.period.Period': { name: 'period' },
+  'com.doublechaintech.his.expenseitem.ExpenseItem': { name: 'expenseItem' },
+  'com.doublechaintech.his.doctor.Doctor': { name: 'doctor' },
+  'com.doublechaintech.his.department.Department': { name: 'department' },
+  'com.doublechaintech.his.doctorassignment.DoctorAssignment': { name: 'doctorAssignment' },
+  'com.doublechaintech.his.doctorschedule.DoctorSchedule': { name: 'doctorSchedule' },
+  'com.doublechaintech.his.userdomain.UserDomain': { name: 'userDomain' },
+  'com.doublechaintech.his.userwhitelist.UserWhiteList': { name: 'userWhiteList' },
+  'com.doublechaintech.his.secuser.SecUser': { name: 'secUser' },
+  'com.doublechaintech.his.secuserblocking.SecUserBlocking': { name: 'secUserBlocking' },
+  'com.doublechaintech.his.userapp.UserApp': { name: 'userApp' },
+  'com.doublechaintech.his.listaccess.ListAccess': { name: 'listAccess' },
+  'com.doublechaintech.his.objectaccess.ObjectAccess': { name: 'objectAccess' },
+  'com.doublechaintech.his.loginhistory.LoginHistory': { name: 'loginHistory' },
+};
 
 // eslint-disable-next-line no-unused-vars
 const presentApp = (clazz, data) => {
   // console.log(data)
-}
+};
 
-
-const calcLocationPath = (clazz,id,subLocation) => {
-
-  const location = ViewMapping[clazz]
-  if(!location){
-  	console.error("Not able to find an app for class: ", clazz);
-  	return 'home'
+const calcLocationPath = (clazz, id, subLocation) => {
+  const location = ViewMapping[clazz];
+  if (!location) {
+    console.error('Not able to find an app for class: ', clazz);
+    return 'home';
   }
-  const {name} = location;
-  if(!name){
-  	return '/home'
+  const { name } = location;
+  if (!name) {
+    return '/home';
   }
   if (name) {
-    return `${name}/${id}/${subLocation}`
+    return `${name}/${id}/${subLocation}`;
   }
-  return '/home'
-}
+  return '/home';
+};
 
-
-const calcMenuData=(clazz) => {
-  const location = ViewMapping[clazz]
-  if(!location){
-  	console.error("Not able to find an app for class: ", clazz);
+const calcMenuData = clazz => {
+  const location = ViewMapping[clazz];
+  if (!location) {
+    console.error('Not able to find an app for class: ', clazz);
     return {};
   }
-  const {name} = location;
+  const { name } = location;
   //const { menuDataOf } = GlobalComponents
-  return menuDataOf(name)
-}
+  return menuDataOf(name);
+};
 
 // console.log("element", )
 
-
-
-const OOTBComponents={
-    HospitalBase,
-    HospitalBizApp,
-    HospitalModel,
-    HospitalDashboard,
-    HospitalPreference,
-    HospitalModalTable,
-    HospitalSearch,
-    HospitalSearchForm,
-    HospitalCreateForm,
-    HospitalAssociateForm,
-    HospitalTable,
-    HospitalService,
-    HospitalUpdateForm,
-    ExpenseTypeBase,
-    ExpenseTypeBizApp,
-    ExpenseTypeModel,
-    ExpenseTypeDashboard,
-    ExpenseTypePreference,
-    ExpenseTypeModalTable,
-    ExpenseTypeSearch,
-    ExpenseTypeSearchForm,
-    ExpenseTypeCreateForm,
-    ExpenseTypeAssociateForm,
-    ExpenseTypeTable,
-    ExpenseTypeService,
-    ExpenseTypeUpdateForm,
-    ExpenseItemBase,
-    ExpenseItemBizApp,
-    ExpenseItemModel,
-    ExpenseItemDashboard,
-    ExpenseItemPreference,
-    ExpenseItemModalTable,
-    ExpenseItemSearch,
-    ExpenseItemSearchForm,
-    ExpenseItemCreateForm,
-    ExpenseItemAssociateForm,
-    ExpenseItemTable,
-    ExpenseItemService,
-    ExpenseItemUpdateForm,
-    DoctorBase,
-    DoctorBizApp,
-    DoctorModel,
-    DoctorDashboard,
-    DoctorPreference,
-    DoctorModalTable,
-    DoctorSearch,
-    DoctorSearchForm,
-    DoctorCreateForm,
-    DoctorAssociateForm,
-    DoctorTable,
-    DoctorService,
-    DoctorUpdateForm,
-    DepartmentBase,
-    DepartmentBizApp,
-    DepartmentModel,
-    DepartmentDashboard,
-    DepartmentPreference,
-    DepartmentModalTable,
-    DepartmentSearch,
-    DepartmentSearchForm,
-    DepartmentCreateForm,
-    DepartmentAssociateForm,
-    DepartmentTable,
-    DepartmentService,
-    DepartmentUpdateForm,
-    DoctorAssignmentBase,
-    DoctorAssignmentBizApp,
-    DoctorAssignmentModel,
-    DoctorAssignmentDashboard,
-    DoctorAssignmentPreference,
-    DoctorAssignmentModalTable,
-    DoctorAssignmentSearch,
-    DoctorAssignmentSearchForm,
-    DoctorAssignmentCreateForm,
-    DoctorAssignmentAssociateForm,
-    DoctorAssignmentTable,
-    DoctorAssignmentService,
-    DoctorAssignmentUpdateForm,
-    DoctorScheduleBase,
-    DoctorScheduleBizApp,
-    DoctorScheduleModel,
-    DoctorScheduleDashboard,
-    DoctorSchedulePreference,
-    DoctorScheduleModalTable,
-    DoctorScheduleSearch,
-    DoctorScheduleSearchForm,
-    DoctorScheduleCreateForm,
-    DoctorScheduleAssociateForm,
-    DoctorScheduleTable,
-    DoctorScheduleService,
-    DoctorScheduleUpdateForm,
-    UserDomainBase,
-    UserDomainBizApp,
-    UserDomainModel,
-    UserDomainDashboard,
-    UserDomainPreference,
-    UserDomainModalTable,
-    UserDomainSearch,
-    UserDomainSearchForm,
-    UserDomainCreateForm,
-    UserDomainAssociateForm,
-    UserDomainTable,
-    UserDomainService,
-    UserDomainUpdateForm,
-    UserWhiteListBase,
-    UserWhiteListBizApp,
-    UserWhiteListModel,
-    UserWhiteListDashboard,
-    UserWhiteListPreference,
-    UserWhiteListModalTable,
-    UserWhiteListSearch,
-    UserWhiteListSearchForm,
-    UserWhiteListCreateForm,
-    UserWhiteListAssociateForm,
-    UserWhiteListTable,
-    UserWhiteListService,
-    UserWhiteListUpdateForm,
-    SecUserBase,
-    SecUserBizApp,
-    SecUserModel,
-    SecUserDashboard,
-    SecUserPreference,
-    SecUserModalTable,
-    SecUserSearch,
-    SecUserSearchForm,
-    SecUserCreateForm,
-    SecUserAssociateForm,
-    SecUserTable,
-    SecUserService,
-    SecUserUpdateForm,
-    SecUserBlockingBase,
-    SecUserBlockingBizApp,
-    SecUserBlockingModel,
-    SecUserBlockingDashboard,
-    SecUserBlockingPreference,
-    SecUserBlockingModalTable,
-    SecUserBlockingSearch,
-    SecUserBlockingSearchForm,
-    SecUserBlockingCreateForm,
-    SecUserBlockingAssociateForm,
-    SecUserBlockingTable,
-    SecUserBlockingService,
-    SecUserBlockingUpdateForm,
-    UserAppBase,
-    UserAppBizApp,
-    UserAppModel,
-    UserAppDashboard,
-    UserAppPreference,
-    UserAppModalTable,
-    UserAppSearch,
-    UserAppSearchForm,
-    UserAppCreateForm,
-    UserAppAssociateForm,
-    UserAppTable,
-    UserAppService,
-    UserAppUpdateForm,
-    ListAccessBase,
-    ListAccessBizApp,
-    ListAccessModel,
-    ListAccessDashboard,
-    ListAccessPreference,
-    ListAccessModalTable,
-    ListAccessSearch,
-    ListAccessSearchForm,
-    ListAccessCreateForm,
-    ListAccessAssociateForm,
-    ListAccessTable,
-    ListAccessService,
-    ListAccessUpdateForm,
-    ObjectAccessBase,
-    ObjectAccessBizApp,
-    ObjectAccessModel,
-    ObjectAccessDashboard,
-    ObjectAccessPreference,
-    ObjectAccessModalTable,
-    ObjectAccessSearch,
-    ObjectAccessSearchForm,
-    ObjectAccessCreateForm,
-    ObjectAccessAssociateForm,
-    ObjectAccessTable,
-    ObjectAccessService,
-    ObjectAccessUpdateForm,
-    LoginHistoryBase,
-    LoginHistoryBizApp,
-    LoginHistoryModel,
-    LoginHistoryDashboard,
-    LoginHistoryPreference,
-    LoginHistoryModalTable,
-    LoginHistorySearch,
-    LoginHistorySearchForm,
-    LoginHistoryCreateForm,
-    LoginHistoryAssociateForm,
-    LoginHistoryTable,
-    LoginHistoryService,
-    LoginHistoryUpdateForm,
-    menuDataOf,bindBizModels,unbindBizModels,calcLocationPath,calcMenuData
+const OOTBComponents = {
+  HospitalBase,
+  HospitalBizApp,
+  HospitalModel,
+  HospitalDashboard,
+  HospitalPreference,
+  HospitalModalTable,
+  HospitalSearch,
+  HospitalSearchForm,
+  HospitalCreateForm,
+  HospitalAssociateForm,
+  HospitalTable,
+  HospitalService,
+  HospitalUpdateForm,
+  ExpenseTypeBase,
+  ExpenseTypeBizApp,
+  ExpenseTypeModel,
+  ExpenseTypeDashboard,
+  ExpenseTypePreference,
+  ExpenseTypeModalTable,
+  ExpenseTypeSearch,
+  ExpenseTypeSearchForm,
+  ExpenseTypeCreateForm,
+  ExpenseTypeAssociateForm,
+  ExpenseTypeTable,
+  ExpenseTypeService,
+  ExpenseTypeUpdateForm,
+  PeriodBase,
+  PeriodBizApp,
+  PeriodModel,
+  PeriodDashboard,
+  PeriodPreference,
+  PeriodModalTable,
+  PeriodSearch,
+  PeriodSearchForm,
+  PeriodCreateForm,
+  PeriodAssociateForm,
+  PeriodTable,
+  PeriodService,
+  PeriodUpdateForm,
+  ExpenseItemBase,
+  ExpenseItemBizApp,
+  ExpenseItemModel,
+  ExpenseItemDashboard,
+  ExpenseItemPreference,
+  ExpenseItemModalTable,
+  ExpenseItemSearch,
+  ExpenseItemSearchForm,
+  ExpenseItemCreateForm,
+  ExpenseItemAssociateForm,
+  ExpenseItemTable,
+  ExpenseItemService,
+  ExpenseItemUpdateForm,
+  DoctorBase,
+  DoctorBizApp,
+  DoctorModel,
+  DoctorDashboard,
+  DoctorPreference,
+  DoctorModalTable,
+  DoctorSearch,
+  DoctorSearchForm,
+  DoctorCreateForm,
+  DoctorAssociateForm,
+  DoctorTable,
+  DoctorService,
+  DoctorUpdateForm,
+  DepartmentBase,
+  DepartmentBizApp,
+  DepartmentModel,
+  DepartmentDashboard,
+  DepartmentPreference,
+  DepartmentModalTable,
+  DepartmentSearch,
+  DepartmentSearchForm,
+  DepartmentCreateForm,
+  DepartmentAssociateForm,
+  DepartmentTable,
+  DepartmentService,
+  DepartmentUpdateForm,
+  DoctorAssignmentBase,
+  DoctorAssignmentBizApp,
+  DoctorAssignmentModel,
+  DoctorAssignmentDashboard,
+  DoctorAssignmentPreference,
+  DoctorAssignmentModalTable,
+  DoctorAssignmentSearch,
+  DoctorAssignmentSearchForm,
+  DoctorAssignmentCreateForm,
+  DoctorAssignmentAssociateForm,
+  DoctorAssignmentTable,
+  DoctorAssignmentService,
+  DoctorAssignmentUpdateForm,
+  DoctorScheduleBase,
+  DoctorScheduleBizApp,
+  DoctorScheduleModel,
+  DoctorScheduleDashboard,
+  DoctorSchedulePreference,
+  DoctorScheduleModalTable,
+  DoctorScheduleSearch,
+  DoctorScheduleSearchForm,
+  DoctorScheduleCreateForm,
+  DoctorScheduleAssociateForm,
+  DoctorScheduleTable,
+  DoctorScheduleService,
+  DoctorScheduleUpdateForm,
+  UserDomainBase,
+  UserDomainBizApp,
+  UserDomainModel,
+  UserDomainDashboard,
+  UserDomainPreference,
+  UserDomainModalTable,
+  UserDomainSearch,
+  UserDomainSearchForm,
+  UserDomainCreateForm,
+  UserDomainAssociateForm,
+  UserDomainTable,
+  UserDomainService,
+  UserDomainUpdateForm,
+  UserWhiteListBase,
+  UserWhiteListBizApp,
+  UserWhiteListModel,
+  UserWhiteListDashboard,
+  UserWhiteListPreference,
+  UserWhiteListModalTable,
+  UserWhiteListSearch,
+  UserWhiteListSearchForm,
+  UserWhiteListCreateForm,
+  UserWhiteListAssociateForm,
+  UserWhiteListTable,
+  UserWhiteListService,
+  UserWhiteListUpdateForm,
+  SecUserBase,
+  SecUserBizApp,
+  SecUserModel,
+  SecUserDashboard,
+  SecUserPreference,
+  SecUserModalTable,
+  SecUserSearch,
+  SecUserSearchForm,
+  SecUserCreateForm,
+  SecUserAssociateForm,
+  SecUserTable,
+  SecUserService,
+  SecUserUpdateForm,
+  SecUserBlockingBase,
+  SecUserBlockingBizApp,
+  SecUserBlockingModel,
+  SecUserBlockingDashboard,
+  SecUserBlockingPreference,
+  SecUserBlockingModalTable,
+  SecUserBlockingSearch,
+  SecUserBlockingSearchForm,
+  SecUserBlockingCreateForm,
+  SecUserBlockingAssociateForm,
+  SecUserBlockingTable,
+  SecUserBlockingService,
+  SecUserBlockingUpdateForm,
+  UserAppBase,
+  UserAppBizApp,
+  UserAppModel,
+  UserAppDashboard,
+  UserAppPreference,
+  UserAppModalTable,
+  UserAppSearch,
+  UserAppSearchForm,
+  UserAppCreateForm,
+  UserAppAssociateForm,
+  UserAppTable,
+  UserAppService,
+  UserAppUpdateForm,
+  ListAccessBase,
+  ListAccessBizApp,
+  ListAccessModel,
+  ListAccessDashboard,
+  ListAccessPreference,
+  ListAccessModalTable,
+  ListAccessSearch,
+  ListAccessSearchForm,
+  ListAccessCreateForm,
+  ListAccessAssociateForm,
+  ListAccessTable,
+  ListAccessService,
+  ListAccessUpdateForm,
+  ObjectAccessBase,
+  ObjectAccessBizApp,
+  ObjectAccessModel,
+  ObjectAccessDashboard,
+  ObjectAccessPreference,
+  ObjectAccessModalTable,
+  ObjectAccessSearch,
+  ObjectAccessSearchForm,
+  ObjectAccessCreateForm,
+  ObjectAccessAssociateForm,
+  ObjectAccessTable,
+  ObjectAccessService,
+  ObjectAccessUpdateForm,
+  LoginHistoryBase,
+  LoginHistoryBizApp,
+  LoginHistoryModel,
+  LoginHistoryDashboard,
+  LoginHistoryPreference,
+  LoginHistoryModalTable,
+  LoginHistorySearch,
+  LoginHistorySearchForm,
+  LoginHistoryCreateForm,
+  LoginHistoryAssociateForm,
+  LoginHistoryTable,
+  LoginHistoryService,
+  LoginHistoryUpdateForm,
+  menuDataOf,
+  bindBizModels,
+  unbindBizModels,
+  calcLocationPath,
+  calcMenuData,
 };
-       
-
 
 export default OOTBComponents;
-
-
-
-
-
-
-

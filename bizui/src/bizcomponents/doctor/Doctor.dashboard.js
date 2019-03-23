@@ -39,7 +39,8 @@ const { Option } = Select
 
 
 const imageList =(doctor)=>{return [
-	 ]}
+	   {"title":'拍摄的图像',"imageLocation":doctor.shotImage},
+]}
 
 const internalImageListOf = (doctor) =>defaultImageListOf(doctor,imageList)
 
@@ -81,6 +82,10 @@ const internalSummaryOf = (doctor,targetComponent) =>{
 	<DescriptionList className={styles.headerList} size="small" col="4">
 <Description term="ID">{doctor.id}</Description> 
 <Description term="名称">{doctor.name}</Description> 
+<<<<<<< HEAD
+<Description term="更新时间">{ moment(doctor.updateTime).format('YYYY-MM-DD')}</Description> 
+=======
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 	
         {buildTransferModal(doctor,targetComponent)}
       </DescriptionList>
@@ -120,7 +125,10 @@ class DoctorDashboard extends Component {
     const cardsData = {cardsName:"医生",cardsFor: "doctor",
     	cardsSource: this.props.doctor,returnURL,displayName,
   		subItems: [
+<<<<<<< HEAD
+=======
 {name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', metaInfo: doctorAssignmentListMetaInfo},
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 {name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],

@@ -1,19 +1,33 @@
-import React, { Component } from 'react'
-import { Card, Button, Form, Icon, Col, Row, DatePicker, TimePicker, Input, Select, Popover,Switch,Modal } from 'antd'
-import { connect } from 'dva'
-import PageHeaderLayout from '../../layouts/PageHeaderLayout'
-import {ImageComponent} from '../../axios/tools'
-import FooterToolbar from '../../components/FooterToolbar'
-import styles from './SecUserBlocking.createform.less'
-import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
+import React, { Component } from 'react';
+import {
+  Card,
+  Button,
+  Form,
+  Icon,
+  Col,
+  Row,
+  DatePicker,
+  TimePicker,
+  Input,
+  Select,
+  Popover,
+  Switch,
+  Modal,
+} from 'antd';
+import { connect } from 'dva';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import { ImageComponent } from '../../axios/tools';
+import FooterToolbar from '../../components/FooterToolbar';
+import styles from './SecUserBlocking.createform.less';
+import { mapBackToImageValues, mapFromImageValues } from '../../axios/tools';
 import GlobalComponents from '../../custcomponents';
-import SecUserBlockingBase from './SecUserBlocking.base'
-import SelectObject from '../../components/SelectObject'
-import appLocaleName from '../../common/Locale.tool'
+import SecUserBlockingBase from './SecUserBlocking.base';
+import SelectObject from '../../components/SelectObject';
+import appLocaleName from '../../common/Locale.tool';
 
-const { Option } = Select
-const { RangePicker } = DatePicker
-const { TextArea } = Input
+const { Option } = Select;
+const { RangePicker } = DatePicker;
+const { TextArea } = Input;
 
 const testValues = {};
 /*
@@ -23,171 +37,148 @@ const testValues = {
 }
 */
 
-
-const imageKeys = [
-]
-
+const imageKeys = [];
 
 class SecUserBlockingAssociateForm extends Component {
   state = {
     previewVisible: false,
     previewImage: '',
     convertedImagesValues: {},
-  }
+  };
 
-  componentDidMount() {
- 
-    
-    
-    
-  }
+  componentDidMount() {}
 
-  handlePreview = (file) => {
-    console.log('preview file', file)
+  handlePreview = file => {
+    console.log('preview file', file);
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
-    })
-  }
-
-  
-
-
+    });
+  };
 
   handleChange = (event, source) => {
-    console.log('get file list from change in update change:', source)
+    console.log('get file list from change in update change:', source);
 
-    const { fileList } = event
-    const { convertedImagesValues } = this.state
+    const { fileList } = event;
+    const { convertedImagesValues } = this.state;
 
-    convertedImagesValues[source] = fileList
-    this.setState({ convertedImagesValues })
-    console.log('/get file list from change in update change:', source)
-  }
-	
-  
+    convertedImagesValues[source] = fileList;
+    this.setState({ convertedImagesValues });
+    console.log('/get file list from change in update change:', source);
+  };
 
   render() {
-	const { form, dispatch, submitting, role,data,owner,toggleAssociatePaymentVisible,visible,onCancel, onCreate } = this.props
-    const { convertedImagesValues } = this.state
-    const {SecUserBlockingService} = GlobalComponents
-    const userContext = null
-    
- const {SecUserModalTable} = GlobalComponents;
+    const {
+      form,
+      dispatch,
+      submitting,
+      role,
+      data,
+      owner,
+      toggleAssociatePaymentVisible,
+      visible,
+      onCancel,
+      onCreate,
+    } = this.props;
+    const { convertedImagesValues } = this.state;
+    const { SecUserBlockingService } = GlobalComponents;
+    const userContext = null;
 
+    const { SecUserModalTable } = GlobalComponents;
 
-    const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
-    const {fieldLabels} = SecUserBlockingBase
-    
-    const capFirstChar = (value)=>{
-    	//const upper = value.replace(/^\w/, c => c.toUpperCase());
-  		const upper = value.charAt(0).toUpperCase() + value.substr(1);
-  		return upper
-  	}
-    
-    
-    
+    const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
+    const { fieldLabels } = SecUserBlockingBase;
 
-    
-    
-    const tryinit  = (fieldName, candidates) => {
-      
-      if(candidates&&candidates.length==1){
-          return candidates[0].id
+    const capFirstChar = value => {
+      //const upper = value.replace(/^\w/, c => c.toUpperCase());
+      const upper = value.charAt(0).toUpperCase() + value.substr(1);
+      return upper;
+    };
+
+    const tryinit = (fieldName, candidates) => {
+      if (candidates && candidates.length == 1) {
+        return candidates[0].id;
       }
-      const { owner } = this.props
-      const { referenceName } = owner
-      if(referenceName!=fieldName){
-        return null
+      const { owner } = this.props;
+      const { referenceName } = owner;
+      if (referenceName != fieldName) {
+        return null;
       }
-      return owner.id
-    }
-    
-    const availableForEdit= (fieldName) =>{
-      const { owner } = this.props
-      const { referenceName } = owner
-      if(referenceName!=fieldName){
-        return true
+      return owner.id;
+    };
+
+    const availableForEdit = fieldName => {
+      const { owner } = this.props;
+      const { referenceName } = owner;
+      if (referenceName != fieldName) {
+        return true;
       }
-      return false
-    
-    }
+      return false;
+    };
     const formItemLayout = {
       labelCol: { span: 6 },
       wrapperCol: { span: 12 },
-    }
+    };
     const switchFormItemLayout = {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
-    }
-   
-    return (
- <Modal
-          title={appLocaleName(userContext,"CreateNew")}
-          visible={visible}
-          onOk={onCancel}
-          onCancel={onCancel}
-          width={920}
-          style={{ top: 40}}
-        >
-        <Card title={appLocaleName(userContext,"BasicInfo")}  className={styles.card} style={{ backgroundColor:"#eee" }}>
-          <Form >
-            <Row gutter={16}>
+    };
 
+    return (
+      <Modal
+        title={appLocaleName(userContext, 'CreateNew')}
+        visible={visible}
+        onOk={onCancel}
+        onCancel={onCancel}
+        width={920}
+        style={{ top: 40 }}
+      >
+        <Card
+          title={appLocaleName(userContext, 'BasicInfo')}
+          className={styles.card}
+          style={{ backgroundColor: '#eee' }}
+        >
+          <Form>
+            <Row gutter={16}>
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.who} {...formItemLayout}>
                   {getFieldDecorator('who', {
+<<<<<<< HEAD
+                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  })(<Input placeholder="请输入谁" />)}
+=======
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入谁" />
                   )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.comments} {...formItemLayout}>
                   {getFieldDecorator('comments', {
+<<<<<<< HEAD
+                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  })(<Input placeholder="请输入评论" />)}
+=======
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入评论" />
                   )}
+>>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
-
             </Row>
-
-
-       
-        
-
-
-
-
-
-
-
-
-
-			</Form>
-			
-			
-			
-			
+          </Form>
         </Card>
-        
-	<SecUserModalTable data={data.secUserList} owner={owner} />
-        
-        
-        
-      </Modal>)
-    
+
+        <SecUserModalTable data={data.secUserList} owner={owner} />
+      </Modal>
+    );
   }
 }
 
 export default connect(state => ({
   collapsed: state.global.collapsed,
-}))(Form.create()(SecUserBlockingAssociateForm))
-
-
-
-
+}))(Form.create()(SecUserBlockingAssociateForm));

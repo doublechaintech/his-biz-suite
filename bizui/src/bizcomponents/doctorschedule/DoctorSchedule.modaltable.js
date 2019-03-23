@@ -1,35 +1,34 @@
-import React, { PureComponent } from 'react';
-import moment from 'moment';
-import { Table, Alert, Badge } from 'antd';
-import styles from './DoctorSchedule.table.less';
-import ImagePreview from '../../components/ImagePreview';
-import DoctorScheduleBase from './DoctorSchedule.base';
-import appLocaleName from '../../common/Locale.tool';
+
+import React, { PureComponent } from 'react'
+import moment from 'moment'
+import { Table, Alert, Badge } from 'antd'
+import styles from './DoctorSchedule.table.less'
+import ImagePreview from '../../components/ImagePreview'
+import DoctorScheduleBase from './DoctorSchedule.base'
+import appLocaleName from '../../common/Locale.tool'
 
 class DoctorScheduleModalTable extends PureComponent {
   render() {
     // const { data,count,current, owner } = this.props
-    const { data } = this.props;
-    const { displayColumns } = DoctorScheduleBase;
-    const userContext = null;
-    if (!data) {
-      return null;
-    }
-    if (!data.length) {
-      return null;
-    }
-
+    const { data } = this.props
+	const {displayColumns} = DoctorScheduleBase
+	const userContext = null
+	if(!data){
+		return null
+	}
+	if(!data.length){
+		return null
+	}
+	
     return (
       <div className={styles.standardTable}>
         <div className={styles.tableAlert}>
           <Alert
-            message={
+            message={(
               <p>
-                {appLocaleName(userContext, 'Totally')}{' '}
-                <a style={{ fontWeight: 600 }}>{data.length}</a>{' '}
-                {appLocaleName(userContext, 'Items')}
+                {appLocaleName(userContext,"Totally")} <a style={{ fontWeight: 600 }}>{data.length}</a> {appLocaleName(userContext,"Items")} 
               </p>
-            }
+            )}
             type="warning"
             showIcon
           />
@@ -42,8 +41,9 @@ class DoctorScheduleModalTable extends PureComponent {
           scroll={{ x: 1455 }}
         />
       </div>
-    );
+    )
   }
 }
 
-export default DoctorScheduleModalTable;
+export default DoctorScheduleModalTable
+

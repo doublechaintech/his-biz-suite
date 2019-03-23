@@ -272,16 +272,8 @@ class UserDomainUpdateForm extends Component {
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入ID" disabled />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入ID" disabled/>
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -289,16 +281,8 @@ class UserDomainUpdateForm extends Component {
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
                     initialValue: selectedRow.name,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入名称" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入名称" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
             </Row>

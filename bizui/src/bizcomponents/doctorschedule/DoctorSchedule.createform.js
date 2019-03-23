@@ -1,46 +1,26 @@
-import React, { Component } from 'react';
-import {
-  Card,
-  Button,
-  Form,
-  Icon,
-  Col,
-  Row,
-  DatePicker,
-  TimePicker,
-  Input,
-  Select,
-  Popover,
-  Switch,
-} from 'antd';
-import { connect } from 'dva';
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import SelectObject from '../../components/SelectObject';
-import { ImageComponent } from '../../axios/tools';
-import FooterToolbar from '../../components/FooterToolbar';
-import styles from './DoctorSchedule.createform.less';
-import { mapBackToImageValues, mapFromImageValues } from '../../axios/tools';
+import React, { Component } from 'react'
+import { Card, Button, Form, Icon, Col, Row, DatePicker, TimePicker, Input, Select, Popover,Switch } from 'antd'
+import { connect } from 'dva'
+import PageHeaderLayout from '../../layouts/PageHeaderLayout'
+import SelectObject from '../../components/SelectObject'
+import {ImageComponent} from '../../axios/tools'
+import FooterToolbar from '../../components/FooterToolbar'
+import styles from './DoctorSchedule.createform.less'
+import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
-import DoctorScheduleBase from './DoctorSchedule.base';
-import appLocaleName from '../../common/Locale.tool';
-const { Option } = Select;
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+import DoctorScheduleBase from './DoctorSchedule.base'
+import appLocaleName from '../../common/Locale.tool'
+const { Option } = Select
+const { RangePicker } = DatePicker
+const { TextArea } = Input
 
 const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-<<<<<<< HEAD
-  scheduleDate: '2016-10-25',
+  scheduleDate: '2016-04-26',
   available: '19',
-  price: '114.01',
-=======
-  scheduleDate: '2016-12-25',
-  period: '上午',
-  available: '17',
-  price: '99.49',
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
+  price: '94.88',
   doctorId: 'D000001',
   periodId: 'P000001',
   departmentId: 'D000001',
@@ -49,114 +29,122 @@ const testValues = {
 }
 */
 
-const imageKeys = [];
+const imageKeys = [
+]
+
 
 class DoctorScheduleCreateForm extends Component {
   state = {
     previewVisible: false,
     previewImage: '',
     convertedImagesValues: {},
-  };
+  }
 
-  componentDidMount() {}
+  componentDidMount() {
+	
+    
+    
+  }
 
-  handlePreview = file => {
-    console.log('preview file', file);
+  handlePreview = (file) => {
+    console.log('preview file', file)
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true,
-    });
-  };
+    })
+  }
+
+ 
+
+
 
   handleChange = (event, source) => {
-    console.log('get file list from change in update change:', source);
+    console.log('get file list from change in update change:', source)
 
-    const { fileList } = event;
-    const { convertedImagesValues } = this.state;
+    const { fileList } = event
+    const { convertedImagesValues } = this.state
 
-    convertedImagesValues[source] = fileList;
-    this.setState({ convertedImagesValues });
-    console.log('/get file list from change in update change:', source);
-  };
+    convertedImagesValues[source] = fileList
+    this.setState({ convertedImagesValues })
+    console.log('/get file list from change in update change:', source)
+  }
+	
+  
 
   render() {
-    const { form, dispatch, submitting, role } = this.props;
-    const { convertedImagesValues } = this.state;
-    const userContext = null;
-    const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
-    const { fieldLabels } = DoctorScheduleBase;
-    const { DoctorScheduleService } = GlobalComponents;
-
-    const capFirstChar = value => {
-      //const upper = value.replace(/^\w/, c => c.toUpperCase());
-      const upper = value.charAt(0).toUpperCase() + value.substr(1);
-      return upper;
-    };
-
+    const { form, dispatch, submitting, role } = this.props
+    const { convertedImagesValues } = this.state
+	const userContext = null
+    const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
+    const {fieldLabels} = DoctorScheduleBase
+    const {DoctorScheduleService} = GlobalComponents
+    
+    const capFirstChar = (value)=>{
+    	//const upper = value.replace(/^\w/, c => c.toUpperCase());
+  		const upper = value.charAt(0).toUpperCase() + value.substr(1);
+  		return upper
+  	}
+    
     const submitCreateForm = () => {
       validateFieldsAndScroll((error, values) => {
         if (error) {
-          console.log('code go here', error);
-          return;
+          console.log('code go here', error)
+          return
         }
 
-        const { owner } = this.props;
-        const imagesValues = mapBackToImageValues(convertedImagesValues);
+        const { owner } = this.props
+        const imagesValues = mapBackToImageValues(convertedImagesValues)
 
-        const parameters = { ...values, ...imagesValues };
-        const cappedRoleName = capFirstChar(role);
+        const parameters = { ...values, ...imagesValues }
+        const cappedRoleName = capFirstChar(role)
         dispatch({
           type: `${owner.type}/add${cappedRoleName}`,
           payload: { id: owner.id, role: role, parameters },
-        });
-      });
-    };
+        })
+      })
+    }
     const submitCreateFormAndContinue = () => {
       validateFieldsAndScroll((error, values) => {
         if (error) {
-          console.log('code go here', error);
-          return;
+          console.log('code go here', error)
+          return
         }
-
-        const { owner } = this.props;
-        const imagesValues = mapBackToImageValues(convertedImagesValues);
-
-        const parameters = { ...values, ...imagesValues };
+        
+        const { owner } = this.props
+        const imagesValues = mapBackToImageValues(convertedImagesValues)
+        
+        const parameters = { ...values, ...imagesValues }
         dispatch({
           type: `${owner.type}/addDoctorSchedule`,
           payload: { id: owner.id, type: 'doctorSchedule', parameters, continueNext: true },
-        });
-      });
-    };
-
+        })
+      })
+    }
+    
     const goback = () => {
-      const { owner } = this.props;
-
+      const { owner } = this.props
+     
       dispatch({
         type: `${owner.type}/goback`,
-        payload: {
-          id: owner.id,
-          type: 'doctorSchedule',
-          listName: appLocaleName(userContext, 'List'),
-        },
-      });
-    };
-    const errors = getFieldsError();
+        payload: { id: owner.id, type: 'doctorSchedule',listName:appLocaleName(userContext,"List") },
+      })
+    }
+    const errors = getFieldsError()
     const getErrorInfo = () => {
-      const errorCount = Object.keys(errors).filter(key => errors[key]).length;
+      const errorCount = Object.keys(errors).filter(key => errors[key]).length
       if (!errors || errorCount === 0) {
-        return null;
+        return null
       }
       // eslint-disable-next-line no-unused-vars
-      const scrollToField = fieldKey => {
-        const labelNode = document.querySelector('label[for="${fieldKey}"]');
+      const scrollToField = (fieldKey) => {
+        const labelNode = document.querySelector('label[for="${fieldKey}"]')
         if (labelNode) {
-          labelNode.scrollIntoView(true);
+          labelNode.scrollIntoView(true)
         }
-      };
-      const errorList = Object.keys(errors).map(key => {
+      }
+      const errorList = Object.keys(errors).map((key) => {
         if (!errors[key]) {
-          return null;
+          return null
         }
         return (
           <li key={key} className={styles.errorListItem} onClick={() => scrollToField(key)}>
@@ -164,12 +152,12 @@ class DoctorScheduleCreateForm extends Component {
             <div className={styles.errorMessage}>{errors[key][0]}</div>
             <div className={styles.errorField}>{fieldLabels[key]}</div>
           </li>
-        );
-      });
+        )
+      })
       return (
         <span className={styles.errorIcon}>
           <Popover
-            title={appLocaleName(userContext, 'FieldValidateInfo')}
+            title={appLocaleName(userContext,"FieldValidateInfo")}
             content={errorList}
             overlayClassName={styles.errorPopover}
             trigger="click"
@@ -179,69 +167,61 @@ class DoctorScheduleCreateForm extends Component {
           </Popover>
           {errorCount}
         </span>
-      );
-    };
+      )
+    }
+    
 
-    const tryinit = fieldName => {
-      const { owner } = this.props;
-      const { referenceName } = owner;
-      if (referenceName != fieldName) {
-        return null;
+    
+    
+    const tryinit  = (fieldName) => {
+      const { owner } = this.props
+      const { referenceName } = owner
+      if(referenceName!=fieldName){
+        return null
       }
-      return owner.id;
-    };
-
-    const availableForEdit = fieldName => {
-      const { owner } = this.props;
-      const { referenceName } = owner;
-      if (referenceName != fieldName) {
-        return true;
+      return owner.id
+    }
+    
+    const availableForEdit= (fieldName) =>{
+      const { owner } = this.props
+      const { referenceName } = owner
+      if(referenceName!=fieldName){
+        return true
       }
-      return false;
-    };
+      return false
+    
+    }
     const formItemLayout = {
       labelCol: { span: 10 },
       wrapperCol: { span: 14 },
-    };
+    }
     const switchFormItemLayout = {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
-    };
+    }
     return (
       <PageHeaderLayout
-        title={appLocaleName(userContext, 'CreateNew')}
-        content={appLocaleName(userContext, 'CreateNew')}
+        title={appLocaleName(userContext,"CreateNew")}
+        content={appLocaleName(userContext,"CreateNew")}
         wrapperClassName={styles.advancedForm}
       >
-        <Card
-          title={appLocaleName(userContext, 'BasicInfo')}
-          className={styles.card}
-          bordered={false}
-        >
-          <Form>
+        <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>
+          <Form >
             <Row gutter={16}>
+
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
-<<<<<<< HEAD
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
-                  })(<Input placeholder="请输入名称" />)}
-=======
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入名称" />
                   )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.scheduleDate} {...formItemLayout}>
                   {getFieldDecorator('scheduleDate', {
-<<<<<<< HEAD
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
-                  })(<DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />)}
-=======
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />
@@ -250,67 +230,59 @@ class DoctorScheduleCreateForm extends Component {
               </Col>
 
               <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.period} {...formItemLayout}>
-                  {getFieldDecorator('period', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入期" />
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.available} {...formItemLayout}>
                   {getFieldDecorator('available', {
-<<<<<<< HEAD
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
-                  })(<Input placeholder="请输入可用" />)}
-=======
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入可用" />
                   )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.price} {...formItemLayout}>
                   {getFieldDecorator('price', {
-<<<<<<< HEAD
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
-                  })(<Input placeholder="请输入价格" />)}
-=======
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input placeholder="请输入价格" />
                   )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
+
             </Row>
           </Form>
         </Card>
 
-        <Card
-          title={appLocaleName(userContext, 'Associate')}
-          className={styles.card}
-          bordered={false}
-        >
-          <Form>
+
+
+       
+        
+
+
+
+
+
+
+
+
+
+        <Card title={appLocaleName(userContext,"Associate")} className={styles.card} bordered={false}>
+          <Form >
             <Row gutter={16}>
+
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.doctor} {...formItemLayout}>
                   {getFieldDecorator('doctorId', {
-                    initialValue: tryinit('doctor'),
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  	initialValue: tryinit('doctor'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <SelectObject
-                      disabled={!availableForEdit('doctor')}
-                      targetType={'doctor'}
-                      requestFunction={DoctorScheduleService.requestCandidateDoctor}
-                    />
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('doctor')}
+                    targetType={"doctor"} 
+                    requestFunction={DoctorScheduleService.requestCandidateDoctor}/>
+                  
+                 
                   )}
                 </Form.Item>
               </Col>
@@ -318,14 +290,16 @@ class DoctorScheduleCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.period} {...formItemLayout}>
                   {getFieldDecorator('periodId', {
-                    initialValue: tryinit('period'),
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  	initialValue: tryinit('period'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <SelectObject
-                      disabled={!availableForEdit('period')}
-                      targetType={'period'}
-                      requestFunction={DoctorScheduleService.requestCandidatePeriod}
-                    />
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('period')}
+                    targetType={"period"} 
+                    requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
+                  
+                 
                   )}
                 </Form.Item>
               </Col>
@@ -333,14 +307,16 @@ class DoctorScheduleCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.department} {...formItemLayout}>
                   {getFieldDecorator('departmentId', {
-                    initialValue: tryinit('department'),
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  	initialValue: tryinit('department'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <SelectObject
-                      disabled={!availableForEdit('department')}
-                      targetType={'department'}
-                      requestFunction={DoctorScheduleService.requestCandidateDepartment}
-                    />
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('department')}
+                    targetType={"department"} 
+                    requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
+                  
+                 
                   )}
                 </Form.Item>
               </Col>
@@ -348,14 +324,16 @@ class DoctorScheduleCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.expenseType} {...formItemLayout}>
                   {getFieldDecorator('expenseTypeId', {
-                    initialValue: tryinit('expenseType'),
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  	initialValue: tryinit('expenseType'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <SelectObject
-                      disabled={!availableForEdit('expenseType')}
-                      targetType={'expenseType'}
-                      requestFunction={DoctorScheduleService.requestCandidateExpenseType}
-                    />
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('expenseType')}
+                    targetType={"expenseType"} 
+                    requestFunction={DoctorScheduleService.requestCandidateExpenseType}/>
+                  
+                 
                   )}
                 </Form.Item>
               </Col>
@@ -363,38 +341,45 @@ class DoctorScheduleCreateForm extends Component {
               <Col lg={12} md={12} sm={24}>
                 <Form.Item label={fieldLabels.hospital} {...formItemLayout}>
                   {getFieldDecorator('hospitalId', {
-                    initialValue: tryinit('hospital'),
-                    rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
+                  	initialValue: tryinit('hospital'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <SelectObject
-                      disabled={!availableForEdit('hospital')}
-                      targetType={'hospital'}
-                      requestFunction={DoctorScheduleService.requestCandidateHospital}
-                    />
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={DoctorScheduleService.requestCandidateHospital}/>
+                  
+                 
                   )}
                 </Form.Item>
               </Col>
+
             </Row>
-          </Form>
+          </Form>  
         </Card>
 
         <FooterToolbar>
           {getErrorInfo()}
           <Button type="primary" onClick={submitCreateForm} loading={submitting} htmlType="submit">
-            {appLocaleName(userContext, 'Submit')}
+            {appLocaleName(userContext,"Submit")}
           </Button>
           <Button type="primary" onClick={submitCreateFormAndContinue} loading={submitting}>
-            {appLocaleName(userContext, 'SubmitAndContinue')}
+            {appLocaleName(userContext,"SubmitAndContinue")}
           </Button>
           <Button type="danger" onClick={goback} loading={submitting}>
-            {appLocaleName(userContext, 'Discard')}
+            {appLocaleName(userContext,"Discard")}
           </Button>
         </FooterToolbar>
       </PageHeaderLayout>
-    );
+    )
   }
 }
 
 export default connect(state => ({
   collapsed: state.global.collapsed,
-}))(Form.create()(DoctorScheduleCreateForm));
+}))(Form.create()(DoctorScheduleCreateForm))
+
+
+
+

@@ -8,10 +8,6 @@ import appLocaleName from '../../common/Locale.tool'
 
 const menuData = {menuName:"部门", menuFor: "department",
   		subItems: [
-<<<<<<< HEAD
-=======
-  {name: 'doctorAssignmentList', displayName:'医生的任务', icon:'sign',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
   {name: 'doctorScheduleList', displayName:'医生安排', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
@@ -85,10 +81,7 @@ const displayColumns = [
   { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'department') },
   { title: '名称', debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record) },
   { title: '医院', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
-<<<<<<< HEAD
   { title: '更新时间', dataIndex: 'updateTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 ]
 
@@ -96,10 +89,7 @@ const fieldLabels = {
   id: 'ID',
   name: '名称',
   hospital: '医院',
-<<<<<<< HEAD
   updateTime: '更新时间',
-=======
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 }
 

@@ -259,7 +259,6 @@ const buildTransferModal = (secUser, targetComponent) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-<<<<<<< HEAD
 const internalRenderExtraHeader = secUser => {
   return null;
 };
@@ -324,53 +323,6 @@ const internalSummaryOf = (secUser, targetComponent) => {
     </DescriptionList>
   );
 };
-=======
-
-
-const internalRenderExtraHeader = (secUser) =>{
-	return null
-}
-const internalRenderExtraFooter = (secUser) =>{
-	return null
-}
-const internalSubListsOf = (cardsData) =>{
-	const {id} = cardsData.cardsSource;
-	const userContext = null
-	return (<Row gutter={24}>
-
-           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
-            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
-              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
-              
-              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
-              
-              </p>         
-          </Card> 
-            </Col>))}
-          </Row>)
-}
-
-const internalSummaryOf = (secUser,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{secUser.id}</Description> 
-<Description term="登录">{secUser.login}</Description> 
-<Description term="手机号码">{secUser.mobile}</Description> 
-<Description term="电子邮件">{secUser.email}</Description> 
-<Description term="密码">{secUser.pwd}</Description> 
-<Description term="验证码">{secUser.verificationCode}</Description> 
-<Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
-<Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
-<Description term="当前状态">{secUser.currentStatus}</Description> 
-	
-        {buildTransferModal(secUser,targetComponent)}
-      </DescriptionList>
-	)
-
-}
-
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
 const renderPermissionSetting = secUser => {
   const { SecUserBase } = GlobalComponents;
@@ -392,7 +344,6 @@ class SecUserPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-<<<<<<< HEAD
     const { id, displayName, userAppCount, loginHistoryCount } = this.props.secUser;
     const cardsData = {
       cardsName: '安全用户',
@@ -400,14 +351,6 @@ class SecUserPreference extends Component {
       cardsSource: this.props.secUser,
       subItems: [],
     };
-=======
-    const { id,displayName, userAppCount, loginHistoryCount } = this.props.secUser
-    const cardsData = {cardsName:"安全用户",cardsFor: "secUser",cardsSource: this.props.secUser,
-  		subItems: [
-    
-      	],
-  	};
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
 
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader;

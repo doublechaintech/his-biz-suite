@@ -203,7 +203,6 @@ class SecUserBlockingSearchForm extends PureComponent {
             </FormItem>
           </Col>
 
-<<<<<<< HEAD
           <Col md={8} sm={24}>
             <FormItem label="谁">
               {getFieldDecorator('who')(
@@ -211,23 +210,6 @@ class SecUserBlockingSearchForm extends PureComponent {
               )}
             </FormItem>
           </Col>
-=======
-       <Col md={8} sm={24}>
-         <FormItem label="ID">
-           {getFieldDecorator('id')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
-
-       <Col md={8} sm={24}>
-         <FormItem label="谁">
-           {getFieldDecorator('who')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
 
           <Col md={8} sm={24}>
             <span className={styles.submitButtons}>

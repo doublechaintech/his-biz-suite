@@ -156,13 +156,8 @@ class UserAppBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
-<<<<<<< HEAD
       name: '访问列表',
       role: 'listAccess',
-=======
-      name: "访问列表",
-      role: "listAccess",
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._userApp.listAccessList,
       metaInfo: state._userApp.listAccessListMetaInfo,
       count: state._userApp.listAccessCount,
@@ -227,13 +222,8 @@ class UserAppBizApp extends React.PureComponent {
     const userContext = null;
     return connect(state => ({
       rule: state.rule,
-<<<<<<< HEAD
       name: '对象访问',
       role: 'objectAccess',
-=======
-      name: "对象访问",
-      role: "objectAccess",
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
       data: state._userApp.objectAccessList,
       metaInfo: state._userApp.objectAccessListMetaInfo,
       count: state._userApp.objectAccessCount,

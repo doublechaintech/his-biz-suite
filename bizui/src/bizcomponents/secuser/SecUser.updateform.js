@@ -274,16 +274,8 @@ class SecUserUpdateForm extends Component {
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入ID" disabled />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入ID" disabled/>
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -291,16 +283,8 @@ class SecUserUpdateForm extends Component {
                 <Form.Item label={fieldLabels.login} {...formItemLayout}>
                   {getFieldDecorator('login', {
                     initialValue: selectedRow.login,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入登录" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入登录" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -308,16 +292,8 @@ class SecUserUpdateForm extends Component {
                 <Form.Item label={fieldLabels.mobile} {...formItemLayout}>
                   {getFieldDecorator('mobile', {
                     initialValue: selectedRow.mobile,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入手机号码" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入手机号码" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -325,18 +301,10 @@ class SecUserUpdateForm extends Component {
                 <Form.Item label={fieldLabels.email} {...formItemLayout}>
                   {getFieldDecorator('email', {
                     initialValue: selectedRow.email,
-<<<<<<< HEAD
                     rules: [
                       { required: false, message: appLocaleName(userContext, 'PleaseInput') },
                     ],
                   })(<Input placeholder="请输入电子邮件" />)}
-=======
-                    rules: [{ required: false, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入电子邮件" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -344,16 +312,8 @@ class SecUserUpdateForm extends Component {
                 <Form.Item label={fieldLabels.pwd} {...formItemLayout}>
                   {getFieldDecorator('pwd', {
                     initialValue: selectedRow.pwd,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入密码" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入密码" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -361,16 +321,8 @@ class SecUserUpdateForm extends Component {
                 <Form.Item label={fieldLabels.verificationCode} {...formItemLayout}>
                   {getFieldDecorator('verificationCode', {
                     initialValue: selectedRow.verificationCode,
-<<<<<<< HEAD
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(<Input placeholder="请输入验证码" />)}
-=======
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入验证码" />
-                    
-                  )}
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                 </Form.Item>
               </Col>
 
@@ -380,17 +332,12 @@ class SecUserUpdateForm extends Component {
                     initialValue: selectedRow.verificationCodeExpire,
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(
-<<<<<<< HEAD
                     <DatePicker
                       showTime
                       format="YYYY-MM-DD HH:mm"
                       minuteStep={5}
                       placeholder="请输入验证码过期"
                     />
-=======
-                    <DatePicker showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="请输入验证码过期" />
-                    
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                   )}
                 </Form.Item>
               </Col>
@@ -401,17 +348,12 @@ class SecUserUpdateForm extends Component {
                     initialValue: selectedRow.lastLoginTime,
                     rules: [{ required: true, message: appLocaleName(userContext, 'PleaseInput') }],
                   })(
-<<<<<<< HEAD
                     <DatePicker
                       showTime
                       format="YYYY-MM-DD HH:mm"
                       minuteStep={5}
                       placeholder="请输入最后登录时间"
                     />
-=======
-                    <DatePicker showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="请输入最后登录时间" />
-                    
->>>>>>> f0fec7af5ee3d5cf047fe422adb18787dcd4aa89
                   )}
                 </Form.Item>
               </Col>

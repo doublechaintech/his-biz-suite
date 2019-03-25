@@ -8,6 +8,12 @@ https://demo.doublechaintech.com/admin/his/#/home
 
 # 源文件（用文本文件写40行的文件就可以生成完整应用）
 
+通过以下文件生成
+* 多角色前台React/Antd管理界面
+* 后台Java
+* 数据库规格
+* 演示数据
+
 ```
 <?xml version='1.0' ?>
 <root org="doublechaintech" chinese_name="医生排班系统" english_name="Doctor Scheduling System">
@@ -52,5 +58,3 @@ https://demo.doublechaintech.com/admin/his/#/home
 
 
 
-## bizcore: 服务器端核心代码项目， Business Core
-## bizui：中台集成界面项目， Business UI，不是闭嘴！

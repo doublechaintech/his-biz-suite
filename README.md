@@ -1,7 +1,7 @@
 
 # 界面通过特别技术自动生成
 
-![ScreenShot](/doc/his-sys.png)
+![ScreenShot](/doc/his-sys-interface.png)
 
 * 自动生成表定义
 * 自动生成界面

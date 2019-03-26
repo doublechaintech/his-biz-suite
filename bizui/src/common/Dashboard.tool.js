@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-indent */
 import FontAwesome from 'react-fontawesome';
 import PermissionSettingService from '../permission/PermissionSetting.service';
 import {
@@ -56,7 +57,7 @@ const topColResponsiveProps = {
   md: 6,
   lg: 6,
   xl: 6,
-  style: { marginBottom: 24 },
+  style: { marginBottom: 24, marginTop: 24 },
 };
 
 const renderForNumbers = aggregatedData => {
@@ -569,22 +570,22 @@ const defaultSubListsOf = cardsData => {
         .map(item => (
           <Col {...topColResponsiveProps} key={item.name}>
             <Card
-              title={`${item.displayName}(${numeral(item.count).format('0,0')})`}
-              style={{ width: 180 }}
-            >
-              <p>
+              title={
+                <span>
                 <Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-                  <FontAwesome name="eye" />
-                  {appLocaleName(userContext, 'Manage')}
+                {item.displayName}({numeral(item.count).format('0,0')})
+                
                 </Link>
-
                 {hasItemCreatePermission(item) && (
                   <Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}>
                     <span className={styles.splitLine} />
                     <FontAwesome name="plus" />
                     {appLocaleName(userContext, 'Add')}
-                  </Link>
-                )}
+                </Link>)}</span>}
+         
+            >
+              <p>
+               
               </p>
             </Card>
           </Col>
@@ -592,6 +593,36 @@ const defaultSubListsOf = cardsData => {
     </Row>
   );
 };
+
+
+const defaultQuickFunctions = cardsData => {
+  const userContext = null;
+  const { id } = cardsData.cardsSource;
+  return (
+    <Row gutter={16}>
+      
+      {cardsData.subItems
+        .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
+       
+        .map(item => (
+          <Col span={6}><Card span={6} style={{"font-size":"25px"}}>
+           <Row gutter={16}>
+          <Col span={3}>
+           <Link title={"增加"} to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`} >
+         <Icon type="plus" />
+         </Link>
+         </Col><Col span={21}>
+         <Link title={"查看"} to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
+         {item.displayName} ({item.count})</Link></Col></Row>
+     
+    </Card></Col>
+         
+        ))}
+    </Row>
+    
+  );
+};
+
 
 const defaultHideCloseTrans = targetComponent => {
   targetComponent.setState({ transferModalVisiable: false });
@@ -611,7 +642,7 @@ const DashboardTool = {
   defaultSubListsOf,
   defaultRenderExtraFooter,
   renderForTimeLine,
-  renderForNumbers,
+  renderForNumbers,defaultQuickFunctions
 };
 
 export default DashboardTool;

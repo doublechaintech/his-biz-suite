@@ -75,9 +75,11 @@ class HospitalAssociateForm extends Component {
     const userContext = null
     
  const {ExpenseTypeModalTable} = GlobalComponents;
+ const {PeriodModalTable} = GlobalComponents;
  const {ExpenseItemModalTable} = GlobalComponents;
  const {DoctorModalTable} = GlobalComponents;
  const {DepartmentModalTable} = GlobalComponents;
+ const {DoctorScheduleModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -190,9 +192,11 @@ class HospitalAssociateForm extends Component {
         </Card>
         
 	<ExpenseTypeModalTable data={data.expenseTypeList} owner={owner} />
+	<PeriodModalTable data={data.periodList} owner={owner} />
 	<ExpenseItemModalTable data={data.expenseItemList} owner={owner} />
 	<DoctorModalTable data={data.doctorList} owner={owner} />
 	<DepartmentModalTable data={data.departmentList} owner={owner} />
+	<DoctorScheduleModalTable data={data.doctorScheduleList} owner={owner} />
         
         
         

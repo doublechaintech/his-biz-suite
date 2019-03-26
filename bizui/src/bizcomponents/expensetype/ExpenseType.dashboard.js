@@ -86,6 +86,7 @@ const internalSummaryOf = (expenseType,targetComponent) =>{
 <Description term="名称">{expenseType.name}</Description> 
 <Description term="辅助识字课">{expenseType.helperChars}</Description> 
 <Description term="状态">{expenseType.status}</Description> 
+<Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(expenseType,targetComponent)}
       </DescriptionList>
@@ -125,7 +126,6 @@ class ExpenseTypeDashboard extends Component {
     const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",
     	cardsSource: this.props.expenseType,returnURL,displayName,
   		subItems: [
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
 {name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],

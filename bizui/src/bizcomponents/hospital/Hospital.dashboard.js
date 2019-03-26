@@ -113,7 +113,7 @@ class HospitalDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, expenseTypeListMetaInfo, expenseItemListMetaInfo, doctorListMetaInfo, departmentListMetaInfo, expenseTypeCount, expenseItemCount, doctorCount, departmentCount } = this.props.hospital
+    const { id,displayName, expenseTypeListMetaInfo, periodListMetaInfo, expenseItemListMetaInfo, doctorListMetaInfo, departmentListMetaInfo, doctorScheduleListMetaInfo, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = this.props.hospital
     if(!this.props.hospital.class){
       return null
     }
@@ -122,10 +122,8 @@ class HospitalDashboard extends Component {
     const cardsData = {cardsName:"医院",cardsFor: "hospital",
     	cardsSource: this.props.hospital,returnURL,displayName,
   		subItems: [
-{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', metaInfo: expenseTypeListMetaInfo},
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', metaInfo: expenseItemListMetaInfo},
 {name: 'doctorList', displayName:'医生',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo},
-{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', metaInfo: departmentListMetaInfo},
+{name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],
   	};

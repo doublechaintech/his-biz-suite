@@ -262,12 +262,23 @@ const internalSummaryOf = (doctorSchedule,targetComponent) =>{
 	<DescriptionList className={styles.headerList} size="small" col="4">
 <Description term="ID">{doctorSchedule.id}</Description> 
 <Description term="名称">{doctorSchedule.name}</Description> 
-<Description term="安排日期">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
-<Description term="期">{doctorSchedule.period}</Description> 
 <Description term="医生">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.doctor.displayName}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"医生","doctor","requestCandidateDoctor",
 	      "transferToAnotherDoctor","anotherDoctorId",doctorSchedule.doctor?doctorSchedule.doctor.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="安排日期">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
+<Description term="期">{doctorSchedule.period==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.period.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"期","period","requestCandidatePeriod",
+	      "transferToAnotherPeriod","anotherPeriodId",doctorSchedule.period?doctorSchedule.period.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="部门">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.department.displayName}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"部门","department","requestCandidateDepartment",
+	      "transferToAnotherDepartment","anotherDepartmentId",doctorSchedule.department?doctorSchedule.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
 <Description term="可用">{doctorSchedule.available}</Description> 
@@ -278,12 +289,8 @@ const internalSummaryOf = (doctorSchedule,targetComponent) =>{
 	      "transferToAnotherExpenseType","anotherExpenseTypeId",doctorSchedule.expenseType?doctorSchedule.expenseType.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="部门">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):doctorSchedule.department.displayName}
- <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"部门","department","requestCandidateDepartment",
-	      "transferToAnotherDepartment","anotherDepartmentId",doctorSchedule.department?doctorSchedule.department.id:"")} 
-  style={{fontSize: 20,color:"red"}} />
-</Description>
+<Description term="创建时间">{ moment(doctorSchedule.createTime).format('YYYY-MM-DD')}</Description> 
+<Description term="更新时间">{ moment(doctorSchedule.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(doctorSchedule,targetComponent)}
       </DescriptionList>

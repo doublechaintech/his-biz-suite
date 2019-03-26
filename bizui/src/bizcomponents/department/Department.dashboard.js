@@ -81,6 +81,7 @@ const internalSummaryOf = (department,targetComponent) =>{
 	<DescriptionList className={styles.headerList} size="small" col="4">
 <Description term="ID">{department.id}</Description> 
 <Description term="名称">{department.name}</Description> 
+<Description term="更新时间">{ moment(department.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(department,targetComponent)}
       </DescriptionList>
@@ -120,7 +121,6 @@ class DepartmentDashboard extends Component {
     const cardsData = {cardsName:"部门",cardsFor: "department",
     	cardsSource: this.props.department,returnURL,displayName,
   		subItems: [
-{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', metaInfo: doctorAssignmentListMetaInfo},
 {name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo},
     
       	],

@@ -1,40 +1,96 @@
-# client-biz-suite
-Client Business Suite Template
 
-使用准备，保证skynet-common-app-framework和skynet-react-framework连个项目在你的根目录下
+# 演示地址 
 
-$ ll skynet-common-app-framework skynet-react-framework
+https://demo.doublechaintech.com/admin/his/#/home
+
+* 医院登录: 13900000001/DoubleChain!y1
+* 医生登录：13900000002/DoubleChain!y1
+
+# 源文件（用文本文件写60多行的文件就可以生成完整应用）
+
+通过以下文件生成
+* 多角色前台React/Antd管理界面
+* 后台Java
+* 数据库规格
+* 演示数据
 
 ```
-zhangxilais-MacBook-Pro:githome Philip$ ls skynet-common-app-framework skynet-react-framework
-skynet-common-app-framework:
-LICENSE		README.md	WEB-INF		build.gradle	settings.gradle	statics		viewlayers
+<?xml version='1.0' ?>
+<root org="doublechaintech" 
+	chinese_name="医生排班系统" 
+	english_name="Doctor Scheduling System">
 
-skynet-react-framework:
-CODE_OF_CONDUCT.md	README.zh-CN.md		dump.rdb		package.json		src
-LICENSE			appveyor.yml		mock			package.json.back	tests
-README.md		bbt_custom_src		package-lock.json	public			yarn.lock
+	
+    <hospital   
+        name="上和医院|[1,200]"  
+        address="毕升路22号" 
+        telephone="028-9123123" />
+	
+    <expense_type  
+        name="诊疗费|治疗费|检查费"  
+        helper_chars="zlf|zlf|jcf"  
+        status="正常|停用" 
+        hospital="$(hospital)"
+        description="text()"   
+        update_time="updateTime()"        
+        _features="setting"
+    />
+    <period  
+        name="上午|下午|夜班"   
+        hospital="$(hospital)"         
+        _features="status"   />
+    <expense_item
+        name="专家诊疗费|血常规|煎药费"       
+        price="$99999999999.00"       
+        expense_type="$(expense_type)"
+        hospital="$(hospital)"        
+        update_time="updateTime()"       
+         _features="setting"
+    />
+
+    <doctor
+        name="魏松全"
+        shot_image="snap.shot-400-300-red.jpg"
+        hospital="$(hospital)"
+        update_time="updateTime()"
+        
+    />
+
+    <department
+        name="放射科" 
+        hospital="$(hospital)" 
+        update_time="updateTime()" 
+        _features="setting"
+ 
+    />
+    
+    <doctor_assignment
+        name="魏松全在内分泌科室上" 
+        doctor="$(doctor)"
+        department="$(department)" 
+        update_time="updateTime()"  
+        _features="setting"
+ 
+    />
+    <doctor_schedule
+        name="2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10"
+        doctor="$(doctor)"  
+        schedule_date="2019-3-11" 
+        period="$(period)"
+        department="$(department)" 
+        available="20"  price="$123.99"
+        expense_type="$(expense_type)" 
+        create_time="createTime()"  
+        update_time="updateTime()" 
+        hospital="$(hospital)"
+    />
+    
+
+</root>
+ 
+ 
+ 
 ```
-然后准备工作区
 
+# 开发工具近期将以SaaS服务方式公开服务，敬请期待
 
-curl https://raw.githubusercontent.com/philipgreat/client-biz-suite/master/create.sh|bash -s kai5
-
-在github上创建一个空的git repository(需要确认是否已经创建）
-
-然后进入目录，执行bash gitinit.sh
-
-
-
-## bizcore: 服务器端核心代码项目， Business Core
-## bizui：中台集成界面项目， Business UI，不是闭嘴！
-## datavisual: 数据大屏前台项目， Data Visual
-## databrain： 大数据后台运算中心
-## iot： 物联网子项目， Internet of Things
-## rnapp： Reactive Native项目
-## wxapp: 微信小程序项目
-
-
-
-# his-biz-suite 
-# his-biz-suite 

@@ -60,6 +60,8 @@ class DoctorScheduleUpdateForm extends Component {
       return {
         ...item,
         scheduleDate: moment(item.scheduleDate),
+        createTime: moment(item.createTime),
+        updateTime: moment(item.updateTime),
 
       }
     })
@@ -287,18 +289,6 @@ class DoctorScheduleUpdateForm extends Component {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />
-                    
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.period} {...formItemLayout}>
-                  {getFieldDecorator('period', {
-                    initialValue: selectedRow.period,
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入期" />
                     
                   )}
                 </Form.Item>

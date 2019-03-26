@@ -82,12 +82,13 @@ const internalSummaryOf = (expenseItem,targetComponent) =>{
 <Description term="ID">{expenseItem.id}</Description> 
 <Description term="名称">{expenseItem.name}</Description> 
 <Description term="价格">{expenseItem.price}</Description> 
-<Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):expenseItem.expenseType.displayName}
+<Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"费用类型","expenseType",ExpenseItemService.requestCandidateExpenseType,
 	      ExpenseItemService.transferToAnotherExpenseType,"anotherExpenseTypeId",expenseItem.expenseType?expenseItem.expenseType.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
+<Description term="更新时间">{ moment(expenseItem.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(expenseItem,targetComponent)}
       </DescriptionList>

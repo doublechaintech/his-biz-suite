@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from 'components/BooleanOption';
-import { Statistic, Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal ,Button} from 'antd'
+import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal ,Button} from 'antd'
 import { Link, Route, Redirect} from 'dva/router'
 import numeral from 'numeral'
 import {
@@ -27,7 +27,7 @@ const {aggregateDataset,calcKey, defaultHideCloseTrans,
   defaultExecuteTrans,defaultHandleTransferSearch,defaultShowTransferModel,
   defaultRenderExtraHeader,
   defaultSubListsOf,
-  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,defaultQuickFunctions
+  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,
 }= DashboardTool
 
 
@@ -117,7 +117,23 @@ const internalSummaryOf = (hospital,targetComponent) =>{
                 </span>}
 */
 
-const internalQuickFunctions = defaultQuickFunctions
+const quickFunctions = cardsData => {
+  const userContext = null;
+  const { id } = cardsData.cardsSource;
+  return (
+    <Card >
+      {cardsData.subItems
+        .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
+       
+        .map(item => (
+          <Col span={12}>
+      <Statistic title="Active Users" value={112893} />
+    </Col>
+         
+        ))}
+    </Card>
+  );
+};
 
 class HospitalDashboard extends Component {
 
@@ -164,9 +180,8 @@ class HospitalDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf
     const renderTitle = this.props.renderTitle || internalRenderTitle
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
-    const quickFunctions = this.props.quickFunctions || internalQuickFunctions
     return (
-      
+
       <PageHeaderLayout
         title={renderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}

@@ -27,7 +27,7 @@ const {aggregateDataset,calcKey, defaultHideCloseTrans,
   defaultExecuteTrans,defaultHandleTransferSearch,defaultShowTransferModel,
   defaultRenderExtraHeader,
   defaultSubListsOf,
-  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,defaultQuickFunctions
+  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,
 }= DashboardTool
 
 
@@ -117,7 +117,26 @@ const internalSummaryOf = (hospital,targetComponent) =>{
                 </span>}
 */
 
-const internalQuickFunctions = defaultQuickFunctions
+const quickFunctions = cardsData => {
+  const userContext = null;
+  const { id } = cardsData.cardsSource;
+  return (
+    <Row gutter={16}>
+      
+      {cardsData.subItems
+        .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
+       
+        .map(item => (
+          <Col span={6}><Card span={6} style={{"font-size":"20px"}}>
+          {item.displayName} ({item.count})
+     
+    </Card></Col>
+         
+        ))}
+    </Row>
+    
+  );
+};
 
 class HospitalDashboard extends Component {
 
@@ -164,9 +183,8 @@ class HospitalDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf
     const renderTitle = this.props.renderTitle || internalRenderTitle
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
-    const quickFunctions = this.props.quickFunctions || internalQuickFunctions
     return (
-      
+
       <PageHeaderLayout
         title={renderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}

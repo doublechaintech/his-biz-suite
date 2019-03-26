@@ -44,6 +44,14 @@ const renderImageCell=(value, record, title)=>{
 	return (<ImagePreview imageTitle={title} imageLocation={value} />)	
 }
 
+
+const formatMoney=(amount)=>{
+	const options={style: 'decimal',minimumFractionDigits: 2,maximumFractionDigits:2}
+    const moneyFormat = new Intl.NumberFormat('en-US',options);
+	return moneyFormat.format(amount)
+	
+}
+
 const renderMoneyCell=(value, record)=>{
 	const userContext = null
 	if(!value){
@@ -52,7 +60,7 @@ const renderMoneyCell=(value, record)=>{
 	if(value == null){
 		return appLocaleName(userContext,"Empty")
 	}
-	return (`${appLocaleName(userContext,"Currency")}${value.toFixed(2)}`)
+	return (`${appLocaleName(userContext,"Currency")}${formatMoney(value)}`)
 }
 
 const renderBooleanCell=(value, record)=>{

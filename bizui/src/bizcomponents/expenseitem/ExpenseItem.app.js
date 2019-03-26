@@ -134,11 +134,7 @@ class ExpenseItemBizApp extends React.PureComponent {
              <Menu.Item key="dashboard">
                <Link to={`/expenseItem/${this.props.expenseItem.id}/dashboard`}><Icon type="dashboard" /><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
              </Menu.Item>
-             
-		 <Menu.Item key="homepage">
-               <Link to={"/home"}><Icon type="home" /><span>{appLocaleName(userContext,"Home")}</span></Link>
-             </Menu.Item>
-             
+           
              
          {filteredMenuItems(targetObject,this).map((item)=>(<Menu.Item key={item.name}>
           <Link to={`/${menuData.menuFor}/${objectId}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}>
@@ -218,7 +214,18 @@ class ExpenseItemBizApp extends React.PureComponent {
      const targetApp = sessionObject('targetApp')
      const currentBreadcrumb =sessionObject(targetApp.id)
      const userContext = null
+     const renderBreadcrumbText=(value)=>{
+     	if(value==null){
+     		return "..."
+     	}
+     	if(value.length < 10){
+     		return value
+     	}
      
+     	return value.substring(0,10)+"..."
+     	
+     	
+     }
      const menuProps = collapsed ? {} : {
        openKeys: this.state.openKeys,
      }
@@ -232,9 +239,9 @@ class ExpenseItemBizApp extends React.PureComponent {
             alt="logo"
             onClick={this.toggle}
             className={styles.logo}
-          />
+          /><Link key={"__home"} to={"/home"} className={styles.breadcrumbLink}><Icon type="home" />&nbsp;{appLocaleName(userContext,"Home")}</Link>
           {currentBreadcrumb.map((item)=>{
-            return (<Link  key={item.link} to={`${item.link}`} className={styles.breadcrumbLink}> &gt;{item.name}</Link>)
+            return (<Link  key={item.link} to={`${item.link}`} className={styles.breadcrumbLink}><Icon type="caret-right" />{renderBreadcrumbText(item.name)}</Link>)
 
           })}
          </div>

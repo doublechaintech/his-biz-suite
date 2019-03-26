@@ -83,7 +83,7 @@ const internalSummaryOf = (loginHistory,targetComponent) =>{
 <Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 
 <Description term="来自IP">{loginHistory.fromIp}</Description> 
 <Description term="描述">{loginHistory.description}</Description> 
-<Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):loginHistory.secUser.displayName}
+<Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):`${loginHistory.secUser.displayName}(${loginHistory.secUser.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"安全用户","secUser",LoginHistoryService.requestCandidateSecUser,
 	      LoginHistoryService.transferToAnotherSecUser,"anotherSecUserId",loginHistory.secUser?loginHistory.secUser.id:"")} 

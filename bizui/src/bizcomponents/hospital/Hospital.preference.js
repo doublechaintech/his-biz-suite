@@ -301,9 +301,13 @@ class HospitalPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, expenseTypeCount, expenseItemCount, doctorCount, departmentCount } = this.props.hospital
+    const { id,displayName, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = this.props.hospital
     const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: this.props.hospital,
   		subItems: [
+{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType'},
+{name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period'},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem'},
+{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department'},
     
       	],
   	};

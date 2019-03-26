@@ -164,9 +164,8 @@ class HospitalDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf
     const renderTitle = this.props.renderTitle || internalRenderTitle
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
-    const quickFunctions = this.props.quickFunctions || internalQuickFunctions
     return (
-      
+
       <PageHeaderLayout
         title={renderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}

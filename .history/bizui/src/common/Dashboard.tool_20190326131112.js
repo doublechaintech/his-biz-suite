@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import FontAwesome from 'react-fontawesome';
 import PermissionSettingService from '../permission/PermissionSetting.service';
 import {
@@ -594,36 +593,6 @@ const defaultSubListsOf = cardsData => {
   );
 };
 
-
-const defaultQuickFunctions = cardsData => {
-  const userContext = null;
-  const { id } = cardsData.cardsSource;
-  return (
-    <Row gutter={16}>
-      
-      {cardsData.subItems
-        .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
-       
-        .map(item => (
-          <Col span={6}><Card span={6} style={{"font-size":"25px"}}>
-           <Row gutter={16}>
-          <Col span={3}>
-           <Link title={"增加"} to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`} >
-         <Icon type="plus" />
-         </Link>
-         </Col><Col span={21}>
-         <Link title={"查看"} to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-         {item.displayName} ({item.count})</Link></Col></Row>
-     
-    </Card></Col>
-         
-        ))}
-    </Row>
-    
-  );
-};
-
-
 const defaultHideCloseTrans = targetComponent => {
   targetComponent.setState({ transferModalVisiable: false });
 };
@@ -642,7 +611,7 @@ const DashboardTool = {
   defaultSubListsOf,
   defaultRenderExtraFooter,
   renderForTimeLine,
-  renderForNumbers,defaultQuickFunctions
+  renderForNumbers,
 };
 
 export default DashboardTool;

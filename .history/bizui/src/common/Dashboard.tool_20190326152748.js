@@ -642,7 +642,7 @@ const DashboardTool = {
   defaultSubListsOf,
   defaultRenderExtraFooter,
   renderForTimeLine,
-  renderForNumbers,defaultQuickFunctions
+  renderForNumbers,
 };
 
 export default DashboardTool;

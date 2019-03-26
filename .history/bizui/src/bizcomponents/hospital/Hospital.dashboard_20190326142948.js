@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from 'components/BooleanOption';
-import { Statistic, Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal ,Button} from 'antd'
+import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal } from 'antd'
 import { Link, Route, Redirect} from 'dva/router'
 import numeral from 'numeral'
 import {
@@ -21,13 +21,13 @@ import ImagePreview from '../../components/ImagePreview';
 import GlobalComponents from '../../custcomponents';
 import DashboardTool from '../../common/Dashboard.tool'
 import appLocaleName from '../../common/Locale.tool'
-const ButtonGroup = Button.Group;
+
 const {aggregateDataset,calcKey, defaultHideCloseTrans,
   defaultImageListOf,defaultSettingListOf,defaultBuildTransferModal,
   defaultExecuteTrans,defaultHandleTransferSearch,defaultShowTransferModel,
   defaultRenderExtraHeader,
   defaultSubListsOf,
-  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,defaultQuickFunctions
+  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,
 }= DashboardTool
 
 
@@ -101,8 +101,20 @@ const internalSummaryOf = (hospital,targetComponent) =>{
             </Button>
           </ButtonGroup>
 
+*/
 
-          title={
+const quickFunctions = cardsData => {
+  const userContext = null;
+  const { id } = cardsData.cardsSource;
+  return (
+    <Row gutter={24}>
+      {cardsData.subItems
+        .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
+       
+        .map(item => (
+          
+          <Card
+              title={
                 <span>
                   <Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
                   {item.displayName}({numeral(item.count).format('0,0')})
@@ -115,9 +127,15 @@ const internalSummaryOf = (hospital,targetComponent) =>{
                     {appLocaleName(userContext, 'Add')}
                   </Link>)}
                 </span>}
-*/
-
-const internalQuickFunctions = defaultQuickFunctions
+         
+            >
+              <p />
+            </Card>
+         
+        ))}
+    </Row>
+  );
+};
 
 class HospitalDashboard extends Component {
 
@@ -164,9 +182,8 @@ class HospitalDashboard extends Component {
     const summaryOf = this.props.summaryOf || internalSummaryOf
     const renderTitle = this.props.renderTitle || internalRenderTitle
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
-    const quickFunctions = this.props.quickFunctions || internalQuickFunctions
     return (
-      
+
       <PageHeaderLayout
         title={renderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}

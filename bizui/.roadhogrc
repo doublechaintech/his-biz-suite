@@ -11,7 +11,7 @@
       "extraBabelPlugins": [
         "dva-hmr"
       ]
-    },
+    }
     
   },
   "externals": {
@@ -20,7 +20,5 @@
     "g2-plugin-slider": "G2.Plugin.slider"
   },
   "ignoreMomentLocale": true,
-  "theme": "./src/theme.js",
-  "devtool": "source-map"
-
+  "theme": "./src/theme.js"
 }

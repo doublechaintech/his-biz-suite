@@ -21,4 +21,5 @@ export default {
   disableDynamicImport: true,
   publicPath: '',
   hash: true,
+  devtool:"source-map"
 };

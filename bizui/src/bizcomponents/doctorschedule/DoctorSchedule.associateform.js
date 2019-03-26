@@ -19,9 +19,9 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-  scheduleDate: '2018-06-24',
-  available: '18',
-  price: '102.00',
+  scheduleDate: '2018-02-20',
+  available: '15',
+  price: '107.98',
   doctorId: 'D000001',
   periodId: 'P000001',
   departmentId: 'D000001',

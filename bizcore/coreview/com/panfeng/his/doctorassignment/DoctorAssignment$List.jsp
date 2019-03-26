@@ -107,6 +107,9 @@
 <c:if test="${param.referName ne 'department'}">
 	<th>${userContext.localeMap['doctor_assignment.department']}</th>
 </c:if>
+<c:if test="${param.referName ne 'updateTime'}">
+	<th>${userContext.localeMap['doctor_assignment.update_time']}</th>
+</c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
 		<tbody>
@@ -152,7 +155,8 @@
 		</div>
 	</td>
 </c:if>
-
+<c:if test="${param.referName ne 'updateTime'}">	<td contenteditable='true' class='edit-value'  propertyToChange='updateTime' storedCellValue='${item.updateTime}' prefix='${ownerBeanName}Manager/updateDoctorAssignment/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.updateTime}" /></td>
+</c:if>
 				<td>
 
 				<a href='#${ownerBeanName}Manager/removeDoctorAssignment/${result.id}/${item.id}/' class='delete-action btn btn-danger btn-xs'><i class="fa fa-trash-o fa-lg"></i> ${userContext.localeMap['@delete']}</a>

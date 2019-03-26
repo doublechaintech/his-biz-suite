@@ -19,13 +19,14 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-  scheduleDate: '2017-11-25',
-  period: '上午',
-  available: '19',
-  price: '95.48',
+  scheduleDate: '2018-06-24',
+  available: '18',
+  price: '102.00',
   doctorId: 'D000001',
-  expenseTypeId: 'ET000001',
+  periodId: 'P000001',
   departmentId: 'D000001',
+  expenseTypeId: 'ET000001',
+  hospitalId: 'H000001',
 }
 */
 
@@ -160,16 +161,6 @@ class DoctorScheduleAssociateForm extends Component {
               </Col>
 
               <Col lg={12} md={12} sm={12}>
-                <Form.Item label={fieldLabels.period} {...formItemLayout}>
-                  {getFieldDecorator('period', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input placeholder="请输入期" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={12}>
                 <Form.Item label={fieldLabels.available} {...formItemLayout}>
                   {getFieldDecorator('available', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
@@ -222,15 +213,15 @@ class DoctorScheduleAssociateForm extends Component {
               </Col>
 
               <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.expenseType} {...formItemLayout}>
-                  {getFieldDecorator('expenseTypeId', {
-                  	initialValue: tryinit('expenseType'),
+                <Form.Item label={fieldLabels.period} {...formItemLayout}>
+                  {getFieldDecorator('periodId', {
+                  	initialValue: tryinit('period'),
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                 <SelectObject 
-                    disabled={!availableForEdit('expenseType')}
-                    targetType={"expenseType"} 
-                    requestFunction={DoctorScheduleService.requestCandidateExpenseType}/>
+                    disabled={!availableForEdit('period')}
+                    targetType={"period"} 
+                    requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
   
                   )}
                 </Form.Item>
@@ -246,6 +237,36 @@ class DoctorScheduleAssociateForm extends Component {
                     disabled={!availableForEdit('department')}
                     targetType={"department"} 
                     requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
+  
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.expenseType} {...formItemLayout}>
+                  {getFieldDecorator('expenseTypeId', {
+                  	initialValue: tryinit('expenseType'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                <SelectObject 
+                    disabled={!availableForEdit('expenseType')}
+                    targetType={"expenseType"} 
+                    requestFunction={DoctorScheduleService.requestCandidateExpenseType}/>
+  
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.hospital} {...formItemLayout}>
+                  {getFieldDecorator('hospitalId', {
+                  	initialValue: tryinit('hospital'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                <SelectObject 
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={DoctorScheduleService.requestCandidateHospital}/>
   
                   )}
                 </Form.Item>

@@ -134,11 +134,7 @@ class HospitalBizApp extends React.PureComponent {
              <Menu.Item key="dashboard">
                <Link to={`/hospital/${this.props.hospital.id}/dashboard`}><Icon type="dashboard" /><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
              </Menu.Item>
-             
-		 <Menu.Item key="homepage">
-               <Link to={"/home"}><Icon type="home" /><span>{appLocaleName(userContext,"Home")}</span></Link>
-             </Menu.Item>
-             
+           
              
          {filteredMenuItems(targetObject,this).map((item)=>(<Menu.Item key={item.name}>
           <Link to={`/${menuData.menuFor}/${objectId}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}>
@@ -204,6 +200,55 @@ class HospitalBizApp extends React.PureComponent {
       currentUpdateIndex: state._hospital.currentUpdateIndex,
       owner: { type: '_hospital', id: state._hospital.id, listName: 'expenseTypeList', ref:state._hospital, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
     }))(ExpenseTypeUpdateForm)
+  }
+
+  getPeriodSearch = () => {
+    const {PeriodSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "期",
+      role: "period",
+      data: state._hospital.periodList,
+      metaInfo: state._hospital.periodListMetaInfo,
+      count: state._hospital.periodCount,
+      currentPage: state._hospital.periodCurrentPageNumber,
+      searchFormParameters: state._hospital.periodSearchFormParameters,
+      searchParameters: {...state._hospital.searchParameters},
+      expandForm: state._hospital.expandForm,
+      loading: state._hospital.loading,
+      partialList: state._hospital.partialList,
+      owner: { type: '_hospital', id: state._hospital.id, 
+      referenceName: 'hospital', 
+      listName: 'periodList', ref:state._hospital, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(PeriodSearch)
+  }
+  getPeriodCreateForm = () => {
+   	const {PeriodCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "period",
+      data: state._hospital.periodList,
+      metaInfo: state._hospital.periodListMetaInfo,
+      count: state._hospital.periodCount,
+      currentPage: state._hospital.periodCurrentPageNumber,
+      searchFormParameters: state._hospital.periodSearchFormParameters,
+      loading: state._hospital.loading,
+      owner: { type: '_hospital', id: state._hospital.id, referenceName: 'hospital', listName: 'periodList', ref:state._hospital, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(PeriodCreateForm)
+  }
+  
+  getPeriodUpdateForm = () => {
+    const userContext = null
+  	const {PeriodUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._hospital.selectedRows,
+      role: "period",
+      currentUpdateIndex: state._hospital.currentUpdateIndex,
+      owner: { type: '_hospital', id: state._hospital.id, listName: 'periodList', ref:state._hospital, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(PeriodUpdateForm)
   }
 
   getExpenseItemSearch = () => {
@@ -353,6 +398,55 @@ class HospitalBizApp extends React.PureComponent {
     }))(DepartmentUpdateForm)
   }
 
+  getDoctorScheduleSearch = () => {
+    const {DoctorScheduleSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "医生安排",
+      role: "doctorSchedule",
+      data: state._hospital.doctorScheduleList,
+      metaInfo: state._hospital.doctorScheduleListMetaInfo,
+      count: state._hospital.doctorScheduleCount,
+      currentPage: state._hospital.doctorScheduleCurrentPageNumber,
+      searchFormParameters: state._hospital.doctorScheduleSearchFormParameters,
+      searchParameters: {...state._hospital.searchParameters},
+      expandForm: state._hospital.expandForm,
+      loading: state._hospital.loading,
+      partialList: state._hospital.partialList,
+      owner: { type: '_hospital', id: state._hospital.id, 
+      referenceName: 'hospital', 
+      listName: 'doctorScheduleList', ref:state._hospital, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(DoctorScheduleSearch)
+  }
+  getDoctorScheduleCreateForm = () => {
+   	const {DoctorScheduleCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "doctorSchedule",
+      data: state._hospital.doctorScheduleList,
+      metaInfo: state._hospital.doctorScheduleListMetaInfo,
+      count: state._hospital.doctorScheduleCount,
+      currentPage: state._hospital.doctorScheduleCurrentPageNumber,
+      searchFormParameters: state._hospital.doctorScheduleSearchFormParameters,
+      loading: state._hospital.loading,
+      owner: { type: '_hospital', id: state._hospital.id, referenceName: 'hospital', listName: 'doctorScheduleList', ref:state._hospital, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(DoctorScheduleCreateForm)
+  }
+  
+  getDoctorScheduleUpdateForm = () => {
+    const userContext = null
+  	const {DoctorScheduleUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._hospital.selectedRows,
+      role: "doctorSchedule",
+      currentUpdateIndex: state._hospital.currentUpdateIndex,
+      owner: { type: '_hospital', id: state._hospital.id, listName: 'doctorScheduleList', ref:state._hospital, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(DoctorScheduleUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -370,6 +464,10 @@ class HospitalBizApp extends React.PureComponent {
   	{path:"/hospital/:id/list/expenseTypeCreateForm", component: this.getExpenseTypeCreateForm()},
   	{path:"/hospital/:id/list/expenseTypeUpdateForm", component: this.getExpenseTypeUpdateForm()},
    	
+  	{path:"/hospital/:id/list/periodList", component: this.getPeriodSearch()},
+  	{path:"/hospital/:id/list/periodCreateForm", component: this.getPeriodCreateForm()},
+  	{path:"/hospital/:id/list/periodUpdateForm", component: this.getPeriodUpdateForm()},
+   	
   	{path:"/hospital/:id/list/expenseItemList", component: this.getExpenseItemSearch()},
   	{path:"/hospital/:id/list/expenseItemCreateForm", component: this.getExpenseItemCreateForm()},
   	{path:"/hospital/:id/list/expenseItemUpdateForm", component: this.getExpenseItemUpdateForm()},
@@ -381,6 +479,10 @@ class HospitalBizApp extends React.PureComponent {
   	{path:"/hospital/:id/list/departmentList", component: this.getDepartmentSearch()},
   	{path:"/hospital/:id/list/departmentCreateForm", component: this.getDepartmentCreateForm()},
   	{path:"/hospital/:id/list/departmentUpdateForm", component: this.getDepartmentUpdateForm()},
+   	
+  	{path:"/hospital/:id/list/doctorScheduleList", component: this.getDoctorScheduleSearch()},
+  	{path:"/hospital/:id/list/doctorScheduleCreateForm", component: this.getDoctorScheduleCreateForm()},
+  	{path:"/hospital/:id/list/doctorScheduleUpdateForm", component: this.getDoctorScheduleUpdateForm()},
      	
   	
   	]
@@ -430,7 +532,18 @@ class HospitalBizApp extends React.PureComponent {
      const targetApp = sessionObject('targetApp')
      const currentBreadcrumb =sessionObject(targetApp.id)
      const userContext = null
+     const renderBreadcrumbText=(value)=>{
+     	if(value==null){
+     		return "..."
+     	}
+     	if(value.length < 10){
+     		return value
+     	}
      
+     	return value.substring(0,10)+"..."
+     	
+     	
+     }
      const menuProps = collapsed ? {} : {
        openKeys: this.state.openKeys,
      }
@@ -444,9 +557,9 @@ class HospitalBizApp extends React.PureComponent {
             alt="logo"
             onClick={this.toggle}
             className={styles.logo}
-          />
+          /><Link key={"__home"} to={"/home"} className={styles.breadcrumbLink}><Icon type="home" />&nbsp;{appLocaleName(userContext,"Home")}</Link>
           {currentBreadcrumb.map((item)=>{
-            return (<Link  key={item.link} to={`${item.link}`} className={styles.breadcrumbLink}> &gt;{item.name}</Link>)
+            return (<Link  key={item.link} to={`${item.link}`} className={styles.breadcrumbLink}><Icon type="caret-right" />{renderBreadcrumbText(item.name)}</Link>)
 
           })}
          </div>

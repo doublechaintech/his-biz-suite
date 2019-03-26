@@ -25,6 +25,7 @@ const testValues = {
 
 
 const imageKeys = [
+  'shotImage',
 ]
 
 
@@ -156,6 +157,21 @@ class DoctorAssociateForm extends Component {
 
 
 
+
+       
+            <Row gutter={16}>
+
+              <Col lg={6} md={12} sm={24}>
+                <ImageComponent
+                  buttonTitle="拍摄的图像"
+                  handlePreview={this.handlePreview}
+                  handleChange={event => this.handleChange(event, 'shotImage')}
+                  fileList={convertedImagesValues.shotImage}
+                />
+              </Col>
+
+            </Row>
+         
 
 
 

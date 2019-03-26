@@ -61,14 +61,14 @@ const removeExpenseItemList = (targetObjectId, parameters) => {
 
 
 const addDoctorSchedule = (targetObjectId, parameters) => {
-  const url = `${PREFIX}expenseTypeManager/addDoctorSchedule/expenseTypeId/name/scheduleDate/period/doctorId/available/price/departmentId/tokensExpr/`
+  const url = `${PREFIX}expenseTypeManager/addDoctorSchedule/expenseTypeId/name/doctorId/scheduleDate/periodId/departmentId/available/price/hospitalId/tokensExpr/`
   const expenseTypeId = targetObjectId
   const requestParameters = { ...parameters, expenseTypeId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateDoctorSchedule = (targetObjectId, parameters) => {
-  const url = `${PREFIX}expenseTypeManager/updateDoctorScheduleProperties/expenseTypeId/id/name/scheduleDate/period/available/price/tokensExpr/`
+  const url = `${PREFIX}expenseTypeManager/updateDoctorScheduleProperties/expenseTypeId/id/name/scheduleDate/available/price/tokensExpr/`
   const expenseTypeId = targetObjectId
   const requestParameters = { ...parameters, expenseTypeId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

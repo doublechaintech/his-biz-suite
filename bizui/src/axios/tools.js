@@ -89,7 +89,7 @@ export const getURLPrefix = () => {
     return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`
   }
   if (url.hostname === '127.0.0.1') {
-    return `https://app.art0x.com/moyi/`
+    return `https://demo.doublechaintech.com/${SYSTEM_SHORT_NAME}/`
   }
   //return `http://xm.jl51.com.cn/cis/`
 

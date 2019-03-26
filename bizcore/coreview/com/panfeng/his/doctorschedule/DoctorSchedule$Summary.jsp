@@ -56,6 +56,14 @@
 <span class="summary-label">${userContext.localeMap['doctor_schedule.price']}</span>
 <span ><fmt:formatNumber type="currency"  value="${result.price}" /></span>
 </div>
+<div class="col-xs-12 col-md-3 summary-section">
+<span class="summary-label">${userContext.localeMap['doctor_schedule.create_time']}</span>
+<span ><fmt:formatDate pattern="yyyy-MM-dd" value="${result.createTime}" /></span>
+</div>
+<div class="col-xs-12 col-md-3 summary-section">
+<span class="summary-label">${userContext.localeMap['doctor_schedule.update_time']}</span>
+<span ><fmt:formatDate pattern="yyyy-MM-dd" value="${result.updateTime}" /></span>
+</div>
 
 	</div>
 	

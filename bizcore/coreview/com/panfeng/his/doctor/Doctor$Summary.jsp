@@ -40,6 +40,14 @@
 <span class="summary-label">${userContext.localeMap['doctor.name']}</span>
 <span >${result.name}</span>
 </div>
+<div class="col-xs-12 col-md-3 summary-section">
+<span class="summary-label">${userContext.localeMap['doctor.shot_image']}</span>
+<span >${result.shotImage}</span>
+</div>
+<div class="col-xs-12 col-md-3 summary-section">
+<span class="summary-label">${userContext.localeMap['doctor.update_time']}</span>
+<span ><fmt:formatDate pattern="yyyy-MM-dd" value="${result.updateTime}" /></span>
+</div>
 
 	</div>
 	

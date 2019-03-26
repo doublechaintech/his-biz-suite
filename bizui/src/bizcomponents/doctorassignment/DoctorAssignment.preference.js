@@ -274,6 +274,7 @@ const internalSummaryOf = (doctorAssignment,targetComponent) =>{
 	      "transferToAnotherDepartment","anotherDepartmentId",doctorAssignment.department?doctorAssignment.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
+<Description term="更新时间">{ moment(doctorAssignment.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(doctorAssignment,targetComponent)}
       </DescriptionList>

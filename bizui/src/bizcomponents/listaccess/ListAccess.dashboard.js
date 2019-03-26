@@ -87,7 +87,7 @@ const internalSummaryOf = (listAccess,targetComponent) =>{
 <Description term="ID">{listAccess.id}</Description> 
 <Description term="名称">{listAccess.name}</Description> 
 <Description term="内部名称">{listAccess.internalName}</Description> 
-<Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):listAccess.app.displayName}
+<Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"应用程序","userApp",ListAccessService.requestCandidateApp,
 	      ListAccessService.transferToAnotherApp,"anotherAppId",listAccess.app?listAccess.app.id:"")} 

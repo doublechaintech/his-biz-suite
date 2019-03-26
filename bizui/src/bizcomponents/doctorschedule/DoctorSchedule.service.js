@@ -34,16 +34,16 @@ const transferToAnotherDoctor = (id, parameters) => {
 
 
 
-const requestCandidateExpenseType = (ownerClass, id, filterKey, pageNo) => {
+const requestCandidatePeriod = (ownerClass, id, filterKey, pageNo) => {
  
-  const url = `${PREFIX}doctorScheduleManager/requestCandidateExpenseType/ownerClass/id/filterKey/pageNo/`
+  const url = `${PREFIX}doctorScheduleManager/requestCandidatePeriod/ownerClass/id/filterKey/pageNo/`
   const requestParameters = {id, ownerClass,filterKey, pageNo}
   return postForm({url,requestParameters})
 }	
 
-const transferToAnotherExpenseType = (id, parameters) => {
+const transferToAnotherPeriod = (id, parameters) => {
   //const parametersExpr = joinParameters(parameters)
-  const url = `${PREFIX}doctorScheduleManager/transferToAnotherExpenseType/id/anotherExpenseTypeId/`
+  const url = `${PREFIX}doctorScheduleManager/transferToAnotherPeriod/id/anotherPeriodId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
 }
@@ -66,16 +66,52 @@ const transferToAnotherDepartment = (id, parameters) => {
 
 
 
+const requestCandidateExpenseType = (ownerClass, id, filterKey, pageNo) => {
+ 
+  const url = `${PREFIX}doctorScheduleManager/requestCandidateExpenseType/ownerClass/id/filterKey/pageNo/`
+  const requestParameters = {id, ownerClass,filterKey, pageNo}
+  return postForm({url,requestParameters})
+}	
+
+const transferToAnotherExpenseType = (id, parameters) => {
+  //const parametersExpr = joinParameters(parameters)
+  const url = `${PREFIX}doctorScheduleManager/transferToAnotherExpenseType/id/anotherExpenseTypeId/`
+  const requestParameters = {id, ...parameters}
+  return postForm({url,requestParameters})
+}
+
+
+
+const requestCandidateHospital = (ownerClass, id, filterKey, pageNo) => {
+ 
+  const url = `${PREFIX}doctorScheduleManager/requestCandidateHospital/ownerClass/id/filterKey/pageNo/`
+  const requestParameters = {id, ownerClass,filterKey, pageNo}
+  return postForm({url,requestParameters})
+}	
+
+const transferToAnotherHospital = (id, parameters) => {
+  //const parametersExpr = joinParameters(parameters)
+  const url = `${PREFIX}doctorScheduleManager/transferToAnotherHospital/id/anotherHospitalId/`
+  const requestParameters = {id, ...parameters}
+  return postForm({url,requestParameters})
+}
+
+
+
 
 
 
 const DoctorScheduleService = { view,
   load,
   requestCandidateDoctor,
-  requestCandidateExpenseType,
+  requestCandidatePeriod,
   requestCandidateDepartment,
+  requestCandidateExpenseType,
+  requestCandidateHospital,
   transferToAnotherDoctor,
+  transferToAnotherPeriod,
+  transferToAnotherDepartment,
   transferToAnotherExpenseType,
-  transferToAnotherDepartment }
+  transferToAnotherHospital }
 export default DoctorScheduleService
 

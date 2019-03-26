@@ -101,6 +101,8 @@
 	  <li class="active"><a data-toggle="tab" href="#summary" class="disabled"><i class="fa  fa-home"></i> ${userContext.localeMap['@summary']}</a></li>
 	 
 	<% Doctor result = (Doctor)request.getAttribute("result");  %>
+			<li><a data-toggle="tab" href="#doctorAssignmentList" class="disabled"> ${userContext.localeMap['doctor_assignment']}</a></li>
+			<li><a data-toggle="tab" href="#doctorScheduleList" class="disabled"> ${userContext.localeMap['doctor_schedule']}</a></li>
  
 	</ul>
 	</div>
@@ -127,8 +129,8 @@
 	
 
 	<div class="row">
-<c:set var="platform" value="${ result.platform}" scope="request" />
-<sky:include page="com/doublechaintech/his/platform/Platform$Info.jsp" />
+<c:set var="hospital" value="${ result.hospital}" scope="request" />
+<sky:include page="com/doublechaintech/his/hospital/Hospital$Info.jsp" />
 
 </div>
 
@@ -149,7 +151,23 @@
 
 	
 
-	
+		<c:if test='${not empty userContext.accessTokens["doctorAssignmentList"] or ignoreListAccessControl}'>
+		<c:set var="doctorAssignmentList" value="${result.doctorAssignmentList}" scope="request"/>
+		<c:set var="doctorAssignmentListName" value="doctorAssignmentList" scope="request"/>
+		<div id="doctorAssignmentList" class="tab-pane fade sublist" refer-name="doctor">
+			<sky:include page="com/doublechaintech/his/doctorassignment/DoctorAssignment$List.jsp"
+					referName="doctor"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["doctorScheduleList"] or ignoreListAccessControl}'>
+		<c:set var="doctorScheduleList" value="${result.doctorScheduleList}" scope="request"/>
+		<c:set var="doctorScheduleListName" value="doctorScheduleList" scope="request"/>
+		<div id="doctorScheduleList" class="tab-pane fade sublist" refer-name="doctor">
+			<sky:include page="com/doublechaintech/his/doctorschedule/DoctorSchedule$List.jsp"
+					referName="doctor"/>
+		</div>
+	</c:if>
+
 	
 
 </div><!--<div class="tab-content" style="padding-top: 10px">-->

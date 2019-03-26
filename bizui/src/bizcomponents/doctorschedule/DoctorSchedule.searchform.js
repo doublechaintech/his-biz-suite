@@ -131,10 +131,11 @@ componentDidMount() {
      
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'id'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'name'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'period'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'doctor'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'expenseType'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'period'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'department'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'expenseType'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'hospital'))
 
      
       console.log("the final parameter", paramList)
@@ -261,14 +262,6 @@ componentDidMount() {
               )}
             </FormItem>
           </Col>
-
-          <Col md={8} sm={24}>
-            <FormItem label="期">
-              {getFieldDecorator('period')(
-                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
-              )}
-            </FormItem>
-          </Col>
  <Col md={8} sm={24}>
                     <Form.Item label="医生">
                   {getFieldDecorator('doctor', {
@@ -280,6 +273,36 @@ componentDidMount() {
                     disabled={!availableForEdit('doctor')}
                     targetType={"doctor"} 
                     requestFunction={DoctorScheduleService.requestCandidateDoctor}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+ <Col md={8} sm={24}>
+                    <Form.Item label="期">
+                  {getFieldDecorator('period', {
+                    initialValue: tryinit('period'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('period')}
+                    targetType={"period"} 
+                    requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
+                  
+                 
+                  )}
+                </Form.Item></Col>
+ <Col md={8} sm={24}>
+                    <Form.Item label="部门">
+                  {getFieldDecorator('department', {
+                    initialValue: tryinit('department'),
+                   
+                  })(
+                  
+                  <SelectObject 
+                    disabled={!availableForEdit('department')}
+                    targetType={"department"} 
+                    requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
                   
                  
                   )}
@@ -300,16 +323,16 @@ componentDidMount() {
                   )}
                 </Form.Item></Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="部门">
-                  {getFieldDecorator('department', {
-                    initialValue: tryinit('department'),
+                    <Form.Item label="医院">
+                  {getFieldDecorator('hospital', {
+                    initialValue: tryinit('hospital'),
                    
                   })(
                   
                   <SelectObject 
-                    disabled={!availableForEdit('department')}
-                    targetType={"department"} 
-                    requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
+                    disabled={!availableForEdit('hospital')}
+                    targetType={"hospital"} 
+                    requestFunction={DoctorScheduleService.requestCandidateHospital}/>
                   
                  
                   )}

@@ -22,10 +22,10 @@ const testValues = {
   helperChars: 'zlf',
   status: '正常',
   hospitalId: 'H000001',
-  description: '    一段样例文字。\
-可以分段。\
+  description: '    ���������������������\
+���������������\
 \
-可以空行。\
+���������������\
 \
 ',
 }

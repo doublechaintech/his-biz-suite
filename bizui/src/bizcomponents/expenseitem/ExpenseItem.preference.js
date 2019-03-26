@@ -269,6 +269,7 @@ const internalSummaryOf = (expenseItem,targetComponent) =>{
 	      "transferToAnotherExpenseType","anotherExpenseTypeId",expenseItem.expenseType?expenseItem.expenseType.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
+<Description term="更新时间">{ moment(expenseItem.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(expenseItem,targetComponent)}
       </DescriptionList>

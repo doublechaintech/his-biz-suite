@@ -28,6 +28,19 @@ import ExpenseTypeAssociateForm from './expensetype/ExpenseType.associateform';
 import ExpenseTypeTable from './expensetype/ExpenseType.table';
 import ExpenseTypeService from './expensetype/ExpenseType.service';
 import ExpenseTypeUpdateForm from './expensetype/ExpenseType.updateform';
+import PeriodBase from './period/Period.base';
+import PeriodBizApp from './period/Period.app';
+import PeriodModel from './period/Period.model';
+import PeriodDashboard from './period/Period.dashboard';
+import PeriodPreference from './period/Period.preference';
+import PeriodModalTable from './period/Period.modaltable';
+import PeriodSearch from './period/Period.search';
+import PeriodSearchForm from './period/Period.searchform';
+import PeriodCreateForm from './period/Period.createform';
+import PeriodAssociateForm from './period/Period.associateform';
+import PeriodTable from './period/Period.table';
+import PeriodService from './period/Period.service';
+import PeriodUpdateForm from './period/Period.updateform';
 import ExpenseItemBase from './expenseitem/ExpenseItem.base';
 import ExpenseItemBizApp from './expenseitem/ExpenseItem.app';
 import ExpenseItemModel from './expenseitem/ExpenseItem.model';
@@ -202,6 +215,7 @@ import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
 const BizModels = [
 	HospitalModel,
 	ExpenseTypeModel,
+	PeriodModel,
 	ExpenseItemModel,
 	DoctorModel,
 	DepartmentModel,
@@ -234,6 +248,7 @@ const menuLibrary = []
 
 menuLibrary['hospital'] = HospitalBase.menuData
 menuLibrary['expenseType'] = ExpenseTypeBase.menuData
+menuLibrary['period'] = PeriodBase.menuData
 menuLibrary['expenseItem'] = ExpenseItemBase.menuData
 menuLibrary['doctor'] = DoctorBase.menuData
 menuLibrary['department'] = DepartmentBase.menuData
@@ -267,21 +282,22 @@ const menuDataOf=(type)=>{
 const ViewMapping = {
 
 
-  'com.panfeng.his.hospital.Hospital': {name:'hospital'},
-  'com.panfeng.his.expensetype.ExpenseType': {name:'expenseType'},
-  'com.panfeng.his.expenseitem.ExpenseItem': {name:'expenseItem'},
-  'com.panfeng.his.doctor.Doctor': {name:'doctor'},
-  'com.panfeng.his.department.Department': {name:'department'},
-  'com.panfeng.his.doctorassignment.DoctorAssignment': {name:'doctorAssignment'},
-  'com.panfeng.his.doctorschedule.DoctorSchedule': {name:'doctorSchedule'},
-  'com.panfeng.his.userdomain.UserDomain': {name:'userDomain'},
-  'com.panfeng.his.userwhitelist.UserWhiteList': {name:'userWhiteList'},
-  'com.panfeng.his.secuser.SecUser': {name:'secUser'},
-  'com.panfeng.his.secuserblocking.SecUserBlocking': {name:'secUserBlocking'},
-  'com.panfeng.his.userapp.UserApp': {name:'userApp'},
-  'com.panfeng.his.listaccess.ListAccess': {name:'listAccess'},
-  'com.panfeng.his.objectaccess.ObjectAccess': {name:'objectAccess'},
-  'com.panfeng.his.loginhistory.LoginHistory': {name:'loginHistory'},
+  'com.doublechaintech.his.hospital.Hospital': {name:'hospital'},
+  'com.doublechaintech.his.expensetype.ExpenseType': {name:'expenseType'},
+  'com.doublechaintech.his.period.Period': {name:'period'},
+  'com.doublechaintech.his.expenseitem.ExpenseItem': {name:'expenseItem'},
+  'com.doublechaintech.his.doctor.Doctor': {name:'doctor'},
+  'com.doublechaintech.his.department.Department': {name:'department'},
+  'com.doublechaintech.his.doctorassignment.DoctorAssignment': {name:'doctorAssignment'},
+  'com.doublechaintech.his.doctorschedule.DoctorSchedule': {name:'doctorSchedule'},
+  'com.doublechaintech.his.userdomain.UserDomain': {name:'userDomain'},
+  'com.doublechaintech.his.userwhitelist.UserWhiteList': {name:'userWhiteList'},
+  'com.doublechaintech.his.secuser.SecUser': {name:'secUser'},
+  'com.doublechaintech.his.secuserblocking.SecUserBlocking': {name:'secUserBlocking'},
+  'com.doublechaintech.his.userapp.UserApp': {name:'userApp'},
+  'com.doublechaintech.his.listaccess.ListAccess': {name:'listAccess'},
+  'com.doublechaintech.his.objectaccess.ObjectAccess': {name:'objectAccess'},
+  'com.doublechaintech.his.loginhistory.LoginHistory': {name:'loginHistory'},
 
 }
 
@@ -353,6 +369,19 @@ const OOTBComponents={
     ExpenseTypeTable,
     ExpenseTypeService,
     ExpenseTypeUpdateForm,
+    PeriodBase,
+    PeriodBizApp,
+    PeriodModel,
+    PeriodDashboard,
+    PeriodPreference,
+    PeriodModalTable,
+    PeriodSearch,
+    PeriodSearchForm,
+    PeriodCreateForm,
+    PeriodAssociateForm,
+    PeriodTable,
+    PeriodService,
+    PeriodUpdateForm,
     ExpenseItemBase,
     ExpenseItemBizApp,
     ExpenseItemModel,

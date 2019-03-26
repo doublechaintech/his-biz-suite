@@ -61,14 +61,14 @@ const removeDoctorAssignmentList = (targetObjectId, parameters) => {
 
 
 const addDoctorSchedule = (targetObjectId, parameters) => {
-  const url = `${PREFIX}departmentManager/addDoctorSchedule/departmentId/name/scheduleDate/period/doctorId/available/price/expenseTypeId/tokensExpr/`
+  const url = `${PREFIX}departmentManager/addDoctorSchedule/departmentId/name/doctorId/scheduleDate/periodId/available/price/expenseTypeId/hospitalId/tokensExpr/`
   const departmentId = targetObjectId
   const requestParameters = { ...parameters, departmentId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateDoctorSchedule = (targetObjectId, parameters) => {
-  const url = `${PREFIX}departmentManager/updateDoctorScheduleProperties/departmentId/id/name/scheduleDate/period/available/price/tokensExpr/`
+  const url = `${PREFIX}departmentManager/updateDoctorScheduleProperties/departmentId/id/name/scheduleDate/available/price/tokensExpr/`
   const departmentId = targetObjectId
   const requestParameters = { ...parameters, departmentId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

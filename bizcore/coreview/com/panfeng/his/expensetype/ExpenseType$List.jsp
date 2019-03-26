@@ -113,6 +113,9 @@
 <c:if test="${param.referName ne 'description'}">
 	<th>${userContext.localeMap['expense_type.description']}</th>
 </c:if>
+<c:if test="${param.referName ne 'updateTime'}">
+	<th>${userContext.localeMap['expense_type.update_time']}</th>
+</c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
 		<tbody>
@@ -142,6 +145,7 @@
 	</td>
 </c:if>
 <c:if test="${param.referName ne 'description'}">	<td contenteditable='true' class='edit-value'  propertyToChange='description' storedCellValue='${item.description}' prefix='${ownerBeanName}Manager/updateExpenseType/${result.id}/${item.id}/'><a title='${item.description}'>${fn:substring(item.description,0,10)}...</a></td>
+</c:if><c:if test="${param.referName ne 'updateTime'}">	<td contenteditable='true' class='edit-value'  propertyToChange='updateTime' storedCellValue='${item.updateTime}' prefix='${ownerBeanName}Manager/updateExpenseType/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.updateTime}" /></td>
 </c:if>
 				<td>
 

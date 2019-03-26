@@ -19,6 +19,7 @@ const { TextArea } = Input
 const imageURLPrefix = '//localhost:2090'
 
 const imageKeys = [
+  'shotImage',
 ]
 
 
@@ -59,6 +60,7 @@ class DoctorUpdateForm extends Component {
     const convertiedValues = selectedRows.map((item) => {
       return {
         ...item,
+        updateTime: moment(item.updateTime),
 
       }
     })
@@ -287,6 +289,23 @@ class DoctorUpdateForm extends Component {
         
         
 
+
+        <Card title={<div>{appLocaleName(userContext,"Attachment")} <Popover title={appLocaleName(userContext,"ScanQRCodetoUploadfromSmartPhone")} content={<div><img src='./qrtest.png'/></div>}><Icon type="qrcode" ></Icon></Popover></div>} className={styles.card} bordered={false}>
+          <Form >
+            <Row gutter={16}>
+
+              <Col lg={6} md={12} sm={24}>
+                <ImageComponent
+                  buttonTitle="拍摄的图像"
+                  handlePreview={this.handlePreview}
+                  handleChange={event => this.handleChange(event, 'shotImage')}
+                  fileList={convertedImagesValues.shotImage}
+                />
+              </Col>
+
+            </Row>
+          </Form>
+        </Card>
 
         <FooterToolbar>
           {getErrorInfo()}

@@ -39,7 +39,8 @@ const topColResponsiveProps = {
 const internalImageListOf = (doctor) =>{
   const userContext = null
   const imageList = [
-	 ]
+	   {"title":'拍摄的图像',"imageLocation":doctor.shotImage},
+]
   const filteredList = imageList.filter((item)=>item.imageLocation!=null)
   if(filteredList.length===0){
     return null
@@ -262,6 +263,7 @@ const internalSummaryOf = (doctor,targetComponent) =>{
 	<DescriptionList className={styles.headerList} size="small" col="4">
 <Description term="ID">{doctor.id}</Description> 
 <Description term="名称">{doctor.name}</Description> 
+<Description term="更新时间">{ moment(doctor.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(doctor,targetComponent)}
       </DescriptionList>
@@ -302,6 +304,7 @@ class DoctorPreference extends Component {
     const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = this.props.doctor
     const cardsData = {cardsName:"医生",cardsFor: "doctor",cardsSource: this.props.doctor,
   		subItems: [
+{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment'},
     
       	],
   	};

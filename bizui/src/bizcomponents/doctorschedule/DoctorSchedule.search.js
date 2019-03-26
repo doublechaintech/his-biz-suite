@@ -62,8 +62,10 @@ const showAssociateDialog = (targetComponent) => {
   const {selectedRows} = targetComponent.state
   
   const { DoctorAssociateForm } = GlobalComponents
-  const { ExpenseTypeAssociateForm } = GlobalComponents
+  const { PeriodAssociateForm } = GlobalComponents
   const { DepartmentAssociateForm } = GlobalComponents
+  const { ExpenseTypeAssociateForm } = GlobalComponents
+  const { HospitalAssociateForm } = GlobalComponents
 
 
   return (
@@ -75,15 +77,23 @@ const showAssociateDialog = (targetComponent) => {
 	visible={currentAssociateModal==='doctor'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'doctor')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'doctor')}/> <ExpenseTypeAssociateForm 
-	visible={currentAssociateModal==='expenseType'} 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'doctor')}/> <PeriodAssociateForm 
+	visible={currentAssociateModal==='period'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
-	onCancel={()=>toggleAssociateModalVisible(targetComponent,'expenseType')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'expenseType')}/> <DepartmentAssociateForm 
+	onCancel={()=>toggleAssociateModalVisible(targetComponent,'period')} 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'period')}/> <DepartmentAssociateForm 
 	visible={currentAssociateModal==='department'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'department')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'department')}/> 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'department')}/> <ExpenseTypeAssociateForm 
+	visible={currentAssociateModal==='expenseType'} 
+	data={{doctorScheduleList:selectedRows}} owner={owner}  
+	onCancel={()=>toggleAssociateModalVisible(targetComponent,'expenseType')} 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'expenseType')}/> <HospitalAssociateForm 
+	visible={currentAssociateModal==='hospital'} 
+	data={{doctorScheduleList:selectedRows}} owner={owner}  
+	onCancel={()=>toggleAssociateModalVisible(targetComponent,'hospital')} 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'hospital')}/> 
  
 
 

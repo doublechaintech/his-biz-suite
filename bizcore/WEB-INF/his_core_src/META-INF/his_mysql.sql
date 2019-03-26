@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190321T1712
+-- BUILD WITH MODEL TIME 190326T1029
 drop database  if exists his;
 create database his;
 alter  database his  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -283,31 +283,31 @@ insert into expense_type_data values ('ET000001','诊疗费','zlf','正常','H00
 
 ���������������
 
-','2019-03-15 10:44:26','1');
+','2019-03-08 02:11:40','1');
 insert into expense_type_data values ('ET000002','治疗费','zlf','停用','H000001','    ���������������������
 ���������������
 
 ���������������
 
-','2019-03-07 13:59:12','1');
+','2019-03-15 16:23:02','1');
 insert into expense_type_data values ('ET000003','检查费','jcf','正常','H000001','    ���������������������
 ���������������
 
 ���������������
 
-','2019-03-17 09:25:33','1');
+','2019-03-22 19:04:02','1');
 insert into expense_type_data values ('ET000004','诊疗费','zlf','停用','H000001','    ���������������������
 ���������������
 
 ���������������
 
-','2019-03-13 08:05:07','1');
+','2019-03-17 04:40:45','1');
 insert into expense_type_data values ('ET000005','治疗费','zlf','正常','H000001','    ���������������������
 ���������������
 
 ���������������
 
-','2019-03-06 19:22:00','1');
+','2019-03-26 19:50:05','1');
 
 	
 insert into period_data values ('P000001','上午','H000001','1');
@@ -315,99 +315,99 @@ insert into period_data values ('P000002','下午','H000001','1');
 insert into period_data values ('P000003','夜班','H000001','1');
 
 	
-insert into expense_item_data values ('EI000001','专家诊疗费','78297481216.00','ET000001','H000001','2019-03-07 13:12:41','1');
-insert into expense_item_data values ('EI000002','血常规','77114236928.00','ET000001','H000001','2019-03-09 18:10:55','1');
-insert into expense_item_data values ('EI000003','煎药费','83248824320.00','ET000001','H000001','2019-03-05 06:54:33','1');
-insert into expense_item_data values ('EI000004','专家诊疗费','91141636096.00','ET000001','H000001','2019-03-05 02:15:03','1');
-insert into expense_item_data values ('EI000005','血常规','96754393088.00','ET000001','H000001','2019-03-08 21:01:02','1');
-insert into expense_item_data values ('EI000006','煎药费','91177050112.00','ET000002','H000001','2019-03-07 18:46:22','1');
-insert into expense_item_data values ('EI000007','专家诊疗费','75310374912.00','ET000002','H000001','2019-03-22 20:37:42','1');
-insert into expense_item_data values ('EI000008','血常规','76104056832.00','ET000002','H000001','2019-03-15 09:45:48','1');
-insert into expense_item_data values ('EI000009','煎药费','92714147840.00','ET000002','H000001','2019-03-02 03:41:55','1');
-insert into expense_item_data values ('EI000010','专家诊疗费','91476205568.00','ET000002','H000001','2019-03-14 07:14:16','1');
-insert into expense_item_data values ('EI000011','血常规','70884941824.00','ET000003','H000001','2019-03-11 14:33:51','1');
-insert into expense_item_data values ('EI000012','煎药费','84217872384.00','ET000003','H000001','2019-03-14 10:34:31','1');
-insert into expense_item_data values ('EI000013','专家诊疗费','96215711744.00','ET000003','H000001','2019-03-20 01:48:54','1');
-insert into expense_item_data values ('EI000014','血常规','77788733440.00','ET000003','H000001','2019-03-21 21:34:36','1');
-insert into expense_item_data values ('EI000015','煎药费','76294144000.00','ET000003','H000001','2019-03-05 15:05:56','1');
-insert into expense_item_data values ('EI000016','专家诊疗费','99041435648.00','ET000004','H000001','2019-03-09 15:35:19','1');
-insert into expense_item_data values ('EI000017','血常规','70629597184.00','ET000004','H000001','2019-03-12 16:41:40','1');
-insert into expense_item_data values ('EI000018','煎药费','85082038272.00','ET000004','H000001','2019-03-07 00:33:47','1');
-insert into expense_item_data values ('EI000019','专家诊疗费','76884140032.00','ET000004','H000001','2019-03-20 15:59:45','1');
-insert into expense_item_data values ('EI000020','血常规','89585426432.00','ET000004','H000001','2019-03-23 00:49:38','1');
-insert into expense_item_data values ('EI000021','煎药费','91029504000.00','ET000005','H000001','2019-03-14 21:34:57','1');
-insert into expense_item_data values ('EI000022','专家诊疗费','73223077888.00','ET000005','H000001','2019-03-06 17:52:55','1');
-insert into expense_item_data values ('EI000023','血常规','85838348288.00','ET000005','H000001','2019-03-06 01:29:13','1');
-insert into expense_item_data values ('EI000024','煎药费','92127952896.00','ET000005','H000001','2019-03-05 10:42:24','1');
-insert into expense_item_data values ('EI000025','专家诊疗费','87166779392.00','ET000005','H000001','2019-03-02 19:39:44','1');
+insert into expense_item_data values ('EI000001','专家诊疗费','80000729088.00','ET000001','H000001','2019-03-26 02:34:28','1');
+insert into expense_item_data values ('EI000002','血常规','80394698752.00','ET000001','H000001','2019-03-21 23:42:44','1');
+insert into expense_item_data values ('EI000003','煎药费','72942460928.00','ET000001','H000001','2019-03-19 17:02:25','1');
+insert into expense_item_data values ('EI000004','专家诊疗费','89797574656.00','ET000001','H000001','2019-03-11 12:47:41','1');
+insert into expense_item_data values ('EI000005','血常规','83344949248.00','ET000001','H000001','2019-03-08 09:37:48','1');
+insert into expense_item_data values ('EI000006','煎药费','85556363264.00','ET000002','H000001','2019-03-25 12:01:19','1');
+insert into expense_item_data values ('EI000007','专家诊疗费','72323514368.00','ET000002','H000001','2019-03-06 04:07:40','1');
+insert into expense_item_data values ('EI000008','血常规','90457595904.00','ET000002','H000001','2019-03-14 21:04:30','1');
+insert into expense_item_data values ('EI000009','煎药费','76156665856.00','ET000002','H000001','2019-03-20 16:49:31','1');
+insert into expense_item_data values ('EI000010','专家诊疗费','87746822144.00','ET000002','H000001','2019-03-20 13:53:44','1');
+insert into expense_item_data values ('EI000011','血常规','92920078336.00','ET000003','H000001','2019-03-06 17:41:31','1');
+insert into expense_item_data values ('EI000012','煎药费','87818485760.00','ET000003','H000001','2019-03-18 04:58:31','1');
+insert into expense_item_data values ('EI000013','专家诊疗费','86730727424.00','ET000003','H000001','2019-03-22 23:39:56','1');
+insert into expense_item_data values ('EI000014','血常规','92235849728.00','ET000003','H000001','2019-03-14 15:31:55','1');
+insert into expense_item_data values ('EI000015','煎药费','84991008768.00','ET000003','H000001','2019-03-05 21:24:56','1');
+insert into expense_item_data values ('EI000016','专家诊疗费','84440678400.00','ET000004','H000001','2019-03-14 18:24:58','1');
+insert into expense_item_data values ('EI000017','血常规','89227542528.00','ET000004','H000001','2019-03-25 06:52:15','1');
+insert into expense_item_data values ('EI000018','煎药费','82498338816.00','ET000004','H000001','2019-03-14 02:56:47','1');
+insert into expense_item_data values ('EI000019','专家诊疗费','89387032576.00','ET000004','H000001','2019-03-26 18:10:00','1');
+insert into expense_item_data values ('EI000020','血常规','74272841728.00','ET000004','H000001','2019-03-16 11:50:15','1');
+insert into expense_item_data values ('EI000021','煎药费','94781743104.00','ET000005','H000001','2019-03-11 07:27:10','1');
+insert into expense_item_data values ('EI000022','专家诊疗费','99537895424.00','ET000005','H000001','2019-03-11 19:35:56','1');
+insert into expense_item_data values ('EI000023','血常规','92269371392.00','ET000005','H000001','2019-03-17 21:13:14','1');
+insert into expense_item_data values ('EI000024','煎药费','76703563776.00','ET000005','H000001','2019-03-11 22:47:48','1');
+insert into expense_item_data values ('EI000025','专家诊疗费','93707714560.00','ET000005','H000001','2019-03-05 21:38:25','1');
 
 	
-insert into doctor_data values ('D000001','魏松全','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-08 01:35:59','1');
-insert into doctor_data values ('D000002','魏松全0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-21 00:26:22','1');
-insert into doctor_data values ('D000003','魏松全0003','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-22 16:57:34','1');
-insert into doctor_data values ('D000004','魏松全0004','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-10 23:26:33','1');
-insert into doctor_data values ('D000005','魏松全0005','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-23 19:52:46','1');
+insert into doctor_data values ('D000001','魏松全','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-23 20:59:38','1');
+insert into doctor_data values ('D000002','魏松全0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-15 12:37:47','1');
+insert into doctor_data values ('D000003','魏松全0003','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-26 16:09:05','1');
+insert into doctor_data values ('D000004','魏松全0004','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-23 21:16:14','1');
+insert into doctor_data values ('D000005','魏松全0005','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-03-07 05:51:44','1');
 
 	
-insert into department_data values ('D000001','放射科','H000001','2019-03-20 06:06:49','1');
-insert into department_data values ('D000002','放射科0002','H000001','2019-03-07 16:20:14','1');
-insert into department_data values ('D000003','放射科0003','H000001','2019-03-09 09:01:07','1');
-insert into department_data values ('D000004','放射科0004','H000001','2019-03-03 05:33:55','1');
-insert into department_data values ('D000005','放射科0005','H000001','2019-03-16 08:10:11','1');
+insert into department_data values ('D000001','放射科','H000001','2019-03-13 01:44:25','1');
+insert into department_data values ('D000002','放射科0002','H000001','2019-03-11 20:10:42','1');
+insert into department_data values ('D000003','放射科0003','H000001','2019-03-20 04:22:54','1');
+insert into department_data values ('D000004','放射科0004','H000001','2019-03-25 18:26:24','1');
+insert into department_data values ('D000005','放射科0005','H000001','2019-03-17 07:17:15','1');
 
 	
-insert into doctor_assignment_data values ('DA000001','魏松全在内分泌科室上','D000001','D000001','2019-03-22 22:47:02','1');
-insert into doctor_assignment_data values ('DA000002','魏松全在内分泌科室上0002','D000001','D000001','2019-03-20 20:48:13','1');
-insert into doctor_assignment_data values ('DA000003','魏松全在内分泌科室上0003','D000001','D000001','2019-03-03 23:09:50','1');
-insert into doctor_assignment_data values ('DA000004','魏松全在内分泌科室上0004','D000001','D000001','2019-03-11 09:55:29','1');
-insert into doctor_assignment_data values ('DA000005','魏松全在内分泌科室上0005','D000001','D000001','2019-03-23 09:07:31','1');
-insert into doctor_assignment_data values ('DA000006','魏松全在内分泌科室上0006','D000002','D000002','2019-03-23 09:13:58','1');
-insert into doctor_assignment_data values ('DA000007','魏松全在内分泌科室上0007','D000002','D000002','2019-03-06 02:28:23','1');
-insert into doctor_assignment_data values ('DA000008','魏松全在内分泌科室上0008','D000002','D000002','2019-03-05 13:40:15','1');
-insert into doctor_assignment_data values ('DA000009','魏松全在内分泌科室上0009','D000002','D000002','2019-03-02 01:13:33','1');
-insert into doctor_assignment_data values ('DA000010','魏松全在内分泌科室上0010','D000002','D000002','2019-03-20 16:51:15','1');
-insert into doctor_assignment_data values ('DA000011','魏松全在内分泌科室上0011','D000003','D000003','2019-03-14 07:54:57','1');
-insert into doctor_assignment_data values ('DA000012','魏松全在内分泌科室上0012','D000003','D000003','2019-03-09 09:59:18','1');
-insert into doctor_assignment_data values ('DA000013','魏松全在内分泌科室上0013','D000003','D000003','2019-03-22 04:41:02','1');
-insert into doctor_assignment_data values ('DA000014','魏松全在内分泌科室上0014','D000003','D000003','2019-03-12 10:52:35','1');
-insert into doctor_assignment_data values ('DA000015','魏松全在内分泌科室上0015','D000003','D000003','2019-03-09 14:19:06','1');
-insert into doctor_assignment_data values ('DA000016','魏松全在内分泌科室上0016','D000004','D000004','2019-03-08 22:35:31','1');
-insert into doctor_assignment_data values ('DA000017','魏松全在内分泌科室上0017','D000004','D000004','2019-03-10 17:21:01','1');
-insert into doctor_assignment_data values ('DA000018','魏松全在内分泌科室上0018','D000004','D000004','2019-03-14 16:30:35','1');
-insert into doctor_assignment_data values ('DA000019','魏松全在内分泌科室上0019','D000004','D000004','2019-03-17 03:55:10','1');
-insert into doctor_assignment_data values ('DA000020','魏松全在内分泌科室上0020','D000004','D000004','2019-03-13 12:36:07','1');
-insert into doctor_assignment_data values ('DA000021','魏松全在内分泌科室上0021','D000005','D000005','2019-03-02 08:50:29','1');
-insert into doctor_assignment_data values ('DA000022','魏松全在内分泌科室上0022','D000005','D000005','2019-03-21 03:47:28','1');
-insert into doctor_assignment_data values ('DA000023','魏松全在内分泌科室上0023','D000005','D000005','2019-03-06 05:15:43','1');
-insert into doctor_assignment_data values ('DA000024','魏松全在内分泌科室上0024','D000005','D000005','2019-03-13 09:30:24','1');
-insert into doctor_assignment_data values ('DA000025','魏松全在内分泌科室上0025','D000005','D000005','2019-03-22 04:22:47','1');
+insert into doctor_assignment_data values ('DA000001','魏松全在内分泌科室上','D000001','D000001','2019-03-24 00:01:00','1');
+insert into doctor_assignment_data values ('DA000002','魏松全在内分泌科室上0002','D000001','D000001','2019-03-26 02:03:16','1');
+insert into doctor_assignment_data values ('DA000003','魏松全在内分泌科室上0003','D000001','D000001','2019-03-06 05:16:01','1');
+insert into doctor_assignment_data values ('DA000004','魏松全在内分泌科室上0004','D000001','D000001','2019-03-05 07:49:50','1');
+insert into doctor_assignment_data values ('DA000005','魏松全在内分泌科室上0005','D000001','D000001','2019-03-22 05:56:10','1');
+insert into doctor_assignment_data values ('DA000006','魏松全在内分泌科室上0006','D000002','D000002','2019-03-07 22:21:07','1');
+insert into doctor_assignment_data values ('DA000007','魏松全在内分泌科室上0007','D000002','D000002','2019-03-25 12:03:39','1');
+insert into doctor_assignment_data values ('DA000008','魏松全在内分泌科室上0008','D000002','D000002','2019-03-05 10:55:30','1');
+insert into doctor_assignment_data values ('DA000009','魏松全在内分泌科室上0009','D000002','D000002','2019-03-26 14:39:29','1');
+insert into doctor_assignment_data values ('DA000010','魏松全在内分泌科室上0010','D000002','D000002','2019-03-05 13:37:26','1');
+insert into doctor_assignment_data values ('DA000011','魏松全在内分泌科室上0011','D000003','D000003','2019-03-07 11:34:33','1');
+insert into doctor_assignment_data values ('DA000012','魏松全在内分泌科室上0012','D000003','D000003','2019-03-15 13:54:20','1');
+insert into doctor_assignment_data values ('DA000013','魏松全在内分泌科室上0013','D000003','D000003','2019-03-23 15:57:03','1');
+insert into doctor_assignment_data values ('DA000014','魏松全在内分泌科室上0014','D000003','D000003','2019-03-15 23:59:34','1');
+insert into doctor_assignment_data values ('DA000015','魏松全在内分泌科室上0015','D000003','D000003','2019-03-19 12:17:46','1');
+insert into doctor_assignment_data values ('DA000016','魏松全在内分泌科室上0016','D000004','D000004','2019-03-17 07:20:23','1');
+insert into doctor_assignment_data values ('DA000017','魏松全在内分泌科室上0017','D000004','D000004','2019-03-06 18:49:55','1');
+insert into doctor_assignment_data values ('DA000018','魏松全在内分泌科室上0018','D000004','D000004','2019-03-19 23:41:11','1');
+insert into doctor_assignment_data values ('DA000019','魏松全在内分泌科室上0019','D000004','D000004','2019-03-15 18:16:31','1');
+insert into doctor_assignment_data values ('DA000020','魏松全在内分泌科室上0020','D000004','D000004','2019-03-13 18:14:47','1');
+insert into doctor_assignment_data values ('DA000021','魏松全在内分泌科室上0021','D000005','D000005','2019-03-12 09:47:25','1');
+insert into doctor_assignment_data values ('DA000022','魏松全在内分泌科室上0022','D000005','D000005','2019-03-16 06:18:46','1');
+insert into doctor_assignment_data values ('DA000023','魏松全在内分泌科室上0023','D000005','D000005','2019-03-09 21:02:32','1');
+insert into doctor_assignment_data values ('DA000024','魏松全在内分泌科室上0024','D000005','D000005','2019-03-17 05:38:27','1');
+insert into doctor_assignment_data values ('DA000025','魏松全在内分泌科室上0025','D000005','D000005','2019-03-22 09:22:37','1');
 
 	
-insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','D000001','2019-01-10','P000001','D000001','15','92.48','ET000001','2019-03-09 01:18:01','2019-03-16 18:37:35','H000001','1');
-insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','D000001','2017-06-26','P000001','D000001','19','95.27','ET000001','2019-03-11 03:57:17','2019-03-20 19:54:54','H000001','1');
-insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','D000001','2018-07-08','P000001','D000001','17','102.86','ET000001','2019-03-13 20:44:06','2019-03-11 13:51:57','H000001','1');
-insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','D000001','2018-10-08','P000001','D000001','17','121.25','ET000001','2019-03-12 05:30:54','2019-03-08 19:58:29','H000001','1');
-insert into doctor_schedule_data values ('DS000005','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100005','D000001','2017-07-10','P000001','D000001','17','114.05','ET000001','2019-03-15 06:02:46','2019-03-11 14:46:07','H000001','1');
-insert into doctor_schedule_data values ('DS000006','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100006','D000002','2017-12-14','P000001','D000002','17','106.33','ET000002','2019-03-11 07:04:24','2019-03-08 16:37:50','H000001','1');
-insert into doctor_schedule_data values ('DS000007','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100007','D000002','2016-10-11','P000001','D000002','15','111.08','ET000002','2019-03-02 00:38:47','2019-03-02 11:51:55','H000001','1');
-insert into doctor_schedule_data values ('DS000008','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100008','D000002','2018-01-13','P000001','D000002','19','122.93','ET000002','2019-03-07 22:27:41','2019-03-06 05:37:58','H000001','1');
-insert into doctor_schedule_data values ('DS000009','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100009','D000002','2018-01-08','P000001','D000002','17','105.89','ET000002','2019-03-02 12:35:23','2019-03-10 09:21:47','H000001','1');
-insert into doctor_schedule_data values ('DS000010','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100010','D000002','2016-06-17','P000002','D000002','19','114.29','ET000002','2019-03-02 18:28:27','2019-03-05 15:29:28','H000001','1');
-insert into doctor_schedule_data values ('DS000011','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100011','D000003','2019-01-24','P000002','D000003','17','110.97','ET000003','2019-03-22 22:43:38','2019-03-03 07:20:31','H000001','1');
-insert into doctor_schedule_data values ('DS000012','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100012','D000003','2018-07-13','P000002','D000003','16','96.17','ET000003','2019-03-23 11:31:17','2019-03-07 03:19:14','H000001','1');
-insert into doctor_schedule_data values ('DS000013','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100013','D000003','2016-11-23','P000002','D000003','19','108.59','ET000003','2019-03-04 13:08:49','2019-03-08 04:08:54','H000001','1');
-insert into doctor_schedule_data values ('DS000014','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100014','D000003','2017-10-12','P000002','D000003','17','91.09','ET000003','2019-03-02 03:04:47','2019-03-08 10:54:10','H000001','1');
-insert into doctor_schedule_data values ('DS000015','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100015','D000003','2018-02-09','P000002','D000003','20','103.98','ET000003','2019-03-19 20:50:51','2019-03-11 23:22:03','H000001','1');
-insert into doctor_schedule_data values ('DS000016','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100016','D000004','2017-11-22','P000002','D000004','17','89.15','ET000004','2019-03-21 02:47:53','2019-03-05 03:41:41','H000001','1');
-insert into doctor_schedule_data values ('DS000017','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100017','D000004','2017-03-27','P000002','D000004','15','96.80','ET000004','2019-03-19 19:13:17','2019-03-10 22:35:34','H000001','1');
-insert into doctor_schedule_data values ('DS000018','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100018','D000004','2017-02-27','P000003','D000004','15','109.81','ET000004','2019-03-18 15:23:00','2019-03-14 04:54:22','H000001','1');
-insert into doctor_schedule_data values ('DS000019','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100019','D000004','2016-06-04','P000003','D000004','20','111.54','ET000004','2019-03-09 16:21:36','2019-03-17 05:31:22','H000001','1');
-insert into doctor_schedule_data values ('DS000020','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100020','D000004','2018-10-10','P000003','D000004','20','115.77','ET000004','2019-03-20 23:07:16','2019-03-11 11:38:40','H000001','1');
-insert into doctor_schedule_data values ('DS000021','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100021','D000005','2016-08-13','P000003','D000005','18','110.54','ET000005','2019-03-19 13:39:19','2019-03-07 06:53:10','H000001','1');
-insert into doctor_schedule_data values ('DS000022','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100022','D000005','2017-02-18','P000003','D000005','18','100.31','ET000005','2019-03-12 00:40:12','2019-03-22 18:44:35','H000001','1');
-insert into doctor_schedule_data values ('DS000023','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100023','D000005','2017-03-20','P000003','D000005','19','122.48','ET000005','2019-03-22 04:43:43','2019-03-09 02:30:51','H000001','1');
-insert into doctor_schedule_data values ('DS000024','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100024','D000005','2017-10-11','P000003','D000005','20','89.64','ET000005','2019-03-18 10:12:24','2019-03-05 03:57:47','H000001','1');
-insert into doctor_schedule_data values ('DS000025','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100025','D000005','2016-09-26','P000003','D000005','19','115.13','ET000005','2019-03-03 23:19:04','2019-03-13 00:49:40','H000001','1');
+insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','D000001','2019-01-05','P000001','D000001','20','86.80','ET000001','2019-03-17 03:27:48','2019-03-07 01:34:40','H000001','1');
+insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','D000001','2018-09-02','P000001','D000001','15','107.86','ET000001','2019-03-10 21:22:47','2019-03-05 20:05:37','H000001','1');
+insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','D000001','2017-11-18','P000001','D000001','17','108.62','ET000001','2019-03-17 12:56:52','2019-03-05 13:46:56','H000001','1');
+insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','D000001','2017-10-21','P000001','D000001','17','115.11','ET000001','2019-03-22 18:58:26','2019-03-26 02:20:17','H000001','1');
+insert into doctor_schedule_data values ('DS000005','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100005','D000001','2018-03-26','P000001','D000001','15','97.03','ET000001','2019-03-21 04:40:21','2019-03-14 00:56:04','H000001','1');
+insert into doctor_schedule_data values ('DS000006','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100006','D000002','2017-09-15','P000001','D000002','17','90.13','ET000002','2019-03-09 18:45:30','2019-03-14 17:24:18','H000001','1');
+insert into doctor_schedule_data values ('DS000007','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100007','D000002','2017-06-10','P000001','D000002','20','113.10','ET000002','2019-03-08 01:28:05','2019-03-12 13:26:17','H000001','1');
+insert into doctor_schedule_data values ('DS000008','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100008','D000002','2017-12-15','P000001','D000002','15','113.87','ET000002','2019-03-20 11:23:36','2019-03-24 18:52:48','H000001','1');
+insert into doctor_schedule_data values ('DS000009','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100009','D000002','2016-08-04','P000001','D000002','19','111.73','ET000002','2019-03-26 14:54:44','2019-03-22 17:55:25','H000001','1');
+insert into doctor_schedule_data values ('DS000010','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100010','D000002','2016-05-22','P000002','D000002','18','105.74','ET000002','2019-03-20 11:09:17','2019-03-09 23:47:04','H000001','1');
+insert into doctor_schedule_data values ('DS000011','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100011','D000003','2017-10-29','P000002','D000003','17','115.99','ET000003','2019-03-08 08:08:24','2019-03-21 04:55:07','H000001','1');
+insert into doctor_schedule_data values ('DS000012','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100012','D000003','2017-08-22','P000002','D000003','19','89.10','ET000003','2019-03-25 15:53:52','2019-03-25 13:54:37','H000001','1');
+insert into doctor_schedule_data values ('DS000013','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100013','D000003','2017-07-03','P000002','D000003','15','116.22','ET000003','2019-03-08 04:39:07','2019-03-05 06:34:37','H000001','1');
+insert into doctor_schedule_data values ('DS000014','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100014','D000003','2018-10-06','P000002','D000003','17','115.17','ET000003','2019-03-09 09:48:40','2019-03-26 08:55:57','H000001','1');
+insert into doctor_schedule_data values ('DS000015','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100015','D000003','2016-12-08','P000002','D000003','18','121.05','ET000003','2019-03-19 03:16:11','2019-03-25 02:31:28','H000001','1');
+insert into doctor_schedule_data values ('DS000016','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100016','D000004','2019-01-10','P000002','D000004','17','95.26','ET000004','2019-03-12 06:24:21','2019-03-13 16:23:09','H000001','1');
+insert into doctor_schedule_data values ('DS000017','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100017','D000004','2017-09-19','P000002','D000004','18','89.55','ET000004','2019-03-21 23:02:24','2019-03-09 10:53:32','H000001','1');
+insert into doctor_schedule_data values ('DS000018','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100018','D000004','2018-06-28','P000003','D000004','15','119.61','ET000004','2019-03-08 16:17:42','2019-03-07 23:57:37','H000001','1');
+insert into doctor_schedule_data values ('DS000019','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100019','D000004','2016-05-24','P000003','D000004','19','98.70','ET000004','2019-03-05 10:31:42','2019-03-14 04:49:44','H000001','1');
+insert into doctor_schedule_data values ('DS000020','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100020','D000004','2016-06-05','P000003','D000004','19','118.90','ET000004','2019-03-07 15:28:14','2019-03-25 14:59:30','H000001','1');
+insert into doctor_schedule_data values ('DS000021','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100021','D000005','2016-07-03','P000003','D000005','17','107.33','ET000005','2019-03-19 06:25:15','2019-03-12 05:23:44','H000001','1');
+insert into doctor_schedule_data values ('DS000022','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100022','D000005','2018-04-20','P000003','D000005','19','88.40','ET000005','2019-03-14 16:05:57','2019-03-13 05:04:50','H000001','1');
+insert into doctor_schedule_data values ('DS000023','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100023','D000005','2016-11-05','P000003','D000005','20','104.01','ET000005','2019-03-05 05:49:20','2019-03-20 15:38:23','H000001','1');
+insert into doctor_schedule_data values ('DS000024','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100024','D000005','2016-07-17','P000003','D000005','17','100.26','ET000005','2019-03-16 16:32:54','2019-03-07 17:47:41','H000001','1');
+insert into doctor_schedule_data values ('DS000025','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100025','D000005','2018-12-29','P000003','D000005','16','92.60','ET000005','2019-03-10 07:53:37','2019-03-09 01:08:06','H000001','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -420,14 +420,14 @@ insert into user_white_list_data values ('UWL000004','13808188512','tester;ios-s
 insert into user_white_list_data values ('UWL000005','clariones','tester;ios-spokesperson0005','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-03-02 12:38:18','2019-03-18 03:58:55','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-07 19:55:04','2019-03-13 21:01:39','UD000001',NULL,'BLOCKED0002','1');
-insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-03-06 15:57:48','2019-03-05 09:55:20','UD000001',NULL,'BLOCKED0003','1');
-insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-03-07 03:48:37','2019-03-13 04:58:39','UD000001',NULL,'BLOCKED0004','1');
-insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-03-18 17:47:13','2019-03-16 06:47:32','UD000001',NULL,'BLOCKED0005','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-03-06 10:06:59','2019-03-15 05:08:22','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-03-17 16:16:11','2019-03-25 08:52:31','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-03-07 14:27:12','2019-03-06 19:43:59','UD000001',NULL,'BLOCKED0003','1');
+insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-03-25 10:43:37','2019-03-14 18:02:13','UD000001',NULL,'BLOCKED0004','1');
+insert into sec_user_data values ('SU000005','login0005','13900000005','','CBDC109937F570CA1D5F223EC59F5368AF9380F9DBF7E553124132BB402ED457','0','2019-03-06 12:59:04','2019-03-21 13:45:58','UD000001',NULL,'BLOCKED0005','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-03-03 04:36:52','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-03-12 20:58:59','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -711,31 +711,31 @@ insert into object_access_data values ('OA000124','控制访问列表10124','Acc
 insert into object_access_data values ('OA000125','控制访问列表10125','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000025','1');
 
 	
-insert into login_history_data values ('LH000001','2019-03-09 05:53:13','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-03-21 23:14:18','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-03-06 19:14:38','192.168.1.1','登陆成功0003','SU000001','1');
-insert into login_history_data values ('LH000004','2019-03-11 03:48:04','192.168.1.2','登陆成功0004','SU000001','1');
-insert into login_history_data values ('LH000005','2019-03-14 04:30:31','192.168.1.1','登陆成功0005','SU000001','1');
-insert into login_history_data values ('LH000006','2019-03-22 19:39:36','192.168.1.2','登陆成功0006','SU000002','1');
-insert into login_history_data values ('LH000007','2019-03-08 12:13:28','192.168.1.1','登陆成功0007','SU000002','1');
-insert into login_history_data values ('LH000008','2019-03-21 14:27:33','192.168.1.2','登陆成功0008','SU000002','1');
-insert into login_history_data values ('LH000009','2019-03-03 09:03:00','192.168.1.1','登陆成功0009','SU000002','1');
-insert into login_history_data values ('LH000010','2019-03-15 02:00:27','192.168.1.2','登陆成功0010','SU000002','1');
-insert into login_history_data values ('LH000011','2019-03-07 02:47:02','192.168.1.1','登陆成功0011','SU000003','1');
-insert into login_history_data values ('LH000012','2019-03-16 00:32:12','192.168.1.2','登陆成功0012','SU000003','1');
-insert into login_history_data values ('LH000013','2019-03-20 14:41:53','192.168.1.1','登陆成功0013','SU000003','1');
-insert into login_history_data values ('LH000014','2019-03-06 19:52:36','192.168.1.2','登陆成功0014','SU000003','1');
-insert into login_history_data values ('LH000015','2019-03-05 11:06:19','192.168.1.1','登陆成功0015','SU000003','1');
-insert into login_history_data values ('LH000016','2019-03-15 11:03:40','192.168.1.2','登陆成功0016','SU000004','1');
-insert into login_history_data values ('LH000017','2019-03-11 09:12:35','192.168.1.1','登陆成功0017','SU000004','1');
-insert into login_history_data values ('LH000018','2019-03-18 01:56:04','192.168.1.2','登陆成功0018','SU000004','1');
-insert into login_history_data values ('LH000019','2019-03-11 00:04:51','192.168.1.1','登陆成功0019','SU000004','1');
-insert into login_history_data values ('LH000020','2019-03-23 20:47:16','192.168.1.2','登陆成功0020','SU000004','1');
-insert into login_history_data values ('LH000021','2019-03-14 04:48:23','192.168.1.1','登陆成功0021','SU000005','1');
-insert into login_history_data values ('LH000022','2019-03-02 01:59:00','192.168.1.2','登陆成功0022','SU000005','1');
-insert into login_history_data values ('LH000023','2019-03-02 04:20:09','192.168.1.1','登陆成功0023','SU000005','1');
-insert into login_history_data values ('LH000024','2019-03-06 01:53:41','192.168.1.2','登陆成功0024','SU000005','1');
-insert into login_history_data values ('LH000025','2019-03-17 15:48:06','192.168.1.1','登陆成功0025','SU000005','1');
+insert into login_history_data values ('LH000001','2019-03-07 11:13:42','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-03-15 10:36:39','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-03-25 14:27:06','192.168.1.1','登陆成功0003','SU000001','1');
+insert into login_history_data values ('LH000004','2019-03-14 22:45:17','192.168.1.2','登陆成功0004','SU000001','1');
+insert into login_history_data values ('LH000005','2019-03-26 04:05:37','192.168.1.1','登陆成功0005','SU000001','1');
+insert into login_history_data values ('LH000006','2019-03-13 08:34:36','192.168.1.2','登陆成功0006','SU000002','1');
+insert into login_history_data values ('LH000007','2019-03-07 04:07:56','192.168.1.1','登陆成功0007','SU000002','1');
+insert into login_history_data values ('LH000008','2019-03-18 23:53:41','192.168.1.2','登陆成功0008','SU000002','1');
+insert into login_history_data values ('LH000009','2019-03-23 08:41:20','192.168.1.1','登陆成功0009','SU000002','1');
+insert into login_history_data values ('LH000010','2019-03-10 16:35:03','192.168.1.2','登陆成功0010','SU000002','1');
+insert into login_history_data values ('LH000011','2019-03-14 17:35:56','192.168.1.1','登陆成功0011','SU000003','1');
+insert into login_history_data values ('LH000012','2019-03-21 02:22:32','192.168.1.2','登陆成功0012','SU000003','1');
+insert into login_history_data values ('LH000013','2019-03-22 05:11:57','192.168.1.1','登陆成功0013','SU000003','1');
+insert into login_history_data values ('LH000014','2019-03-09 05:03:33','192.168.1.2','登陆成功0014','SU000003','1');
+insert into login_history_data values ('LH000015','2019-03-24 14:25:11','192.168.1.1','登陆成功0015','SU000003','1');
+insert into login_history_data values ('LH000016','2019-03-21 04:48:54','192.168.1.2','登陆成功0016','SU000004','1');
+insert into login_history_data values ('LH000017','2019-03-18 23:16:42','192.168.1.1','登陆成功0017','SU000004','1');
+insert into login_history_data values ('LH000018','2019-03-12 16:09:31','192.168.1.2','登陆成功0018','SU000004','1');
+insert into login_history_data values ('LH000019','2019-03-10 11:18:44','192.168.1.1','登陆成功0019','SU000004','1');
+insert into login_history_data values ('LH000020','2019-03-23 01:08:07','192.168.1.2','登陆成功0020','SU000004','1');
+insert into login_history_data values ('LH000021','2019-03-13 08:45:08','192.168.1.1','登陆成功0021','SU000005','1');
+insert into login_history_data values ('LH000022','2019-03-18 21:19:35','192.168.1.2','登陆成功0022','SU000005','1');
+insert into login_history_data values ('LH000023','2019-03-21 08:50:46','192.168.1.1','登陆成功0023','SU000005','1');
+insert into login_history_data values ('LH000024','2019-03-09 20:17:07','192.168.1.2','登陆成功0024','SU000005','1');
+insert into login_history_data values ('LH000025','2019-03-23 02:52:37','192.168.1.1','登陆成功0025','SU000005','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');

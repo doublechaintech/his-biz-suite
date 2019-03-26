@@ -53,7 +53,7 @@ export default class SelectObject extends React.Component {
     this.executeSearch("")
   }
   componentWillUnmount() {
-    this._isMounted = false;
+    this._isMounted = true;
   }
   componentWillReceiveProps(nextProps) {
     // Should be a controlled component.

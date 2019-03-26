@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from 'components/BooleanOption';
-import { Statistic, Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal ,Button} from 'antd'
+import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal } from 'antd'
 import { Link, Route, Redirect} from 'dva/router'
 import numeral from 'numeral'
 import {
@@ -21,7 +21,7 @@ import ImagePreview from '../../components/ImagePreview';
 import GlobalComponents from '../../custcomponents';
 import DashboardTool from '../../common/Dashboard.tool'
 import appLocaleName from '../../common/Locale.tool'
-const ButtonGroup = Button.Group;
+
 const {aggregateDataset,calcKey, defaultHideCloseTrans,
   defaultImageListOf,defaultSettingListOf,defaultBuildTransferModal,
   defaultExecuteTrans,defaultHandleTransferSearch,defaultShowTransferModel,
@@ -29,6 +29,8 @@ const {aggregateDataset,calcKey, defaultHideCloseTrans,
   defaultSubListsOf,
   defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,defaultQuickFunctions
 }= DashboardTool
+
+
 
 
 
@@ -78,44 +80,17 @@ const internalSummaryOf = (hospital,targetComponent) =>{
 	const {HospitalService} = GlobalComponents
 	const userContext = null
 	return (
-  <DescriptionList className={styles.headerList} size="small" col="4">
-  <Description term="ID">{hospital.id}</Description> 
-  <Description term="名称">{hospital.name}</Description> 
-  <Description term="地址">{hospital.address}</Description> 
-  <Description term="电话">{hospital.telephone}</Description> 
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{hospital.id}</Description> 
+<Description term="名称">{hospital.name}</Description> 
+<Description term="地址">{hospital.address}</Description> 
+<Description term="电话">{hospital.telephone}</Description> 
 	
-  {buildTransferModal(hospital,targetComponent)}
-</DescriptionList>
+        {buildTransferModal(hospital,targetComponent)}
+      </DescriptionList>
 	)
 
 }
-
-/*
-
-<ButtonGroup>
-            <Button onClick={this.decline}>
-              <Icon type="minus" />
-            </Button>
-            <Button onClick={this.increase}>
-              <Icon type="plus" />
-            </Button>
-          </ButtonGroup>
-
-
-          title={
-                <span>
-                  <Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-                  {item.displayName}({numeral(item.count).format('0,0')})
-                
-                </Link>
-                  { (
-                  <Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}>
-                    <span className={styles.splitLine} />
-                    <FontAwesome name="plus" />
-                    {appLocaleName(userContext, 'Add')}
-                  </Link>)}
-                </span>}
-*/
 
 const internalQuickFunctions = defaultQuickFunctions
 
@@ -130,7 +105,7 @@ class HospitalDashboard extends Component {
     transferServiceName:"",
     currentValue:"",
     transferTargetParameterName:"",  
-    defaultType: 'hospital',
+    defaultType: 'hospital'
 
 
   }
@@ -166,22 +141,18 @@ class HospitalDashboard extends Component {
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
     const quickFunctions = this.props.quickFunctions || internalQuickFunctions
     return (
-      
+
       <PageHeaderLayout
         title={renderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >
-      
-       
         {quickFunctions(cardsData)} 
         {renderExtraHeader(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}
-        
+        {imageListOf(cardsData.cardsSource)}        
         {largeTextOf(cardsData.cardsSource)}
-          
-        
+  
       </PageHeaderLayout>
     )
   }

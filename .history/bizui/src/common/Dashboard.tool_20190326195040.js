@@ -613,7 +613,7 @@ const defaultQuickFunctions = cardsData => {
          </Link>
          </Col><Col span={21}>
          <Link title={"查看"} to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-         {item.displayName} </Link><span style={{"font-size":"10px"}}> 一共{item.count}条</span></Col></Row>
+         {item.displayName} </Link><span style={{"font-size":"5px"}}> 一共{item.count}条</span></Col></Row>
      
     </Card></Col>
          

@@ -8,10 +8,8 @@ import appLocaleName from '../../common/Locale.tool'
 
 const menuData = {menuName:"医院", menuFor: "hospital",
   		subItems: [
-  {name: 'expenseTypeList', displayName:'费用类型', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  {name: 'expenseItemList', displayName:'费用项目', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   {name: 'doctorList', displayName:'医生', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  {name: 'departmentList', displayName:'部门', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'doctorScheduleList', displayName:'医生安排', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }
@@ -48,6 +46,14 @@ const renderImageCell=(value, record, title)=>{
 	return (<ImagePreview imageTitle={title} imageLocation={value} />)	
 }
 
+
+const formatMoney=(amount)=>{
+	const options={style: 'decimal',minimumFractionDigits: 2,maximumFractionDigits:2}
+    const moneyFormat = new Intl.NumberFormat('en-US',options);
+	return moneyFormat.format(amount)
+	
+}
+
 const renderMoneyCell=(value, record)=>{
 	const userContext = null
 	if(!value){
@@ -56,7 +62,7 @@ const renderMoneyCell=(value, record)=>{
 	if(value == null){
 		return appLocaleName(userContext,"Empty")
 	}
-	return (`${appLocaleName(userContext,"Currency")}${value.toFixed(2)}`)
+	return (`${appLocaleName(userContext,"Currency")}${formatMoney(value)}`)
 }
 
 const renderBooleanCell=(value, record)=>{

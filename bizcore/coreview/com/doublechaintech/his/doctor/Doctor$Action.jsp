@@ -19,6 +19,8 @@
 	
 	<li><span>${userContext.localeMap['doctor.id']}</span> ${doctor.id}</li>
 <li><span>${userContext.localeMap['doctor.name']}</span> ${doctor.name}</li>
+<li><span>${userContext.localeMap['doctor.shot_image']}</span> ${doctor.shotImage}</li>
+<li><span>${userContext.localeMap['doctor.update_time']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${doctor.updateTime}" /></li>
 
 	
 	</ul>

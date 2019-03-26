@@ -44,6 +44,28 @@ const removeExpenseTypeList = (targetObjectId, parameters) => {
 
 
 
+const addPeriod = (targetObjectId, parameters) => {
+  const url = `${PREFIX}hospitalManager/addPeriod/hospitalId/name/tokensExpr/`
+  const hospitalId = targetObjectId
+  const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updatePeriod = (targetObjectId, parameters) => {
+  const url = `${PREFIX}hospitalManager/updatePeriodProperties/hospitalId/id/name/tokensExpr/`
+  const hospitalId = targetObjectId
+  const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removePeriodList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}hospitalManager/removePeriodList/hospitalId/periodIds/tokensExpr/`
+  const requestParameters = { ...parameters, hospitalId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
 const addExpenseItem = (targetObjectId, parameters) => {
   const url = `${PREFIX}hospitalManager/addExpenseItem/hospitalId/name/price/expenseTypeId/tokensExpr/`
   const hospitalId = targetObjectId
@@ -67,14 +89,14 @@ const removeExpenseItemList = (targetObjectId, parameters) => {
 
 
 const addDoctor = (targetObjectId, parameters) => {
-  const url = `${PREFIX}hospitalManager/addDoctor/hospitalId/name/tokensExpr/`
+  const url = `${PREFIX}hospitalManager/addDoctor/hospitalId/name/shotImage/tokensExpr/`
   const hospitalId = targetObjectId
   const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updateDoctor = (targetObjectId, parameters) => {
-  const url = `${PREFIX}hospitalManager/updateDoctorProperties/hospitalId/id/name/tokensExpr/`
+  const url = `${PREFIX}hospitalManager/updateDoctorProperties/hospitalId/id/name/shotImage/tokensExpr/`
   const hospitalId = targetObjectId
   const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
@@ -109,19 +131,47 @@ const removeDepartmentList = (targetObjectId, parameters) => {
 }
 
 
+
+const addDoctorSchedule = (targetObjectId, parameters) => {
+  const url = `${PREFIX}hospitalManager/addDoctorSchedule/hospitalId/name/doctorId/scheduleDate/periodId/departmentId/available/price/expenseTypeId/tokensExpr/`
+  const hospitalId = targetObjectId
+  const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateDoctorSchedule = (targetObjectId, parameters) => {
+  const url = `${PREFIX}hospitalManager/updateDoctorScheduleProperties/hospitalId/id/name/scheduleDate/available/price/tokensExpr/`
+  const hospitalId = targetObjectId
+  const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeDoctorScheduleList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}hospitalManager/removeDoctorScheduleList/hospitalId/doctorScheduleIds/tokensExpr/`
+  const requestParameters = { ...parameters, hospitalId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const HospitalService = { view,
   load,
   addExpenseType,
+  addPeriod,
   addExpenseItem,
   addDoctor,
   addDepartment,
+  addDoctorSchedule,
   updateExpenseType,
+  updatePeriod,
   updateExpenseItem,
   updateDoctor,
   updateDepartment,
+  updateDoctorSchedule,
   removeExpenseTypeList,
+  removePeriodList,
   removeExpenseItemList,
   removeDoctorList,
-  removeDepartmentList }
+  removeDepartmentList,
+  removeDoctorScheduleList }
 export default HospitalService
 

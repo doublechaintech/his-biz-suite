@@ -59,6 +59,7 @@ class ExpenseItemUpdateForm extends Component {
     const convertiedValues = selectedRows.map((item) => {
       return {
         ...item,
+        updateTime: moment(item.updateTime),
 
       }
     })

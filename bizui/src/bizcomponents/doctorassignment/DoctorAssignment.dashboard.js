@@ -81,18 +81,19 @@ const internalSummaryOf = (doctorAssignment,targetComponent) =>{
 	<DescriptionList className={styles.headerList} size="small" col="4">
 <Description term="ID">{doctorAssignment.id}</Description> 
 <Description term="名称">{doctorAssignment.name}</Description> 
-<Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.doctor.displayName}
+<Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):`${doctorAssignment.doctor.displayName}(${doctorAssignment.doctor.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"医生","doctor",DoctorAssignmentService.requestCandidateDoctor,
 	      DoctorAssignmentService.transferToAnotherDoctor,"anotherDoctorId",doctorAssignment.doctor?doctorAssignment.doctor.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):doctorAssignment.department.displayName}
+<Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):`${doctorAssignment.department.displayName}(${doctorAssignment.department.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"部门","department",DoctorAssignmentService.requestCandidateDepartment,
 	      DoctorAssignmentService.transferToAnotherDepartment,"anotherDepartmentId",doctorAssignment.department?doctorAssignment.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
+<Description term="更新时间">{ moment(doctorAssignment.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(doctorAssignment,targetComponent)}
       </DescriptionList>

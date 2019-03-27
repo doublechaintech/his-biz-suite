@@ -1,7 +1,7 @@
 
 # 界面通过特别技术自动生成
 
-![ScreenShot](/doc/his-sys-interface.png | width=400)
+<img src='/doc/his-sys-interface.png'  width="400"/>
 
 * 自动生成表定义
 * 自动生成界面
@@ -104,4 +104,4 @@ https://demo.doublechaintech.com/admin/his/#/home
 
 # 开发工具近期将以SaaS服务方式公开服务，敬请期待
 下载手册 
-![ScreenShot](/doc/manual.png)
+<img src='/doc/his-sys-interface.png'  width="400"/>

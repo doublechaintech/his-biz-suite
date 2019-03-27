@@ -605,7 +605,7 @@ const defaultQuickFunctions = cardsData => {
         .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
         .filter(item => hasItemReadPermission(item))
         .map(item => (
-          <Col span={6}><Card span={6} style={{"font-size":"25px"}}>
+          <Col span={6}><Card span={6} style={{"font-size":"20px"}}>
            <Row gutter={16}>
            {hasItemCreatePermission(item) && (
           <Col span={3}>
@@ -616,7 +616,7 @@ const defaultQuickFunctions = cardsData => {
          
          <Col span={21}>
          <Link title={"查看"} to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-         {item.displayName} ({item.count})</Link></Col></Row>
+         {item.displayName} </Link><span style={{"font-size":"10px"}}> 共{item.count}条</span></Col></Row>
      
     </Card></Col>
          

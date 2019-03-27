@@ -18,11 +18,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '专家诊疗费',
-<<<<<<< HEAD
-  price: '81118429184.00',
-=======
-  price: '91517231104.00',
->>>>>>> e490699983a5aaf2d8418335d695796744df6780
+  price: '86842105856.00',
   expenseTypeId: 'ET000001',
   hospitalId: 'H000001',
 }
@@ -198,10 +194,10 @@ class ExpenseItemCreateForm extends Component {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
     }
-    return (
+	return (
       <PageHeaderLayout
-        title={appLocaleName(userContext,"CreateNew")}
-        content={appLocaleName(userContext,"CreateNew")}
+        title={`${appLocaleName(userContext,"CreateNew")}费用项目`}
+        content={`${appLocaleName(userContext,"CreateNew")}费用项目`}
         wrapperClassName={styles.advancedForm}
       >
         <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>

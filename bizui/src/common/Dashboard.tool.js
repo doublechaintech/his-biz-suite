@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/jsx-indent */
 import FontAwesome from 'react-fontawesome';
 import PermissionSettingService from '../permission/PermissionSetting.service';
@@ -18,7 +19,7 @@ import {
   Select,
   Form,
   AutoComplete,
-  Modal,
+  Modal
 } from 'antd';
 import styles from './Dashboard.tool.less';
 import ImagePreview from '../components/ImagePreview';
@@ -602,21 +603,32 @@ const defaultQuickFunctions = cardsData => {
     <Row gutter={16}>
       
       {cardsData.subItems
-        .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
+        
         .filter(item => hasItemReadPermission(item))
         .map(item => (
-          <Col span={6}><Card span={6} style={{"font-size":"20px"}}>
+          <Col key={item.displayName} span={6}><Card span={6} style={{fontSize:"20px"}}>
            <Row gutter={16}>
            {hasItemCreatePermission(item) && (
           <Col span={3}>
-           <Link title={"增加"} to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`} >
+          <Tooltip title={`增加一个${item.displayName}`} placement="bottom">  
+           <Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`} >
+           
          <Icon type="plus" />
-         </Link>
+         </Link></Tooltip>
          </Col>)}
          
          <Col span={21}>
-         <Link title={"查看"} to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-         {item.displayName} </Link><span style={{"font-size":"10px"}}> 共{item.count}条</span></Col></Row>
+
+         <Tooltip title={`进入${item.displayName}列表`} placement="bottom">  
+         <Link  to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
+         {item.displayName} </Link><span style={{fontSize:"10px"}}> 共{item.count}条</span>
+         </Tooltip>
+         
+         </Col>
+         
+         
+         
+         </Row>
      
     </Card></Col>
          

@@ -194,7 +194,7 @@ componentDidMount() {
        <Col md={8} sm={24}>
          <FormItem label="ID">
            {getFieldDecorator('id')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
@@ -202,7 +202,7 @@ componentDidMount() {
        <Col md={8} sm={24}>
          <FormItem label="名称">
            {getFieldDecorator('name')(
-             <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
@@ -249,7 +249,7 @@ componentDidMount() {
           <Col md={8} sm={24}>
             <FormItem label="ID">
               {getFieldDecorator('id')(
-                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
@@ -257,7 +257,7 @@ componentDidMount() {
           <Col md={8} sm={24}>
             <FormItem label="名称">
               {getFieldDecorator('name')(
-                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
@@ -265,7 +265,7 @@ componentDidMount() {
           <Col md={8} sm={24}>
             <FormItem label="辅助识字课">
               {getFieldDecorator('helperChars')(
-                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
@@ -273,7 +273,7 @@ componentDidMount() {
           <Col md={8} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('status')(
-                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
@@ -296,7 +296,7 @@ componentDidMount() {
           <Col md={8} sm={24}>
             <FormItem label="描述">
               {getFieldDecorator('description')(
-                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>

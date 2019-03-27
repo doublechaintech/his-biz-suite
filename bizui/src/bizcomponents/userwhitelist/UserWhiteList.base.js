@@ -1,104 +1,100 @@
-import ImagePreview from '../../components/ImagePreview';
-import { Link } from 'dva/router';
-import moment from 'moment';
-import appLocaleName from '../../common/Locale.tool';
 
-const menuData = {
-  menuName: '用户白名单',
-  menuFor: 'userWhiteList',
-  subItems: [],
-};
+import ImagePreview from '../../components/ImagePreview'
+import { Link } from 'dva/router'
+import moment from 'moment'
+import appLocaleName from '../../common/Locale.tool'
 
-const renderTextCell = (value, record) => {
-  const userContext = null;
-  if (!value) {
-    return '';
-  }
-  if (value == null) {
-    return '';
-  }
-  if (value.length > 15) {
-    return (
-      value.substring(0, 15) + '...(' + value.length + appLocaleName(userContext, 'Chars') + ')'
-    );
-  }
-  return value;
-};
 
-const renderIdentifier = (value, record, targtObjectType) => {
-  return <Link to={`/${targtObjectType}/${value}/dashboard`}>{value}</Link>;
-};
 
-const renderDateCell = (value, record) => {
-  return moment(value).format('YYYY-MM-DD');
-};
-const renderDateTimeCell = (value, record) => {
-  return moment(value).format('YYYY-MM-DD HH:mm');
-};
+const menuData = {menuName:"用户白名单", menuFor: "userWhiteList",
+  		subItems: [
+  
+  		],
+}
 
-const renderImageCell = (value, record, title) => {
-  return <ImagePreview imageTitle={title} imageLocation={value} />;
-};
+const renderTextCell=(value, record)=>{
+	const userContext = null
+	if(!value){
+		return '';
+	}
+	if(value==null){
+		return '';
+	}
+	if(value.length>15){
+		return value.substring(0,15)+"...("+value.length+appLocaleName(userContext,"Chars")+")"
+	}
+	return value
+	
+}
 
-const formatMoney = amount => {
-  const options = { style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2 };
-  const moneyFormat = new Intl.NumberFormat('en-US', options);
-  return moneyFormat.format(amount);
-};
+const renderIdentifier=(value, record, targtObjectType)=>{
 
-const renderMoneyCell = (value, record) => {
-  const userContext = null;
-  if (!value) {
-    return appLocaleName(userContext, 'Empty');
-  }
-  if (value == null) {
-    return appLocaleName(userContext, 'Empty');
-  }
-  return `${appLocaleName(userContext, 'Currency')}${formatMoney(value)}`;
-};
+	return (<Link to={`/${targtObjectType}/${value}/dashboard`}>{value}</Link>)
+	
+}
 
-const renderBooleanCell = (value, record) => {
-  const userContext = null;
+const renderDateCell=(value, record)=>{
+	return moment(value).format('YYYY-MM-DD');
+}
+const renderDateTimeCell=(value, record)=>{
+	return moment(value).format('YYYY-MM-DD HH:mm');	
+}
 
-  return value ? appLocaleName(userContext, 'Yes') : appLocaleName(userContext, 'No');
-};
+const renderImageCell=(value, record, title)=>{
+	return (<ImagePreview imageTitle={title} imageLocation={value} />)	
+}
 
-const renderReferenceCell = (value, record) => {
-  const userContext = null;
-  return value ? value.displayName : appLocaleName(userContext, 'NotAssigned');
-};
+
+const formatMoney=(amount)=>{
+	const options={style: 'decimal',minimumFractionDigits: 2,maximumFractionDigits:2}
+    const moneyFormat = new Intl.NumberFormat('en-US',options);
+	return moneyFormat.format(amount)
+	
+}
+
+const renderMoneyCell=(value, record)=>{
+	const userContext = null
+	if(!value){
+		return appLocaleName(userContext,"Empty")
+	}
+	if(value == null){
+		return appLocaleName(userContext,"Empty")
+	}
+	return (`${appLocaleName(userContext,"Currency")}${formatMoney(value)}`)
+}
+
+const renderBooleanCell=(value, record)=>{
+	const userContext = null
+
+	return  (value? appLocaleName(userContext,"Yes") : appLocaleName(userContext,"No"))
+
+}
+
+const renderReferenceCell=(value, record)=>{
+	const userContext = null
+	return (value ? value.displayName : appLocaleName(userContext,"NotAssigned")) 
+
+}
 
 const displayColumns = [
-  {
-    title: 'ID',
-    debugtype: 'string',
-    dataIndex: 'id',
-    width: '20',
-    render: (text, record) => renderTextCell(text, record),
-  },
-  {
-    title: '用户身份',
-    debugtype: 'string',
-    dataIndex: 'userIdentity',
-    width: '15',
-    render: (text, record) => renderTextCell(text, record),
-  },
-  {
-    title: '用户特殊功能',
-    debugtype: 'string',
-    dataIndex: 'userSpecialFunctions',
-    width: '27',
-    render: (text, record) => renderTextCell(text, record),
-  },
-  { title: '域', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record) },
-];
+  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: '用户身份', debugtype: 'string', dataIndex: 'userIdentity', width: '15',render: (text, record)=>renderTextCell(text,record) },
+  { title: '用户特殊功能', debugtype: 'string', dataIndex: 'userSpecialFunctions', width: '27',render: (text, record)=>renderTextCell(text,record) },
+  { title: '域', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record)},
+
+]
 
 const fieldLabels = {
   id: 'ID',
   userIdentity: '用户身份',
   userSpecialFunctions: '用户特殊功能',
   domain: '域',
-};
 
-const UserWhiteListBase = { menuData, displayColumns, fieldLabels };
-export default UserWhiteListBase;
+}
+
+
+const UserWhiteListBase={menuData,displayColumns,fieldLabels}
+export default UserWhiteListBase
+
+
+

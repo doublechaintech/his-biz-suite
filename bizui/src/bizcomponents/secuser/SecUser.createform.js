@@ -22,13 +22,8 @@ const testValues = {
   email: '',
   pwd: 'C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95',
   verificationCode: '0',
-<<<<<<< HEAD
-  verificationCodeExpire: '2019-03-06 20:55:17',
-  lastLoginTime: '2019-03-17 22:46:44',
-=======
-  verificationCodeExpire: '2019-03-20 15:19:03',
-  lastLoginTime: '2019-03-13 21:09:50',
->>>>>>> e490699983a5aaf2d8418335d695796744df6780
+  verificationCodeExpire: '2019-03-21 16:19:43',
+  lastLoginTime: '2019-03-15 18:48:16',
   domainId: 'UD000001',
 }
 */
@@ -203,10 +198,10 @@ class SecUserCreateForm extends Component {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
     }
-    return (
+	return (
       <PageHeaderLayout
-        title={appLocaleName(userContext,"CreateNew")}
-        content={appLocaleName(userContext,"CreateNew")}
+        title={`${appLocaleName(userContext,"CreateNew")}安全用户`}
+        content={`${appLocaleName(userContext,"CreateNew")}安全用户`}
         wrapperClassName={styles.advancedForm}
       >
         <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>

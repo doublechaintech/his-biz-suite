@@ -1,4 +1,14 @@
 
+# 界面通过特别技术自动生成
+
+![ScreenShot](/doc/his-sys-interface.png)
+
+* 自动生成表定义
+* 自动生成界面
+* 自动生成后台代码
+* 自动翻译
+
+
 # 演示地址 
 
 https://demo.doublechaintech.com/admin/his/#/home

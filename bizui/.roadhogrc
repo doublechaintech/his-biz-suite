@@ -12,6 +12,7 @@
         "dva-hmr"
       ]
     }
+    
   },
   "externals": {
     "g2": "G2",

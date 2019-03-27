@@ -100,7 +100,7 @@ const determinLocale = userContext => {
     }
     return defaultLocale
   }
-  
+
   const userLocale = userContext.userLocale;
   if (isLegalLocale(userLocale)) {
     return userLocale;

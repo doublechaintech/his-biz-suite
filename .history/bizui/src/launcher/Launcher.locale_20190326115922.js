@@ -91,16 +91,15 @@ const isLegalLocale = value => {
 };
 
 const determinLocale = userContext => {
-  const defaultLocale = 'zhCN';
+  const defaultLocale = 'enUS';
   if (userContext == null) {
     const userLang = navigator.language || navigator.userLanguage;
     const trimedLocale = userLang.replace('-', '');
     if (isLegalLocale(trimedLocale)) {
       return trimedLocale;
     }
-    return defaultLocale
   }
-  
+
   const userLocale = userContext.userLocale;
   if (isLegalLocale(userLocale)) {
     return userLocale;

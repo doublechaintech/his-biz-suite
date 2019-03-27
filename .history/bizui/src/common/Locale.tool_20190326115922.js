@@ -153,7 +153,6 @@ const determinLocale = userContext => {
     if (isLegalLocale(trimedLocale)) {
       return trimedLocale;
     }
-    return defaultLocale;
   }
 
   const userLocale = userContext.userLocale;

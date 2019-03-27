@@ -104,4 +104,5 @@ https://demo.doublechaintech.com/admin/his/#/home
 
 # 开发工具近期将以SaaS服务方式公开服务，敬请期待
 下载手册 
+<br/>
 <img src='/doc/manual.jpg'  width="400"/>

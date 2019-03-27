@@ -18,15 +18,9 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-<<<<<<< HEAD
-  scheduleDate: '2018-11-20',
-  available: '15',
-  price: '94.33',
-=======
-  scheduleDate: '2017-06-25',
-  available: '15',
-  price: '89.73',
->>>>>>> e490699983a5aaf2d8418335d695796744df6780
+  scheduleDate: '2017-06-04',
+  available: '20',
+  price: '105.57',
   doctorId: 'D000001',
   periodId: 'P000001',
   departmentId: 'D000001',
@@ -205,10 +199,10 @@ class DoctorScheduleCreateForm extends Component {
       labelCol: { span: 14 },
       wrapperCol: { span: 4 },
     }
-    return (
+	return (
       <PageHeaderLayout
-        title={appLocaleName(userContext,"CreateNew")}
-        content={appLocaleName(userContext,"CreateNew")}
+        title={`${appLocaleName(userContext,"CreateNew")}医生安排`}
+        content={`${appLocaleName(userContext,"CreateNew")}医生安排`}
         wrapperClassName={styles.advancedForm}
       >
         <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>

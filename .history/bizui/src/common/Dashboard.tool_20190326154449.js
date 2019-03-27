@@ -603,16 +603,15 @@ const defaultQuickFunctions = cardsData => {
       
       {cardsData.subItems
         .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
-        .filter(item => hasItemReadPermission(item))
+       
         .map(item => (
           <Col span={6}><Card span={6} style={{"font-size":"25px"}}>
            <Row gutter={16}>
-           {hasItemCreatePermission(item) && (
           <Col span={3}>
            <Link title={"增加"} to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`} >
          <Icon type="plus" />
          </Link>
-         </Col>)}
+         </Col>
          
          <Col span={21}>
          <Link title={"查看"} to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>

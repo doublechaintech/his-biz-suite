@@ -262,7 +262,7 @@ class LoginHistoryUpdateForm extends Component {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入ID" disabled/>
+                    <Input size="large" placeholder="请输入ID" disabled/>
                     
                   )}
                 </Form.Item>
@@ -274,7 +274,7 @@ class LoginHistoryUpdateForm extends Component {
                     initialValue: selectedRow.fromIp,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入来自IP" />
+                    <Input size="large" placeholder="请输入来自IP" />
                     
                   )}
                 </Form.Item>
@@ -286,7 +286,7 @@ class LoginHistoryUpdateForm extends Component {
                     initialValue: selectedRow.description,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入描述" />
+                    <Input size="large" placeholder="请输入描述" />
                     
                   )}
                 </Form.Item>

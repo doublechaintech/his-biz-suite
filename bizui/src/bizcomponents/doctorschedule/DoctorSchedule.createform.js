@@ -18,9 +18,9 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-  scheduleDate: '2017-06-04',
-  available: '20',
-  price: '105.57',
+  scheduleDate: '2018-05-28',
+  available: '15',
+  price: '107.26',
   doctorId: 'D000001',
   periodId: 'P000001',
   departmentId: 'D000001',
@@ -214,7 +214,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入名称" />
+                    <Input size="large" placeholder="请输入名称" />
                   )}
                 </Form.Item>
               </Col>
@@ -224,7 +224,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('scheduleDate', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker format="YYYY-MM-DD" placeholder="请输入安排日期" />
+                    <DatePicker size="large" format="YYYY-MM-DD" placeholder="请输入安排日期" />
                   )}
                 </Form.Item>
               </Col>
@@ -234,7 +234,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('available', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入可用" />
+                    <Input size="large" placeholder="请输入可用" />
                   )}
                 </Form.Item>
               </Col>
@@ -244,7 +244,7 @@ class DoctorScheduleCreateForm extends Component {
                   {getFieldDecorator('price', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入价格" />
+                    <Input size="large" placeholder="请输入价格" />
                   )}
                 </Form.Item>
               </Col>

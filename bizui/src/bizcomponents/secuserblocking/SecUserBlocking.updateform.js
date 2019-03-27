@@ -262,7 +262,7 @@ class SecUserBlockingUpdateForm extends Component {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入ID" disabled/>
+                    <Input size="large" placeholder="请输入ID" disabled/>
                     
                   )}
                 </Form.Item>
@@ -274,7 +274,7 @@ class SecUserBlockingUpdateForm extends Component {
                     initialValue: selectedRow.who,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入谁" />
+                    <Input size="large" placeholder="请输入谁" />
                     
                   )}
                 </Form.Item>
@@ -286,7 +286,7 @@ class SecUserBlockingUpdateForm extends Component {
                     initialValue: selectedRow.comments,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input placeholder="请输入评论" />
+                    <Input size="large" placeholder="请输入评论" />
                     
                   )}
                 </Form.Item>

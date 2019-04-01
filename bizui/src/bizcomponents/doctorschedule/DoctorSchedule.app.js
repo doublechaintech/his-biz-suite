@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class DoctorScheduleBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/doctorSchedule/${this.props.doctorSchedule.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/doctorSchedule/${this.props.doctorSchedule.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/doctorSchedule/${this.props.doctorSchedule.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -157,12 +162,14 @@ class DoctorScheduleBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {DoctorScheduleDashboard} = GlobalComponents
-  	const {DoctorSchedulePreference} = GlobalComponents
+  	const {DoctorSchedulePermission} = GlobalComponents
+  	const {DoctorScheduleProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/doctorSchedule/:id/dashboard", component: DoctorScheduleDashboard},
-  	{path:"/doctorSchedule/:id/preference", component: DoctorSchedulePreference},
+  	{path:"/doctorSchedule/:id/profile", component: DoctorScheduleProfile},
+  	{path:"/doctorSchedule/:id/permission", component: DoctorSchedulePermission},
   	
   	
     	

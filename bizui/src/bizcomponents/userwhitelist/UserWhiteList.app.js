@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class UserWhiteListBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/userWhiteList/${this.props.userWhiteList.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/userWhiteList/${this.props.userWhiteList.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/userWhiteList/${this.props.userWhiteList.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -157,12 +162,14 @@ class UserWhiteListBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {UserWhiteListDashboard} = GlobalComponents
-  	const {UserWhiteListPreference} = GlobalComponents
+  	const {UserWhiteListPermission} = GlobalComponents
+  	const {UserWhiteListProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/userWhiteList/:id/dashboard", component: UserWhiteListDashboard},
-  	{path:"/userWhiteList/:id/preference", component: UserWhiteListPreference},
+  	{path:"/userWhiteList/:id/profile", component: UserWhiteListProfile},
+  	{path:"/userWhiteList/:id/permission", component: UserWhiteListPermission},
   	
   	
     	

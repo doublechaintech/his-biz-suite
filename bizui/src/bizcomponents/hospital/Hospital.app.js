@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,18 @@ class HospitalBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/hospital/${this.props.hospital.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
+        <SubMenu key="sub4" title={<span><Icon type="setting" /><span>设置</span></span>}>
+        <Menu.Item key="preference">
+               <Link to={`/hospital/${this.props.hospital.id}/preference`}><Icon type="safety" /><span>权限{appLocaleName(userContext,"Preference")}</span></Link>
              </Menu.Item>
-      
+             <Menu.Item key="preference2">
+               <Link to={`/hospital/${this.props.hospital.id}/preference`}><Icon type="profile" /><span>系统配置</span></Link>
+             </Menu.Item>
+
+
+             </SubMenu>
+
+
            </Menu>
     )
   }

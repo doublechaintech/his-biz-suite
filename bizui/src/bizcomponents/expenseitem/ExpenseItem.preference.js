@@ -307,8 +307,12 @@ class ExpenseItemPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName,  } = this.props.expenseItem
-    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",cardsSource: this.props.expenseItem,
+    const  expenseItem = this.props.expenseItem;
+    const { id,displayName,  } = expenseItem
+    
+    
+    
+    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",cardsSource: expenseItem,
   		subItems: [
     
       	],

@@ -328,8 +328,12 @@ class DoctorSchedulePreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName,  } = this.props.doctorSchedule
-    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",cardsSource: this.props.doctorSchedule,
+    const  doctorSchedule = this.props.doctorSchedule;
+    const { id,displayName,  } = doctorSchedule
+    
+    
+    
+    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",cardsSource: doctorSchedule,
   		subItems: [
     
       	],

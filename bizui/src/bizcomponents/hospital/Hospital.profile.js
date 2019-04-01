@@ -34,7 +34,14 @@ const topColResponsiveProps = {
   xl: 4,
   style: { marginBottom: 24 },
 }
-
+const preferenceItemColResponsiveProps = {
+  xs: 24,
+  sm: 24,
+  md: 24,
+  lg: 24,
+  xl: 24,
+  style: { marginBottom: 24 },
+}
 
 const internalImageListOf = (hospital) =>{
   const userContext = null
@@ -280,7 +287,45 @@ const renderPermissionSetting = hospital => {
 }
 
 
-class HospitalProfile extends Component {
+const defaultSubListsOf = cardsData => {
+  const userContext = null;
+  const { id } = cardsData.cardsSource;
+  return (
+    <Row gutter={24}>
+    <Col {...preferenceItemColResponsiveProps}>
+<Card >
+  <Tabs
+          defaultActiveKey="1"
+        
+          
+        >
+        {cardsData.subItems
+          .sort((x, y) => x.displayName.localeCompare(y.displayName, 'zh-CN'))
+          //.filter(item => hasItemReadPermission(item))
+          .map(item => {
+            const TableComponent = item.tableComponent
+            return (
+            <TabPane tab={`${item.displayName}(${numeral(item.count).format('0,0')})`}  key={item.displayName}>
+            
+            <TableComponent 
+              data={item.data} 
+              count={item.count}
+              owner={{referenceName:"ok"}}
+              selectedRows={[]}
+              />
+            
+            </TabPane>)}
+          )}
+          
+          
+        </Tabs>
+        </Card>
+        </Col>
+    </Row>
+  );
+};
+
+class HospitalPreference extends Component {
 
   state = {
     transferModalVisiable: false,
@@ -308,21 +353,28 @@ class HospitalProfile extends Component {
     
     const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,
   		subItems: [
-{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', data: hospital.expenseTypeList},
-{name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period', data: hospital.periodList},
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: hospital.expenseItemList},
-{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', data: hospital.departmentList},
+{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', data: hospital.expenseTypeList,tableComponent: GlobalComponents.ExpenseTypeModalTable},
+{name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period', data: hospital.periodList,tableComponent: GlobalComponents.PeriodModalTable},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: hospital.expenseItemList,tableComponent: GlobalComponents.ExpenseItemModalTable},
+{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', data: hospital.departmentList,tableComponent: GlobalComponents.DepartmentModalTable},
     
       	],
   	};
     //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
     
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const subListsOf = this.props.subListsOf || internalSubListsOf
+    const settingListOf = this.props.settingListOf || internalSettingListOf
+    const imageListOf = this.props.imageListOf || internalImageListOf
+    const subListsOf = this.props.subListsOf || defaultSubListsOf
     const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
     const summaryOf = this.props.summaryOf || internalSummaryOf
-    // const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
-
+    const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
+    /*
+    {settingListOf(cardsData.cardsSource)}
+        {imageListOf(cardsData.cardsSource)}
+        {subListsOf(cardsData)} 
+        {largeTextOf(cardsData.cardsSource)}
+    */
     return (
 
       <PageHeaderLayout
@@ -330,8 +382,12 @@ class HospitalProfile extends Component {
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >
-      {renderExtraHeader(cardsData.cardsSource)}
-       {subListsOf(cardsData)} 
+      
+       
+       
+        {subListsOf(cardsData)} 
+          
+       
       </PageHeaderLayout>
     )
   }
@@ -339,5 +395,5 @@ class HospitalProfile extends Component {
 
 export default connect(state => ({
   hospital: state._hospital,
-}))(Form.create()(HospitalProfile))
+}))(Form.create()(HospitalPreference))
 

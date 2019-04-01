@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class UserAppBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/userApp/${this.props.userApp.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/userApp/${this.props.userApp.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/userApp/${this.props.userApp.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -255,12 +260,14 @@ class UserAppBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {UserAppDashboard} = GlobalComponents
-  	const {UserAppPreference} = GlobalComponents
+  	const {UserAppPermission} = GlobalComponents
+  	const {UserAppProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/userApp/:id/dashboard", component: UserAppDashboard},
-  	{path:"/userApp/:id/preference", component: UserAppPreference},
+  	{path:"/userApp/:id/profile", component: UserAppProfile},
+  	{path:"/userApp/:id/permission", component: UserAppPermission},
   	
   	
   	

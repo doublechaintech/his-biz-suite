@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class ExpenseTypeBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/expenseType/${this.props.expenseType.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/expenseType/${this.props.expenseType.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/expenseType/${this.props.expenseType.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -255,12 +260,14 @@ class ExpenseTypeBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {ExpenseTypeDashboard} = GlobalComponents
-  	const {ExpenseTypePreference} = GlobalComponents
+  	const {ExpenseTypePermission} = GlobalComponents
+  	const {ExpenseTypeProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/expenseType/:id/dashboard", component: ExpenseTypeDashboard},
-  	{path:"/expenseType/:id/preference", component: ExpenseTypePreference},
+  	{path:"/expenseType/:id/profile", component: ExpenseTypeProfile},
+  	{path:"/expenseType/:id/permission", component: ExpenseTypePermission},
   	
   	
   	

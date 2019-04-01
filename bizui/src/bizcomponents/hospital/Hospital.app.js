@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import React from 'react'
 import PropTypes from 'prop-types'
 import {
@@ -141,18 +142,16 @@ class HospitalBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-        <SubMenu key="sub4" title={<span><Icon type="setting" /><span>设置</span></span>}>
-        <Menu.Item key="preference">
-               <Link to={`/hospital/${this.props.hospital.id}/preference`}><Icon type="safety" /><span>权限{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
-             <Menu.Item key="preference2">
-               <Link to={`/hospital/${this.props.hospital.id}/preference`}><Icon type="profile" /><span>系统配置</span></Link>
-             </Menu.Item>
-
-
-             </SubMenu>
-
-
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/hospital/${this.props.hospital.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/hospital/${this.props.hospital.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
+      
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -458,12 +457,14 @@ class HospitalBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {HospitalDashboard} = GlobalComponents
-  	const {HospitalPreference} = GlobalComponents
+  	const {HospitalPermission} = GlobalComponents
+  	const {HospitalProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/hospital/:id/dashboard", component: HospitalDashboard},
-  	{path:"/hospital/:id/preference", component: HospitalPreference},
+  	{path:"/hospital/:id/profile", component: HospitalProfile},
+  	{path:"/hospital/:id/permission", component: HospitalPermission},
   	
   	
   	

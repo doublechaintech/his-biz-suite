@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class LoginHistoryBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/loginHistory/${this.props.loginHistory.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/loginHistory/${this.props.loginHistory.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/loginHistory/${this.props.loginHistory.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -157,12 +162,14 @@ class LoginHistoryBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {LoginHistoryDashboard} = GlobalComponents
-  	const {LoginHistoryPreference} = GlobalComponents
+  	const {LoginHistoryPermission} = GlobalComponents
+  	const {LoginHistoryProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/loginHistory/:id/dashboard", component: LoginHistoryDashboard},
-  	{path:"/loginHistory/:id/preference", component: LoginHistoryPreference},
+  	{path:"/loginHistory/:id/profile", component: LoginHistoryProfile},
+  	{path:"/loginHistory/:id/permission", component: LoginHistoryPermission},
   	
   	
     	

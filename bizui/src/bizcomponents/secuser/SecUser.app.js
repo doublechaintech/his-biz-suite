@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class SecUserBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/secUser/${this.props.secUser.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/secUser/${this.props.secUser.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/secUser/${this.props.secUser.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -255,12 +260,14 @@ class SecUserBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {SecUserDashboard} = GlobalComponents
-  	const {SecUserPreference} = GlobalComponents
+  	const {SecUserPermission} = GlobalComponents
+  	const {SecUserProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/secUser/:id/dashboard", component: SecUserDashboard},
-  	{path:"/secUser/:id/preference", component: SecUserPreference},
+  	{path:"/secUser/:id/profile", component: SecUserProfile},
+  	{path:"/secUser/:id/permission", component: SecUserPermission},
   	
   	
   	

@@ -13,6 +13,8 @@ import HospitalSearchForm from './hospital/Hospital.searchform';
 import HospitalCreateForm from './hospital/Hospital.createform';
 import HospitalAssociateForm from './hospital/Hospital.associateform';
 import HospitalTable from './hospital/Hospital.table';
+import HospitalPermission from './hospital/Hospital.permission';
+import HospitalProfile from './hospital/Hospital.profile';
 import HospitalService from './hospital/Hospital.service';
 import HospitalUpdateForm from './hospital/Hospital.updateform';
 import ExpenseTypeBase from './expensetype/ExpenseType.base';
@@ -26,6 +28,8 @@ import ExpenseTypeSearchForm from './expensetype/ExpenseType.searchform';
 import ExpenseTypeCreateForm from './expensetype/ExpenseType.createform';
 import ExpenseTypeAssociateForm from './expensetype/ExpenseType.associateform';
 import ExpenseTypeTable from './expensetype/ExpenseType.table';
+import ExpenseTypePermission from './expensetype/ExpenseType.permission';
+import ExpenseTypeProfile from './expensetype/ExpenseType.profile';
 import ExpenseTypeService from './expensetype/ExpenseType.service';
 import ExpenseTypeUpdateForm from './expensetype/ExpenseType.updateform';
 import PeriodBase from './period/Period.base';
@@ -39,6 +43,8 @@ import PeriodSearchForm from './period/Period.searchform';
 import PeriodCreateForm from './period/Period.createform';
 import PeriodAssociateForm from './period/Period.associateform';
 import PeriodTable from './period/Period.table';
+import PeriodPermission from './period/Period.permission';
+import PeriodProfile from './period/Period.profile';
 import PeriodService from './period/Period.service';
 import PeriodUpdateForm from './period/Period.updateform';
 import ExpenseItemBase from './expenseitem/ExpenseItem.base';
@@ -52,6 +58,8 @@ import ExpenseItemSearchForm from './expenseitem/ExpenseItem.searchform';
 import ExpenseItemCreateForm from './expenseitem/ExpenseItem.createform';
 import ExpenseItemAssociateForm from './expenseitem/ExpenseItem.associateform';
 import ExpenseItemTable from './expenseitem/ExpenseItem.table';
+import ExpenseItemPermission from './expenseitem/ExpenseItem.permission';
+import ExpenseItemProfile from './expenseitem/ExpenseItem.profile';
 import ExpenseItemService from './expenseitem/ExpenseItem.service';
 import ExpenseItemUpdateForm from './expenseitem/ExpenseItem.updateform';
 import DoctorBase from './doctor/Doctor.base';
@@ -65,6 +73,8 @@ import DoctorSearchForm from './doctor/Doctor.searchform';
 import DoctorCreateForm from './doctor/Doctor.createform';
 import DoctorAssociateForm from './doctor/Doctor.associateform';
 import DoctorTable from './doctor/Doctor.table';
+import DoctorPermission from './doctor/Doctor.permission';
+import DoctorProfile from './doctor/Doctor.profile';
 import DoctorService from './doctor/Doctor.service';
 import DoctorUpdateForm from './doctor/Doctor.updateform';
 import DepartmentBase from './department/Department.base';
@@ -78,6 +88,8 @@ import DepartmentSearchForm from './department/Department.searchform';
 import DepartmentCreateForm from './department/Department.createform';
 import DepartmentAssociateForm from './department/Department.associateform';
 import DepartmentTable from './department/Department.table';
+import DepartmentPermission from './department/Department.permission';
+import DepartmentProfile from './department/Department.profile';
 import DepartmentService from './department/Department.service';
 import DepartmentUpdateForm from './department/Department.updateform';
 import DoctorAssignmentBase from './doctorassignment/DoctorAssignment.base';
@@ -91,6 +103,8 @@ import DoctorAssignmentSearchForm from './doctorassignment/DoctorAssignment.sear
 import DoctorAssignmentCreateForm from './doctorassignment/DoctorAssignment.createform';
 import DoctorAssignmentAssociateForm from './doctorassignment/DoctorAssignment.associateform';
 import DoctorAssignmentTable from './doctorassignment/DoctorAssignment.table';
+import DoctorAssignmentPermission from './doctorassignment/DoctorAssignment.permission';
+import DoctorAssignmentProfile from './doctorassignment/DoctorAssignment.profile';
 import DoctorAssignmentService from './doctorassignment/DoctorAssignment.service';
 import DoctorAssignmentUpdateForm from './doctorassignment/DoctorAssignment.updateform';
 import DoctorScheduleBase from './doctorschedule/DoctorSchedule.base';
@@ -104,6 +118,8 @@ import DoctorScheduleSearchForm from './doctorschedule/DoctorSchedule.searchform
 import DoctorScheduleCreateForm from './doctorschedule/DoctorSchedule.createform';
 import DoctorScheduleAssociateForm from './doctorschedule/DoctorSchedule.associateform';
 import DoctorScheduleTable from './doctorschedule/DoctorSchedule.table';
+import DoctorSchedulePermission from './doctorschedule/DoctorSchedule.permission';
+import DoctorScheduleProfile from './doctorschedule/DoctorSchedule.profile';
 import DoctorScheduleService from './doctorschedule/DoctorSchedule.service';
 import DoctorScheduleUpdateForm from './doctorschedule/DoctorSchedule.updateform';
 import UserDomainBase from './userdomain/UserDomain.base';
@@ -117,6 +133,8 @@ import UserDomainSearchForm from './userdomain/UserDomain.searchform';
 import UserDomainCreateForm from './userdomain/UserDomain.createform';
 import UserDomainAssociateForm from './userdomain/UserDomain.associateform';
 import UserDomainTable from './userdomain/UserDomain.table';
+import UserDomainPermission from './userdomain/UserDomain.permission';
+import UserDomainProfile from './userdomain/UserDomain.profile';
 import UserDomainService from './userdomain/UserDomain.service';
 import UserDomainUpdateForm from './userdomain/UserDomain.updateform';
 import UserWhiteListBase from './userwhitelist/UserWhiteList.base';
@@ -130,6 +148,8 @@ import UserWhiteListSearchForm from './userwhitelist/UserWhiteList.searchform';
 import UserWhiteListCreateForm from './userwhitelist/UserWhiteList.createform';
 import UserWhiteListAssociateForm from './userwhitelist/UserWhiteList.associateform';
 import UserWhiteListTable from './userwhitelist/UserWhiteList.table';
+import UserWhiteListPermission from './userwhitelist/UserWhiteList.permission';
+import UserWhiteListProfile from './userwhitelist/UserWhiteList.profile';
 import UserWhiteListService from './userwhitelist/UserWhiteList.service';
 import UserWhiteListUpdateForm from './userwhitelist/UserWhiteList.updateform';
 import SecUserBase from './secuser/SecUser.base';
@@ -143,6 +163,8 @@ import SecUserSearchForm from './secuser/SecUser.searchform';
 import SecUserCreateForm from './secuser/SecUser.createform';
 import SecUserAssociateForm from './secuser/SecUser.associateform';
 import SecUserTable from './secuser/SecUser.table';
+import SecUserPermission from './secuser/SecUser.permission';
+import SecUserProfile from './secuser/SecUser.profile';
 import SecUserService from './secuser/SecUser.service';
 import SecUserUpdateForm from './secuser/SecUser.updateform';
 import SecUserBlockingBase from './secuserblocking/SecUserBlocking.base';
@@ -156,6 +178,8 @@ import SecUserBlockingSearchForm from './secuserblocking/SecUserBlocking.searchf
 import SecUserBlockingCreateForm from './secuserblocking/SecUserBlocking.createform';
 import SecUserBlockingAssociateForm from './secuserblocking/SecUserBlocking.associateform';
 import SecUserBlockingTable from './secuserblocking/SecUserBlocking.table';
+import SecUserBlockingPermission from './secuserblocking/SecUserBlocking.permission';
+import SecUserBlockingProfile from './secuserblocking/SecUserBlocking.profile';
 import SecUserBlockingService from './secuserblocking/SecUserBlocking.service';
 import SecUserBlockingUpdateForm from './secuserblocking/SecUserBlocking.updateform';
 import UserAppBase from './userapp/UserApp.base';
@@ -169,6 +193,8 @@ import UserAppSearchForm from './userapp/UserApp.searchform';
 import UserAppCreateForm from './userapp/UserApp.createform';
 import UserAppAssociateForm from './userapp/UserApp.associateform';
 import UserAppTable from './userapp/UserApp.table';
+import UserAppPermission from './userapp/UserApp.permission';
+import UserAppProfile from './userapp/UserApp.profile';
 import UserAppService from './userapp/UserApp.service';
 import UserAppUpdateForm from './userapp/UserApp.updateform';
 import ListAccessBase from './listaccess/ListAccess.base';
@@ -182,6 +208,8 @@ import ListAccessSearchForm from './listaccess/ListAccess.searchform';
 import ListAccessCreateForm from './listaccess/ListAccess.createform';
 import ListAccessAssociateForm from './listaccess/ListAccess.associateform';
 import ListAccessTable from './listaccess/ListAccess.table';
+import ListAccessPermission from './listaccess/ListAccess.permission';
+import ListAccessProfile from './listaccess/ListAccess.profile';
 import ListAccessService from './listaccess/ListAccess.service';
 import ListAccessUpdateForm from './listaccess/ListAccess.updateform';
 import ObjectAccessBase from './objectaccess/ObjectAccess.base';
@@ -195,6 +223,8 @@ import ObjectAccessSearchForm from './objectaccess/ObjectAccess.searchform';
 import ObjectAccessCreateForm from './objectaccess/ObjectAccess.createform';
 import ObjectAccessAssociateForm from './objectaccess/ObjectAccess.associateform';
 import ObjectAccessTable from './objectaccess/ObjectAccess.table';
+import ObjectAccessPermission from './objectaccess/ObjectAccess.permission';
+import ObjectAccessProfile from './objectaccess/ObjectAccess.profile';
 import ObjectAccessService from './objectaccess/ObjectAccess.service';
 import ObjectAccessUpdateForm from './objectaccess/ObjectAccess.updateform';
 import LoginHistoryBase from './loginhistory/LoginHistory.base';
@@ -208,6 +238,8 @@ import LoginHistorySearchForm from './loginhistory/LoginHistory.searchform';
 import LoginHistoryCreateForm from './loginhistory/LoginHistory.createform';
 import LoginHistoryAssociateForm from './loginhistory/LoginHistory.associateform';
 import LoginHistoryTable from './loginhistory/LoginHistory.table';
+import LoginHistoryPermission from './loginhistory/LoginHistory.permission';
+import LoginHistoryProfile from './loginhistory/LoginHistory.profile';
 import LoginHistoryService from './loginhistory/LoginHistory.service';
 import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
 
@@ -354,6 +386,8 @@ const OOTBComponents={
     HospitalCreateForm,
     HospitalAssociateForm,
     HospitalTable,
+    HospitalPermission,
+    HospitalProfile,
     HospitalService,
     HospitalUpdateForm,
     ExpenseTypeBase,
@@ -367,6 +401,8 @@ const OOTBComponents={
     ExpenseTypeCreateForm,
     ExpenseTypeAssociateForm,
     ExpenseTypeTable,
+    ExpenseTypePermission,
+    ExpenseTypeProfile,
     ExpenseTypeService,
     ExpenseTypeUpdateForm,
     PeriodBase,
@@ -380,6 +416,8 @@ const OOTBComponents={
     PeriodCreateForm,
     PeriodAssociateForm,
     PeriodTable,
+    PeriodPermission,
+    PeriodProfile,
     PeriodService,
     PeriodUpdateForm,
     ExpenseItemBase,
@@ -393,6 +431,8 @@ const OOTBComponents={
     ExpenseItemCreateForm,
     ExpenseItemAssociateForm,
     ExpenseItemTable,
+    ExpenseItemPermission,
+    ExpenseItemProfile,
     ExpenseItemService,
     ExpenseItemUpdateForm,
     DoctorBase,
@@ -406,6 +446,8 @@ const OOTBComponents={
     DoctorCreateForm,
     DoctorAssociateForm,
     DoctorTable,
+    DoctorPermission,
+    DoctorProfile,
     DoctorService,
     DoctorUpdateForm,
     DepartmentBase,
@@ -419,6 +461,8 @@ const OOTBComponents={
     DepartmentCreateForm,
     DepartmentAssociateForm,
     DepartmentTable,
+    DepartmentPermission,
+    DepartmentProfile,
     DepartmentService,
     DepartmentUpdateForm,
     DoctorAssignmentBase,
@@ -432,6 +476,8 @@ const OOTBComponents={
     DoctorAssignmentCreateForm,
     DoctorAssignmentAssociateForm,
     DoctorAssignmentTable,
+    DoctorAssignmentPermission,
+    DoctorAssignmentProfile,
     DoctorAssignmentService,
     DoctorAssignmentUpdateForm,
     DoctorScheduleBase,
@@ -445,6 +491,8 @@ const OOTBComponents={
     DoctorScheduleCreateForm,
     DoctorScheduleAssociateForm,
     DoctorScheduleTable,
+    DoctorSchedulePermission,
+    DoctorScheduleProfile,
     DoctorScheduleService,
     DoctorScheduleUpdateForm,
     UserDomainBase,
@@ -458,6 +506,8 @@ const OOTBComponents={
     UserDomainCreateForm,
     UserDomainAssociateForm,
     UserDomainTable,
+    UserDomainPermission,
+    UserDomainProfile,
     UserDomainService,
     UserDomainUpdateForm,
     UserWhiteListBase,
@@ -471,6 +521,8 @@ const OOTBComponents={
     UserWhiteListCreateForm,
     UserWhiteListAssociateForm,
     UserWhiteListTable,
+    UserWhiteListPermission,
+    UserWhiteListProfile,
     UserWhiteListService,
     UserWhiteListUpdateForm,
     SecUserBase,
@@ -484,6 +536,8 @@ const OOTBComponents={
     SecUserCreateForm,
     SecUserAssociateForm,
     SecUserTable,
+    SecUserPermission,
+    SecUserProfile,
     SecUserService,
     SecUserUpdateForm,
     SecUserBlockingBase,
@@ -497,6 +551,8 @@ const OOTBComponents={
     SecUserBlockingCreateForm,
     SecUserBlockingAssociateForm,
     SecUserBlockingTable,
+    SecUserBlockingPermission,
+    SecUserBlockingProfile,
     SecUserBlockingService,
     SecUserBlockingUpdateForm,
     UserAppBase,
@@ -510,6 +566,8 @@ const OOTBComponents={
     UserAppCreateForm,
     UserAppAssociateForm,
     UserAppTable,
+    UserAppPermission,
+    UserAppProfile,
     UserAppService,
     UserAppUpdateForm,
     ListAccessBase,
@@ -523,6 +581,8 @@ const OOTBComponents={
     ListAccessCreateForm,
     ListAccessAssociateForm,
     ListAccessTable,
+    ListAccessPermission,
+    ListAccessProfile,
     ListAccessService,
     ListAccessUpdateForm,
     ObjectAccessBase,
@@ -536,6 +596,8 @@ const OOTBComponents={
     ObjectAccessCreateForm,
     ObjectAccessAssociateForm,
     ObjectAccessTable,
+    ObjectAccessPermission,
+    ObjectAccessProfile,
     ObjectAccessService,
     ObjectAccessUpdateForm,
     LoginHistoryBase,
@@ -549,6 +611,8 @@ const OOTBComponents={
     LoginHistoryCreateForm,
     LoginHistoryAssociateForm,
     LoginHistoryTable,
+    LoginHistoryPermission,
+    LoginHistoryProfile,
     LoginHistoryService,
     LoginHistoryUpdateForm,
     menuDataOf,bindBizModels,unbindBizModels,calcLocationPath,calcMenuData

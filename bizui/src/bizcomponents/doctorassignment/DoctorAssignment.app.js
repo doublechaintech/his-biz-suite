@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class DoctorAssignmentBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -157,12 +162,14 @@ class DoctorAssignmentBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {DoctorAssignmentDashboard} = GlobalComponents
-  	const {DoctorAssignmentPreference} = GlobalComponents
+  	const {DoctorAssignmentPermission} = GlobalComponents
+  	const {DoctorAssignmentProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/doctorAssignment/:id/dashboard", component: DoctorAssignmentDashboard},
-  	{path:"/doctorAssignment/:id/preference", component: DoctorAssignmentPreference},
+  	{path:"/doctorAssignment/:id/profile", component: DoctorAssignmentProfile},
+  	{path:"/doctorAssignment/:id/permission", component: DoctorAssignmentPermission},
   	
   	
     	

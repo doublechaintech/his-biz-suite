@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class ObjectAccessBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/objectAccess/${this.props.objectAccess.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/objectAccess/${this.props.objectAccess.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/objectAccess/${this.props.objectAccess.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -157,12 +162,14 @@ class ObjectAccessBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {ObjectAccessDashboard} = GlobalComponents
-  	const {ObjectAccessPreference} = GlobalComponents
+  	const {ObjectAccessPermission} = GlobalComponents
+  	const {ObjectAccessProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/objectAccess/:id/dashboard", component: ObjectAccessDashboard},
-  	{path:"/objectAccess/:id/preference", component: ObjectAccessPreference},
+  	{path:"/objectAccess/:id/profile", component: ObjectAccessProfile},
+  	{path:"/objectAccess/:id/permission", component: ObjectAccessPermission},
   	
   	
     	

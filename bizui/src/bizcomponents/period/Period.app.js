@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class PeriodBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/period/${this.props.period.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/period/${this.props.period.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/period/${this.props.period.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -206,12 +211,14 @@ class PeriodBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {PeriodDashboard} = GlobalComponents
-  	const {PeriodPreference} = GlobalComponents
+  	const {PeriodPermission} = GlobalComponents
+  	const {PeriodProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/period/:id/dashboard", component: PeriodDashboard},
-  	{path:"/period/:id/preference", component: PeriodPreference},
+  	{path:"/period/:id/profile", component: PeriodProfile},
+  	{path:"/period/:id/permission", component: PeriodPermission},
   	
   	
   	

@@ -312,8 +312,12 @@ class DoctorAssignmentPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName,  } = this.props.doctorAssignment
-    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: this.props.doctorAssignment,
+    const  doctorAssignment = this.props.doctorAssignment;
+    const { id,displayName,  } = doctorAssignment
+    
+    
+    
+    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: doctorAssignment,
   		subItems: [
     
       	],

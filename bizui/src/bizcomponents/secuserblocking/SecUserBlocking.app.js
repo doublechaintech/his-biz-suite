@@ -48,7 +48,7 @@ const filteredMenuItems = (targetObject, targetComponent) => {
 
 
 const { Header, Sider, Content } = Layout
-const { SubMenu } = Menu
+const SubMenu = Menu.SubMenu;
 
 const query = {
   'screen-xs': {
@@ -141,11 +141,16 @@ class SecUserBlockingBizApp extends React.PureComponent {
           <Icon type="bars" /><span>{item.displayName}</span>
           </Link>
         </Menu.Item>))}
-       
-       <Menu.Item key="preference">
-               <Link to={`/secUserBlocking/${this.props.secUserBlocking.id}/preference`}><Icon type="setting" /><span>{appLocaleName(userContext,"Preference")}</span></Link>
-             </Menu.Item>
+       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
+       			<Menu.Item key="profile">
+               		<Link to={`/secUserBlocking/${this.props.secUserBlocking.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+             	</Menu.Item>
+             	<Menu.Item key="permission">
+               		<Link to={`/secUserBlocking/${this.props.secUserBlocking.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+             	</Menu.Item> 
       
+        	</SubMenu>
+        
            </Menu>
     )
   }
@@ -206,12 +211,14 @@ class SecUserBlockingBizApp extends React.PureComponent {
   
   buildRouters = () =>{
   	const {SecUserBlockingDashboard} = GlobalComponents
-  	const {SecUserBlockingPreference} = GlobalComponents
+  	const {SecUserBlockingPermission} = GlobalComponents
+  	const {SecUserBlockingProfile} = GlobalComponents
   	
   	
   	const routers=[
   	{path:"/secUserBlocking/:id/dashboard", component: SecUserBlockingDashboard},
-  	{path:"/secUserBlocking/:id/preference", component: SecUserBlockingPreference},
+  	{path:"/secUserBlocking/:id/profile", component: SecUserBlockingProfile},
+  	{path:"/secUserBlocking/:id/permission", component: SecUserBlockingPermission},
   	
   	
   	

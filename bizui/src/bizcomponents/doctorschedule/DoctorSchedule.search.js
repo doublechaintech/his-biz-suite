@@ -66,8 +66,7 @@ const showAssociateDialog = (targetComponent) => {
   const { DepartmentAssociateForm } = GlobalComponents
   const { ExpenseTypeAssociateForm } = GlobalComponents
   const { HospitalAssociateForm } = GlobalComponents
-
-
+  
   return (
   <div>
   
@@ -77,19 +76,23 @@ const showAssociateDialog = (targetComponent) => {
 	visible={currentAssociateModal==='doctor'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'doctor')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'doctor')}/> <PeriodAssociateForm 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'doctor')}/>
+   <PeriodAssociateForm 
 	visible={currentAssociateModal==='period'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'period')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'period')}/> <DepartmentAssociateForm 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'period')}/>
+   <DepartmentAssociateForm 
 	visible={currentAssociateModal==='department'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'department')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'department')}/> <ExpenseTypeAssociateForm 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'department')}/>
+   <ExpenseTypeAssociateForm 
 	visible={currentAssociateModal==='expenseType'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'expenseType')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'expenseType')}/> <HospitalAssociateForm 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'expenseType')}/>
+   <HospitalAssociateForm 
 	visible={currentAssociateModal==='hospital'} 
 	data={{doctorScheduleList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'hospital')} 

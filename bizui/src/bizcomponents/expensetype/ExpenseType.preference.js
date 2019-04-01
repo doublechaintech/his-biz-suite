@@ -305,10 +305,14 @@ class ExpenseTypePreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, expenseItemCount, doctorScheduleCount } = this.props.expenseType
-    const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",cardsSource: this.props.expenseType,
+    const  expenseType = this.props.expenseType;
+    const { id,displayName, expenseItemCount, doctorScheduleCount } = expenseType
+    
+    
+    
+    const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",cardsSource: expenseType,
   		subItems: [
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem'},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: expenseType.expenseItemList},
     
       	],
   	};

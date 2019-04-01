@@ -300,10 +300,14 @@ class DepartmentPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = this.props.department
-    const cardsData = {cardsName:"部门",cardsFor: "department",cardsSource: this.props.department,
+    const  department = this.props.department;
+    const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = department
+    
+    
+    
+    const cardsData = {cardsName:"部门",cardsFor: "department",cardsSource: department,
   		subItems: [
-{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment'},
+{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', data: department.doctorAssignmentList},
     
       	],
   	};

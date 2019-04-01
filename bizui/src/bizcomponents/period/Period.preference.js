@@ -299,8 +299,12 @@ class PeriodPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, doctorScheduleCount } = this.props.period
-    const cardsData = {cardsName:"期",cardsFor: "period",cardsSource: this.props.period,
+    const  period = this.props.period;
+    const { id,displayName, doctorScheduleCount } = period
+    
+    
+    
+    const cardsData = {cardsName:"期",cardsFor: "period",cardsSource: period,
   		subItems: [
     
       	],

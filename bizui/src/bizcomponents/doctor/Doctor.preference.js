@@ -301,10 +301,14 @@ class DoctorPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = this.props.doctor
-    const cardsData = {cardsName:"医生",cardsFor: "doctor",cardsSource: this.props.doctor,
+    const  doctor = this.props.doctor;
+    const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = doctor
+    
+    
+    
+    const cardsData = {cardsName:"医生",cardsFor: "doctor",cardsSource: doctor,
   		subItems: [
-{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment'},
+{name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment', data: doctor.doctorAssignmentList},
     
       	],
   	};

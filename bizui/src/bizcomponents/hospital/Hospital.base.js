@@ -1,12 +1,10 @@
-
-import ImagePreview from '../../components/ImagePreview'
+import React from 'react'
+import { Icon } from 'antd'
 import { Link } from 'dva/router'
 import moment from 'moment'
+import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-
-import { Icon } from 'antd';
 import BaseTool from '../../common/Base.tool';
-
 
 const {
 	defaultRenderReferenceCell,
@@ -17,16 +15,7 @@ const {
 	defaultRenderDateCell,
 	defaultRenderIdentifier,
 	defaultRenderTextCell,
- 
 } = BaseTool
-
-const menuData = {menuName:"医院", menuFor: "hospital",
-  		subItems: [
-  {name: 'doctorList', displayName:'医生', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  {name: 'doctorScheduleList', displayName:'医生安排', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
-  
-  		],
-}
 
 const renderTextCell=defaultRenderTextCell
 const renderIdentifier=defaultRenderIdentifier
@@ -36,6 +25,17 @@ const renderImageCell=defaultRenderImageCell
 const renderMoneyCell=defaultRenderMoneyCell
 const renderBooleanCell=defaultRenderBooleanCell
 const renderReferenceCell=defaultRenderReferenceCell
+
+
+const menuData = {menuName:"医院", menuFor: "hospital",
+  		subItems: [
+  {name: 'doctorList', displayName:'医生', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'doctorScheduleList', displayName:'医生安排', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  
+  		],
+}
+
+
 
 const displayColumns = [
   { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'hospital') },

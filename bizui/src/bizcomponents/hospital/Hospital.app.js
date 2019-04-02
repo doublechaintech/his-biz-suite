@@ -131,15 +131,17 @@ class HospitalBizApp extends React.PureComponent {
            >
            
 
-             <Menu.Item key="dashboard">
+           <Menu.Item key="dashboard">
                <Link to={`/hospital/${this.props.hospital.id}/dashboard`}><Icon type="dashboard" /><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
              </Menu.Item>
+
            
         {filteredNoGroupMenuItems(targetObject,this).map((item)=>(renderMenuItem(item)))}  
         {filteredMenuItemsGroup(targetObject,this).map((groupedMenuItem,index)=>{
           return(
-    <SubMenu key={`vg`} title={<span><Icon type="folder" /><span>{``}</span></span>} >
+    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
       {groupedMenuItem.subItems.map((item)=>(renderMenuItem(item)))}  
+      
     </SubMenu>
 
         )}
@@ -154,8 +156,9 @@ class HospitalBizApp extends React.PureComponent {
              	</Menu.Item> 
       
         	</SubMenu>
-        
-           </Menu>
+         
+           
+          </Menu>
     )
   }
   

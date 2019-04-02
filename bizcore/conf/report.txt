@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190320T1436) @Tue Apr 02 14:33:12 CST 2019, 21 objects and 160 fields===========================
+=================Execute Report (Model Time 190320T1436) @Tue Apr 02 20:58:52 CST 2019, 21 objects and 160 fields===========================
 
 
 
@@ -118,12 +118,12 @@ hospital{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(6){
-		expenseTypeList	hospital(基本信息)--hospital;
-		periodList	hospital(基本信息)--hospital;
-		expenseItemList	hospital(基本信息)--hospital;
-		doctorList	hospital(基本信息)--hospital;
-		departmentList	hospital(基本信息)--hospital;
-		doctorScheduleList	hospital(基本信息)--hospital;
+		expenseTypeList	hospital(__no_group)--hospital;
+		periodList	hospital(__no_group)--hospital;
+		expenseItemList	hospital(__no_group)--hospital;
+		doctorList	hospital(__no_group)--hospital;
+		departmentList	hospital(__no_group)--hospital;
+		doctorScheduleList	hospital(__no_group)--hospital;
 	}
 } depth=0; isRoot = true
 
@@ -139,8 +139,8 @@ expense_type{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		expenseItemList	expense_type(基本信息)--expense_type;
-		doctorScheduleList	expense_type(基本信息)--expense_type;
+		expenseItemList	expense_type(__no_group)--expense_type;
+		doctorScheduleList	expense_type(__no_group)--expense_type;
 	}
 } depth=1; isRoot = false
 
@@ -152,7 +152,7 @@ period{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){
-		doctorScheduleList	period(基本信息)--period;
+		doctorScheduleList	period(__no_group)--period;
 	}
 } depth=1; isRoot = false
 
@@ -180,8 +180,8 @@ doctor{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		doctorAssignmentList	doctor(基本信息)--doctor;
-		doctorScheduleList	doctor(基本信息)--doctor;
+		doctorAssignmentList	doctor(__no_group)--doctor;
+		doctorScheduleList	doctor(__no_group)--doctor;
 	}
 } depth=1; isRoot = false
 
@@ -194,8 +194,8 @@ department{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		doctorAssignmentList	department(基本信息)--department;
-		doctorScheduleList	department(基本信息)--department;
+		doctorAssignmentList	department(__no_group)--department;
+		doctorScheduleList	department(__no_group)--department;
 	}
 } depth=1; isRoot = false
 
@@ -241,12 +241,12 @@ hospital{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(6){
-		expenseTypeList	hospital(基本信息)--hospital;
-		periodList	hospital(基本信息)--hospital;
-		expenseItemList	hospital(基本信息)--hospital;
-		doctorList	hospital(基本信息)--hospital;
-		departmentList	hospital(基本信息)--hospital;
-		doctorScheduleList	hospital(基本信息)--hospital;
+		expenseTypeList	hospital(__no_group)--hospital;
+		periodList	hospital(__no_group)--hospital;
+		expenseItemList	hospital(__no_group)--hospital;
+		doctorList	hospital(__no_group)--hospital;
+		departmentList	hospital(__no_group)--hospital;
+		doctorScheduleList	hospital(__no_group)--hospital;
 	}
 } depth=0; isRoot = true
 
@@ -262,8 +262,8 @@ expense_type{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		expenseItemList	expense_type(基本信息)--expense_type;
-		doctorScheduleList	expense_type(基本信息)--expense_type;
+		expenseItemList	expense_type(__no_group)--expense_type;
+		doctorScheduleList	expense_type(__no_group)--expense_type;
 	}
 } depth=1; isRoot = false
 
@@ -275,7 +275,7 @@ period{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){
-		doctorScheduleList	period(基本信息)--period;
+		doctorScheduleList	period(__no_group)--period;
 	}
 } depth=1; isRoot = false
 
@@ -303,8 +303,8 @@ doctor{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		doctorAssignmentList	doctor(基本信息)--doctor;
-		doctorScheduleList	doctor(基本信息)--doctor;
+		doctorAssignmentList	doctor(__no_group)--doctor;
+		doctorScheduleList	doctor(__no_group)--doctor;
 	}
 } depth=1; isRoot = false
 
@@ -317,8 +317,8 @@ department{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		doctorAssignmentList	department(基本信息)--department;
-		doctorScheduleList	department(基本信息)--department;
+		doctorAssignmentList	department(__no_group)--department;
+		doctorScheduleList	department(__no_group)--department;
 	}
 } depth=1; isRoot = false
 
@@ -362,8 +362,8 @@ user_domain{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		userWhiteListList	domain(基本信息)--domain;
-		secUserList	domain(基本信息)--domain;
+		userWhiteListList	domain(__no_group)--domain;
+		secUserList	domain(__no_group)--domain;
 	}
 } depth=0; isRoot = true
 
@@ -395,8 +395,8 @@ sec_user{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		userAppList	sec_user(基本信息)--sec_user;
-		loginHistoryList	sec_user(基本信息)--sec_user;
+		userAppList	sec_user(__no_group)--sec_user;
+		loginHistoryList	sec_user(__no_group)--sec_user;
 	}
 } depth=1; isRoot = false
 
@@ -409,7 +409,7 @@ sec_user_blocking{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(1){
-		secUserList	blocking(基本信息)--blocking;
+		secUserList	blocking(__no_group)--blocking;
 	}
 } depth=0; isRoot = true
 
@@ -427,8 +427,8 @@ user_app{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(2){
-		listAccessList	app(基本信息)--app;
-		objectAccessList	app(基本信息)--app;
+		listAccessList	app(__no_group)--app;
+		objectAccessList	app(__no_group)--app;
 	}
 } depth=2; isRoot = false
 
@@ -491,10 +491,10 @@ generic_form{
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(4){
-		formMessageList	form(基本信息)--form;
-		formFieldMessageList	form(基本信息)--form;
-		formFieldList	form(基本信息)--form;
-		formActionList	form(基本信息)--form;
+		formMessageList	form(__no_group)--form;
+		formFieldMessageList	form(__no_group)--form;
+		formFieldList	form(__no_group)--form;
+		formActionList	form(__no_group)--form;
 	}
 } depth=0; isRoot = true
 

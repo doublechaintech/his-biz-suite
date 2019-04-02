@@ -16,27 +16,26 @@ import {
 import DocumentTitle from 'react-document-title'
 import { connect } from 'dva'
 import { Link, Route, Redirect, Switch } from 'dva/router'
-import moment from 'moment'
-import groupBy from 'lodash/groupBy'
+
+
 import { ContainerQuery } from 'react-container-query'
 import classNames from 'classnames'
 import styles from './Hospital.app.less'
 import {sessionObject} from '../../utils/utils'
 
-import HeaderSearch from '../../components/HeaderSearch';
-import NoticeIcon from '../../components/NoticeIcon';
-import GlobalFooter from '../../components/GlobalFooter';
-
 
 import GlobalComponents from '../../custcomponents';
 
-import PermissionSettingService from '../../permission/PermissionSetting.service'
+
 import appLocaleName from '../../common/Locale.tool'
 import BizAppTool from '../../common/BizApp.tool'
 
 const { Header, Sider, Content } = Layout
 const { SubMenu } = Menu
+
 const {
+
+
   defaultFilteredNoGroupMenuItems,
   defaultFilteredMenuItemsGroup,
   defaultRenderMenuItem,
@@ -113,23 +112,19 @@ class HospitalBizApp extends React.PureComponent {
   getNavMenuItems = (targetObject) => {
   
 
-    const menuData = sessionObject('menuData')
+   
     const targetApp = sessionObject('targetApp')
-	const {objectId}=targetApp;
+	  const {objectId}=targetApp;
   	const userContext = null
     return (
       
 		  <Menu
              theme="dark"
              mode="inline"
-            
-             
              onOpenChange={this.handleOpenChange}
-            
              defaultOpenKeys={['firstOne']}
              style={{ margin: '16px 0', width: '100%' }}
            >
-           
 
              <Menu.Item key="dashboard">
                <Link to={`/hospital/${this.props.hospital.id}/dashboard`}><Icon type="dashboard" /><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
@@ -137,13 +132,20 @@ class HospitalBizApp extends React.PureComponent {
            
         {filteredNoGroupMenuItems(targetObject,this).map((item)=>(renderMenuItem(item)))}  
         {filteredMenuItemsGroup(targetObject,this).map((groupedMenuItem,index)=>{
+          
+          
           return(
-    <SubMenu key={`vg`} title={<span><Icon type="folder" /><span>{``}</span></span>} >
+
+    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
       {groupedMenuItem.subItems.map((item)=>(renderMenuItem(item)))}  
     </SubMenu>
 
         )}
         )}
+
+       
+
+
 
        		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
        			<Menu.Item key="profile">

@@ -138,7 +138,7 @@ class ListAccessBizApp extends React.PureComponent {
         {filteredNoGroupMenuItems(targetObject,this).map((item)=>(renderMenuItem(item)))}  
         {filteredMenuItemsGroup(targetObject,this).map((groupedMenuItem,index)=>{
           return(
-    <SubMenu key={`vg`} title={<span><Icon type="folder" /><span>{``}</span></span>} >
+    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
       {groupedMenuItem.subItems.map((item)=>(renderMenuItem(item)))}  
     </SubMenu>
 

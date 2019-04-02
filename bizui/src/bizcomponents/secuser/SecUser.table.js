@@ -127,8 +127,6 @@ class SecUserTable extends PureComponent {
 	const calcDisplayColumns = this.props.calcDisplayColumns||this.calcDisplayColumns
 	const userContext = null
     const paginationProps = {
-      showSizeChanger: true,
-      showQuickJumper: true,
       pageSize: 20,
       total: count,
       current,

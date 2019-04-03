@@ -208,7 +208,7 @@ class HospitalCreateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入名称" />
+                    <Input size="large" placeholder="名称" />
                   )}
                 </Form.Item>
               </Col>
@@ -218,7 +218,7 @@ class HospitalCreateForm extends Component {
                   {getFieldDecorator('address', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入地址" />
+                    <Input size="large" placeholder="地址" />
                   )}
                 </Form.Item>
               </Col>
@@ -228,7 +228,7 @@ class HospitalCreateForm extends Component {
                   {getFieldDecorator('telephone', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入电话" />
+                    <Input size="large" placeholder="电话" />
                   )}
                 </Form.Item>
               </Col>

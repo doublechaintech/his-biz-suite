@@ -215,7 +215,7 @@ class ExpenseTypeCreateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入名称" />
+                    <Input size="large" placeholder="名称" />
                   )}
                 </Form.Item>
               </Col>
@@ -225,7 +225,7 @@ class ExpenseTypeCreateForm extends Component {
                   {getFieldDecorator('helperChars', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入辅助识字课" />
+                    <Input size="large" placeholder="辅助识字课" />
                   )}
                 </Form.Item>
               </Col>
@@ -235,7 +235,7 @@ class ExpenseTypeCreateForm extends Component {
                   {getFieldDecorator('status', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入状态" />
+                    <Input size="large" placeholder="状态" />
                   )}
                 </Form.Item>
               </Col>

@@ -542,11 +542,16 @@ const defaultBuildTransferModal = (mainObject, targetComponent) => {
 };
 
 const defaultRenderExtraHeader = mainObject => {
+  
+};
+
+
+const defaultRenderAnalytics= mainObject => {
   const data = aggregateDataset(mainObject);
   if (!data.dataArray) {
     return null;
   }
-  if (data.dataArray.length == 0) {
+  if (data.dataArray.length === 0) {
     return null;
   }
   return (
@@ -654,6 +659,7 @@ const DashboardTool = {
   defaultHandleTransferSearch,
   defaultShowTransferModel,
   defaultRenderExtraHeader,
+  defaultRenderAnalytics,
   defaultSubListsOf,
   defaultRenderExtraFooter,
   renderForTimeLine,

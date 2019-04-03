@@ -262,7 +262,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入ID" disabled/>
+                    <Input size="large" placeholder="ID" disabled/>
                     
                   )}
                 </Form.Item>
@@ -274,7 +274,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入名称" />
+                    <Input size="large" placeholder="名称" />
                     
                   )}
                 </Form.Item>
@@ -286,7 +286,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.helperChars,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入辅助识字课" />
+                    <Input size="large" placeholder="辅助识字课" />
                     
                   )}
                 </Form.Item>
@@ -298,7 +298,7 @@ class ExpenseTypeUpdateForm extends Component {
                     initialValue: selectedRow.status,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入状态" />
+                    <Input size="large" placeholder="状态" />
                     
                   )}
                 </Form.Item>

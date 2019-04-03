@@ -23,8 +23,8 @@ const testValues = {
   email: '',
   pwd: 'C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95',
   verificationCode: '0',
-  verificationCodeExpire: '2019-03-20 01:03:48',
-  lastLoginTime: '2019-04-02 07:35:50',
+  verificationCodeExpire: '2019-03-14 19:30:40',
+  lastLoginTime: '2019-03-31 21:36:12',
   domainId: 'UD000001',
 }
 */
@@ -146,7 +146,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('login', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入登录" />
+                    <Input size="large" placeholder="登录" />
                   )}
                 </Form.Item>
               </Col>
@@ -156,7 +156,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('mobile', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入手机号码" />
+                    <Input size="large" placeholder="手机号码" />
                   )}
                 </Form.Item>
               </Col>
@@ -166,7 +166,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('email', {
                     rules: [{ required: false, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入电子邮件" />
+                    <Input size="large" placeholder="电子邮件" />
                   )}
                 </Form.Item>
               </Col>
@@ -176,7 +176,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('pwd', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入密码" />
+                    <Input size="large" placeholder="密码" />
                   )}
                 </Form.Item>
               </Col>
@@ -186,7 +186,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('verificationCode', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="请输入验证码" />
+                    <Input size="large" placeholder="验证码" />
                   )}
                 </Form.Item>
               </Col>
@@ -196,7 +196,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('verificationCodeExpire', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="请输入验证码过期" />
+                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="验证码过期" />
                   )}
                 </Form.Item>
               </Col>
@@ -206,7 +206,7 @@ class SecUserAssociateForm extends Component {
                   {getFieldDecorator('lastLoginTime', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="请输入最后登录时间" />
+                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="最后登录时间" />
                   )}
                 </Form.Item>
               </Col>

@@ -57,10 +57,10 @@ export const get3 = ({ url, msg = '接口异常', headers }) =>
       console.log(err);
       message.warn(msg);
     });
-
+// const headers = { 'X-App-Version':"35",'Content-Type': 'application/x-www-form-urlencoded' }
 export const get = ({ url, msg = '接口异常', headers }) =>
   axios
-    .get(url, headers)
+    .get(url, {headers:{"X-App-Version":35}})
     .then(function(res) {
       console.log('http headers', res.headers);
       const clazz = res.headers['x-class'];
@@ -174,19 +174,20 @@ export const PREFIX = getURLPrefix();
 export const postForm = ({ url, requestParameters, msg = '接口异常'})=>{
 
   
-  const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+  const headers = { 'X-App-Version':"35",'Content-Type': 'application/x-www-form-urlencoded' }
+  const options ={headers}
   return post({
     url,
     data: joinPostParameters(requestParameters),
-    headers,
+    options,
   })
 }
 
 
 
-export const post = ({ url, data, msg = '接口异常', headers }) =>
+export const post = ({ url, data, msg = '接口异常', options }) =>
   axios
-    .post(url, data, headers)
+    .post(url, data, options)
     .then(res => res.data)
     .catch(err => {
       console.log(err);

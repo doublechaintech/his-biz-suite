@@ -147,10 +147,10 @@ class DoctorAssignmentBizApp extends React.PureComponent {
 
        		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
        			<Menu.Item key="profile">
-               		<Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/permission`}><Icon type="safety" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+               		<Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/permission`}><Icon type="safety-certificate" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
              	</Menu.Item>
              	<Menu.Item key="permission">
-               		<Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/profile`}><Icon type="profile" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+               		<Link to={`/doctorAssignment/${this.props.doctorAssignment.id}/profile`}><Icon type="cluster" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
              	</Menu.Item> 
       
         	</SubMenu>

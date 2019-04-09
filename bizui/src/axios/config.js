@@ -1,7 +1,7 @@
 
 export const SYSTEM_SHORT_NAME = "his" //Use for requssting different apps
 export const SYSTEM_LOCAL_NAME = "医生排班系统" 
-export const BUILD_TIIME="Thu Apr 04 01:41:42 CST 2019"
+export const BUILD_TIIME="Fri Apr 05 02:37:25 CST 2019"
 export const MEDIA_UPLOAD_URL="https://www.doublechaintech.com/mss/upload.html"
 export const MEDIA_PREFIX="https://www.doublechaintech.com/mss/"
 

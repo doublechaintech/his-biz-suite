@@ -41,6 +41,8 @@ import {
   TimelineChart,
 } from 'components/Charts';
 
+import { PREFIX } from '../axios/tools'
+
 import echarts from 'echarts';
 import Themes from './Dashboard.echartstheme';
 import { isWeekend } from 'date-fns';
@@ -299,7 +301,7 @@ const aggregateDataset = mainObject => {
       const itemkey = calcKey(item);
       const existedValue = dataMap[itemkey];
       const itemValue = {};
-      const displayName = series.displayName;
+      const {displayName} = series
       itemValue[displayName] = item.count;
       dimensionSet.add(displayName);
       if (!existedValue) {
@@ -602,11 +604,26 @@ const defaultSubListsOf = cardsData => {
 
 
 const defaultQuickFunctions = cardsData => {
-  const userContext = null;
-  const { id } = cardsData.cardsSource;
+  
+  const { id, actionList } = cardsData.cardsSource;
   return (
     <Row gutter={16}>
-      
+      {
+        actionList.filter(item => item.actionGroup==="custom")
+        .map(item=>(
+
+          
+          <Col span={6} key={`${item.actionPath}`}>
+          <Card span={6} style={{fontSize:"20px"}}>
+          <a href={`${PREFIX}${item.managerBeanName}/${item.actionPath}`} target="_blank">
+          <Icon type={item.actionIcon} /> {item.actionName}
+          </a>
+          </Card>
+          </Col>
+        ))
+
+
+      }
       {cardsData.subItems
         
         .filter(item => hasItemReadPermission(item))

@@ -169,6 +169,7 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     listParameters[`${listName}.orderBy.0`]=backendSorter.field
     listParameters[`${listName}.descOrAsc.0`]=backendSorter.order
     
+
     
     
     
@@ -177,7 +178,6 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     console.log("searchParameters",searchParameters)
 
     const params = {
-      ...searchParameters,
       ...listParameters,
       ...formValues,
       ...filters,
@@ -188,7 +188,7 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     
     dispatch({
       type: `${owner.type}/load`,
-      payload: { id: owner.id, parameters: params,searchParameters },
+      payload: { id: owner.id, parameters: params,searchParameters:{...listParameters} },
     })
   }
   

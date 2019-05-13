@@ -102,7 +102,7 @@ componentDidMount() {
     }
   }
   */
-  buildStringSearchParameters = (formValues, searchVerb, fieldName) => {
+  buildStringSearchParameters = (listName, formValues, searchVerb, fieldName) => {
     const fieldValue = formValues[fieldName]
     if (!fieldValue) {
       return null
@@ -111,9 +111,9 @@ componentDidMount() {
     //paramHolder.length
     const value = {}
 
-    value[`expenseTypeList.searchField`] = fieldName
-    value[`expenseTypeList.searchVerb`] =  searchVerb
-    value[`expenseTypeList.searchValue`] = fieldValue
+    value[`${listName}.searchField`] = fieldName
+    value[`${listName}.searchVerb`] =  searchVerb
+    value[`${listName}.searchValue`] = fieldValue
     
     return value
 
@@ -127,14 +127,15 @@ componentDidMount() {
     form.validateFields((err, fieldsValue) => {
       if (err) return
       const paramList = []
-      
+      const { owner } = this.props
+      const {listName} = owner
      
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'id'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'name'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'helperChars'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'status'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'hospital'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'description'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'id'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'name'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'helperChars'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'status'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'hospital'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'description'))
 
      
       console.log("the final parameter", paramList)
@@ -150,11 +151,12 @@ componentDidMount() {
 
       }
      
-      params['expenseTypeList'] = 1
-      params['expenseTypeList.orderBy.0'] = "id"
-      params['expenseTypeList.descOrAsc.0'] = "desc"
       
-      const { owner } = this.props
+      params[`${listName}`] = 1
+      params[`${listName}.orderBy.0`] = "id"
+      params[`${listName}.descOrAsc.0`] = "desc"
+      
+      
       const expandForm = overrideValue([this.state.expandForm],false)
       dispatch({
         type: `${owner.type}/load`,

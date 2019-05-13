@@ -22,12 +22,7 @@ const testValues = {
   helperChars: 'zlf',
   status: '正常',
   hospitalId: 'H000001',
-  description: '    一段样例文字。\
-可以分段。\
-\
-可以空行。\
-\
-',
+  description: '    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n',
 }
 */
 

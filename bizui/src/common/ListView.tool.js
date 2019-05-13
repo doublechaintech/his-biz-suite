@@ -140,7 +140,15 @@ const handleDeletionModalVisible = (event,targetComponent) => {
       </Modal>)
   }
   
-  
+  const convertToBackendSorter=(sorter)=>{
+
+    
+    const  field  = sorter.field||"id"
+    if(sorter.order==="descend"){
+      return {field,order:"desc"}
+    }
+    return {field,order:"asc"}
+  }
   const handleStandardTableChange = (pagination, filtersArg, sorter,targetComponent) => {
     const { dispatch } = targetComponent.props
     const { formValues } = targetComponent.state
@@ -152,36 +160,31 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     }, {})
     const { owner,searchParameters } = targetComponent.props
     const {listName} = owner;
-    let listParameters = {};
+    const listParameters = {};
     listParameters[listName]=1;
     listParameters[`${listName}CurrentPage`]=pagination.current;
     listParameters[`${listName}RowsPerPage`]=pagination.pageSize;
 
-    if(!searchParameters||!searchParameters[`${listName}.orderBy.0`]){
-      listParameters[`${listName}.orderBy.0`]="id"
-    }
-    if(!searchParameters||!searchParameters[`${listName}.descOrAsc.0`]){
-      listParameters[`${listName}.descOrAsc.0`]="desc"
-    }
+    const backendSorter=convertToBackendSorter(sorter)
+    listParameters[`${listName}.orderBy.0`]=backendSorter.field
+    listParameters[`${listName}.descOrAsc.0`]=backendSorter.order
     
     
-   
+    
+    
 
    
     console.log("searchParameters",searchParameters)
 
     const params = {
-      ...listParameters,
       ...searchParameters,
+      ...listParameters,
       ...formValues,
       ...filters,
 
     }
-    if (sorter.field) {
-      params.sorter = '_'
-    }
-
-    console.log("handleStandardTableChange", params)
+    
+    console.log("handleStandardTableChange", params,"sorter",sorter)
     
     dispatch({
       type: `${owner.type}/load`,

@@ -102,7 +102,7 @@ componentDidMount() {
     }
   }
   */
-  buildStringSearchParameters = (formValues, searchVerb, fieldName) => {
+  buildStringSearchParameters = (listName, formValues, searchVerb, fieldName) => {
     const fieldValue = formValues[fieldName]
     if (!fieldValue) {
       return null
@@ -111,9 +111,9 @@ componentDidMount() {
     //paramHolder.length
     const value = {}
 
-    value[`doctorScheduleList.searchField`] = fieldName
-    value[`doctorScheduleList.searchVerb`] =  searchVerb
-    value[`doctorScheduleList.searchValue`] = fieldValue
+    value[`${listName}.searchField`] = fieldName
+    value[`${listName}.searchVerb`] =  searchVerb
+    value[`${listName}.searchValue`] = fieldValue
     
     return value
 
@@ -127,15 +127,16 @@ componentDidMount() {
     form.validateFields((err, fieldsValue) => {
       if (err) return
       const paramList = []
-      
+      const { owner } = this.props
+      const {listName} = owner
      
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'id'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'name'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'doctor'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'period'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'department'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'expenseType'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'hospital'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'id'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'name'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'doctor'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'period'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'department'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'expenseType'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'hospital'))
 
      
       console.log("the final parameter", paramList)
@@ -151,11 +152,12 @@ componentDidMount() {
 
       }
      
-      params['doctorScheduleList'] = 1
-      params['doctorScheduleList.orderBy.0'] = "id"
-      params['doctorScheduleList.descOrAsc.0'] = "desc"
       
-      const { owner } = this.props
+      params[`${listName}`] = 1
+      params[`${listName}.orderBy.0`] = "id"
+      params[`${listName}.descOrAsc.0`] = "desc"
+      
+      
       const expandForm = overrideValue([this.state.expandForm],false)
       dispatch({
         type: `${owner.type}/load`,
@@ -191,18 +193,25 @@ componentDidMount() {
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+ <Col md={8} sm={24}>
+                 <Form.Item label="期">
+               {getFieldDecorator('period', {
+                 initialValue: tryinit('period'),
+                
+               })(
+               
+               <SelectObject 
+                 disabled={!availableForEdit('period')}
+                 targetType={"period"} 
+                 requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
+               
+              
+               )}
+             </Form.Item></Col>
 
        <Col md={8} sm={24}>
          <FormItem label="ID">
            {getFieldDecorator('id')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
-
-       <Col md={8} sm={24}>
-         <FormItem label="名称">
-           {getFieldDecorator('name')(
              <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>

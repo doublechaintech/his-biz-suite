@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -33,16 +35,6 @@ const menuData = {menuName:"用户白名单", menuFor: "userWhiteList",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: '用户身份', debugtype: 'string', dataIndex: 'userIdentity', width: '15',render: (text, record)=>renderTextCell(text,record) },
-  { title: '用户特殊功能', debugtype: 'string', dataIndex: 'userSpecialFunctions', width: '27',render: (text, record)=>renderTextCell(text,record) },
-  { title: '域', dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record)},
-
-]
-
 const fieldLabels = {
   id: 'ID',
   userIdentity: '用户身份',
@@ -51,8 +43,36 @@ const fieldLabels = {
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.userIdentity, debugtype: 'string', dataIndex: 'userIdentity', width: '15',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.userSpecialFunctions, debugtype: 'string', dataIndex: 'userSpecialFunctions', width: '27',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.domain, dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record), sorter:true},
 
-const UserWhiteListBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({userWhiteList,targetComponent})=>{
+
+	
+	
+	const {UserWhiteListService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{userWhiteList.id}</Description> 
+<Description term="用户身份">{userWhiteList.userIdentity}</Description> 
+<Description term="用户特殊功能">{userWhiteList.userSpecialFunctions}</Description> 
+	
+        {buildTransferModal(userWhiteList,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const UserWhiteListBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default UserWhiteListBase
 
 

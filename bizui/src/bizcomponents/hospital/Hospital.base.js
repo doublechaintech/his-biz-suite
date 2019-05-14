@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -35,16 +37,6 @@ const menuData = {menuName:"医院", menuFor: "hospital",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'hospital') },
-  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record) },
-  { title: '地址', debugtype: 'string', dataIndex: 'address', width: '10',render: (text, record)=>renderTextCell(text,record) },
-  { title: '电话', debugtype: 'string', dataIndex: 'telephone', width: '15',render: (text, record)=>renderTextCell(text,record) },
-
-]
-
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -53,8 +45,37 @@ const fieldLabels = {
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.ID, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'hospital'), sorter:true,sortOrder:"ascend" },
+  { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.address, debugtype: 'string', dataIndex: 'address', width: '10',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.telephone, debugtype: 'string', dataIndex: 'telephone', width: '15',render: (text, record)=>renderTextCell(text,record), sorter:true },
 
-const HospitalBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({hospital,targetComponent})=>{
+
+	
+	
+	const {HospitalService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{hospital.id}</Description> 
+<Description term="名称">{hospital.name}</Description> 
+<Description term="地址">{hospital.address}</Description> 
+<Description term="电话">{hospital.telephone}</Description> 
+	
+        {buildTransferModal(hospital,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const HospitalBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default HospitalBase
 
 

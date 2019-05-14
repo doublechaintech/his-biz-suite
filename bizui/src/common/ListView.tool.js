@@ -140,14 +140,22 @@ const handleDeletionModalVisible = (event,targetComponent) => {
       </Modal>)
   }
   
-  const convertToBackendSorter=(sorter)=>{
+  const convertToBackendSorter=({listName,sorter})=>{
 
+    const sortProperties = {}
     
-    const  field  = sorter.field||"id"
-    if(sorter.order==="descend"){
-      return {field,order:"desc"}
+    if(!sorter){
+      return sortProperties
     }
-    return {field,order:"asc"}
+    if(sorter.field){
+      sortProperties[`${listName}.orderBy.0`]=sorter.field
+      sortProperties[`${listName}.descOrAsc.0`]=(sorter.order==="ascend"?"asc":"desc")
+      return sortProperties
+    }
+    delete sortProperties[`${listName}.orderBy.0`]
+    delete sortProperties[`${listName}..descOrAsc.0`]
+    
+    return sortProperties
   }
   const handleStandardTableChange = (pagination, filtersArg, sorter,targetComponent) => {
     const { dispatch } = targetComponent.props
@@ -165,21 +173,17 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     listParameters[`${listName}CurrentPage`]=pagination.current;
     listParameters[`${listName}RowsPerPage`]=pagination.pageSize;
 
-    const backendSorter=convertToBackendSorter(sorter)
-    listParameters[`${listName}.orderBy.0`]=backendSorter.field
-    listParameters[`${listName}.descOrAsc.0`]=backendSorter.order
-    
-
-    
-    
-    
-
-   
-    console.log("searchParameters",searchParameters)
-
+    const sortProperties = convertToBackendSorter({listName,sorter})
+    const newSearchParameters = {...searchParameters,...listParameters,...sortProperties}
+    console.log("newSearchParameters",newSearchParameters)
+    if(!sorter.field){
+      delete newSearchParameters[`${listName}.orderBy.0`]
+      delete newSearchParameters[`${listName}..descOrAsc.0`]
+    }
     const params = {
       ...searchParameters,
       ...listParameters,
+      ...sortProperties,
       ...formValues,
       ...filters,
 
@@ -189,7 +193,7 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     
     dispatch({
       type: `${owner.type}/load`,
-      payload: { id: owner.id, parameters: params,searchParameters:{...searchParameters,...listParameters} },
+      payload: { id: owner.id, parameters: params,searchParameters: newSearchParameters},
     })
   }
   

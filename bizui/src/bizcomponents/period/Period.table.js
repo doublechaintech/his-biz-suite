@@ -56,7 +56,7 @@ class PeriodTable extends PureComponent {
     if(!searchParameters[listName]){
       return remainColumns
     }
-    const sorter = {field: searchParameters[`.orderBy.0`], order:searchParameters[`.descOrAsc.0`]}
+    const sorter = {field: searchParameters[`${listName}.orderBy.0`], order:searchParameters[`${listName}.descOrAsc.0`]}
     console.log("sorter in table", sorter)
     const convertSorter=(targetSorter)=>{
       if(targetSorter.order==="desc"){
@@ -86,7 +86,7 @@ class PeriodTable extends PureComponent {
       render: (text, record) => (
         <span>
           
-         { hasReadPermission(metaInfo)&&<Link to={`/period/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
+          { hasReadPermission(metaInfo)&&<Link to={`/period/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
           {
             record.actionList&&record.actionList.map((item)=>(<a key={item.actionId} onClick={()=>this.executeAction(item,text, record)}><span className={styles.splitLine} />{item.actionName}</a>))

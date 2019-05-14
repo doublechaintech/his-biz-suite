@@ -178,6 +178,7 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     console.log("searchParameters",searchParameters)
 
     const params = {
+      ...searchParameters,
       ...listParameters,
       ...formValues,
       ...filters,
@@ -188,7 +189,7 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     
     dispatch({
       type: `${owner.type}/load`,
-      payload: { id: owner.id, parameters: params,searchParameters:{...listParameters} },
+      payload: { id: owner.id, parameters: params,searchParameters:{...searchParameters,...listParameters} },
     })
   }
   

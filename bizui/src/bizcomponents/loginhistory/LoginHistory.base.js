@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -33,17 +35,6 @@ const menuData = {menuName:"登录历史", menuFor: "loginHistory",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: '登录时间', dataIndex: 'loginTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-  { title: '来自IP', debugtype: 'string', dataIndex: 'fromIp', width: '15',render: (text, record)=>renderTextCell(text,record) },
-  { title: '描述', debugtype: 'string', dataIndex: 'description', width: '8',render: (text, record)=>renderTextCell(text,record) },
-  { title: '安全用户', dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record)},
-
-]
-
 const fieldLabels = {
   id: 'ID',
   loginTime: '登录时间',
@@ -53,8 +44,44 @@ const fieldLabels = {
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.loginTime, dataIndex: 'loginTime', render: (text, record) =>renderDateTimeCell(text,record), sorter:true  },
+  { title: fieldLabels.fromIp, debugtype: 'string', dataIndex: 'fromIp', width: '15',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.description, debugtype: 'string', dataIndex: 'description', width: '8',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.secUser, dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record), sorter:true},
 
-const LoginHistoryBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({loginHistory,targetComponent})=>{
+
+	
+	
+	const {LoginHistoryService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{loginHistory.id}</Description> 
+<Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 
+<Description term="来自IP">{loginHistory.fromIp}</Description> 
+<Description term="描述">{loginHistory.description}</Description> 
+<Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):`${loginHistory.secUser.displayName}(${loginHistory.secUser.id})`}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"安全用户","secUser",LoginHistoryService.requestCandidateSecUser,
+	      LoginHistoryService.transferToAnotherSecUser,"anotherSecUserId",loginHistory.secUser?loginHistory.secUser.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(loginHistory,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const LoginHistoryBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default LoginHistoryBase
 
 

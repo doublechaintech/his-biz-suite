@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -34,22 +36,39 @@ const menuData = {menuName:"用户域", menuFor: "userDomain",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'userDomain') },
-  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record) },
-
-]
-
 const fieldLabels = {
   id: 'ID',
   name: '名称',
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.ID, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'userDomain'), sorter:true,sortOrder:"ascend" },
+  { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record), sorter:true },
 
-const UserDomainBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({userDomain,targetComponent})=>{
+
+	
+	
+	const {UserDomainService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{userDomain.id}</Description> 
+<Description term="名称">{userDomain.name}</Description> 
+	
+        {buildTransferModal(userDomain,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const UserDomainBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default UserDomainBase
 
 

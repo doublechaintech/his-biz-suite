@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -34,16 +36,6 @@ const menuData = {menuName:"用户屏蔽", menuFor: "secUserBlocking",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'secUserBlocking') },
-  { title: '谁', debugtype: 'string', dataIndex: 'who', width: '17',render: (text, record)=>renderTextCell(text,record) },
-  { title: '块时间', dataIndex: 'blockTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-  { title: '评论', debugtype: 'string', dataIndex: 'comments', width: '28',render: (text, record)=>renderTextCell(text,record) },
-
-]
-
 const fieldLabels = {
   id: 'ID',
   who: '谁',
@@ -52,8 +44,37 @@ const fieldLabels = {
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.ID, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'secUserBlocking'), sorter:true,sortOrder:"ascend" },
+  { title: fieldLabels.who, debugtype: 'string', dataIndex: 'who', width: '17',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.blockTime, dataIndex: 'blockTime', render: (text, record) =>renderDateTimeCell(text,record), sorter:true  },
+  { title: fieldLabels.comments, debugtype: 'string', dataIndex: 'comments', width: '28',render: (text, record)=>renderTextCell(text,record), sorter:true },
 
-const SecUserBlockingBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({secUserBlocking,targetComponent})=>{
+
+	
+	
+	const {SecUserBlockingService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{secUserBlocking.id}</Description> 
+<Description term="谁">{secUserBlocking.who}</Description> 
+<Description term="块时间">{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD')}</Description> 
+<Description term="评论">{secUserBlocking.comments}</Description> 
+	
+        {buildTransferModal(secUserBlocking,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const SecUserBlockingBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default SecUserBlockingBase
 
 

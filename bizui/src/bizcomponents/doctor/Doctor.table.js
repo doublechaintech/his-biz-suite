@@ -40,7 +40,7 @@ class DoctorTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], [])
   }
-
+  
   enhanceColumnsWithSorter=()=>{
     const {displayColumns} = DoctorBase
     const {owner, searchParameters} =  this.props
@@ -74,25 +74,19 @@ class DoctorTable extends PureComponent {
     return enhancedColumns
 
   }
-
- calcDisplayColumns=()=>{
+  
+  calcDisplayColumns=()=>{
 
     const { metaInfo} =  this.props
-   
     const userContext = null
-    
-    
-   
-
-    
     const enhancedColumns = this.enhanceColumnsWithSorter()
-    // fixed: 'right',
+    
     const operationColumn={
       title: appLocaleName(userContext,"Operate"),
       render: (text, record) => (
         <span>
           
-          { hasReadPermission(metaInfo)&&<Link to={`/doctor/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
+         { hasReadPermission(metaInfo)&&<Link to={`/doctor/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
           {  hasUpdatePermission(metaInfo)&&<span className={styles.splitLine} /> } {hasUpdatePermission(metaInfo)&&<a key="__2" onClick={()=>this.gotoEdit(text, record)}>{appLocaleName(userContext,"Edit")}</a>}
 

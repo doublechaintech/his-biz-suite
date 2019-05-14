@@ -102,7 +102,7 @@ componentDidMount() {
     }
   }
   */
-  buildStringSearchParameters = (formValues, searchVerb, fieldName) => {
+  buildStringSearchParameters = (listName, formValues, searchVerb, fieldName) => {
     const fieldValue = formValues[fieldName]
     if (!fieldValue) {
       return null
@@ -111,9 +111,9 @@ componentDidMount() {
     //paramHolder.length
     const value = {}
 
-    value[`secUserList.searchField`] = fieldName
-    value[`secUserList.searchVerb`] =  searchVerb
-    value[`secUserList.searchValue`] = fieldValue
+    value[`${listName}.searchField`] = fieldName
+    value[`${listName}.searchVerb`] =  searchVerb
+    value[`${listName}.searchValue`] = fieldValue
     
     return value
 
@@ -127,15 +127,16 @@ componentDidMount() {
     form.validateFields((err, fieldsValue) => {
       if (err) return
       const paramList = []
-      
+      const { owner } = this.props
+      const {listName} = owner
      
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'id'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'login'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'mobile'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'email'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'pwd'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'eq', 'domain'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(fieldsValue,'contains', 'currentStatus'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'id'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'login'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'mobile'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'email'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'pwd'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'domain'))
+		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'currentStatus'))
 
      
       console.log("the final parameter", paramList)
@@ -151,11 +152,12 @@ componentDidMount() {
 
       }
      
-      params['secUserList'] = 1
-      params['secUserList.orderBy.0'] = "id"
-      params['secUserList.descOrAsc.0'] = "desc"
       
-      const { owner } = this.props
+      params[`${listName}`] = 1
+      params[`${listName}.orderBy.0`] = "id"
+      params[`${listName}.descOrAsc.0`] = "desc"
+      
+      
       const expandForm = overrideValue([this.state.expandForm],false)
       dispatch({
         type: `${owner.type}/load`,

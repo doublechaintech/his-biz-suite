@@ -46,7 +46,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.ID, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'hospital') },
+  { title: fieldLabels.ID, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'hospital') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record) },
   { title: fieldLabels.address, debugtype: 'string', dataIndex: 'address', width: '10',render: (text, record)=>renderTextCell(text,record) },
   { title: fieldLabels.telephone, debugtype: 'string', dataIndex: 'telephone', width: '15',render: (text, record)=>renderTextCell(text,record) },

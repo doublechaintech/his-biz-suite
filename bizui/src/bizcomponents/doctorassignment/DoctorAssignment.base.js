@@ -49,7 +49,7 @@ const displayColumns = [
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '14',render: (text, record)=>renderTextCell(text,record) },
   { title: fieldLabels.doctor, dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record)},
   { title: fieldLabels.department, dataIndex: 'department', render: (text, record) => renderReferenceCell(text, record)},
-  { title: fieldLabels.updateTime, dataIndex: 'updateTime', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: fieldLabels.updateTime, dataIndex: 'updateTime', render: (text, record) =>renderDateTimeCell(text,record), sorter: true   },
 
 ]
 // refernce to https://ant.design/components/list-cn/

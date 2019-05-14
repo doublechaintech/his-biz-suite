@@ -40,7 +40,7 @@ class DoctorTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], [])
   }
-
+  
   enhanceColumnsWithSorter=()=>{
     const {displayColumns} = DoctorBase
     const {owner, searchParameters} =  this.props
@@ -56,7 +56,7 @@ class DoctorTable extends PureComponent {
     if(!searchParameters[listName]){
       return remainColumns
     }
-    const sorter = {field: searchParameters[`${listName}.orderBy.0`], order:searchParameters[`${listName}.descOrAsc.0`]}
+    const sorter = {field: searchParameters[`.orderBy.0`], order:searchParameters[`.descOrAsc.0`]}
     console.log("sorter in table", sorter)
     const convertSorter=(targetSorter)=>{
       if(targetSorter.order==="desc"){
@@ -74,25 +74,19 @@ class DoctorTable extends PureComponent {
     return enhancedColumns
 
   }
-
- calcDisplayColumns=()=>{
+  
+  calcDisplayColumns=()=>{
 
     const { metaInfo} =  this.props
-   
     const userContext = null
-    
-    
-   
-
-    
     const enhancedColumns = this.enhanceColumnsWithSorter()
-    // fixed: 'right',
+    
     const operationColumn={
       title: appLocaleName(userContext,"Operate"),
       render: (text, record) => (
         <span>
           
-          { hasReadPermission(metaInfo)&&<Link to={`/doctor/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
+         { hasReadPermission(metaInfo)&&<Link to={`/doctor/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
           {  hasUpdatePermission(metaInfo)&&<span className={styles.splitLine} /> } {hasUpdatePermission(metaInfo)&&<a key="__2" onClick={()=>this.gotoEdit(text, record)}>{appLocaleName(userContext,"Edit")}</a>}
 

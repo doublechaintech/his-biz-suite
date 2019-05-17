@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -33,18 +35,6 @@ const menuData = {menuName:"费用项目", menuFor: "expenseItem",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '9',render: (text, record)=>renderTextCell(text,record) },
-  { title: '价格', dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record) },
-  { title: '费用类型', dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record)},
-  { title: '医院', dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
-  { title: '更新时间', dataIndex: 'updateTime', render: (text, record) =>renderDateTimeCell(text,record)  },
-
-]
-
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -55,8 +45,45 @@ const fieldLabels = {
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '9',render: (text, record)=>renderTextCell(text,record) },
+  { title: fieldLabels.price, dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record) },
+  { title: fieldLabels.expenseType, dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record)},
+  { title: fieldLabels.hospital, dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record)},
+  { title: fieldLabels.updateTime, dataIndex: 'updateTime', render: (text, record) =>renderDateTimeCell(text,record)  },
 
-const ExpenseItemBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({expenseItem,targetComponent})=>{
+
+	
+	
+	const {ExpenseItemService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{expenseItem.id}</Description> 
+<Description term="名称">{expenseItem.name}</Description> 
+<Description term="价格">{expenseItem.price}</Description> 
+<Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"费用类型","expenseType",ExpenseItemService.requestCandidateExpenseType,
+	      ExpenseItemService.transferToAnotherExpenseType,"anotherExpenseTypeId",expenseItem.expenseType?expenseItem.expenseType.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+<Description term="更新时间">{ moment(expenseItem.updateTime).format('YYYY-MM-DD')}</Description> 
+	
+        {buildTransferModal(expenseItem,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const ExpenseItemBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default ExpenseItemBase
 
 

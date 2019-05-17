@@ -61,9 +61,9 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	
 		
 	public 	Doctor(){
-		//lazy load for all the properties
+		// lazy load for all the properties
 	}
-	//disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
+	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setHospital( null );
 
@@ -182,13 +182,13 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	
 	
 	public void setShotImage(String shotImage){
-		this.mShotImage = trimString(encodeUrl(shotImage));;
+		this.mShotImage = trimString(shotImage);;
 	}
 	public String getShotImage(){
 		return this.mShotImage;
 	}
 	public Doctor updateShotImage(String shotImage){
-		this.mShotImage = trimString(encodeUrl(shotImage));;
+		this.mShotImage = trimString(shotImage);;
 		this.changed = true;
 		return this;
 	}

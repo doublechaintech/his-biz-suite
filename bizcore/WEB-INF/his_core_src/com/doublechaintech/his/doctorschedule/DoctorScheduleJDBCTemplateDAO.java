@@ -3,6 +3,8 @@ package com.doublechaintech.his.doctorschedule;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -1052,6 +1054,9 @@ public class DoctorScheduleJDBCTemplateDAO extends HisNamingServiceDAO implement
 	public void enhanceList(List<DoctorSchedule> doctorScheduleList) {		
 		this.enhanceListInternal(doctorScheduleList, this.getDoctorScheduleMapper());
 	}
+	
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<DoctorSchedule> doctorScheduleList = ownerEntity.collectRefsWithType(DoctorSchedule.INTERNAL_TYPE);

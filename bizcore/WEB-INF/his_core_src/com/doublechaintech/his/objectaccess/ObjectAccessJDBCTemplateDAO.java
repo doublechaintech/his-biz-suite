@@ -3,6 +3,8 @@ package com.doublechaintech.his.objectaccess;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -530,6 +532,9 @@ public class ObjectAccessJDBCTemplateDAO extends HisNamingServiceDAO implements 
 	public void enhanceList(List<ObjectAccess> objectAccessList) {		
 		this.enhanceListInternal(objectAccessList, this.getObjectAccessMapper());
 	}
+	
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<ObjectAccess> objectAccessList = ownerEntity.collectRefsWithType(ObjectAccess.INTERNAL_TYPE);

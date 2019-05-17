@@ -3,6 +3,8 @@ package com.doublechaintech.his.doctorassignment;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -657,6 +659,9 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisNamingServiceDAO impleme
 	public void enhanceList(List<DoctorAssignment> doctorAssignmentList) {		
 		this.enhanceListInternal(doctorAssignmentList, this.getDoctorAssignmentMapper());
 	}
+	
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<DoctorAssignment> doctorAssignmentList = ownerEntity.collectRefsWithType(DoctorAssignment.INTERNAL_TYPE);

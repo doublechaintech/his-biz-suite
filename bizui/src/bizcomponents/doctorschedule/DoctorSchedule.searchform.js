@@ -191,18 +191,25 @@ componentDidMount() {
     return (
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+ <Col md={8} sm={24}>
+                 <Form.Item label="期">
+               {getFieldDecorator('period', {
+                 initialValue: tryinit('period'),
+                
+               })(
+               
+               <SelectObject 
+                 disabled={!availableForEdit('period')}
+                 targetType={"period"} 
+                 requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
+               
+              
+               )}
+             </Form.Item></Col>
 
        <Col md={8} sm={24}>
          <FormItem label="ID">
            {getFieldDecorator('id')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
-           )}
-         </FormItem>
-       </Col>
-
-       <Col md={8} sm={24}>
-         <FormItem label="名称">
-           {getFieldDecorator('name')(
              <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>

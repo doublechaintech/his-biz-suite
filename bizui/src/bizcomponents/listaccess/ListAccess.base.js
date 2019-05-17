@@ -4,7 +4,9 @@ import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
 import appLocaleName from '../../common/Locale.tool'
-import BaseTool from '../../common/Base.tool';
+import BaseTool from '../../common/Base.tool'
+import GlobalComponents from '../../custcomponents'
+import DescriptionList from '../../components/DescriptionList'
 
 const {
 	defaultRenderReferenceCell,
@@ -33,21 +35,6 @@ const menuData = {menuName:"访问列表", menuFor: "listAccess",
   		],
 }
 
-
-
-const displayColumns = [
-  { title: 'ID', debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
-  { title: '名称', debugtype: 'string', dataIndex: 'name', width: '6',render: (text, record)=>renderTextCell(text,record) },
-  { title: '内部名称', debugtype: 'string', dataIndex: 'internalName', width: '24',render: (text, record)=>renderTextCell(text,record) },
-  { title: '读权限', dataIndex: 'readPermission', render: (text, record) =>renderBooleanCell(text, record) },
-  { title: '创建权限', dataIndex: 'createPermission', render: (text, record) =>renderBooleanCell(text, record) },
-  { title: '删除权限', dataIndex: 'deletePermission', render: (text, record) =>renderBooleanCell(text, record) },
-  { title: '更新许可', dataIndex: 'updatePermission', render: (text, record) =>renderBooleanCell(text, record) },
-  { title: '执行权限', dataIndex: 'executionPermission', render: (text, record) =>renderBooleanCell(text, record) },
-  { title: '应用程序', dataIndex: 'app', render: (text, record) => renderReferenceCell(text, record)},
-
-]
-
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -61,8 +48,47 @@ const fieldLabels = {
 
 }
 
+const displayColumns = [
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record) },
+  { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '6',render: (text, record)=>renderTextCell(text,record) },
+  { title: fieldLabels.internalName, debugtype: 'string', dataIndex: 'internalName', width: '24',render: (text, record)=>renderTextCell(text,record) },
+  { title: fieldLabels.readPermission, dataIndex: 'readPermission', render: (text, record) =>renderBooleanCell(text, record) },
+  { title: fieldLabels.createPermission, dataIndex: 'createPermission', render: (text, record) =>renderBooleanCell(text, record) },
+  { title: fieldLabels.deletePermission, dataIndex: 'deletePermission', render: (text, record) =>renderBooleanCell(text, record) },
+  { title: fieldLabels.updatePermission, dataIndex: 'updatePermission', render: (text, record) =>renderBooleanCell(text, record) },
+  { title: fieldLabels.executionPermission, dataIndex: 'executionPermission', render: (text, record) =>renderBooleanCell(text, record) },
+  { title: fieldLabels.app, dataIndex: 'app', render: (text, record) => renderReferenceCell(text, record)},
 
-const ListAccessBase={menuData,displayColumns,fieldLabels}
+]
+// refernce to https://ant.design/components/list-cn/
+const renderItemOfList=({listAccess,targetComponent})=>{
+
+	
+	
+	const {ListAccessService} = GlobalComponents
+	// const userContext = null
+	return (
+	<DescriptionList className={styles.headerList} size="small" col="4">
+<Description term="ID">{listAccess.id}</Description> 
+<Description term="名称">{listAccess.name}</Description> 
+<Description term="内部名称">{listAccess.internalName}</Description> 
+<Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
+ <Icon type="swap" onClick={()=>
+  showTransferModel(targetComponent,"应用程序","userApp",ListAccessService.requestCandidateApp,
+	      ListAccessService.transferToAnotherApp,"anotherAppId",listAccess.app?listAccess.app.id:"")} 
+  style={{fontSize: 20,color:"red"}} />
+</Description>
+	
+        {buildTransferModal(listAccess,targetComponent)}
+      </DescriptionList>
+	)
+
+}
+	
+
+
+
+const ListAccessBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default ListAccessBase
 
 

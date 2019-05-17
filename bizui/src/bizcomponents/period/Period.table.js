@@ -40,24 +40,53 @@ class PeriodTable extends PureComponent {
   cleanSelectedKeys = () => {
     this.handleRowSelectChange([], [])
   }
- calcDisplayColumns=()=>{
-
-    const {owner, metaInfo} =  this.props
-    const {referenceName} = owner
-    const userContext = null
-    
+  
+  enhanceColumnsWithSorter=()=>{
     const {displayColumns} = PeriodBase
+    const {owner, searchParameters} =  this.props
+    const {referenceName, listName} = owner
     if(!referenceName){
       return displayColumns
     }
-    const remainColumns = displayColumns.filter((item,index)=> item.dataIndex!=referenceName&&item.dataIndex!=='content')
-    //fixed: 'right',
+    const remainColumns = displayColumns.filter((item,index)=> item.dataIndex!==referenceName&&index<7&&item.dataIndex!=='content')
+    
+    if(!searchParameters){
+      return remainColumns
+    }
+    if(!searchParameters[listName]){
+      return remainColumns
+    }
+    const sorter = {field: searchParameters[`${listName}.orderBy.0`], order:searchParameters[`${listName}.descOrAsc.0`]}
+    console.log("sorter in table", sorter)
+    const convertSorter=(targetSorter)=>{
+      if(targetSorter.order==="desc"){
+        return "descend"
+      }
+      return "ascend"
+
+    }
+    const enhancedColumns = remainColumns.map(item=>{
+      if(sorter.field===item.dataIndex){
+        return {...item, sortOrder: convertSorter(sorter)}
+      }
+      return item
+    })
+    return enhancedColumns
+
+  }
+  
+  calcDisplayColumns=()=>{
+
+    const { metaInfo} =  this.props
+    const userContext = null
+    const enhancedColumns = this.enhanceColumnsWithSorter()
+    
     const operationColumn={
       title: appLocaleName(userContext,"Operate"),
       render: (text, record) => (
         <span>
           
-         { hasReadPermission(metaInfo)&&<Link to={`/period/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
+          { hasReadPermission(metaInfo)&&<Link to={`/period/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
           {
             record.actionList&&record.actionList.map((item)=>(<a key={item.actionId} onClick={()=>this.executeAction(item,text, record)}><span className={styles.splitLine} />{item.actionName}</a>))
@@ -67,11 +96,11 @@ class PeriodTable extends PureComponent {
       ),
     }
    
-    remainColumns.push(
+    enhancedColumns.push(
       operationColumn
     )
     
-    return remainColumns
+    return enhancedColumns
 
   }
   executeAction = (action, text, record) => {

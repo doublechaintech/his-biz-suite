@@ -9,7 +9,7 @@
 * 自动翻译
 
 
-# 演示地址 (本演示运行于南大通用GBASE V8.5S之上）
+# 演示地址 (新演示已运行于南大通用GBASE V8.5S之上，MySQL已经过长期验证）
 
 https://demo.doublechaintech.com/admin/his/#/home
 

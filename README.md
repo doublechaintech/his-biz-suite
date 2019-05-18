@@ -9,14 +9,12 @@
 * 自动翻译
 
 
-# 演示地址 
+# 演示地址 (本演示运行于南大通用GBASE V8.5S之上）
 
 https://demo.doublechaintech.com/admin/his/#/home
 
 * 医院登录: 13900000001/DoubleChain!y1
 * 医生登录：13900000002/DoubleChain!y1
-
-目前在解决集成南大通用数据库GBASE8.5的中文问题。
 
 
 # 源文件（用文本文件写60多行的文件就可以生成完整应用）

@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190326T1029
+-- BUILD WITH MODEL TIME 190417T0011
 drop database  if exists his;
 create database his;
 alter  database his  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -278,9 +278,9 @@ create table form_action_data (
 insert into hospital_data values ('H000001','上和医院','毕升路22号','028-9123123','1');
 
 	
-insert into expense_type_data values ('ET000001','诊疗费','zlf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-04-30 05:15:33','1');
-insert into expense_type_data values ('ET000002','治疗费','zlf','停用','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-04-16 13:31:06','1');
-insert into expense_type_data values ('ET000003','检查费','jcf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-04-30 10:11:12','1');
+insert into expense_type_data values ('ET000001','诊疗费','zlf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-05-03 11:45:08','1');
+insert into expense_type_data values ('ET000002','治疗费','zlf','停用','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-05-01 20:18:12','1');
+insert into expense_type_data values ('ET000003','检查费','jcf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-04-29 02:29:31','1');
 
 	
 insert into period_data values ('P000001','上午','H000001','1');
@@ -288,30 +288,30 @@ insert into period_data values ('P000002','下午','H000001','1');
 insert into period_data values ('P000003','夜班','H000001','1');
 
 	
-insert into expense_item_data values ('EI000001','专家诊疗费','85966905344.00','ET000001','H000001','2019-04-17 05:13:03','1');
-insert into expense_item_data values ('EI000002','血常规','71299440640.00','ET000001','H000001','2019-04-22 08:02:28','1');
-insert into expense_item_data values ('EI000003','煎药费','78544535552.00','ET000002','H000001','2019-04-27 19:20:05','1');
-insert into expense_item_data values ('EI000004','专家诊疗费','70706118656.00','ET000003','H000001','2019-04-30 08:48:35','1');
+insert into expense_item_data values ('EI000001','专家诊疗费','72494768128.00','ET000001','H000001','2019-05-14 19:57:00','1');
+insert into expense_item_data values ('EI000002','血常规','79899353088.00','ET000001','H000001','2019-05-09 09:35:05','1');
+insert into expense_item_data values ('EI000003','煎药费','76118368256.00','ET000002','H000001','2019-04-28 07:48:43','1');
+insert into expense_item_data values ('EI000004','专家诊疗费','90603724800.00','ET000003','H000001','2019-05-10 06:05:58','1');
 
 	
-insert into doctor_data values ('D000001','魏松全','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-04-15 10:21:08','1');
-insert into doctor_data values ('D000002','魏松全0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-04-11 13:39:24','1');
+insert into doctor_data values ('D000001','魏松全','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-05-16 21:26:30','1');
+insert into doctor_data values ('D000002','魏松全0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-05-16 17:05:49','1');
 
 	
-insert into department_data values ('D000001','放射科','H000001','2019-04-14 02:34:19','1');
-insert into department_data values ('D000002','放射科0002','H000001','2019-04-28 08:56:28','1');
+insert into department_data values ('D000001','放射科','H000001','2019-05-01 10:52:17','1');
+insert into department_data values ('D000002','放射科0002','H000001','2019-05-07 07:53:52','1');
 
 	
-insert into doctor_assignment_data values ('DA000001','魏松全在内分泌科室上','D000001','D000001','2019-04-10 01:24:42','1');
-insert into doctor_assignment_data values ('DA000002','魏松全在内分泌科室上0002','D000001','D000001','2019-04-25 02:09:47','1');
-insert into doctor_assignment_data values ('DA000003','魏松全在内分泌科室上0003','D000002','D000002','2019-04-18 10:55:16','1');
-insert into doctor_assignment_data values ('DA000004','魏松全在内分泌科室上0004','D000002','D000002','2019-04-30 04:36:12','1');
+insert into doctor_assignment_data values ('DA000001','魏松全在内分泌科室上','D000001','D000001','2019-05-04 13:35:54','1');
+insert into doctor_assignment_data values ('DA000002','魏松全在内分泌科室上0002','D000001','D000001','2019-04-30 00:04:51','1');
+insert into doctor_assignment_data values ('DA000003','魏松全在内分泌科室上0003','D000002','D000002','2019-05-16 02:02:00','1');
+insert into doctor_assignment_data values ('DA000004','魏松全在内分泌科室上0004','D000002','D000002','2019-05-12 05:06:52','1');
 
 	
-insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','D000001','2016-05-31','P000001','D000001','15','107.80','ET000001','2019-04-19 07:11:39','2019-04-27 23:25:58','H000001','1');
-insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','D000001','2017-06-04','P000001','D000001','15','89.18','ET000001','2019-04-21 07:28:42','2019-04-15 15:45:15','H000001','1');
-insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','D000002','2018-06-14','P000002','D000002','20','105.46','ET000002','2019-04-30 13:33:25','2019-04-28 01:54:44','H000001','1');
-insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','D000002','2018-05-04','P000003','D000002','16','87.11','ET000003','2019-04-09 23:13:06','2019-04-24 13:08:58','H000001','1');
+insert into doctor_schedule_data values ('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','D000001','2019-01-24','P000001','D000001','19','107.25','ET000001','2019-05-13 06:56:53','2019-05-17 04:55:05','H000001','1');
+insert into doctor_schedule_data values ('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','D000001','2017-11-16','P000001','D000001','18','96.04','ET000001','2019-05-07 21:16:29','2019-05-09 22:17:14','H000001','1');
+insert into doctor_schedule_data values ('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','D000002','2018-07-31','P000002','D000002','18','88.34','ET000002','2019-05-08 18:50:38','2019-05-06 06:30:32','H000001','1');
+insert into doctor_schedule_data values ('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','D000002','2019-02-22','P000003','D000002','16','91.04','ET000003','2019-05-16 08:10:54','2019-05-09 00:56:47','H000001','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -321,11 +321,11 @@ insert into user_white_list_data values ('UWL000001','clariones','tester;ios-spo
 insert into user_white_list_data values ('UWL000002','13808188512','tester;ios-spokesperson0002','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-04-15 14:31:17','2019-04-17 11:06:57','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-04-19 00:54:10','2019-04-23 19:29:16','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-05-06 21:39:32','2019-05-04 04:01:46','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-05-02 11:13:53','2019-05-11 18:19:08','UD000001',NULL,'BLOCKED0002','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-04-12 16:21:54','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-05-16 09:38:16','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -356,10 +356,10 @@ insert into object_access_data values ('OA000007','控制访问列表10007','Fra
 insert into object_access_data values ('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000006','1');
 
 	
-insert into login_history_data values ('LH000001','2019-04-23 05:37:18','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-04-22 03:28:24','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-04-22 01:48:19','192.168.1.1','登陆成功0003','SU000002','1');
-insert into login_history_data values ('LH000004','2019-04-29 10:35:38','192.168.1.2','登陆成功0004','SU000002','1');
+insert into login_history_data values ('LH000001','2019-05-11 17:00:31','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-05-01 13:19:03','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-05-14 19:25:17','192.168.1.1','登陆成功0003','SU000002','1');
+insert into login_history_data values ('LH000004','2019-05-16 16:58:23','192.168.1.2','登陆成功0004','SU000002','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');
@@ -594,7 +594,7 @@ insert into user_app_data values('UA000014','My Account','SU000007','lock',1,'MX
 
 
 /* start with data patch */
-/* The sql file is not found from: /home/philip/resin-3.1.12/webapps/sky/data-patch/his.sql */
+/* The sql file is not found from: /Users/Philip/githome/web-code-generator/sky/data-patch/his.sql */
 
 
 /*

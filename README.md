@@ -9,13 +9,14 @@
 * 自动翻译
 
 
-# 演示地址 (新演示已运行于南大通用GBASE V8.5S之上，MySQL已经过长期验证）
+# 演示地址 
 
 https://demo.doublechaintech.com/admin/his/#/home
 
 * 医院登录: 13900000001/DoubleChain!y1
 * 医生登录：13900000002/DoubleChain!y1
 
+新演示已运行于国产数据库南大通用GBase 8s之上
 
 # 源文件（用文本文件写60多行的文件就可以生成完整应用）
 

@@ -17,7 +17,7 @@ import com.doublechaintech.his.HisUserContext;
 
 public class DepartmentCustomManagerImpl extends DepartmentManagerImpl{
 
-	public boolean like(Stirng articleId) {
+	public boolean like(String articleId) {
 		
 		return true;
 		

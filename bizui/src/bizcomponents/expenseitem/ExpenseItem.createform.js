@@ -18,11 +18,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '专家诊疗费',
-<<<<<<< HEAD
-  price: '83549470720.00',
-=======
-  price: '84810145792.00',
->>>>>>> 68f7f5fca875ad2f29dc14a6138b833352f3ae1a
+  price: '92525805568.00',
   expenseTypeId: 'ET000001',
   hospitalId: 'H000001',
 }

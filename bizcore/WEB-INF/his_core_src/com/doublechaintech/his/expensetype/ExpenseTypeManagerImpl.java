@@ -268,8 +268,9 @@ public class ExpenseTypeManagerImpl extends CustomHisCheckerManager implements E
 			//will be good when the expenseType loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to ExpenseType.
-			
-			
+			if (expenseType.isChanged()){
+			expenseType.updateUpdateTime(userContext.now());
+			}
 			expenseType = saveExpenseType(userContext, expenseType, options);
 			return expenseType;
 			

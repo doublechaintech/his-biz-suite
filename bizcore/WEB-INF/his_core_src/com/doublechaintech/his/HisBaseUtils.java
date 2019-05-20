@@ -34,6 +34,10 @@ public class HisBaseUtils {
 		}
 	}
 	
+	public static String getCacheAccessKey(HisUserContext ctx) {
+		return ctx.tokenId()+":access_page_without_footprint";
+	}
+	
 	protected static BaseEntity loadCanCacheInLocal(HisUserContext userContext, String type, String id) throws Exception {
 		String key = "baseentity:"+type+":"+id;
 		BaseEntity result = (BaseEntity) userContext.getFromContextLocalStorage(key);

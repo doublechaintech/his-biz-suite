@@ -247,8 +247,9 @@ public class PeriodManagerImpl extends CustomHisCheckerManager implements Period
 			//will be good when the period loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to Period.
+			if (period.isChanged()){
 			
-			
+			}
 			period = savePeriod(userContext, period, options);
 			return period;
 			

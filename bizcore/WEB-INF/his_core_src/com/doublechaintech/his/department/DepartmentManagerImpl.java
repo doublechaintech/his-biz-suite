@@ -253,8 +253,9 @@ public class DepartmentManagerImpl extends CustomHisCheckerManager implements De
 			//will be good when the department loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to Department.
-			
-			
+			if (department.isChanged()){
+			department.updateUpdateTime(userContext.now());
+			}
 			department = saveDepartment(userContext, department, options);
 			return department;
 			

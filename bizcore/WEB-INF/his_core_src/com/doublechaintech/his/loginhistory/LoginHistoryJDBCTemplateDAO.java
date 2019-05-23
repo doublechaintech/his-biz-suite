@@ -3,6 +3,8 @@ package com.doublechaintech.his.loginhistory;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -530,6 +532,9 @@ public class LoginHistoryJDBCTemplateDAO extends HisNamingServiceDAO implements 
 	public void enhanceList(List<LoginHistory> loginHistoryList) {		
 		this.enhanceListInternal(loginHistoryList, this.getLoginHistoryMapper());
 	}
+	
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<LoginHistory> loginHistoryList = ownerEntity.collectRefsWithType(LoginHistory.INTERNAL_TYPE);

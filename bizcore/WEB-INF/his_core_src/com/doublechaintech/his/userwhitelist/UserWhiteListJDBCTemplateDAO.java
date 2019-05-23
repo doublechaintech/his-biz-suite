@@ -3,6 +3,8 @@ package com.doublechaintech.his.userwhitelist;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -512,6 +514,9 @@ public class UserWhiteListJDBCTemplateDAO extends HisNamingServiceDAO implements
 	public void enhanceList(List<UserWhiteList> userWhiteListList) {		
 		this.enhanceListInternal(userWhiteListList, this.getUserWhiteListMapper());
 	}
+	
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<UserWhiteList> userWhiteListList = ownerEntity.collectRefsWithType(UserWhiteList.INTERNAL_TYPE);

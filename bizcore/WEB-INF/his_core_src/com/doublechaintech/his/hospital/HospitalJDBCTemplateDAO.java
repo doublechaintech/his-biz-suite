@@ -3,6 +3,8 @@ package com.doublechaintech.his.hospital;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -1989,6 +1991,141 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	public void enhanceList(List<Hospital> hospitalList) {		
 		this.enhanceListInternal(hospitalList, this.getHospitalMapper());
 	}
+	
+	
+	// 需要一个加载引用我的对象的enhance方法:ExpenseType的hospital的ExpenseTypeList
+	public void loadOurExpenseTypeList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(ExpenseType.HOSPITAL_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<ExpenseType> loadedObjs = userContext.getDAOGroup().getExpenseTypeDAO().findExpenseTypeWithKey(key, options);
+		Map<String, List<ExpenseType>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getHospital().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<ExpenseType> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<ExpenseType> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setExpenseTypeList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:Period的hospital的PeriodList
+	public void loadOurPeriodList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Period.HOSPITAL_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<Period> loadedObjs = userContext.getDAOGroup().getPeriodDAO().findPeriodWithKey(key, options);
+		Map<String, List<Period>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getHospital().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<Period> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<Period> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setPeriodList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的hospital的ExpenseItemList
+	public void loadOurExpenseItemList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(ExpenseItem.HOSPITAL_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<ExpenseItem> loadedObjs = userContext.getDAOGroup().getExpenseItemDAO().findExpenseItemWithKey(key, options);
+		Map<String, List<ExpenseItem>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getHospital().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<ExpenseItem> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<ExpenseItem> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setExpenseItemList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:Doctor的hospital的DoctorList
+	public void loadOurDoctorList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Doctor.HOSPITAL_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<Doctor> loadedObjs = userContext.getDAOGroup().getDoctorDAO().findDoctorWithKey(key, options);
+		Map<String, List<Doctor>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getHospital().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<Doctor> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<Doctor> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setDoctorList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:Department的hospital的DepartmentList
+	public void loadOurDepartmentList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Department.HOSPITAL_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<Department> loadedObjs = userContext.getDAOGroup().getDepartmentDAO().findDepartmentWithKey(key, options);
+		Map<String, List<Department>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getHospital().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<Department> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<Department> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setDepartmentList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的hospital的DoctorScheduleList
+	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(DoctorSchedule.HOSPITAL_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<DoctorSchedule> loadedObjs = userContext.getDAOGroup().getDoctorScheduleDAO().findDoctorScheduleWithKey(key, options);
+		Map<String, List<DoctorSchedule>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getHospital().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<DoctorSchedule> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<DoctorSchedule> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setDoctorScheduleList(loadedSmartList);
+		});
+	}
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<Hospital> hospitalList = ownerEntity.collectRefsWithType(Hospital.INTERNAL_TYPE);

@@ -3,6 +3,8 @@ package com.doublechaintech.his.userdomain;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -853,6 +855,53 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 	public void enhanceList(List<UserDomain> userDomainList) {		
 		this.enhanceListInternal(userDomainList, this.getUserDomainMapper());
 	}
+	
+	
+	// 需要一个加载引用我的对象的enhance方法:UserWhiteList的domain的UserWhiteListList
+	public void loadOurUserWhiteListList(HisUserContext userContext, List<UserDomain> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserWhiteList.DOMAIN_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<UserWhiteList> loadedObjs = userContext.getDAOGroup().getUserWhiteListDAO().findUserWhiteListWithKey(key, options);
+		Map<String, List<UserWhiteList>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getDomain().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<UserWhiteList> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<UserWhiteList> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setUserWhiteListList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:SecUser的domain的SecUserList
+	public void loadOurSecUserList(HisUserContext userContext, List<UserDomain> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(SecUser.DOMAIN_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<SecUser> loadedObjs = userContext.getDAOGroup().getSecUserDAO().findSecUserWithKey(key, options);
+		Map<String, List<SecUser>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getDomain().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<SecUser> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<SecUser> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setSecUserList(loadedSmartList);
+		});
+	}
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<UserDomain> userDomainList = ownerEntity.collectRefsWithType(UserDomain.INTERNAL_TYPE);

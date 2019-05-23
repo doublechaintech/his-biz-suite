@@ -564,6 +564,24 @@ const defaultRenderAnalytics= mainObject => {
   );
 };
 
+const legalListForDisplay=(targetObject, listItem)=>{
+
+  if(!targetObject){
+    return false
+  }
+  if(!listItem){
+    return false
+  }
+  if(!listItem.name){
+    return false
+  }
+  if(!targetObject[listItem.name]){
+    return false
+  }
+
+  return true
+
+}
 
 const defaultRenderSubjectList = cardsData => {
   
@@ -574,13 +592,15 @@ const defaultRenderSubjectList = cardsData => {
       
       {cardsData.subItems
         
-       
+        .filter(listItem=>legalListForDisplay(targetObject,listItem))
         .map(listItem => (
          
           <Col key={listItem.displayName} span={24}>
-             <Divider style={{ margin: '16px 0' }} />
+            
              <Card>
           {listItem.displayName}
+
+
             {
              
               targetObject[listItem.name].map(item=>(listItem.renderItem(item)))

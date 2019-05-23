@@ -294,8 +294,9 @@ public class DoctorScheduleManagerImpl extends CustomHisCheckerManager implement
 			//will be good when the doctorSchedule loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to DoctorSchedule.
-			
-			
+			if (doctorSchedule.isChanged()){
+			doctorSchedule.updateUpdateTime(userContext.now());
+			}
 			doctorSchedule = saveDoctorSchedule(userContext, doctorSchedule, options);
 			return doctorSchedule;
 			

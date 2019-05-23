@@ -258,8 +258,9 @@ public class DoctorManagerImpl extends CustomHisCheckerManager implements Doctor
 			//will be good when the doctor loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to Doctor.
-			
-			
+			if (doctor.isChanged()){
+			doctor.updateUpdateTime(userContext.now());
+			}
 			doctor = saveDoctor(userContext, doctor, options);
 			return doctor;
 			

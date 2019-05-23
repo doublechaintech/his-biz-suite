@@ -242,8 +242,9 @@ public class FormMessageManagerImpl extends CustomHisCheckerManager implements F
 			//will be good when the formMessage loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to FormMessage.
+			if (formMessage.isChanged()){
 			
-			
+			}
 			formMessage = saveFormMessage(userContext, formMessage, options);
 			return formMessage;
 			

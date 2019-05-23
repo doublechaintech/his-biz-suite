@@ -272,8 +272,9 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			//will be good when the hospital loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to Hospital.
+			if (hospital.isChanged()){
 			
-			
+			}
 			hospital = saveHospital(userContext, hospital, options);
 			return hospital;
 			

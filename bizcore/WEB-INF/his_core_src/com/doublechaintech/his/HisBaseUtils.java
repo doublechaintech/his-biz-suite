@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.terapico.caf.form.ImageInfo;
 
@@ -32,6 +34,13 @@ public class HisBaseUtils {
 		} catch (NoSuchAlgorithmException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+	
+	public static String getCacheAccessKey(HisUserContext ctx) {
+		return ctx.tokenId()+":access_page_without_footprint";
+	}
+	public static <T> Set<Object> toSet(List<T> list, Function<T, ? extends Object> mapper) {
+		return list.stream().map(mapper).collect(Collectors.toSet());
 	}
 	
 	protected static BaseEntity loadCanCacheInLocal(HisUserContext userContext, String type, String id) throws Exception {

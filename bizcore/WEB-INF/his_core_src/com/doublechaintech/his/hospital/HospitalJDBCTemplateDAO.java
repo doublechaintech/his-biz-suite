@@ -1994,9 +1994,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:ExpenseType的hospital的ExpenseTypeList
-	public void loadOurExpenseTypeList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<ExpenseType> loadOurExpenseTypeList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2013,12 +2013,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setExpenseTypeList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:Period的hospital的PeriodList
-	public void loadOurPeriodList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<Period> loadOurPeriodList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2035,12 +2036,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setPeriodList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的hospital的ExpenseItemList
-	public void loadOurExpenseItemList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<ExpenseItem> loadOurExpenseItemList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2057,12 +2059,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setExpenseItemList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:Doctor的hospital的DoctorList
-	public void loadOurDoctorList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<Doctor> loadOurDoctorList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2079,12 +2082,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:Department的hospital的DepartmentList
-	public void loadOurDepartmentList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<Department> loadOurDepartmentList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2101,12 +2105,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setDepartmentList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的hospital的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2123,6 +2128,7 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

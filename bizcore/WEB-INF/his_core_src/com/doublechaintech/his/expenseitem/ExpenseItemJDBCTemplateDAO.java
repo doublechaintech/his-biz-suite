@@ -3,6 +3,8 @@ package com.doublechaintech.his.expenseitem;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -659,6 +661,9 @@ public class ExpenseItemJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	public void enhanceList(List<ExpenseItem> expenseItemList) {		
 		this.enhanceListInternal(expenseItemList, this.getExpenseItemMapper());
 	}
+	
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<ExpenseItem> expenseItemList = ownerEntity.collectRefsWithType(ExpenseItem.INTERNAL_TYPE);

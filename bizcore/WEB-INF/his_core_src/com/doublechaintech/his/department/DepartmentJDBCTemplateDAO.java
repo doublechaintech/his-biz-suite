@@ -3,6 +3,8 @@ package com.doublechaintech.his.department;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -1204,6 +1206,53 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	public void enhanceList(List<Department> departmentList) {		
 		this.enhanceListInternal(departmentList, this.getDepartmentMapper());
 	}
+	
+	
+	// 需要一个加载引用我的对象的enhance方法:DoctorAssignment的department的DoctorAssignmentList
+	public void loadOurDoctorAssignmentList(HisUserContext userContext, List<Department> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(DoctorAssignment.DEPARTMENT_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<DoctorAssignment> loadedObjs = userContext.getDAOGroup().getDoctorAssignmentDAO().findDoctorAssignmentWithKey(key, options);
+		Map<String, List<DoctorAssignment>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getDepartment().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<DoctorAssignment> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<DoctorAssignment> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setDoctorAssignmentList(loadedSmartList);
+		});
+	}
+	
+	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的department的DoctorScheduleList
+	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Department> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(DoctorSchedule.DEPARTMENT_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<DoctorSchedule> loadedObjs = userContext.getDAOGroup().getDoctorScheduleDAO().findDoctorScheduleWithKey(key, options);
+		Map<String, List<DoctorSchedule>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getDepartment().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<DoctorSchedule> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<DoctorSchedule> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setDoctorScheduleList(loadedSmartList);
+		});
+	}
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<Department> departmentList = ownerEntity.collectRefsWithType(Department.INTERNAL_TYPE);

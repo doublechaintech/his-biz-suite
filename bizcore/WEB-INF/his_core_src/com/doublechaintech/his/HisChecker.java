@@ -702,7 +702,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkObjectTypeOfUserApp(String objectType)
 	{
 		
-	 	checkStringLengthRange(objectType,5, 108,OBJECT_TYPE_OF_USER_APP ); 		
+	 	checkStringLengthRange(objectType,1, 100,OBJECT_TYPE_OF_USER_APP ); 		
 		
 		return this;
 	}	 			
@@ -747,7 +747,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkNameOfListAccess(String name)
 	{
 		
-	 	checkStringLengthRange(name,2, 200,NAME_OF_LIST_ACCESS ); 		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_LIST_ACCESS ); 		
 		
 		return this;
 	}	 			
@@ -756,7 +756,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkInternalNameOfListAccess(String internalName)
 	{
 		
-	 	checkStringLengthRange(internalName,2, 200,INTERNAL_NAME_OF_LIST_ACCESS ); 		
+	 	checkStringLengthRange(internalName,1, 200,INTERNAL_NAME_OF_LIST_ACCESS ); 		
 		
 		return this;
 	}	 			

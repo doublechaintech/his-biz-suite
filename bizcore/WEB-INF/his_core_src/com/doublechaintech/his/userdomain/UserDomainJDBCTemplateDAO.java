@@ -858,9 +858,9 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:UserWhiteList的domain的UserWhiteListList
-	public void loadOurUserWhiteListList(HisUserContext userContext, List<UserDomain> us, Map<String,Object> options) throws Exception{
+	public SmartList<UserWhiteList> loadOurUserWhiteListList(HisUserContext userContext, List<UserDomain> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -877,12 +877,13 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 			loadedSmartList.addAll(loadedList);
 			it.setUserWhiteListList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:SecUser的domain的SecUserList
-	public void loadOurSecUserList(HisUserContext userContext, List<UserDomain> us, Map<String,Object> options) throws Exception{
+	public SmartList<SecUser> loadOurSecUserList(HisUserContext userContext, List<UserDomain> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -899,6 +900,7 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 			loadedSmartList.addAll(loadedList);
 			it.setSecUserList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

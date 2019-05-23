@@ -253,8 +253,9 @@ public class ExpenseItemManagerImpl extends CustomHisCheckerManager implements E
 			//will be good when the expenseItem loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to ExpenseItem.
-			
-			
+			if (expenseItem.isChanged()){
+			expenseItem.updateUpdateTime(userContext.now());
+			}
 			expenseItem = saveExpenseItem(userContext, expenseItem, options);
 			return expenseItem;
 			

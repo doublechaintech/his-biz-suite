@@ -86,7 +86,7 @@ class UserWhiteListTable extends PureComponent {
       render: (text, record) => (
         <span>
           
-         { hasReadPermission(metaInfo)&&<Link to={`/userWhiteList/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
+          { hasReadPermission(metaInfo)&&<Link to={`/userWhiteList/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
           {  hasUpdatePermission(metaInfo)&&<span className={styles.splitLine} /> } {hasUpdatePermission(metaInfo)&&<a key="__2" onClick={()=>this.gotoEdit(text, record)}>{appLocaleName(userContext,"Edit")}</a>}
 

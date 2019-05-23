@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon } from 'antd'
+import { Icon,Divider } from 'antd'
+
 import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
@@ -7,7 +8,7 @@ import appLocaleName from '../../common/Locale.tool'
 import BaseTool from '../../common/Base.tool'
 import GlobalComponents from '../../custcomponents'
 import DescriptionList from '../../components/DescriptionList'
-
+const { Description } = DescriptionList
 const {
 	defaultRenderReferenceCell,
 	defaultRenderBooleanCell,
@@ -58,22 +59,26 @@ const displayColumns = [
 
 ]
 // refernce to https://ant.design/components/list-cn/
-const renderItemOfList=({expenseType,targetComponent})=>{
+const renderItemOfList=(expenseType,targetComponent)=>{
 
 	
 	
-	const {ExpenseTypeService} = GlobalComponents
-	// const userContext = null
+	
+	const userContext = null
 	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
+	<div key={expenseType.id}>
+	 <Divider style={{ margin: '16px 0' }} />
+	<DescriptionList  key={expenseType.id} size="small" col="4">
 <Description term="ID">{expenseType.id}</Description> 
 <Description term="名称">{expenseType.name}</Description> 
 <Description term="辅助识字课">{expenseType.helperChars}</Description> 
 <Description term="状态">{expenseType.status}</Description> 
 <Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD')}</Description> 
 	
-        {buildTransferModal(expenseType,targetComponent)}
+        
       </DescriptionList>
+      
+      </div>
 	)
 
 }

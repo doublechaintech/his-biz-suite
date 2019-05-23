@@ -16,6 +16,8 @@ https://demo.doublechaintech.com/admin/his/#/home
 * 医院登录: 13900000001/DoubleChain!y1
 * 医生登录：13900000002/DoubleChain!y1
 
+新演示已运行于国产数据库南大通用GBase 8s之上
+
 # 源文件（用文本文件写60多行的文件就可以生成完整应用）
 
 通过以下文件生成

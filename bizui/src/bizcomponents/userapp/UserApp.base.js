@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon } from 'antd'
+import { Icon,Divider } from 'antd'
+
 import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
@@ -7,7 +8,7 @@ import appLocaleName from '../../common/Locale.tool'
 import BaseTool from '../../common/Base.tool'
 import GlobalComponents from '../../custcomponents'
 import DescriptionList from '../../components/DescriptionList'
-
+const { Description } = DescriptionList
 const {
 	defaultRenderReferenceCell,
 	defaultRenderBooleanCell,
@@ -63,21 +64,19 @@ const displayColumns = [
 
 ]
 // refernce to https://ant.design/components/list-cn/
-const renderItemOfList=({userApp,targetComponent})=>{
+const renderItemOfList=(userApp,targetComponent)=>{
 
 	
 	
-	const {UserAppService} = GlobalComponents
-	// const userContext = null
+	
+	const userContext = null
 	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
+	<div key={userApp.id}>
+	 <Divider style={{ margin: '16px 0' }} />
+	<DescriptionList  key={userApp.id} size="small" col="4">
 <Description term="ID">{userApp.id}</Description> 
 <Description term="标题">{userApp.title}</Description> 
 <Description term="安全用户">{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):`${userApp.secUser.displayName}(${userApp.secUser.id})`}
- <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"安全用户","secUser",UserAppService.requestCandidateSecUser,
-	      UserAppService.transferToAnotherSecUser,"anotherSecUserId",userApp.secUser?userApp.secUser.id:"")} 
-  style={{fontSize: 20,color:"red"}} />
 </Description>
 <Description term="应用程序图标">{userApp.appIcon}</Description> 
 <Description term="许可">{userApp.permission}</Description> 
@@ -85,8 +84,10 @@ const renderItemOfList=({userApp,targetComponent})=>{
 <Description term="对象ID">{userApp.objectId}</Description> 
 <Description term="位置">{userApp.location}</Description> 
 	
-        {buildTransferModal(userApp,targetComponent)}
+        
       </DescriptionList>
+      
+      </div>
 	)
 
 }

@@ -86,7 +86,7 @@ class PeriodTable extends PureComponent {
       render: (text, record) => (
         <span>
           
-         { hasReadPermission(metaInfo)&&<Link to={`/period/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
+          { hasReadPermission(metaInfo)&&<Link to={`/period/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
           {
             record.actionList&&record.actionList.map((item)=>(<a key={item.actionId} onClick={()=>this.executeAction(item,text, record)}><span className={styles.splitLine} />{item.actionName}</a>))

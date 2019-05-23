@@ -19,7 +19,7 @@ import {
   Select,
   Form,
   AutoComplete,
-  Modal
+  Modal,Divider,
 } from 'antd';
 import styles from './Dashboard.tool.less';
 import ImagePreview from '../components/ImagePreview';
@@ -564,6 +564,36 @@ const defaultRenderAnalytics= mainObject => {
   );
 };
 
+
+const defaultRenderSubjectList = cardsData => {
+  
+  //listItem.renderItem(item)
+  const targetObject = cardsData.cardsSource
+  return (
+    <Row gutter={16}>
+      
+      {cardsData.subItems
+        
+       
+        .map(listItem => (
+         
+          <Col key={listItem.displayName} span={24}>
+             <Divider style={{ margin: '16px 0' }} />
+             <Card>
+          {listItem.displayName}
+            {
+             
+              targetObject[listItem.name].map(item=>(listItem.renderItem(item)))
+            }
+           
+          </Card></Col>
+         
+        ))}
+    </Row>
+    
+  );
+};
+
 const defaultRenderExtraFooter = mainObject => {
   return null;
 };
@@ -680,7 +710,7 @@ const DashboardTool = {
   defaultSubListsOf,
   defaultRenderExtraFooter,
   renderForTimeLine,
-  renderForNumbers,defaultQuickFunctions
+  renderForNumbers,defaultQuickFunctions,defaultRenderSubjectList
 };
 
 export default DashboardTool;

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon } from 'antd'
+import { Icon,Divider } from 'antd'
+
 import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
@@ -7,7 +8,7 @@ import appLocaleName from '../../common/Locale.tool'
 import BaseTool from '../../common/Base.tool'
 import GlobalComponents from '../../custcomponents'
 import DescriptionList from '../../components/DescriptionList'
-
+const { Description } = DescriptionList
 const {
 	defaultRenderReferenceCell,
 	defaultRenderBooleanCell,
@@ -49,9 +50,9 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record), sorter:true },
-  { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '6',render: (text, record)=>renderTextCell(text,record), sorter:true },
-  { title: fieldLabels.internalName, debugtype: 'string', dataIndex: 'internalName', width: '24',render: (text, record)=>renderTextCell(text,record), sorter:true },
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '6',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.internalName, debugtype: 'string', dataIndex: 'internalName', width: '24',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.readPermission, dataIndex: 'readPermission', render: (text, record) =>renderBooleanCell(text, record), sorter:true },
   { title: fieldLabels.createPermission, dataIndex: 'createPermission', render: (text, record) =>renderBooleanCell(text, record), sorter:true },
   { title: fieldLabels.deletePermission, dataIndex: 'deletePermission', render: (text, record) =>renderBooleanCell(text, record), sorter:true },
@@ -61,26 +62,26 @@ const displayColumns = [
 
 ]
 // refernce to https://ant.design/components/list-cn/
-const renderItemOfList=({listAccess,targetComponent})=>{
+const renderItemOfList=(listAccess,targetComponent)=>{
 
 	
 	
-	const {ListAccessService} = GlobalComponents
-	// const userContext = null
+	
+	const userContext = null
 	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
+	<div key={listAccess.id}>
+	 <Divider style={{ margin: '16px 0' }} />
+	<DescriptionList  key={listAccess.id} size="small" col="4">
 <Description term="ID">{listAccess.id}</Description> 
 <Description term="名称">{listAccess.name}</Description> 
 <Description term="内部名称">{listAccess.internalName}</Description> 
 <Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
- <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"应用程序","userApp",ListAccessService.requestCandidateApp,
-	      ListAccessService.transferToAnotherApp,"anotherAppId",listAccess.app?listAccess.app.id:"")} 
-  style={{fontSize: 20,color:"red"}} />
 </Description>
 	
-        {buildTransferModal(listAccess,targetComponent)}
+        
       </DescriptionList>
+      
+      </div>
 	)
 
 }

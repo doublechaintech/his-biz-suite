@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon } from 'antd'
+import { Icon,Divider } from 'antd'
+
 import { Link } from 'dva/router'
 import moment from 'moment'
 import ImagePreview from '../../components/ImagePreview'
@@ -7,7 +8,7 @@ import appLocaleName from '../../common/Locale.tool'
 import BaseTool from '../../common/Base.tool'
 import GlobalComponents from '../../custcomponents'
 import DescriptionList from '../../components/DescriptionList'
-
+const { Description } = DescriptionList
 const {
 	defaultRenderReferenceCell,
 	defaultRenderBooleanCell,
@@ -67,14 +68,16 @@ const displayColumns = [
 
 ]
 // refernce to https://ant.design/components/list-cn/
-const renderItemOfList=({secUser,targetComponent})=>{
+const renderItemOfList=(secUser,targetComponent)=>{
 
 	
 	
-	const {SecUserService} = GlobalComponents
-	// const userContext = null
+	
+	const userContext = null
 	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
+	<div key={secUser.id}>
+	 <Divider style={{ margin: '16px 0' }} />
+	<DescriptionList  key={secUser.id} size="small" col="4">
 <Description term="ID">{secUser.id}</Description> 
 <Description term="登录">{secUser.login}</Description> 
 <Description term="手机号码">{secUser.mobile}</Description> 
@@ -85,8 +88,10 @@ const renderItemOfList=({secUser,targetComponent})=>{
 <Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
 <Description term="当前状态">{secUser.currentStatus}</Description> 
 	
-        {buildTransferModal(secUser,targetComponent)}
+        
       </DescriptionList>
+      
+      </div>
 	)
 
 }

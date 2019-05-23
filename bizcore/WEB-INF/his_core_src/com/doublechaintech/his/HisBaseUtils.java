@@ -13,9 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.terapico.caf.form.ImageInfo;
+import com.terapico.utils.TextUtil;
 
 
 public class HisBaseUtils {
@@ -34,6 +37,20 @@ public class HisBaseUtils {
 		} catch (NoSuchAlgorithmException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+	
+	private static final Pattern ptnChnMobile = Pattern.compile("1[3-9]\\d{9}");
+	public static String formatChinaMobile(String mobile) {
+		String num = TextUtil.onlyNumber(mobile);
+		if (num.startsWith("86") || num.startsWith("086") || num.startsWith("0086")) {
+			int pos = num.indexOf("86");
+			num = num.substring(pos+2);
+		}
+		Matcher m = ptnChnMobile.matcher(num);
+		if (m.matches()) {
+			return num;
+		}
+		return null;
 	}
 	
 	public static String getCacheAccessKey(HisUserContext ctx) {
@@ -162,6 +179,12 @@ public class HisBaseUtils {
 	}
 	public static int getAppBuildVersion(HisUserContext ctx) {
 		return getBuildVersion(getRequestAppVersion(ctx));
+	}
+	protected static boolean startFromVersion(HisUserContext ctx, int version) {
+		if (!ctx.isProductEnvironment()) {
+			return true;
+		}
+		return getAppBuildVersion(ctx) >= version;
 	}
 	/*
 	 * "x-app-device" : "EML-AL00",

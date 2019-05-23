@@ -3,6 +3,8 @@ package com.doublechaintech.his.period;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
@@ -914,6 +916,31 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	public void enhanceList(List<Period> periodList) {		
 		this.enhanceListInternal(periodList, this.getPeriodMapper());
 	}
+	
+	
+	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的period的DoctorScheduleList
+	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Period> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return;
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(DoctorSchedule.PERIOD_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<DoctorSchedule> loadedObjs = userContext.getDAOGroup().getDoctorScheduleDAO().findDoctorScheduleWithKey(key, options);
+		Map<String, List<DoctorSchedule>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getPeriod().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<DoctorSchedule> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<DoctorSchedule> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setDoctorScheduleList(loadedSmartList);
+		});
+	}
+	
+	
 	@Override
 	public void collectAndEnhance(BaseEntity ownerEntity) {
 		List<Period> periodList = ownerEntity.collectRefsWithType(Period.INTERNAL_TYPE);

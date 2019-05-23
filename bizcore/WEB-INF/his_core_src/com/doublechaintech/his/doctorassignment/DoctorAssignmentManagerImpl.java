@@ -248,8 +248,9 @@ public class DoctorAssignmentManagerImpl extends CustomHisCheckerManager impleme
 			//will be good when the doctorAssignment loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to DoctorAssignment.
-			
-			
+			if (doctorAssignment.isChanged()){
+			doctorAssignment.updateUpdateTime(userContext.now());
+			}
 			doctorAssignment = saveDoctorAssignment(userContext, doctorAssignment, options);
 			return doctorAssignment;
 			

@@ -441,6 +441,13 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 			return resultData;
 		}
 	}
+	
+	public Map<String, Object> serializeObject(Object object, SerializeScope serializeScope) {
+		Map<String, Object> resultMap = new HashMap<>();
+		SerializeScope ssWrapper = SerializeScope.INCLUDE().field("data", serializeScope);
+		handleOneData(resultMap, ssWrapper, "/", "data", object);
+		return (Map<String, Object>) resultMap.get("data");
+	}
 }
 
 

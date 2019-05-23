@@ -983,9 +983,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:ListAccess的app的ListAccessList
-	public void loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
+	public SmartList<ListAccess> loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1002,12 +1002,13 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			loadedSmartList.addAll(loadedList);
 			it.setListAccessList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:ObjectAccess的app的ObjectAccessList
-	public void loadOurObjectAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
+	public SmartList<ObjectAccess> loadOurObjectAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1024,6 +1025,7 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			loadedSmartList.addAll(loadedList);
 			it.setObjectAccessList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

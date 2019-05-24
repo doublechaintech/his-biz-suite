@@ -15,10 +15,10 @@
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
 	
-		<property name="driverClassName" value="${app.database.driverClass}" />
 		<property name="url" value="${app.database.jdbcURL}" />
 		<property name="username" value="${app.database.username}" />
 		<property name="password" value="${app.database.password}" />
+		<property name="driverClassName" value="${app.database.driverClass}" />
 		<property name="initialSize" value="${app.database.pool.initialSize}" />
 		<property name="maxActive" value="${app.database.pool.maxActive}" />
 		

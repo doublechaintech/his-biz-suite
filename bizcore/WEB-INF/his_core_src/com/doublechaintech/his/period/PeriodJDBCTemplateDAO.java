@@ -919,9 +919,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的period的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Period> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Period> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -938,6 +938,7 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

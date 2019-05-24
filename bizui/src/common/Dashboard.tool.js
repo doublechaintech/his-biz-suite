@@ -63,6 +63,16 @@ const topColResponsiveProps = {
   style: { marginBottom: 24, marginTop: 24 },
 };
 
+const wholeLineColProps = {
+  xs: 24,
+  sm: 24,
+  md: 24,
+  lg: 24,
+  xl: 24,
+  style: {  marginBottom: 24, marginTop: 24},
+};
+
+
 const renderForNumbers = aggregatedData => {
   if (!aggregatedData) {
     return null;
@@ -189,7 +199,7 @@ const renderForTimeLine = aggregatedData => {
   if (!data.dataArray) {
     return null;
   }
-  if (data.dataArray.length == 0) {
+  if (data.dataArray.length === 0) {
     return null;
   }
   const option = {
@@ -405,7 +415,7 @@ const defaultLargeTextOf = mainObject => {
 //TODO: repalce with service
 const defaultHandleTransferSearch = (targetComponent, filterKey, newRequest) => {
   const parameters = newRequest || targetComponent.state;
-  console.log('current state', newRequest);
+  
   const {
     candidateServiceFunc,
     candidateObjectType,
@@ -413,7 +423,7 @@ const defaultHandleTransferSearch = (targetComponent, filterKey, newRequest) => 
     transferServiceFunc,
   } = parameters;
 
-  console.log('current state', parameters);
+  
 
   const id = ''; //not used for now
   const pageNo = 1;
@@ -422,7 +432,7 @@ const defaultHandleTransferSearch = (targetComponent, filterKey, newRequest) => 
     console.log('candidateReferenceService current state, not working', parameters);
     return;
   }
-  //get a function for fetching the candidate reference list
+  // get a function for fetching the candidate reference list
   const future = candidateReferenceService(candidateObjectType, id, filterKey, pageNo);
 
   future.then(candidateReferenceList => {
@@ -585,7 +595,7 @@ const legalListForDisplay=(targetObject, listItem)=>{
 
 const defaultRenderSubjectList = cardsData => {
   
-  //listItem.renderItem(item)
+  // listItem.renderItem(item)
   const targetObject = cardsData.cardsSource
   return (
     <Row gutter={16}>
@@ -595,18 +605,17 @@ const defaultRenderSubjectList = cardsData => {
         .filter(listItem=>legalListForDisplay(targetObject,listItem))
         .map(listItem => (
          
-          <Col key={listItem.displayName} span={24}>
+          <Col key={listItem.displayName} span={24} {...wholeLineColProps}>
             
-             <Card>
-          {listItem.displayName}
-
+             <Card title={listItem.displayName} style={{ marginBottom: 24 }} >
 
             {
              
               targetObject[listItem.name].map(item=>(listItem.renderItem(item)))
             }
            
-          </Card></Col>
+             </Card>
+          </Col>
          
         ))}
     </Row>

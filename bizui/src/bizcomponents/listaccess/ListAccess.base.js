@@ -70,7 +70,7 @@ const renderItemOfList=(listAccess,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={listAccess.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	 <Divider style={{ height: '2px' }} />
 	<DescriptionList  key={listAccess.id} size="small" col="4">
 <Description term="ID">{listAccess.id}</Description> 
 <Description term="名称">{listAccess.name}</Description> 

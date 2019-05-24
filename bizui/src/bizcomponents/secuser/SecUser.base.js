@@ -76,7 +76,7 @@ const renderItemOfList=(secUser,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={secUser.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	 <Divider style={{ height: '2px' }} />
 	<DescriptionList  key={secUser.id} size="small" col="4">
 <Description term="ID">{secUser.id}</Description> 
 <Description term="登录">{secUser.login}</Description> 

@@ -59,7 +59,7 @@ const renderItemOfList=(period,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={period.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	 <Divider style={{ height: '2px' }} />
 	<DescriptionList  key={period.id} size="small" col="4">
 <Description term="ID">{period.id}</Description> 
 <Description term="名称">{period.name}</Description> 

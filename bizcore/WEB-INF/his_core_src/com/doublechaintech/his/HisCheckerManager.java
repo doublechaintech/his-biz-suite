@@ -62,6 +62,16 @@ public class HisCheckerManager extends BaseManagerImpl {
 		enhancer.setCallback(proxy);
 		return asyncProxy = enhancer.create();
 	}
+	
+	protected void cacheVerifyCode(HisUserContext ctx, String mobile, String verifyCode) {
+		String cacheKey = "verifyCode:"+mobile;
+		ctx.putToCache(cacheKey, verifyCode, HisBaseConstants.DEFAULT_CACHE_TIME_FOR_USER);
+	}
+
+	protected String getVerifyCodeFromCache(HisUserContext ctx, String mobile) {
+		String cacheKey = "verifyCode:"+mobile;
+		return (String) ctx.getCachedObject(cacheKey, String.class);
+	}
 	/*
 	
 	

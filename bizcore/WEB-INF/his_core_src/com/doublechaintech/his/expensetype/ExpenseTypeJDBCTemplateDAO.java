@@ -1215,9 +1215,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的expenseType的ExpenseItemList
-	public void loadOurExpenseItemList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
+	public SmartList<ExpenseItem> loadOurExpenseItemList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1234,12 +1234,13 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			loadedSmartList.addAll(loadedList);
 			it.setExpenseItemList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的expenseType的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1256,6 +1257,7 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

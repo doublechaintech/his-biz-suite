@@ -1211,9 +1211,9 @@ public class DoctorJDBCTemplateDAO extends HisNamingServiceDAO implements Doctor
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorAssignment的doctor的DoctorAssignmentList
-	public void loadOurDoctorAssignmentList(HisUserContext userContext, List<Doctor> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorAssignment> loadOurDoctorAssignmentList(HisUserContext userContext, List<Doctor> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1230,12 +1230,13 @@ public class DoctorJDBCTemplateDAO extends HisNamingServiceDAO implements Doctor
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorAssignmentList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的doctor的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Doctor> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Doctor> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1252,6 +1253,7 @@ public class DoctorJDBCTemplateDAO extends HisNamingServiceDAO implements Doctor
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

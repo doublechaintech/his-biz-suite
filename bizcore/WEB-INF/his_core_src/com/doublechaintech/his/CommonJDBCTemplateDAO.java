@@ -597,29 +597,30 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	//When running under a cluster environment, we need a global unique id to ensure 
 	//The id will not be repeated
 	
-	private Long currentMax = -1L;
+	private AtomicLong currentMax = new AtomicLong(-1L);
 
 	protected String getNextId() {
 		synchronized(currentMax){
-			if(currentMax > 0){
-
-				return String.format(getIdFormat(),++currentMax);
+			if(currentMax.get() > 0){
+				System.out.println(this.getClass().getName()+this.hashCode()+":getNextId()="+currentMax);
+				return String.format(getIdFormat(),currentMax.incrementAndGet());
 			}
 			//The following logic just run when the first time loaded the id from table
 			try {
 				String SQL = "select max(id) from "+getName()+"_data";
 				String maxId = getJdbcTemplateObject().queryForObject(SQL, String.class);
 				if(maxId==null){
-                    currentMax = 1L;
+                    currentMax.set(1L);;
 					return  String.format(getIdFormat(),1);
 				}
 				
 				Object ret[]=parse(maxId);
-				currentMax = (Long)ret[1]+1;
-				return String.format(getIdFormat(),currentMax);
+				currentMax.set((Long)ret[1]+1);
+				System.out.println(this.getClass().getName()+this.hashCode()+":getNextId(start from "+maxId+")="+currentMax);
+				return String.format(getIdFormat(),currentMax.get());
 				
 			} catch (EmptyResultDataAccessException e) {
-                currentMax = 1L;
+                currentMax.set(1L);
 				return  String.format(getIdFormat(),1);
 			}
 		}
@@ -1396,6 +1397,8 @@ class CountingResultMap extends HashMap<String, Integer> {
 	}
 	
 }
+
+
 
 
 

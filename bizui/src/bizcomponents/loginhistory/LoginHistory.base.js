@@ -62,7 +62,7 @@ const renderItemOfList=(loginHistory,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={loginHistory.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	 <Divider style={{ height: '2px' }} />
 	<DescriptionList  key={loginHistory.id} size="small" col="4">
 <Description term="ID">{loginHistory.id}</Description> 
 <Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 

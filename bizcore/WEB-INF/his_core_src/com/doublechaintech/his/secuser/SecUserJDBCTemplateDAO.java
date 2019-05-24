@@ -1204,9 +1204,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:UserApp的secUser的UserAppList
-	public void loadOurUserAppList(HisUserContext userContext, List<SecUser> us, Map<String,Object> options) throws Exception{
+	public SmartList<UserApp> loadOurUserAppList(HisUserContext userContext, List<SecUser> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1223,12 +1223,13 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			loadedSmartList.addAll(loadedList);
 			it.setUserAppList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:LoginHistory的secUser的LoginHistoryList
-	public void loadOurLoginHistoryList(HisUserContext userContext, List<SecUser> us, Map<String,Object> options) throws Exception{
+	public SmartList<LoginHistory> loadOurLoginHistoryList(HisUserContext userContext, List<SecUser> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1245,6 +1246,7 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			loadedSmartList.addAll(loadedList);
 			it.setLoginHistoryList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

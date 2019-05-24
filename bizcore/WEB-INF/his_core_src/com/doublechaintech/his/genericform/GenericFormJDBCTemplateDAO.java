@@ -1316,9 +1316,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:FormMessage的form的FormMessageList
-	public void loadOurFormMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormMessage> loadOurFormMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1335,12 +1335,13 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormMessageList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:FormFieldMessage的form的FormFieldMessageList
-	public void loadOurFormFieldMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormFieldMessage> loadOurFormFieldMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1357,12 +1358,13 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormFieldMessageList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:FormField的form的FormFieldList
-	public void loadOurFormFieldList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormField> loadOurFormFieldList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1379,12 +1381,13 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormFieldList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:FormAction的form的FormActionList
-	public void loadOurFormActionList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormAction> loadOurFormActionList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1401,6 +1404,7 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormActionList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	

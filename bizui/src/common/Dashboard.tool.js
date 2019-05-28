@@ -7,19 +7,12 @@ import {
   Col,
   Icon,
   Card,
-  Tabs,
-  Table,
-  Radio,
-  DatePicker,
   Tooltip,
-  Menu,
-  Dropdown,
-  Badge,
   Switch,
   Select,
   Form,
   AutoComplete,
-  Modal,Divider,
+  Modal,Divider,Collapse
 } from 'antd';
 import styles from './Dashboard.tool.less';
 import ImagePreview from '../components/ImagePreview';
@@ -31,22 +24,17 @@ import moment from 'moment';
 import appLocaleName from './Locale.tool';
 import {
   ChartCard,
-  yuan,
   MiniArea,
   MiniBar,
-  MiniProgress,
-  Field,
-  Bar,
-  Pie,
-  TimelineChart,
+
 } from 'components/Charts';
 
 import { PREFIX } from '../axios/tools'
 
 import echarts from 'echarts';
 import Themes from './Dashboard.echartstheme';
-import { isWeekend } from 'date-fns';
 
+const {Panel} = Collapse;
 //get more style from https://echarts.baidu.com/theme-builder/
 echarts.registerTheme('bizTheme2', Themes.bizTheme);
 //please do not use defaultTheme, this is a big trap for developers
@@ -724,6 +712,52 @@ const defaultHideCloseTrans = targetComponent => {
   targetComponent.setState({ transferModalVisiable: false });
 };
 
+const renderTitle=(listItem,cardsData)=>{
+  const {id} = cardsData.cardsSource
+  return <div>{listItem.displayName}({listItem.count})
+   <Link to={`/${cardsData.cardsFor}/${id}/list/${listItem.name}/${listItem.displayName}列表`}>
+   <Icon type="double-right" />
+   </Link>
+   </div>
+
+}
+
+const renderListContent=(targetObject, listItem)=>{
+
+  const listContent = targetObject[listItem.name];
+  if(!listContent){
+    return (<div>稍等...</div>)
+  }
+  return listContent.map(item=>(listItem.renderItem(item)))
+
+}
+const defaultRenderSettingList = cardsData => {
+  
+  // listItem.renderItem(item)
+  const targetObject = cardsData.cardsSource
+  
+  return (
+    <Collapse bordered={false} defaultActiveKey={['1']}>
+      
+      {cardsData.subItems
+        
+        
+        .map((listItem) => (
+    
+          <Panel header={renderTitle(listItem,cardsData)} key={listItem.name}>
+            {
+             renderListContent(targetObject,listItem,cardsData)
+            }
+           
+          </Panel>
+        ))}
+    </Collapse>
+    
+  );
+};
+
+
+
 const DashboardTool = {
   aggregateDataset,
   calcKey,
@@ -739,7 +773,7 @@ const DashboardTool = {
   defaultSubListsOf,
   defaultRenderExtraFooter,
   renderForTimeLine,
-  renderForNumbers,defaultQuickFunctions,defaultRenderSubjectList
+  renderForNumbers,defaultQuickFunctions,defaultRenderSubjectList,defaultRenderSettingList,
 };
 
 export default DashboardTool;

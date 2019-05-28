@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-
+import GlobalComponents from '../../custcomponents';
 import {Form } from 'antd'
 import { Link } from 'dva/router'
 
@@ -17,7 +17,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 const {
   defaultRenderExtraHeader,
-  defaultSubListsOf,
+  defaultSubListsOf, defaultRenderSubjectList,
 
 }= DashboardTool
 
@@ -27,6 +27,7 @@ const internalRenderExtraHeader = defaultRenderExtraHeader
 
 const internalSubListsOf = defaultSubListsOf
 
+const internalRenderSubjectList = defaultRenderSubjectList
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
   const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
@@ -34,19 +35,10 @@ const internalRenderTitle = (cardsData,targetComponent) =>{
 
 }
 
-
-const internalSummaryOf = (expenseType,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{expenseType.id}</Description> 
-<Description term="名称">{expenseType.name}</Description> 
-<Description term="辅助识字课">{expenseType.helperChars}</Description> 
-<Description term="状态">{expenseType.status}</Description> 
-<Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD')}</Description> 
+const internalSummaryOf = (item, targetComponents)=>{
 	
-      </DescriptionList>
-	)
+	return GlobalComponents.ExpenseTypeBase.renderItemOfList(item, targetComponents)
+
 }
 
 
@@ -66,14 +58,15 @@ class ExpenseTypeProfile extends Component {
 
     const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",cardsSource: expenseType,
   		subItems: [
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: expenseType.expenseItemList},
-    
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem',  renderItem: GlobalComponents.ExpenseItemBase.renderItemOfList},
+     
       	],
   	};
     
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const subListsOf = this.props.subListsOf || internalSubListsOf
+   
     const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderSubjectList = this.props.renderSubjectList || internalRenderSubjectList
     
     return (
 
@@ -83,7 +76,7 @@ class ExpenseTypeProfile extends Component {
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}
-       {subListsOf(cardsData)} 
+       {renderSubjectList(cardsData)} 
       </PageHeaderLayout>
     )
   }

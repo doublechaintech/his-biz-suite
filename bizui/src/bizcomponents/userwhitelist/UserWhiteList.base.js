@@ -60,7 +60,7 @@ const renderItemOfList=(userWhiteList,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={userWhiteList.id}>
-	 <Divider style={{ height: '2px' }} />
+	
 	<DescriptionList  key={userWhiteList.id} size="small" col="4">
 <Description term="ID">{userWhiteList.id}</Description> 
 <Description term="用户身份">{userWhiteList.userIdentity}</Description> 
@@ -68,7 +68,7 @@ const renderItemOfList=(userWhiteList,targetComponent)=>{
 	
         
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

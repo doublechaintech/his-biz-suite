@@ -57,14 +57,14 @@ const renderItemOfList=(userDomain,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={userDomain.id}>
-	 <Divider style={{ height: '2px' }} />
+	
 	<DescriptionList  key={userDomain.id} size="small" col="4">
 <Description term="ID">{userDomain.id}</Description> 
 <Description term="名称">{userDomain.name}</Description> 
 	
         
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

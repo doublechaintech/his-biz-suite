@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-
+import GlobalComponents from '../../custcomponents';
 import {Form } from 'antd'
 import { Link } from 'dva/router'
 
@@ -17,7 +17,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 const {
   defaultRenderExtraHeader,
-  defaultSubListsOf,
+  defaultSubListsOf, defaultRenderSubjectList,
 
 }= DashboardTool
 
@@ -27,6 +27,7 @@ const internalRenderExtraHeader = defaultRenderExtraHeader
 
 const internalSubListsOf = defaultSubListsOf
 
+const internalRenderSubjectList = defaultRenderSubjectList
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
   const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
@@ -34,23 +35,10 @@ const internalRenderTitle = (cardsData,targetComponent) =>{
 
 }
 
-
-const internalSummaryOf = (secUser,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{secUser.id}</Description> 
-<Description term="登录">{secUser.login}</Description> 
-<Description term="手机号码">{secUser.mobile}</Description> 
-<Description term="电子邮件">{secUser.email}</Description> 
-<Description term="密码">{secUser.pwd}</Description> 
-<Description term="验证码">{secUser.verificationCode}</Description> 
-<Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
-<Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
-<Description term="当前状态">{secUser.currentStatus}</Description> 
+const internalSummaryOf = (item, targetComponents)=>{
 	
-      </DescriptionList>
-	)
+	return GlobalComponents.SecUserBase.renderItemOfList(item, targetComponents)
+
 }
 
 
@@ -70,13 +58,14 @@ class SecUserProfile extends Component {
 
     const cardsData = {cardsName:"安全用户",cardsFor: "secUser",cardsSource: secUser,
   		subItems: [
-    
+     
       	],
   	};
     
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const subListsOf = this.props.subListsOf || internalSubListsOf
+   
     const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderSubjectList = this.props.renderSubjectList || internalRenderSubjectList
     
     return (
 
@@ -86,7 +75,7 @@ class SecUserProfile extends Component {
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}
-       {subListsOf(cardsData)} 
+       {renderSubjectList(cardsData)} 
       </PageHeaderLayout>
     )
   }

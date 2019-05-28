@@ -19,292 +19,63 @@ import styles from './ObjectAccess.preference.less'
 import DescriptionList from '../../components/DescriptionList';
 import ImagePreview from '../../components/ImagePreview';
 import GlobalComponents from '../../custcomponents';
-import PermissionSetting from '../../permission/PermissionSetting'
+import DashboardTool from '../../common/Dashboard.tool'
 import appLocaleName from '../../common/Locale.tool'
+
+const {aggregateDataset,calcKey, defaultHideCloseTrans,
+  defaultImageListOf,defaultSettingListOf,defaultBuildTransferModal,
+  defaultExecuteTrans,defaultHandleTransferSearch,defaultShowTransferModel,
+  defaultRenderExtraHeader,
+  defaultSubListsOf,defaultRenderAnalytics,
+  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,
+  defaultQuickFunctions, defaultRenderSubjectList,
+}= DashboardTool
+
+
+
 const { Description } = DescriptionList;
 const { TabPane } = Tabs
 const { RangePicker } = DatePicker
 const { Option } = Select
 
-const topColResponsiveProps = {
-  xs: 8,
-  sm: 6,
-  md: 6,
-  lg: 4,
-  xl: 4,
-  style: { marginBottom: 24 },
-}
 
 
-const internalImageListOf = (objectAccess) =>{
-  const userContext = null
-  const imageList = [
-	 ]
-  const filteredList = imageList.filter((item)=>item.imageLocation!=null)
-  if(filteredList.length===0){
-    return null
-  }
 
-  return(<Card title={appLocaleName(userContext,"ImageList")} className={styles.card}><Row type="flex" justify="start" align="bottom">
-  {
-      filteredList.map((item,index)=>(<Col span={4} key={index}><ImagePreview imageTitle ={item.title} showTitleUnderImage={true} imageLocation={item.imageLocation} >{item.title}</ImagePreview></Col>))
-  }</Row></Card> )
+const internalRenderExtraHeader = defaultRenderExtraHeader
+
+const internalRenderExtraFooter = defaultRenderExtraFooter
+const internalSubListsOf = defaultSubListsOf
+
+
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
 }
 
-const internalSettingListOf = (objectAccess) =>{
-	const userContext = null
-	const optionList = [ 
-	]
+
+const internalSummaryOf = (item, targetComponents)=>{
 	
-  if(optionList.length===0){
-    return null
-  }
-  return(<Card title={appLocaleName(userContext,"Switchers")} className={styles.card}>
-  	
-  	{
-  	  optionList.map((item)=><Col key={item.parameterName} span={6} style={{"height":"60px"}}>
-       <Switch  title={item.title} checked={item.value} type={item.value?"success":"error"} checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")} />
-       <span style={{"margin":"10px"}}>{item.title}</span>
-       </Col>)
-  	}
-
-
-</Card> )
-	
-
+	return GlobalComponents.ObjectAccessBase.renderItem(item, targetComponents)
 
 }
 
-const internalLargeTextOf = (objectAccess) =>{
-
-	return null
-	
-
-}
-
-/////////////////////////////////////// BUILD FOR TRANSFERRING TO ANOTHER OBJECT////////////////////////////////////////////////
-
-const handleTransferSearch =(targetComponent,filterKey,newRequest)=>{
-  const {ObjectAccessService} = GlobalComponents;
-
-  const parameters = newRequest||targetComponent.state
-
-  const {
- 
-    candidateServiceName,
-    candidateObjectType,
-    targetLocalName,
- 
-  } = parameters
-
-  console.log("current state", parameters)
-
-  const id = "";//not used for now
-  const pageNo = 1;
-  const candidateReferenceService = ObjectAccessService[candidateServiceName] 
-  if(!candidateReferenceService){
-    console.log("current state", parameters)
-    return;
-  }
-  //get a function for fetching the candidate reference list
-  const future = candidateReferenceService(candidateObjectType, id, filterKey, pageNo);
-  console.log(future);
-  future.then(candidateReferenceList=>{
-    targetComponent.setState({
-     ...parameters,
-      candidateReferenceList,
-      transferModalVisiable:true,transferModalTitle:appLocaleName(userContext,"Reassign")+targetLocalName+">"
-     
-    })
-
-  })
-
-}
-//  onClick={()=>showTransferModel(targetComponent,{appLocaleName(userContext,"City")},"city","requestCandidateDistrict","transferToAnotherDistrict")} 
-
-const showTransferModel = (targetComponent,targetLocalName,
-  candidateObjectType,candidateServiceName, transferServiceName, transferTargetParameterName,currentValue) => {
-
-  const filterKey = ""
-
-  const newRequest = {targetLocalName,candidateObjectType,candidateServiceName,transferServiceName,transferTargetParameterName,currentValue}
-  console.log("showTransferModel  new state", newRequest)
-  //targetComponent.setState(newState);
-  handleTransferSearch(targetComponent,filterKey,newRequest)
-}
-
-const hideCloseTrans = (targetComponent) =>{
-  targetComponent.setState({transferModalVisiable:false})
-
-}
-
-const executeTrans = (objectAccess,targetComponent) =>{
-  const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = targetComponent.props.form
-  const {
-   
-    candidateServiceName,
-    candidateObjectType,
-    targetLocalName,
-    transferServiceName
-  } = targetComponent.state
-
-  const {dispatch} = targetComponent.props
-
-  validateFieldsAndScroll((error, values) => {
-    console.log("error", values)
-
-    const parameters  = {...values}
-    const id=objectAccess.id;
-    const serviceNameToCall = transferServiceName;
-
-    const payload = {parameters,id,serviceNameToCall}
-    
-    //targetComponent.setState({transferModalVisiable:false})
-    dispatch({type:"_objectAccess/doJob",payload: payload})
-
-    targetComponent.setState({transferModalVisiable:false})
-
-  })
- 
-
-}
-
-
-const buildTransferModal = (objectAccess,targetComponent) => {
-
-
-  const {transferModalVisiable,targetLocalName,transferModalTitle,
-    candidateReferenceList,transferTargetParameterName,currentValue} = targetComponent.state
-  const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = targetComponent.props.form
-
-
-  if(!candidateReferenceList||!candidateReferenceList.candidates){
-    return null;
-  }
-
-
-  const formItemLayout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  }
-
-  return(
-
-<Modal title={transferModalTitle}
-          visible={transferModalVisiable}
-          onOk={()=>executeTrans(objectAccess,targetComponent)}
-          onCancel={()=>hideCloseTrans(targetComponent)}
-          
-        >
-
-  <Form >
-            <Row gutter={16}>
-
-              <Col lg={24} md={24} sm={24}>
-                <Form.Item label={`${appLocaleName(userContext,"PleaseSelectNew")}${targetLocalName}`} {...formItemLayout}>
-                  {getFieldDecorator(transferTargetParameterName, {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseSearch") }],
-                    initialValue: currentValue
-                  })(
-                    <AutoComplete
-                    dataSource={candidateReferenceList.candidates}
-                    onSearch={(value)=>handleTransferSearch(targetComponent,value)}
-                    >
-                   {candidateReferenceList.candidates.map(item=>{
-                return (<Option key={item.id}>{`${item.displayName}(${item.id})`}</Option>);
-            })}
-                    
-                    </AutoComplete>
-                  )}
-                </Form.Item>
-              </Col></Row>
-              </Form>
-
-          
-        </Modal>)
-
-
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-const internalRenderExtraHeader = (objectAccess) =>{
-	return null
-}
-const internalRenderExtraFooter = (objectAccess) =>{
-	return null
-}
-const internalSubListsOf = (cardsData) =>{
-	const {id} = cardsData.cardsSource;
-	const userContext = null
-	return (<Row gutter={24}>
-
-           {cardsData.subItems.sort((x,y)=>x.displayName.localeCompare(y.displayName, 'zh-CN')).map((item)=>(<Col {...topColResponsiveProps} key={item.name}>   
-            <Card title={`${item.displayName}(${numeral(item.count).format('0,0')})`}  style={{ width: 180 }}>             
-              <p><Link to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}${appLocaleName(userContext,"List")}`}><FontAwesome name="list"  />&nbsp;{appLocaleName(userContext,"Manage")}</Link>
-              
-              {item.addFunction&&(<Link to={`/${cardsData.cardsFor}/${id}/list/${item.role}CreateForm`}><span className={styles.splitLine}></span><FontAwesome name="plus"  />&nbsp;{appLocaleName(userContext,"Add")}</Link>)}   
-              
-              </p>         
-          </Card> 
-            </Col>))}
-          </Row>)
-}
-
-const internalSummaryOf = (objectAccess,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{objectAccess.id}</Description> 
-<Description term="名称">{objectAccess.name}</Description> 
-<Description term="访问对象类型">{objectAccess.objectType}</Description> 
-<Description term="列表1">{objectAccess.list1}</Description> 
-<Description term="列表2">{objectAccess.list2}</Description> 
-<Description term="列表3">{objectAccess.list3}</Description> 
-<Description term="列表4">{objectAccess.list4}</Description> 
-<Description term="列表5">{objectAccess.list5}</Description> 
-<Description term="列表6">{objectAccess.list6}</Description> 
-<Description term="列表7">{objectAccess.list7}</Description> 
-<Description term="列表8">{objectAccess.list8}</Description> 
-<Description term="列表9">{objectAccess.list9}</Description> 
-<Description term="应用程序">{objectAccess.app==null?appLocaleName(userContext,"NotAssigned"):objectAccess.app.displayName}
- <Icon type="swap" onClick={()=>
-  showTransferModel(targetComponent,"应用程序","userApp","requestCandidateApp",
-	      "transferToAnotherApp","anotherAppId",objectAccess.app?objectAccess.app.id:"")} 
-  style={{fontSize: 20,color:"red"}} />
-</Description>
-	
-        {buildTransferModal(objectAccess,targetComponent)}
-      </DescriptionList>
-	)
-
-}
-
-
-const renderPermissionSetting = objectAccess => {
-  const {ObjectAccessBase} = GlobalComponents
-  return <PermissionSetting targetObject={objectAccess}  targetObjectMeta={ObjectAccessBase}/>
-
-
-}
-
+const internalQuickFunctions = defaultQuickFunctions
 
 class ObjectAccessPreference extends Component {
 
-  state = {
+ state = {
     transferModalVisiable: false,
     candidateReferenceList: {},
     candidateServiceName:"",
-    candidateObjectType:"",
+    candidateObjectType:"city",
     targetLocalName:"",
     transferServiceName:"",
     currentValue:"",
-    transferTargetParameterName:""
+    transferTargetParameterName:"",  
+    defaultType: 'objectAccess'
 
 
   }
@@ -315,51 +86,49 @@ class ObjectAccessPreference extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  objectAccess = this.props.objectAccess;
-    const { id,displayName,  } = objectAccess
+    const { id,displayName,  } = this.props.objectAccess
+    if(!this.props.objectAccess.class){
+      return null
+    }
+    const returnURL = this.props.returnURL
     
-    
-    
-    const cardsData = {cardsName:"对象访问",cardsFor: "objectAccess",cardsSource: objectAccess,
+    const cardsData = {cardsName:"对象访问",cardsFor: "objectAccess",
+    	cardsSource: this.props.objectAccess,returnURL,displayName,
   		subItems: [
     
       	],
   	};
-    //{appLocaleName(userContext,"EveryPartCanBeCustomed")}_features="custom"{appLocaleName(userContext,"Getacustomsample")}
     
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const settingListOf = this.props.settingListOf || internalSettingListOf
-    const imageListOf = this.props.imageListOf || internalImageListOf
-    const subListsOf = this.props.subListsOf || internalSubListsOf
-    const largeTextOf = this.props.largeTextOf ||internalLargeTextOf
     const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderTitle = this.props.renderTitle || internalRenderTitle
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
-    /*
-    {settingListOf(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}
-        {subListsOf(cardsData)} 
-        {largeTextOf(cardsData.cardsSource)}
-    */
+    const renderSubjectList = this.props.renderSubjectList || internalRenderSubjectList
+     
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={renderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >
-      {renderPermissionSetting(cardsData.cardsSource)}
-      {renderExtraHeader(cardsData.cardsSource)}
-        <div>
        
-        {subListsOf(cardsData)} 
-          
-        </div>
+        {renderExtraHeader(cardsData.cardsSource)}
+       
+        
+        {renderSubjectList(cardsData)}       
+        
+        {renderExtraFooter(cardsData.cardsSource)}
+  		
       </PageHeaderLayout>
+    
     )
   }
 }
 
 export default connect(state => ({
   objectAccess: state._objectAccess,
+  returnURL: state.breadcrumb.returnURL,
+  
 }))(Form.create()(ObjectAccessPreference))
 

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-
+import GlobalComponents from '../../custcomponents';
 import {Form } from 'antd'
 import { Link } from 'dva/router'
 
@@ -17,7 +17,7 @@ import appLocaleName from '../../common/Locale.tool'
 
 const {
   defaultRenderExtraHeader,
-  defaultSubListsOf,
+  defaultSubListsOf, defaultRenderSubjectList,
 
 }= DashboardTool
 
@@ -27,6 +27,7 @@ const internalRenderExtraHeader = defaultRenderExtraHeader
 
 const internalSubListsOf = defaultSubListsOf
 
+const internalRenderSubjectList = defaultRenderSubjectList
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
   const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
@@ -34,17 +35,10 @@ const internalRenderTitle = (cardsData,targetComponent) =>{
 
 }
 
-
-const internalSummaryOf = (doctorAssignment,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{doctorAssignment.id}</Description> 
-<Description term="名称">{doctorAssignment.name}</Description> 
-<Description term="更新时间">{ moment(doctorAssignment.updateTime).format('YYYY-MM-DD')}</Description> 
+const internalSummaryOf = (item, targetComponents)=>{
 	
-      </DescriptionList>
-	)
+	return GlobalComponents.DoctorAssignmentBase.renderItemOfList(item, targetComponents)
+
 }
 
 
@@ -64,13 +58,14 @@ class DoctorAssignmentProfile extends Component {
 
     const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: doctorAssignment,
   		subItems: [
-    
+     
       	],
   	};
     
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const subListsOf = this.props.subListsOf || internalSubListsOf
+   
     const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderSubjectList = this.props.renderSubjectList || internalRenderSubjectList
     
     return (
 
@@ -80,7 +75,7 @@ class DoctorAssignmentProfile extends Component {
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}
-       {subListsOf(cardsData)} 
+       {renderSubjectList(cardsData)} 
       </PageHeaderLayout>
     )
   }

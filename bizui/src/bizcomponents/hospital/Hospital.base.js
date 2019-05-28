@@ -62,14 +62,13 @@ const renderItemOfList=(hospital,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={hospital.id}>
-	 <Divider style={{ height: '2px' }} />
+	
 	<DescriptionList  key={hospital.id} size="small" col="4">
 <Description term="ID">{hospital.id}</Description> 
 <Description term="名称">{hospital.name}</Description> 
 <Description term="地址">{hospital.address}</Description> 
 <Description term="电话">{hospital.telephone}</Description> 
 	
-        
       </DescriptionList>
       
       </div>

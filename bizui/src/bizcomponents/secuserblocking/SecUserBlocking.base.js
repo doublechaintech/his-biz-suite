@@ -61,7 +61,7 @@ const renderItemOfList=(secUserBlocking,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={secUserBlocking.id}>
-	 <Divider style={{ height: '2px' }} />
+	
 	<DescriptionList  key={secUserBlocking.id} size="small" col="4">
 <Description term="ID">{secUserBlocking.id}</Description> 
 <Description term="谁">{secUserBlocking.who}</Description> 
@@ -70,7 +70,7 @@ const renderItemOfList=(secUserBlocking,targetComponent)=>{
 	
         
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

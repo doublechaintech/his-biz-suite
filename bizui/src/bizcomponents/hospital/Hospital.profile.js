@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-
-import {Form } from 'antd'
+import GlobalComponents from '../../custcomponents';
+import {Form, Card, Row,Col,Icon } from 'antd'
 import { Link } from 'dva/router'
 
 import PageHeaderLayout from '../../layouts/PageHeaderLayout'
@@ -15,9 +15,10 @@ import DescriptionList from '../../components/DescriptionList';
 import DashboardTool from '../../common/Dashboard.tool'
 import appLocaleName from '../../common/Locale.tool'
 
+
 const {
   defaultRenderExtraHeader,
-  defaultSubListsOf,
+  defaultSubListsOf, defaultRenderSettingList,
 
 }= DashboardTool
 
@@ -28,24 +29,18 @@ const internalRenderExtraHeader = defaultRenderExtraHeader
 const internalSubListsOf = defaultSubListsOf
 
 
+const internalRenderSettingList = defaultRenderSettingList
+
 const internalRenderTitle = (cardsData,targetComponent) =>{
   const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
 }
 
-
-const internalSummaryOf = (hospital,targetComponent) =>{
-    const userContext = null
-	return (
-	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{hospital.id}</Description> 
-<Description term="名称">{hospital.name}</Description> 
-<Description term="地址">{hospital.address}</Description> 
-<Description term="电话">{hospital.telephone}</Description> 
+const internalSummaryOf = (item, targetComponents)=>{
 	
-      </DescriptionList>
-	)
+	return GlobalComponents.HospitalBase.renderItemOfList(item, targetComponents)
+
 }
 
 
@@ -65,17 +60,18 @@ class HospitalProfile extends Component {
 
     const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,
   		subItems: [
-{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', data: hospital.expenseTypeList},
-{name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period', data: hospital.periodList},
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: hospital.expenseItemList},
-{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', data: hospital.departmentList},
-    
+{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType',  renderItem: GlobalComponents.ExpenseTypeBase.renderItemOfList},
+{name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period',  renderItem: GlobalComponents.PeriodBase.renderItemOfList},
+{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem',  renderItem: GlobalComponents.ExpenseItemBase.renderItemOfList},
+{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department',  renderItem: GlobalComponents.DepartmentBase.renderItemOfList},
+     
       	],
   	};
     
     const renderExtraHeader = this.props.renderExtraHeader || internalRenderExtraHeader
-    const subListsOf = this.props.subListsOf || internalSubListsOf
+   
     const summaryOf = this.props.summaryOf || internalSummaryOf
+    const renderSettingList = this.props.renderSettingList || internalRenderSettingList
     
     return (
 
@@ -85,7 +81,7 @@ class HospitalProfile extends Component {
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}
-       {subListsOf(cardsData)} 
+       {renderSettingList(cardsData)} 
       </PageHeaderLayout>
     )
   }

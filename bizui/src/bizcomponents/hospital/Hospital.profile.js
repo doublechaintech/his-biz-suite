@@ -5,16 +5,15 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import GlobalComponents from '../../custcomponents';
-import {Form, Card, Row,Col,Icon } from 'antd'
+import {Form } from 'antd'
 import { Link } from 'dva/router'
 
 import PageHeaderLayout from '../../layouts/PageHeaderLayout'
-import styles from './Hospital.preference.less'
+import styles from './Hospital.profile.less'
 import DescriptionList from '../../components/DescriptionList';
 
 import DashboardTool from '../../common/Dashboard.tool'
 import appLocaleName from '../../common/Locale.tool'
-
 
 const {
   defaultRenderExtraHeader,
@@ -27,7 +26,6 @@ const { Description } = DescriptionList;
 const internalRenderExtraHeader = defaultRenderExtraHeader
 
 const internalSubListsOf = defaultSubListsOf
-
 
 const internalRenderSettingList = defaultRenderSettingList
 

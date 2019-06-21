@@ -6,7 +6,6 @@ import HospitalBase from './hospital/Hospital.base';
 import HospitalBizApp from './hospital/Hospital.app';
 import HospitalModel from './hospital/Hospital.model';
 import HospitalDashboard from './hospital/Hospital.dashboard';
-import HospitalPreference from './hospital/Hospital.preference';
 import HospitalModalTable from './hospital/Hospital.modaltable';
 import HospitalSearch from './hospital/Hospital.search';
 import HospitalSearchForm from './hospital/Hospital.searchform';
@@ -21,7 +20,6 @@ import ExpenseTypeBase from './expensetype/ExpenseType.base';
 import ExpenseTypeBizApp from './expensetype/ExpenseType.app';
 import ExpenseTypeModel from './expensetype/ExpenseType.model';
 import ExpenseTypeDashboard from './expensetype/ExpenseType.dashboard';
-import ExpenseTypePreference from './expensetype/ExpenseType.preference';
 import ExpenseTypeModalTable from './expensetype/ExpenseType.modaltable';
 import ExpenseTypeSearch from './expensetype/ExpenseType.search';
 import ExpenseTypeSearchForm from './expensetype/ExpenseType.searchform';
@@ -36,7 +34,6 @@ import PeriodBase from './period/Period.base';
 import PeriodBizApp from './period/Period.app';
 import PeriodModel from './period/Period.model';
 import PeriodDashboard from './period/Period.dashboard';
-import PeriodPreference from './period/Period.preference';
 import PeriodModalTable from './period/Period.modaltable';
 import PeriodSearch from './period/Period.search';
 import PeriodSearchForm from './period/Period.searchform';
@@ -51,7 +48,6 @@ import ExpenseItemBase from './expenseitem/ExpenseItem.base';
 import ExpenseItemBizApp from './expenseitem/ExpenseItem.app';
 import ExpenseItemModel from './expenseitem/ExpenseItem.model';
 import ExpenseItemDashboard from './expenseitem/ExpenseItem.dashboard';
-import ExpenseItemPreference from './expenseitem/ExpenseItem.preference';
 import ExpenseItemModalTable from './expenseitem/ExpenseItem.modaltable';
 import ExpenseItemSearch from './expenseitem/ExpenseItem.search';
 import ExpenseItemSearchForm from './expenseitem/ExpenseItem.searchform';
@@ -66,7 +62,6 @@ import DoctorBase from './doctor/Doctor.base';
 import DoctorBizApp from './doctor/Doctor.app';
 import DoctorModel from './doctor/Doctor.model';
 import DoctorDashboard from './doctor/Doctor.dashboard';
-import DoctorPreference from './doctor/Doctor.preference';
 import DoctorModalTable from './doctor/Doctor.modaltable';
 import DoctorSearch from './doctor/Doctor.search';
 import DoctorSearchForm from './doctor/Doctor.searchform';
@@ -81,7 +76,6 @@ import DepartmentBase from './department/Department.base';
 import DepartmentBizApp from './department/Department.app';
 import DepartmentModel from './department/Department.model';
 import DepartmentDashboard from './department/Department.dashboard';
-import DepartmentPreference from './department/Department.preference';
 import DepartmentModalTable from './department/Department.modaltable';
 import DepartmentSearch from './department/Department.search';
 import DepartmentSearchForm from './department/Department.searchform';
@@ -96,7 +90,6 @@ import DoctorAssignmentBase from './doctorassignment/DoctorAssignment.base';
 import DoctorAssignmentBizApp from './doctorassignment/DoctorAssignment.app';
 import DoctorAssignmentModel from './doctorassignment/DoctorAssignment.model';
 import DoctorAssignmentDashboard from './doctorassignment/DoctorAssignment.dashboard';
-import DoctorAssignmentPreference from './doctorassignment/DoctorAssignment.preference';
 import DoctorAssignmentModalTable from './doctorassignment/DoctorAssignment.modaltable';
 import DoctorAssignmentSearch from './doctorassignment/DoctorAssignment.search';
 import DoctorAssignmentSearchForm from './doctorassignment/DoctorAssignment.searchform';
@@ -111,7 +104,6 @@ import DoctorScheduleBase from './doctorschedule/DoctorSchedule.base';
 import DoctorScheduleBizApp from './doctorschedule/DoctorSchedule.app';
 import DoctorScheduleModel from './doctorschedule/DoctorSchedule.model';
 import DoctorScheduleDashboard from './doctorschedule/DoctorSchedule.dashboard';
-import DoctorSchedulePreference from './doctorschedule/DoctorSchedule.preference';
 import DoctorScheduleModalTable from './doctorschedule/DoctorSchedule.modaltable';
 import DoctorScheduleSearch from './doctorschedule/DoctorSchedule.search';
 import DoctorScheduleSearchForm from './doctorschedule/DoctorSchedule.searchform';
@@ -126,7 +118,6 @@ import UserDomainBase from './userdomain/UserDomain.base';
 import UserDomainBizApp from './userdomain/UserDomain.app';
 import UserDomainModel from './userdomain/UserDomain.model';
 import UserDomainDashboard from './userdomain/UserDomain.dashboard';
-import UserDomainPreference from './userdomain/UserDomain.preference';
 import UserDomainModalTable from './userdomain/UserDomain.modaltable';
 import UserDomainSearch from './userdomain/UserDomain.search';
 import UserDomainSearchForm from './userdomain/UserDomain.searchform';
@@ -141,7 +132,6 @@ import UserWhiteListBase from './userwhitelist/UserWhiteList.base';
 import UserWhiteListBizApp from './userwhitelist/UserWhiteList.app';
 import UserWhiteListModel from './userwhitelist/UserWhiteList.model';
 import UserWhiteListDashboard from './userwhitelist/UserWhiteList.dashboard';
-import UserWhiteListPreference from './userwhitelist/UserWhiteList.preference';
 import UserWhiteListModalTable from './userwhitelist/UserWhiteList.modaltable';
 import UserWhiteListSearch from './userwhitelist/UserWhiteList.search';
 import UserWhiteListSearchForm from './userwhitelist/UserWhiteList.searchform';
@@ -156,7 +146,6 @@ import SecUserBase from './secuser/SecUser.base';
 import SecUserBizApp from './secuser/SecUser.app';
 import SecUserModel from './secuser/SecUser.model';
 import SecUserDashboard from './secuser/SecUser.dashboard';
-import SecUserPreference from './secuser/SecUser.preference';
 import SecUserModalTable from './secuser/SecUser.modaltable';
 import SecUserSearch from './secuser/SecUser.search';
 import SecUserSearchForm from './secuser/SecUser.searchform';
@@ -171,7 +160,6 @@ import SecUserBlockingBase from './secuserblocking/SecUserBlocking.base';
 import SecUserBlockingBizApp from './secuserblocking/SecUserBlocking.app';
 import SecUserBlockingModel from './secuserblocking/SecUserBlocking.model';
 import SecUserBlockingDashboard from './secuserblocking/SecUserBlocking.dashboard';
-import SecUserBlockingPreference from './secuserblocking/SecUserBlocking.preference';
 import SecUserBlockingModalTable from './secuserblocking/SecUserBlocking.modaltable';
 import SecUserBlockingSearch from './secuserblocking/SecUserBlocking.search';
 import SecUserBlockingSearchForm from './secuserblocking/SecUserBlocking.searchform';
@@ -186,7 +174,6 @@ import UserAppBase from './userapp/UserApp.base';
 import UserAppBizApp from './userapp/UserApp.app';
 import UserAppModel from './userapp/UserApp.model';
 import UserAppDashboard from './userapp/UserApp.dashboard';
-import UserAppPreference from './userapp/UserApp.preference';
 import UserAppModalTable from './userapp/UserApp.modaltable';
 import UserAppSearch from './userapp/UserApp.search';
 import UserAppSearchForm from './userapp/UserApp.searchform';
@@ -201,7 +188,6 @@ import ListAccessBase from './listaccess/ListAccess.base';
 import ListAccessBizApp from './listaccess/ListAccess.app';
 import ListAccessModel from './listaccess/ListAccess.model';
 import ListAccessDashboard from './listaccess/ListAccess.dashboard';
-import ListAccessPreference from './listaccess/ListAccess.preference';
 import ListAccessModalTable from './listaccess/ListAccess.modaltable';
 import ListAccessSearch from './listaccess/ListAccess.search';
 import ListAccessSearchForm from './listaccess/ListAccess.searchform';
@@ -216,7 +202,6 @@ import ObjectAccessBase from './objectaccess/ObjectAccess.base';
 import ObjectAccessBizApp from './objectaccess/ObjectAccess.app';
 import ObjectAccessModel from './objectaccess/ObjectAccess.model';
 import ObjectAccessDashboard from './objectaccess/ObjectAccess.dashboard';
-import ObjectAccessPreference from './objectaccess/ObjectAccess.preference';
 import ObjectAccessModalTable from './objectaccess/ObjectAccess.modaltable';
 import ObjectAccessSearch from './objectaccess/ObjectAccess.search';
 import ObjectAccessSearchForm from './objectaccess/ObjectAccess.searchform';
@@ -231,7 +216,6 @@ import LoginHistoryBase from './loginhistory/LoginHistory.base';
 import LoginHistoryBizApp from './loginhistory/LoginHistory.app';
 import LoginHistoryModel from './loginhistory/LoginHistory.model';
 import LoginHistoryDashboard from './loginhistory/LoginHistory.dashboard';
-import LoginHistoryPreference from './loginhistory/LoginHistory.preference';
 import LoginHistoryModalTable from './loginhistory/LoginHistory.modaltable';
 import LoginHistorySearch from './loginhistory/LoginHistory.search';
 import LoginHistorySearchForm from './loginhistory/LoginHistory.searchform';
@@ -379,7 +363,6 @@ const OOTBComponents={
     HospitalBizApp,
     HospitalModel,
     HospitalDashboard,
-    HospitalPreference,
     HospitalModalTable,
     HospitalSearch,
     HospitalSearchForm,
@@ -394,7 +377,6 @@ const OOTBComponents={
     ExpenseTypeBizApp,
     ExpenseTypeModel,
     ExpenseTypeDashboard,
-    ExpenseTypePreference,
     ExpenseTypeModalTable,
     ExpenseTypeSearch,
     ExpenseTypeSearchForm,
@@ -409,7 +391,6 @@ const OOTBComponents={
     PeriodBizApp,
     PeriodModel,
     PeriodDashboard,
-    PeriodPreference,
     PeriodModalTable,
     PeriodSearch,
     PeriodSearchForm,
@@ -424,7 +405,6 @@ const OOTBComponents={
     ExpenseItemBizApp,
     ExpenseItemModel,
     ExpenseItemDashboard,
-    ExpenseItemPreference,
     ExpenseItemModalTable,
     ExpenseItemSearch,
     ExpenseItemSearchForm,
@@ -439,7 +419,6 @@ const OOTBComponents={
     DoctorBizApp,
     DoctorModel,
     DoctorDashboard,
-    DoctorPreference,
     DoctorModalTable,
     DoctorSearch,
     DoctorSearchForm,
@@ -454,7 +433,6 @@ const OOTBComponents={
     DepartmentBizApp,
     DepartmentModel,
     DepartmentDashboard,
-    DepartmentPreference,
     DepartmentModalTable,
     DepartmentSearch,
     DepartmentSearchForm,
@@ -469,7 +447,6 @@ const OOTBComponents={
     DoctorAssignmentBizApp,
     DoctorAssignmentModel,
     DoctorAssignmentDashboard,
-    DoctorAssignmentPreference,
     DoctorAssignmentModalTable,
     DoctorAssignmentSearch,
     DoctorAssignmentSearchForm,
@@ -484,7 +461,6 @@ const OOTBComponents={
     DoctorScheduleBizApp,
     DoctorScheduleModel,
     DoctorScheduleDashboard,
-    DoctorSchedulePreference,
     DoctorScheduleModalTable,
     DoctorScheduleSearch,
     DoctorScheduleSearchForm,
@@ -499,7 +475,6 @@ const OOTBComponents={
     UserDomainBizApp,
     UserDomainModel,
     UserDomainDashboard,
-    UserDomainPreference,
     UserDomainModalTable,
     UserDomainSearch,
     UserDomainSearchForm,
@@ -514,7 +489,6 @@ const OOTBComponents={
     UserWhiteListBizApp,
     UserWhiteListModel,
     UserWhiteListDashboard,
-    UserWhiteListPreference,
     UserWhiteListModalTable,
     UserWhiteListSearch,
     UserWhiteListSearchForm,
@@ -529,7 +503,6 @@ const OOTBComponents={
     SecUserBizApp,
     SecUserModel,
     SecUserDashboard,
-    SecUserPreference,
     SecUserModalTable,
     SecUserSearch,
     SecUserSearchForm,
@@ -544,7 +517,6 @@ const OOTBComponents={
     SecUserBlockingBizApp,
     SecUserBlockingModel,
     SecUserBlockingDashboard,
-    SecUserBlockingPreference,
     SecUserBlockingModalTable,
     SecUserBlockingSearch,
     SecUserBlockingSearchForm,
@@ -559,7 +531,6 @@ const OOTBComponents={
     UserAppBizApp,
     UserAppModel,
     UserAppDashboard,
-    UserAppPreference,
     UserAppModalTable,
     UserAppSearch,
     UserAppSearchForm,
@@ -574,7 +545,6 @@ const OOTBComponents={
     ListAccessBizApp,
     ListAccessModel,
     ListAccessDashboard,
-    ListAccessPreference,
     ListAccessModalTable,
     ListAccessSearch,
     ListAccessSearchForm,
@@ -589,7 +559,6 @@ const OOTBComponents={
     ObjectAccessBizApp,
     ObjectAccessModel,
     ObjectAccessDashboard,
-    ObjectAccessPreference,
     ObjectAccessModalTable,
     ObjectAccessSearch,
     ObjectAccessSearchForm,
@@ -604,7 +573,6 @@ const OOTBComponents={
     LoginHistoryBizApp,
     LoginHistoryModel,
     LoginHistoryDashboard,
-    LoginHistoryPreference,
     LoginHistoryModalTable,
     LoginHistorySearch,
     LoginHistorySearchForm,

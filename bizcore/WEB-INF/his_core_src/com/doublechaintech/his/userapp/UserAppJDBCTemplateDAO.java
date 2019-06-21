@@ -30,7 +30,10 @@ import com.doublechaintech.his.listaccess.ListAccessDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserAppDAO{
  
@@ -94,7 +97,7 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public UserApp load(String id,Map<String,Object> options) throws Exception{
@@ -983,9 +986,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:ListAccess的app的ListAccessList
-	public void loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
+	public SmartList<ListAccess> loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1002,12 +1005,13 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			loadedSmartList.addAll(loadedList);
 			it.setListAccessList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:ObjectAccess的app的ObjectAccessList
-	public void loadOurObjectAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
+	public SmartList<ObjectAccess> loadOurObjectAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1024,6 +1028,7 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			loadedSmartList.addAll(loadedList);
 			it.setObjectAccessList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -1059,6 +1064,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 	public SmartList<UserApp> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getUserAppMapper());
 	}
+	
+	
+
 }
 
 

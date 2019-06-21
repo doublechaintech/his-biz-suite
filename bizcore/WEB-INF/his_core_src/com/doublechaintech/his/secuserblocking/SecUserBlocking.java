@@ -410,6 +410,24 @@ public class SecUserBlocking extends BaseEntity implements  java.io.Serializable
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof SecUserBlocking){
+		
+			
+			SecUserBlocking dest =(SecUserBlocking)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeWho(getWho());
+			dest.mergeBlockTime(getBlockTime());
+			dest.mergeComments(getComments());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

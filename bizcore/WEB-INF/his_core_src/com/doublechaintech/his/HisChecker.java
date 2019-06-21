@@ -563,6 +563,33 @@ public class HisChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  WEIXIN_OPENID_OF_SEC_USER ="sec_user.weixin_openid";
+	public HisChecker checkWeixinOpenidOfSecUser(String weixinOpenid)
+	{
+		
+	 	checkStringLengthRange(weixinOpenid,0, 128,WEIXIN_OPENID_OF_SEC_USER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  WEIXIN_APPID_OF_SEC_USER ="sec_user.weixin_appid";
+	public HisChecker checkWeixinAppidOfSecUser(String weixinAppid)
+	{
+		
+	 	checkStringLengthRange(weixinAppid,0, 128,WEIXIN_APPID_OF_SEC_USER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ACCESS_TOKEN_OF_SEC_USER ="sec_user.access_token";
+	public HisChecker checkAccessTokenOfSecUser(String accessToken)
+	{
+		
+	 	checkStringLengthRange(accessToken,0, 128,ACCESS_TOKEN_OF_SEC_USER ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  VERIFICATION_CODE_OF_SEC_USER ="sec_user.verification_code";
 	public HisChecker checkVerificationCodeOfSecUser(int verificationCode)
 	{
@@ -1396,9 +1423,6 @@ public class HisChecker extends BaseChecker{
 
     
 }
-
-
-
 
 
 

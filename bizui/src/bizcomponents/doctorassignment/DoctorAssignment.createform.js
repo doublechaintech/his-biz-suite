@@ -18,8 +18,8 @@ const testValues = {};
 /*
 const testValues = {
   name: '魏松全在内分泌科室上',
-  doctorId: 'D000001',
-  departmentId: 'D000001',
+  doctorId: 'D00000001',
+  departmentId: 'D00000001',
 }
 */
 

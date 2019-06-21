@@ -7,6 +7,10 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.doctor.Doctor;
+import com.doublechaintech.his.department.Department;
+
 import com.doublechaintech.his.department.DepartmentDAO;
 import com.doublechaintech.his.doctor.DoctorDAO;
 
@@ -59,6 +63,7 @@ public interface DoctorAssignmentDAO{
  	public void analyzeDoctorAssignmentByDepartment(SmartList<DoctorAssignment> resultList, String departmentId, Map<String,Object> options);
 
  
- }
+ 
+}
 
 

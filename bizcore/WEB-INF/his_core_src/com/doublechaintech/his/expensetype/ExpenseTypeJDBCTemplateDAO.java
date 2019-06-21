@@ -30,7 +30,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements ExpenseTypeDAO{
  
@@ -94,7 +97,7 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public ExpenseType load(String id,Map<String,Object> options) throws Exception{
@@ -1215,9 +1218,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的expenseType的ExpenseItemList
-	public void loadOurExpenseItemList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
+	public SmartList<ExpenseItem> loadOurExpenseItemList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1234,12 +1237,13 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			loadedSmartList.addAll(loadedList);
 			it.setExpenseItemList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的expenseType的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1256,6 +1260,7 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -1291,6 +1296,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	public SmartList<ExpenseType> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getExpenseTypeMapper());
 	}
+	
+	
+
 }
 
 

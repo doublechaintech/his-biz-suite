@@ -100,6 +100,7 @@ public class BaseEntity implements Serializable{
    }
 	
 	public String maskChinaMobileNumber(String chinaMobileNumber){
+	
 		if(chinaMobileNumber == null){
 			return null;
 		}
@@ -108,7 +109,7 @@ public class BaseEntity implements Serializable{
 		}
 		
 		return chinaMobileNumber.substring(0,3)+"****"+chinaMobileNumber.substring(7);
-        
+    
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -862,9 +863,6 @@ public class BaseEntity implements Serializable{
 		return this.isValidFieldChar(fieldChar);
 	}
 }
-
-
-
 
 
 

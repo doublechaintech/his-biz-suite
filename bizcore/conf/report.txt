@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190417T0011) @Fri May 17 23:56:27 CST 2019, 21 objects and 160 fields===========================
+=================Execute Report (Model Time 190417T0011) @Sat Jun 22 00:39:41 CST 2019, 21 objects and 163 fields===========================
 
 
 
@@ -380,12 +380,15 @@ user_white_list{
 } depth=1; isRoot = false
 
 sec_user{
-	fields(12){
+	fields(15){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	login('login'), verb: false, required: true;
 		string_china_mobile_phone	mobile('13900000001'), verb: false, required: true;
 		string	email('|suddy_chang@163.com'), verb: false, required: false;
 		string_password	pwd('*******'), verb: false, required: true;
+		string	weixin_openid('wx123456789abcdefghijklmn'), verb: false, required: true;
+		string	weixin_appid('wxapp12098410239840'), verb: false, required: true;
+		string	access_token('jwt_token_12345678'), verb: false, required: true;
 		int	verification_code('0|9999999'), verb: false, required: true;
 		date_time	verification_code_expire('2099-12-31T09:09:09'), verb: false, required: true;
 		date_time	last_login_time('2099-12-31T09:09:09'), verb: false, required: true;

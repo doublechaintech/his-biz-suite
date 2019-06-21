@@ -7,6 +7,9 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.genericform.GenericForm;
+
 import com.doublechaintech.his.genericform.GenericFormDAO;
 
 
@@ -50,10 +53,8 @@ public interface FormActionDAO{
  	public void analyzeFormActionByForm(SmartList<FormAction> resultList, String genericFormId, Map<String,Object> options);
 
  
- }
-
-
-
+ 
+}
 
 
 

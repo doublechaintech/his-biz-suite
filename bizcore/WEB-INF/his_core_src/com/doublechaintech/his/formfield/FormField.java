@@ -800,6 +800,36 @@ public class FormField extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof FormField){
+		
+			
+			FormField dest =(FormField)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeLabel(getLabel());
+			dest.mergeLocaleKey(getLocaleKey());
+			dest.mergeParameterName(getParameterName());
+			dest.mergeType(getType());
+			dest.mergePlaceholder(getPlaceholder());
+			dest.mergeDefaultValue(getDefaultValue());
+			dest.mergeDescription(getDescription());
+			dest.mergeFieldGroup(getFieldGroup());
+			dest.mergeMinimumValue(getMinimumValue());
+			dest.mergeMaximumValue(getMaximumValue());
+			dest.mergeRequired(getRequired());
+			dest.mergeDisabled(getDisabled());
+			dest.mergeCustomRendering(getCustomRendering());
+			dest.mergeCandidateValues(getCandidateValues());
+			dest.mergeSuggestValues(getSuggestValues());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

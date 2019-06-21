@@ -128,18 +128,23 @@
 
 	<div class="row">
 <c:set var="doctor" value="${ result.doctor}" scope="request" />
+<c:set var="referName" value="" scope="request" />
 <sky:include page="com/doublechaintech/his/doctor/Doctor$Info.jsp" />
 
 <c:set var="period" value="${ result.period}" scope="request" />
+<c:set var="referName" value="" scope="request" />
 <sky:include page="com/doublechaintech/his/period/Period$Info.jsp" />
 
 <c:set var="department" value="${ result.department}" scope="request" />
+<c:set var="referName" value="" scope="request" />
 <sky:include page="com/doublechaintech/his/department/Department$Info.jsp" />
 
 <c:set var="expenseType" value="${ result.expenseType}" scope="request" />
+<c:set var="referName" value="" scope="request" />
 <sky:include page="com/doublechaintech/his/expensetype/ExpenseType$Info.jsp" />
 
 <c:set var="hospital" value="${ result.hospital}" scope="request" />
+<c:set var="referName" value="" scope="request" />
 <sky:include page="com/doublechaintech/his/hospital/Hospital$Info.jsp" />
 
 </div>

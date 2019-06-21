@@ -320,6 +320,24 @@ public class LoginHistory extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof LoginHistory){
+		
+			
+			LoginHistory dest =(LoginHistory)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeLoginTime(getLoginTime());
+			dest.mergeFromIp(getFromIp());
+			dest.mergeDescription(getDescription());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

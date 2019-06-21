@@ -820,6 +820,45 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField weixinOpenidFromSecUser(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Weixin Openid");
+		field.setLocaleKey("sec_user.weixin_openid");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Weixin Openid");
+		return field;
+	}
+
+	protected FormField weixinAppidFromSecUser(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Weixin Appid");
+		field.setLocaleKey("sec_user.weixin_appid");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Weixin Appid");
+		return field;
+	}
+
+	protected FormField accessTokenFromSecUser(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("访问令牌");
+		field.setLocaleKey("sec_user.access_token");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写访问令牌");
+		return field;
+	}
+
 	protected FormField verificationCodeFromSecUser(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("验证码");

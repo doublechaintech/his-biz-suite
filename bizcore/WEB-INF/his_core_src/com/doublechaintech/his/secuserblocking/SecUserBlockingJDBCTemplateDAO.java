@@ -26,7 +26,10 @@ import com.doublechaintech.his.secuser.SecUserDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implements SecUserBlockingDAO{
 
@@ -62,7 +65,7 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public SecUserBlocking load(String id,Map<String,Object> options) throws Exception{
@@ -678,9 +681,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:SecUser的blocking的SecUserList
-	public void loadOurSecUserList(HisUserContext userContext, List<SecUserBlocking> us, Map<String,Object> options) throws Exception{
+	public SmartList<SecUser> loadOurSecUserList(HisUserContext userContext, List<SecUserBlocking> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -697,6 +700,7 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 			loadedSmartList.addAll(loadedList);
 			it.setSecUserList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -732,6 +736,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	public SmartList<SecUserBlocking> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getSecUserBlockingMapper());
 	}
+	
+	
+
 }
 
 

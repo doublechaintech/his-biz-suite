@@ -130,6 +130,7 @@
 
 	<div class="row">
 <c:set var="hospital" value="${ result.hospital}" scope="request" />
+<c:set var="referName" value="" scope="request" />
 <sky:include page="com/doublechaintech/his/hospital/Hospital$Info.jsp" />
 
 </div>

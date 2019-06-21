@@ -30,7 +30,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements DepartmentDAO{
  
@@ -94,7 +97,7 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public Department load(String id,Map<String,Object> options) throws Exception{
@@ -1209,9 +1212,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorAssignment的department的DoctorAssignmentList
-	public void loadOurDoctorAssignmentList(HisUserContext userContext, List<Department> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorAssignment> loadOurDoctorAssignmentList(HisUserContext userContext, List<Department> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1228,12 +1231,13 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorAssignmentList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的department的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Department> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Department> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1250,6 +1254,7 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -1285,6 +1290,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	public SmartList<Department> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDepartmentMapper());
 	}
+	
+	
+
 }
 
 

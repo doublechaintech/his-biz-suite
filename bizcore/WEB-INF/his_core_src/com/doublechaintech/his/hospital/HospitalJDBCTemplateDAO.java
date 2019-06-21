@@ -36,7 +36,10 @@ import com.doublechaintech.his.period.PeriodDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements HospitalDAO{
 
@@ -167,7 +170,7 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public Hospital load(String id,Map<String,Object> options) throws Exception{
@@ -1994,9 +1997,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:ExpenseType的hospital的ExpenseTypeList
-	public void loadOurExpenseTypeList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<ExpenseType> loadOurExpenseTypeList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2013,12 +2016,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setExpenseTypeList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:Period的hospital的PeriodList
-	public void loadOurPeriodList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<Period> loadOurPeriodList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2035,12 +2039,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setPeriodList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的hospital的ExpenseItemList
-	public void loadOurExpenseItemList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<ExpenseItem> loadOurExpenseItemList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2057,12 +2062,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setExpenseItemList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:Doctor的hospital的DoctorList
-	public void loadOurDoctorList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<Doctor> loadOurDoctorList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2079,12 +2085,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:Department的hospital的DepartmentList
-	public void loadOurDepartmentList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<Department> loadOurDepartmentList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2101,12 +2108,13 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setDepartmentList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的hospital的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -2123,6 +2131,7 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -2158,6 +2167,89 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	public SmartList<Hospital> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getHospitalMapper());
 	}
+	
+	
+    
+	public Map<String, Integer> countBySql(String sql, Object[] params) {
+		if (params == null || params.length == 0) {
+			return new HashMap<>();
+		}
+		List<Map<String, Object>> result = this.getJdbcTemplateObject().queryForList(sql, params);
+		if (result == null || result.isEmpty()) {
+			return new HashMap<>();
+		}
+		Map<String, Integer> cntMap = new HashMap<>();
+		for (Map<String, Object> data : result) {
+			String key = (String) data.get("id");
+			Number value = (Number) data.get("count");
+			cntMap.put(key, value.intValue());
+		}
+		this.logSQLAndParameters("countBySql", sql, params, cntMap.size() + " Counts");
+		return cntMap;
+	}
+
+	public Integer singleCountBySql(String sql, Object[] params) {
+		Integer cnt = this.getJdbcTemplateObject().queryForObject(sql, params, Integer.class);
+		logSQLAndParameters("singleCountBySql", sql, params, cnt + "");
+		return cnt;
+	}
+
+	public BigDecimal summaryBySql(String sql, Object[] params) {
+		BigDecimal cnt = this.getJdbcTemplateObject().queryForObject(sql, params, BigDecimal.class);
+		logSQLAndParameters("summaryBySql", sql, params, cnt + "");
+		return cnt == null ? BigDecimal.ZERO : cnt;
+	}
+
+	public <T> List<T> queryForList(String sql, Object[] params, Class<T> claxx) {
+		List<T> result = this.getJdbcTemplateObject().queryForList(sql, params, claxx);
+		logSQLAndParameters("queryForList", sql, params, result.size() + " items");
+		return result;
+	}
+
+	public Map<String, Object> queryForMap(String sql, Object[] params) throws DataAccessException {
+		Map<String, Object> result = null;
+		try {
+			result = this.getJdbcTemplateObject().queryForMap(sql, params);
+		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			// 空结果，返回null
+		}
+		logSQLAndParameters("queryForObject", sql, params, result == null ? "not found" : String.valueOf(result));
+		return result;
+	}
+
+	public <T> T queryForObject(String sql, Object[] params, Class<T> claxx) throws DataAccessException {
+		T result = null;
+		try {
+			result = this.getJdbcTemplateObject().queryForObject(sql, params, claxx);
+		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			// 空结果，返回null
+		}
+		logSQLAndParameters("queryForObject", sql, params, result == null ? "not found" : String.valueOf(result));
+		return result;
+	}
+
+	public List<Map<String, Object>> queryAsMapList(String sql, Object[] params) {
+		List<Map<String, Object>> result = getJdbcTemplateObject().queryForList(sql, params);
+		logSQLAndParameters("queryAsMapList", sql, params, result.size() + " items");
+		return result;
+	}
+
+	public synchronized int updateBySql(String sql, Object[] params) {
+		int result = getJdbcTemplateObject().update(sql, params);
+		logSQLAndParameters("updateBySql", sql, params, result + " items");
+		return result;
+	}
+
+	public void execSqlWithRowCallback(String sql, Object[] args, RowCallbackHandler callback) {
+		getJdbcTemplateObject().query(sql, args, callback);
+	}
+
+	public void executeSql(String sql) {
+		logSQLAndParameters("executeSql", sql, new Object[] {}, "");
+		getJdbcTemplateObject().execute(sql);
+	}
+
+
 }
 
 

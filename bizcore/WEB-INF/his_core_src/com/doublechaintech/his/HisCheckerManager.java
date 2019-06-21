@@ -62,6 +62,25 @@ public class HisCheckerManager extends BaseManagerImpl {
 		enhancer.setCallback(proxy);
 		return asyncProxy = enhancer.create();
 	}
+	
+	protected void cacheVerifyCode(HisUserContext ctx, String mobile, String verifyCode) {
+		String cacheKey = "verifyCode:"+mobile;
+		ctx.putToCache(cacheKey, verifyCode, HisBaseConstants.DEFAULT_CACHE_TIME_FOR_VCODE);
+	}
+
+	protected String getVerifyCodeFromCache(HisUserContext ctx, String mobile) {
+		String cacheKey = "verifyCode:"+mobile;
+		return (String) ctx.getCachedObject(cacheKey, String.class);
+	}
+	protected void checkVerifyCode(HisUserContext ctx, String inputVerifyCode, String mobile) throws Exception {
+		String cachedVerifyCode = getVerifyCodeFromCache(ctx, mobile);
+		if (cachedVerifyCode == null) {
+			throw new Exception("请先获取验证码");
+		}
+		if (!cachedVerifyCode.equals(inputVerifyCode)) {
+			throw new Exception("验证码不正确");
+		}
+	}
 	/*
 	
 	
@@ -542,6 +561,30 @@ public class HisCheckerManager extends BaseManagerImpl {
 	{
 		
 	 	checkPassword(pwd,3, 28,PWD_OF_SEC_USER, messageList); 		
+		
+	}	 			
+	
+	public static final String  WEIXIN_OPENID_OF_SEC_USER ="sec_user.weixin_openid";
+	protected void checkWeixinOpenidOfSecUser(HisUserContext userContext, String weixinOpenid, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(weixinOpenid,0, 128,WEIXIN_OPENID_OF_SEC_USER, messageList); 		
+		
+	}	 			
+	
+	public static final String  WEIXIN_APPID_OF_SEC_USER ="sec_user.weixin_appid";
+	protected void checkWeixinAppidOfSecUser(HisUserContext userContext, String weixinAppid, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(weixinAppid,0, 128,WEIXIN_APPID_OF_SEC_USER, messageList); 		
+		
+	}	 			
+	
+	public static final String  ACCESS_TOKEN_OF_SEC_USER ="sec_user.access_token";
+	protected void checkAccessTokenOfSecUser(HisUserContext userContext, String accessToken, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(accessToken,0, 128,ACCESS_TOKEN_OF_SEC_USER, messageList); 		
 		
 	}	 			
 	
@@ -1343,9 +1386,6 @@ public class HisCheckerManager extends BaseManagerImpl {
 	}
     
 }
-
-
-
 
 
 

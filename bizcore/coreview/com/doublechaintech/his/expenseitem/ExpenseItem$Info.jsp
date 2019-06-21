@@ -14,7 +14,7 @@
 	
 	<div class="inner-section">
 	
-	<b title="A ExpenseItem">${userContext.localeMap['expense_item']} </b><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+	<b title="A ExpenseItem">${userContext.localeMap['expense_item']} ${referName}</b><a href="#"><i class="fa fa-refresh" aria-hidden="true"></i></a>
 	<hr/>
 	<ul>
 	

@@ -400,6 +400,26 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof FormAction){
+		
+			
+			FormAction dest =(FormAction)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeLabel(getLabel());
+			dest.mergeLocaleKey(getLocaleKey());
+			dest.mergeActionKey(getActionKey());
+			dest.mergeLevel(getLevel());
+			dest.mergeUrl(getUrl());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 
@@ -423,9 +443,6 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 	
 
 }
-
-
-
 
 
 

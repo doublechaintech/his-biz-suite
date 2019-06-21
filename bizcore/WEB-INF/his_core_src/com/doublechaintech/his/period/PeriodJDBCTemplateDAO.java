@@ -28,7 +28,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements PeriodDAO{
  
@@ -73,7 +76,7 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public Period load(String id,Map<String,Object> options) throws Exception{
@@ -919,9 +922,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的period的DoctorScheduleList
-	public void loadOurDoctorScheduleList(HisUserContext userContext, List<Period> us, Map<String,Object> options) throws Exception{
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Period> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -938,6 +941,7 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			loadedSmartList.addAll(loadedList);
 			it.setDoctorScheduleList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -973,6 +977,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	public SmartList<Period> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getPeriodMapper());
 	}
+	
+	
+
 }
 
 

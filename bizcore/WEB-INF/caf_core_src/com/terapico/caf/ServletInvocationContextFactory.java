@@ -1,6 +1,7 @@
 package com.terapico.caf;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -95,8 +96,11 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 
 	}
 	protected List<String> parse(HttpServletRequest request) throws InvocationException {
-		if(request.getMethod()=="POST"){
+		if(request.getMethod().equals("POST")){
 			return this.parsePost(request);
+		}
+		if(request.getMethod().equals("PUT")){
+			return this.parsePut(request);
 		}
 		return this.parseGet(request);
 	}
@@ -268,6 +272,30 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 
 	}
 
+	
+	protected List<String> parsePut(HttpServletRequest request) throws InvocationException  {
+
+		List<String> parameters = new ArrayList<String>(10);
+		String requestURI = this.getRequestPath(request);
+		
+		System.out.println("PUT : "+requestURI);
+		String str=null;
+		StringBuilder resultString =new StringBuilder();
+		
+		try {
+			while ((str = request.getReader().readLine()) != null) {
+				resultString.append(str);
+			}
+			System.out.println("PUT data: "+resultString);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// System.out.println(URLDecoder.decode(schema[2],"UTF-8"));
+		return parameters;
+
+	}
+	
 	protected List<String> parsePost(HttpServletRequest request) throws InvocationException  {
 
 		List<String> parameters = new ArrayList<String>(10);

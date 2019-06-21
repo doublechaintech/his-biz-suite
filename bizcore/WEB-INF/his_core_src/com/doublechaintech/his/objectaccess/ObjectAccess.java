@@ -640,6 +640,32 @@ public class ObjectAccess extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof ObjectAccess){
+		
+			
+			ObjectAccess dest =(ObjectAccess)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeObjectType(getObjectType());
+			dest.mergeList1(getList1());
+			dest.mergeList2(getList2());
+			dest.mergeList3(getList3());
+			dest.mergeList4(getList4());
+			dest.mergeList5(getList5());
+			dest.mergeList6(getList6());
+			dest.mergeList7(getList7());
+			dest.mergeList8(getList8());
+			dest.mergeList9(getList9());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

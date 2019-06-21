@@ -32,7 +32,10 @@ import com.doublechaintech.his.formaction.FormActionDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements GenericFormDAO{
 
@@ -125,7 +128,7 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public GenericForm load(String id,Map<String,Object> options) throws Exception{
@@ -1316,9 +1319,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	
 	
 	// 需要一个加载引用我的对象的enhance方法:FormMessage的form的FormMessageList
-	public void loadOurFormMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormMessage> loadOurFormMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1335,12 +1338,13 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormMessageList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:FormFieldMessage的form的FormFieldMessageList
-	public void loadOurFormFieldMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormFieldMessage> loadOurFormFieldMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1357,12 +1361,13 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormFieldMessageList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:FormField的form的FormFieldList
-	public void loadOurFormFieldList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormField> loadOurFormFieldList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1379,12 +1384,13 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormFieldList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	// 需要一个加载引用我的对象的enhance方法:FormAction的form的FormActionList
-	public void loadOurFormActionList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
+	public SmartList<FormAction> loadOurFormActionList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception{
 		if (us == null || us.isEmpty()){
-			return;
+			return new SmartList<>();
 		}
 		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -1401,6 +1407,7 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			loadedSmartList.addAll(loadedList);
 			it.setFormActionList(loadedSmartList);
 		});
+		return loadedObjs;
 	}
 	
 	
@@ -1436,6 +1443,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	public SmartList<GenericForm> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getGenericFormMapper());
 	}
+	
+	
+
 }
 
 

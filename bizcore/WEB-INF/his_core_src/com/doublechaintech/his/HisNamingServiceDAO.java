@@ -135,6 +135,7 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 		String key = this.join(internalTypeOf(baseEntity),":",baseEntity.getId());
 		return resultMap.get(key);
 	}
+
 	protected String trimString(String valueToTrim) {
 		if(valueToTrim==null) {
 			return null;
@@ -164,7 +165,7 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 					// Fixed the issue for Informix and Gbase 8t/s data base, it appends values for the class column
 					String value = resultSet.getString(3);
 					
-					System.out.printf("%s = %s\r\n",key, value);
+					// System.out.printf("%s = %s\r\n",key, value);
 					
 					internalMap.put(key, value);
 					
@@ -297,9 +298,6 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 	
     
 }
-
-
-
 
 
 

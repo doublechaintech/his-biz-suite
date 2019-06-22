@@ -31,7 +31,11 @@
 	 	<property name="eventService" ref="dummyEventService" />
 	 	-->
 	 	<property name="graphService" ref="dummygraphService" />
+<<<<<<< HEAD
 	 	<property name="eventService" ref="dummyEventService" />
+=======
+	 	<property name="eventService" ref="kafkaMessageEventService" />
+>>>>>>> 33ff1cbaecb3c6bcb41e12f110908656655a9fc4
 	 	
 	 	<property name="messageService" ref="messageService" />
 	 	<property name="daoGroup" ref="DAOGroup" />

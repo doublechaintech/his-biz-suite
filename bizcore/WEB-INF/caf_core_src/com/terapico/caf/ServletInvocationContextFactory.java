@@ -66,7 +66,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		List<String> urlElements = parse(request);
 
 		if (urlElements.size() < start + 1) {
-			throw new InvocationException("No sufficient parameter to call");
+			throw new InvocationException("No sufficient parameter to call"+ String.join(" and ", urlElements) );
 		}
 
 		Object targetObject = getBean(request, urlElements);
@@ -281,16 +281,30 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		System.out.println("PUT : "+requestURI);
 		String str=null;
 		StringBuilder resultString =new StringBuilder();
-		
+		String array[] = requestURI.split("/");
+		System.out.println("GET : "+requestURI);
+		for (int i = 0; i < array.length; i++) {
+			
+			try {
+				String val = URLDecoder.decode(array[i], "UTF-8").trim();
+				System.out.println("array["+i+"]:"+val);
+				parameters.add(val);
+			} catch (UnsupportedEncodingException e) {
+				throw new InvocationException("Encoding UTF-8 is not supported");
+			}
+			
+		}
+		/*
 		try {
 			while ((str = request.getReader().readLine()) != null) {
 				resultString.append(str);
 			}
 			System.out.println("PUT data: "+resultString);
+			parameters.add(resultString.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		// System.out.println(URLDecoder.decode(schema[2],"UTF-8"));
 		return parameters;
 

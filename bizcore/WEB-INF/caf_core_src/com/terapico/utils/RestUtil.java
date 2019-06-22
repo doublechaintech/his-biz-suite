@@ -3,12 +3,14 @@ package com.terapico.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,7 +19,9 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -103,5 +107,56 @@ public class RestUtil {
 		URI uri = builder.build();
 		return uri;
 	}
+	
+	public static String postXml(String url, String xml,String encoding) throws  IOException{
+        String body = "";
 
+        CloseableHttpClient client = getHttpClient();
+
+        HttpPost httpPost = new HttpPost(url);
+        
+        httpPost.setHeader("Content-Type", "text/xml; charset=UTF-8");
+        StringEntity entityParams = new StringEntity(xml, encoding);
+        httpPost.setEntity(entityParams);
+        CloseableHttpResponse response = client.execute(httpPost);
+        HttpEntity entity = response.getEntity();
+        if (entity != null) {
+            body = EntityUtils.toString(entity, encoding);
+        }
+        EntityUtils.consume(entity);
+        response.close();
+        return body;
+    }
+
+
+	public static String postJson(String url, String json) throws Exception{
+		String body = "";
+
+		CloseableHttpClient client = getHttpClient();
+
+		HttpPost httpPost = new HttpPost(url);
+
+		StringEntity entityParams = null;
+		CloseableHttpResponse response = null;
+		HttpEntity entity = null;
+		try{
+			entityParams = new StringEntity(json);
+			httpPost.setEntity(entityParams);
+			response = client.execute(httpPost);
+			entity = response.getEntity();
+			if (entity != null) {
+				body = EntityUtils.toString(entity);
+			}
+		}
+		catch(Exception e){
+
+		}finally {
+			EntityUtils.consume(entity);
+			if (response != null){
+				response.close();
+			}
+		}
+
+		return body;
+	}
 }

@@ -20,10 +20,10 @@ public class DateTimeUtil {
 	public static long WEEK_IN_MS = DAY_IN_MS * 7;
 
 	public static final DateTimeFormatter DAY_FORMAT = DateTimeFormatter.ofPattern("yyyy-M-d");
-	public static final DateTimeFormatter DAY_TIME_MINUTE_FORMAT = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm");
-	public static final DateTimeFormatter DAY_TIME_MINUTE_FORMAT_S = DateTimeFormatter.ofPattern("yyyy-M-dd'T'HH:mm");
-	public static final DateTimeFormatter DAY_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-M-d HH:mm:ss");
-	public static final DateTimeFormatter DAY_TIME_FORMAT_S = DateTimeFormatter.ofPattern("yyyy-M-d'T'HH:mm:ss");
+	public static final DateTimeFormatter DAY_TIME_MINUTE_FORMAT = DateTimeFormatter.ofPattern("yyyy-M-d H:m");
+	public static final DateTimeFormatter DAY_TIME_MINUTE_FORMAT_S = DateTimeFormatter.ofPattern("yyyy-M-dd'T'H:m");
+	public static final DateTimeFormatter DAY_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-M-d H:m:s");
+	public static final DateTimeFormatter DAY_TIME_FORMAT_S = DateTimeFormatter.ofPattern("yyyy-M-d'T'H:m:s");
 	private static final DateTimeFormatter[] allFormats = new DateTimeFormatter[] { DAY_FORMAT, DAY_TIME_FORMAT,
 			DAY_TIME_FORMAT_S, DAY_TIME_MINUTE_FORMAT, DAY_TIME_MINUTE_FORMAT_S };
 
@@ -76,7 +76,9 @@ public class DateTimeUtil {
 	public static Date addHours(Date date, int hours) {
 		return toDate(toLocalDateTime(date).plusHours(hours));
 	}
-
+	public static Date addMS(Date date, long ms) {
+		return new Date(date.getTime() + ms);
+	}
 	private static Date toDate(LocalDateTime input) {
 		return Date.from(input.atZone(ZoneId.systemDefault()).toInstant());
 	}

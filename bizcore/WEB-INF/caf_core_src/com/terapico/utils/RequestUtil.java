@@ -60,6 +60,14 @@ public class RequestUtil {
         if (value instanceof Number) {
         	return new Date(((Number) value).longValue());
         }
+        if (value instanceof String && ((String)value).matches("\\d{0,14}")) {
+        	try {
+        		long tsMs = Long.parseLong((String) value);
+        		return new Date(tsMs);
+        	}catch (Exception e) {
+        		// 不行就算了
+        	}
+        }
         Date date = DateTimeUtil.parseInputDateTime(String.valueOf(value));
         if (date == null) {
             return defaultValue;

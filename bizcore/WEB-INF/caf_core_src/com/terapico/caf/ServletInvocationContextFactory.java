@@ -271,7 +271,20 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		return findSingleMethod(targetObject,methodName);
 
 	}
-
+	
+	protected String readBodyAsString(HttpServletRequest request) {
+		String str=null;
+		StringBuilder resultString =new StringBuilder();
+		try {
+			while ((str = request.getReader().readLine()) != null) {
+				resultString.append(str);
+			}
+			return resultString.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
 	
 	protected List<String> parsePut(HttpServletRequest request) throws InvocationException  {
 
@@ -279,12 +292,16 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		String requestURI = this.getRequestPath(request);
 		
 		System.out.println("PUT : "+requestURI);
-		String str=null;
-		StringBuilder resultString =new StringBuilder();
+		
+		
 		String array[] = requestURI.split("/");
-		System.out.println("GET : "+requestURI);
+		//System.out.println("GET : "+requestURI);
+		//Only method name should be parsed
+		
 		for (int i = 0; i < array.length; i++) {
-			
+			if(i>2) {
+				break;//ignore any parameter for put
+			}
 			try {
 				String val = URLDecoder.decode(array[i], "UTF-8").trim();
 				System.out.println("array["+i+"]:"+val);
@@ -292,8 +309,13 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 			} catch (UnsupportedEncodingException e) {
 				throw new InvocationException("Encoding UTF-8 is not supported");
 			}
-			
+			//the last parameter sh
 		}
+		
+		String body = this.readBodyAsString(request);
+		
+		parameters.add(body);
+		
 		/*
 		try {
 			while ((str = request.getReader().readLine()) != null) {
@@ -307,7 +329,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		}*/
 		// System.out.println(URLDecoder.decode(schema[2],"UTF-8"));
 		return parameters;
-
+		
 	}
 	
 	protected List<String> parsePost(HttpServletRequest request) throws InvocationException  {

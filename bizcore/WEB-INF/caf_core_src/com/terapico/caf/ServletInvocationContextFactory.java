@@ -179,6 +179,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		if(isPostRequest(request)){
 			return getPostParameters(parameterTypes, parameters,request);
 		}
+		if(isPutRequest(request)){
+			return getPutParameters(parameterTypes, parameters,request);
+		}
 		return getParameters(parameterTypes, parameters,request);
 
 	}
@@ -191,6 +194,24 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 	protected Object[] getParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return super.getParameters(types, parameters);
+	}
+	/* 处理PUT请求，只是允许两种情况
+	 * 如果这个函数包括了userContext，那么允许两个参数
+	 * 如果这个函数没有包括userContext，那么只是允许一个参数
+	 * 没有UC的情况下，只是允许一个参数
+	 * 
+	 * */
+	protected Object[] getPutParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
+		
+		if(types.length!=1) {
+			throw new IllegalArgumentException("For put method without a userContext parameter, only one parameter allowed");
+		}
+		
+		String strExpr = this.readBodyAsString(request);
+		
+		return new Object[] {strExpr};
+		
+	
 	}
 	
 	/*
@@ -256,6 +277,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 	protected boolean isGetRequest(HttpServletRequest request){
 		return request.getMethod().equalsIgnoreCase("GET");
 	}
+	protected boolean isPutRequest(HttpServletRequest request){
+		return request.getMethod().equalsIgnoreCase("PUT");
+	}
 	protected boolean isPostRequest(HttpServletRequest request){
 		return request.getMethod().equalsIgnoreCase("POST");
 	}
@@ -312,9 +336,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 			//the last parameter sh
 		}
 		
-		String body = this.readBodyAsString(request);
+		//String body = this.readBodyAsString(request);
 		
-		parameters.add(body);
+		//parameters.add(body);
 		
 		/*
 		try {

@@ -19,7 +19,7 @@ import java.util.TimeZone;
 public class ReflectionTool {
 	protected Object[] getParameters(Type[] types, Object[] parameters) {
 
-		int length = parameters.length;
+		int length = types.length;
 		if (length == 0) {
 			return new Object[] {};
 		}

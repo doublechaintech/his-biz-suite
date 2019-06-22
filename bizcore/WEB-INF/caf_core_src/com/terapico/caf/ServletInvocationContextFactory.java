@@ -208,8 +208,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		}
 		
 		String strExpr = this.readBodyAsString(request);
-		
-		return new Object[] {strExpr};
+		System.out.print("PUT CONTENT: "+ strExpr);
+		//return new Object[] {strExpr};
+		return new Object[] {};
 		
 	
 	}

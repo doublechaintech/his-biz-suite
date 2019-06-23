@@ -58,6 +58,11 @@ public class ReflectionTool {
 		}
 		return false;
 	}
+	public boolean hasRemoteInitiableInterface(Type parameterType) {
+		
+		return RemoteInitiatable.class.isAssignableFrom((Class) parameterType);
+		
+	}
 	public Object convertOnlyOneParameter(Type[] types, String value) {
 		int length = types.length;
 		
@@ -65,13 +70,18 @@ public class ReflectionTool {
 			throw new IllegalArgumentException("Only one type allowed here, but the length of the length is: "+length);
 			
 		}
-		Type firstParameterType = types[0]; //very safe here, there is ONE param when code runs to here
+		Type firstParameterType = types[0]; //it is safe here, there is ONE param when code runs to here
 		
 		//String type supported
 		if(firstParameterType == java.lang.String.class) {
 			return value;
 		}
 		//otherwise this should be a json object with a class
+		if(!hasRemoteInitiableInterface(firstParameterType)) {
+			
+			throw new IllegalArgumentException("The type should implement a RemoteInitiable interface, but the class is: " + firstParameterType.getTypeName());
+		}
+		//parse to a json object and return
 		
 		return value;
 		

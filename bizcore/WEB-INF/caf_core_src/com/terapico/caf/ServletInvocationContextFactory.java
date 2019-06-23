@@ -80,7 +80,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		if (targetMethod == null) {
 			throw new InvocationException("Not able to find the target method to call： " +request.getRequestURI());
 		}
-		if(!hasRightNumberOfParameters(urlElements,targetMethod)){
+		if(!hasRightNumberOfParameters(request,urlElements,targetMethod)){
 			Object []parameters=this.getCandidateParameters(urlElements);
 			return buildFormContext(getBeanName(urlElements),targetMethod,parameters);
 		}
@@ -125,12 +125,27 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		context.setParameters(new Object[]{beanName,targetMethod,parameters});
 		return context;
 	}
-	protected boolean hasRightNumberOfParameters(List<String> urlElements,Method targetMethod)
+	
+	protected int expectedCountOfParameters(HttpServletRequest request, List<String> urlElements,Method targetMethod)
 	{
+		
+		if(this.isPutRequest(request)) {
+			return 1;
+		}
+		
 		int size=urlElements.size();
+		
+		return (size-start-2);
+		
+	}
+	
+	protected boolean hasRightNumberOfParameters(HttpServletRequest request, List<String> urlElements,Method targetMethod)
+	{
 		Type [] parameterTypes=targetMethod.getGenericParameterTypes();
 		
-		return (size-start-2)==parameterTypes.length;
+		int expectedParameterCount = this.expectedCountOfParameters(request, urlElements, targetMethod);
+		
+		return expectedParameterCount == parameterTypes.length;
 		
 	}
 	
@@ -171,6 +186,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		// Object [] parameters=new String[urlElements.size()-start-2];
 		Object elements[] = urlElements.toArray();
 		Object[] parameters = Arrays.copyOfRange(elements, start+2, urlElements.size());
+		if(isPutRequest(request)){
+			return getPutParameters(parameterTypes, parameters,request);
+		}
 		checkParametersLength(parameterTypes,parameters);
 		
 		if(isGetRequest(request)){
@@ -179,9 +197,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		if(isPostRequest(request)){
 			return getPostParameters(parameterTypes, parameters,request);
 		}
-		if(isPutRequest(request)){
-			return getPutParameters(parameterTypes, parameters,request);
-		}
+		
 		return getParameters(parameterTypes, parameters,request);
 
 	}

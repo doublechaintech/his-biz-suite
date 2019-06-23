@@ -1,5 +1,6 @@
 package com.terapico.caf;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -12,6 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -58,12 +64,12 @@ public class ReflectionTool {
 		}
 		return false;
 	}
-	public boolean hasRemoteInitiableInterface(Type parameterType) {
+	public static boolean hasRemoteInitiableInterface(Type parameterType) {
 		
 		return RemoteInitiatable.class.isAssignableFrom((Class) parameterType);
 		
 	}
-	public Object convertOnlyOneParameter(Type[] types, String value) {
+	public static Object convertOnlyOneParameter(Type[] types, String value) {
 		int length = types.length;
 		
 		if(length == 0) {
@@ -78,17 +84,21 @@ public class ReflectionTool {
 		}
 		//otherwise this should be a json object with a class
 		if(!hasRemoteInitiableInterface(firstParameterType)) {
-			
 			throw new IllegalArgumentException("The type should implement a RemoteInitiable interface, but the class is: " + firstParameterType.getTypeName());
 		}
 		//parse to a json object and return
 		
-		return value;
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
-		
-		
-		
-		
+		Class targetClass = firstParameterType.getClass();
+		try {
+			Object responseObj = mapper.readValue(value, (Class)firstParameterType);
+			return responseObj;
+		} catch (Exception e) {
+			return null;
+		} 
+
 	}
 	protected Constructor getOneStringConstructor(Class clazz) {
 		Constructor constructors[] = clazz.getDeclaredConstructors();

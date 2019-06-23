@@ -20,18 +20,11 @@ public class UCInvocationContextFactory extends ServletInvocationContextFactory 
 	 * 如果不是，就按照原来的方式返回
 	 * 
 	 * */
-
-	@Override
-	protected Object[] getParameters(Type[] types, Object[] parameters,HttpServletRequest request) {
-		// FIXME: need to make some improvement to make the code better, 
+	protected Type [] removeIfFirstUCTypeFromTypeList(Type[] types, Object[] parameters) {
 		Type firstParameterType = types[0];
-
 		if(!UCTypeTool.isBaseUCType(firstParameterType)){
-			return super.getParameters(types, parameters);
+			return types;// keep the original types
 		}
-		//Load a user 
-		
-		
 		Type ignoredUCTypes [] = Arrays.copyOfRange(types, 1,types.length);
 		
 		if(ignoredUCTypes.length != parameters.length){
@@ -39,10 +32,41 @@ public class UCInvocationContextFactory extends ServletInvocationContextFactory 
 			throw new IllegalArgumentException("ignoredUCTypes.length != parameters.length not match '"
 			+ignoredUCTypes.length+"' vs '"+ parameters.length+"', types.length="+types.length);
 		}
-		Object[] params = super.getParameters(ignoredUCTypes, parameters);
 		
+		return ignoredUCTypes;
+		
+		
+	}
+	
+	@Override
+	protected Object[] getParameters(Type[] types, Object[] parameters,HttpServletRequest request) {
+		// FIXME: need to make some improvement to make the code better, 
+		
+		
+		Type ignoredUCTypes [] =removeIfFirstUCTypeFromTypeList(types, parameters);
+		Object[] params = super.getParameters(ignoredUCTypes, parameters);
 		return wrapFinalParameters(params,request);
 		
+	}
+	
+	@Override
+	protected Object[] getPostParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
+		
+		Type ignoredUCTypes [] =removeIfFirstUCTypeFromTypeList(types, parameters);
+		Object[] params = super.getPostParameters(ignoredUCTypes, parameters,request);
+		return wrapFinalParameters(params,request);
+	
+		
+		
+	}
+	
+	@Override
+	protected Object[] getPutParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
+		
+		Type ignoredUCTypes [] =removeIfFirstUCTypeFromTypeList(types, parameters);
+		Object[] params = super.getPutParameters(ignoredUCTypes, parameters,request);
+		return wrapFinalParameters(params,request);
+	
 		
 		
 	}
@@ -92,30 +116,7 @@ public class UCInvocationContextFactory extends ServletInvocationContextFactory 
 	
 	
 	
-	@Override
-	protected Object[] getPostParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
-		
-		Type firstType = types[0];
-		
-		
-		if(!UCTypeTool.isBaseUCType(firstType)){
-			return super.getPostParameters(types, parameters, request);
-		}
-		Type ignoredUCTypes [] = Arrays.copyOfRange(types, 1,types.length);
-		
-		if(ignoredUCTypes.length != parameters.length){
-			
-			throw new IllegalArgumentException("ignoredUCTypes.length != parameters.length not match '"
-			+ignoredUCTypes.length+"' vs '"+ parameters.length+"', types.length="+types.length);
-		}
-		Object[] params = super.getPostParameters(ignoredUCTypes, parameters,request);
-		
-		return wrapFinalParameters(params,request);
-		
-		
-		
-		
-	}
+	
 	protected void saveUserConext(HttpServletRequest request) throws Exception{
 		Object manager = getBean("secUserManager");
 		if(manager == null){

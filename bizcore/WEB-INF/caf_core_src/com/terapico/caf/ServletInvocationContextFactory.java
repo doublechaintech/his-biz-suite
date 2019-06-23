@@ -215,15 +215,10 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		String strExpr = this.readBodyAsString(request);
 		System.out.print("PUT CONTENT: "+ strExpr);
 		
-		Type firstParameterType = types[0]; //very safe here, there is ONE param when code runs to here
-		
-		//String type supported
-		if(firstParameterType == java.lang.String.class) {
-			return new Object[] {strExpr};
-		}
+		Object object = ReflectionTool.convertOnlyOneParameter(types,strExpr);
 		
 		//return new Object[] {strExpr};
-		return new Object[] {};
+		return new Object[] {object};
 		
 	
 	}

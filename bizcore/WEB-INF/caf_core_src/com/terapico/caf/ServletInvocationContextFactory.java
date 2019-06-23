@@ -202,13 +202,26 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 	 * 
 	 * */
 	protected Object[] getPutParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
+		int length = types.length;
 		
-		if(types.length!=1) {
+		if(length == 0) {
+			return new Object[] {};
+			//
+		}
+		if(length > 1) {
 			throw new IllegalArgumentException("For put method without a userContext parameter, only one parameter allowed");
 		}
-		
+		//only one parameter allowed, the body should be a json object string
 		String strExpr = this.readBodyAsString(request);
 		System.out.print("PUT CONTENT: "+ strExpr);
+		
+		Type firstParameterType = types[0]; //very safe here, there is ONE param when code runs to here
+		
+		//String type supported
+		if(firstParameterType == java.lang.String.class) {
+			return new Object[] {strExpr};
+		}
+		
 		//return new Object[] {strExpr};
 		return new Object[] {};
 		

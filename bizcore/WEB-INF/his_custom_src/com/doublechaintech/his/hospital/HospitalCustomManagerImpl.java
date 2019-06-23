@@ -27,20 +27,15 @@ public class HospitalCustomManagerImpl extends HospitalManagerImpl{
 		return super.checkAccess(baseUserContext, methodName, parameters);
 		
 	}
-	public String requestNew(HisUserContext userContext,Hospital value) {
+	public Hospital requestNew(HisUserContext userContext,Hospital value) {
 		System.out.print("run some thins");
 		
 		userContext.log(value+"");
 		
-		return "run some thins"+userContext+":"+value;
+		return value;
 		
 	}
-	public String requestThis(HisUserContext userContext,Hospital value) {
-		
-		return "yes";
-		
-	}
-	
+
 
 	
 

@@ -69,6 +69,14 @@ public class ReflectionTool {
 		return RemoteInitiatable.class.isAssignableFrom((Class) parameterType);
 		
 	}
+	
+	private static ObjectMapper mapper ;
+	static {
+		mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		
+	}
+	
 	public static Object convertOnlyOneParameter(Type[] types, String value) {
 		int length = types.length;
 		
@@ -88,9 +96,7 @@ public class ReflectionTool {
 		}
 		//parse to a json object and return
 		
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		
+		 
 		
 		try {
 			Object responseObj = mapper.readValue(value, (Class)firstParameterType);

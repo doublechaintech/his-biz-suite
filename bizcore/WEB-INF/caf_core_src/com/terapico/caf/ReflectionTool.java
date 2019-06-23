@@ -91,11 +91,12 @@ public class ReflectionTool {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		
-		Class targetClass = firstParameterType.getClass();
+		
 		try {
 			Object responseObj = mapper.readValue(value, (Class)firstParameterType);
 			return responseObj;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		} 
 

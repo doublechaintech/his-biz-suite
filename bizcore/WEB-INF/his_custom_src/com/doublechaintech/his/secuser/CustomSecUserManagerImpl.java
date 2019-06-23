@@ -562,13 +562,17 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         userContext.setDaoGroup(getDaoGroup());
         userContext.setEventService(this.getEventService());
         userContext.setManagerGroup(getManagerGroup());
+        if(request.getMethod().equals("PUT")) {
+        	return;
+        }
+        
         ServletInputStream ins;
         try {
             ins = request.getInputStream();
 
             if (ins != null) {
                 if (ins.available() > 0) {
-                    System.out.println("input stream can read");
+                	// throw new IllegalStateException("input stream can read");
                     ByteArrayOutputStream bout = new ByteArrayOutputStream();
                     byte[] buff = new byte[1024];
                     int n = 0;
@@ -578,7 +582,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 
                     userContext.setRequestBody(bout.toByteArray());
                 } else {
-                    System.out.println("input stream cannot read");
+                    throw new IllegalStateException("input stream cannot read");
                 }
             }
         } catch (IOException e) {

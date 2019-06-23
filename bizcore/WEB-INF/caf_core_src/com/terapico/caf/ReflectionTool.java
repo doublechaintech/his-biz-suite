@@ -58,7 +58,28 @@ public class ReflectionTool {
 		}
 		return false;
 	}
-
+	public Object convertOnlyOneParameter(Type[] types, String value) {
+		int length = types.length;
+		
+		if(length == 0) {
+			throw new IllegalArgumentException("Only one type allowed here, but the length of the length is: "+length);
+			
+		}
+		Type firstParameterType = types[0]; //very safe here, there is ONE param when code runs to here
+		
+		//String type supported
+		if(firstParameterType == java.lang.String.class) {
+			return value;
+		}
+		//otherwise this should be a json object with a class
+		
+		return value;
+		
+		
+		
+		
+		
+	}
 	protected Constructor getOneStringConstructor(Class clazz) {
 		Constructor constructors[] = clazz.getDeclaredConstructors();
 

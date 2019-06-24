@@ -38,7 +38,16 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	@JsonIgnore
 	protected String pageTitle;
 	@JsonIgnore
+	protected String linkToUrl;
+	@JsonIgnore
 	protected HashMap<String, Object> dataContainer;
+	
+	public String getLinkToUrl() {
+		return linkToUrl;
+	}
+	public void setLinkToUrl(String linkToUrl) {
+		this.linkToUrl = linkToUrl;
+	}
 	public String getPageTitle() {
 		return pageTitle;
 	}
@@ -336,11 +345,9 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		if (object instanceof FilterTabsViewComponent) {
 			return new FilterTabsSerializer();
 		}
-		/*
 		if (object instanceof BaseHisFormProcessor) {
 			return new FormProcessorSerializer();
 		}
-		*/
 		if (object instanceof ButtonViewComponent) {
 			// action 是特别定制的序列化
 			return new ButtonViewComponentSerializer();
@@ -386,13 +393,11 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	protected class FormProcessorSerializer implements CustomSerializer {
 		@Override
 		public Object serialize(SerializeScope serializeScope, Object value, String path) {
-			/*
 			BaseHisFormProcessor form = (BaseHisFormProcessor) value;
 			if (form == null) {
 				return null;
 			}
-			return form.mapToUiForm(userContext);*/
-			return null;
+			return form.mapToUiForm(userContext);
 		}
 	}
 	
@@ -449,9 +454,6 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		return (Map<String, Object>) resultMap.get("data");
 	}
 }
-
-
-
 
 
 

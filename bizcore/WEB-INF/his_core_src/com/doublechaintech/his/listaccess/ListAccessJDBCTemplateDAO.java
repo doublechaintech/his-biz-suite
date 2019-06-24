@@ -26,7 +26,10 @@ import com.doublechaintech.his.userapp.UserAppDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class ListAccessJDBCTemplateDAO extends HisNamingServiceDAO implements ListAccessDAO{
  
@@ -52,7 +55,7 @@ public class ListAccessJDBCTemplateDAO extends HisNamingServiceDAO implements Li
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public ListAccess load(String id,Map<String,Object> options) throws Exception{
@@ -559,6 +562,9 @@ public class ListAccessJDBCTemplateDAO extends HisNamingServiceDAO implements Li
 	public SmartList<ListAccess> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getListAccessMapper());
 	}
+	
+	
+
 }
 
 

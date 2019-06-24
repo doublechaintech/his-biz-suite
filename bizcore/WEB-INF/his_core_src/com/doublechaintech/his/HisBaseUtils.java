@@ -23,6 +23,13 @@ import com.terapico.utils.TextUtil;
 
 public class HisBaseUtils {
 	protected static final Map<String, Object> emptyOptions = new HashMap<>();
+	protected static final Map<String, Object> EO = new HashMap<>();
+
+	public static String getOssUploadFolderName(String tokenType, String token, boolean isProdEnv) {
+		String folderName;
+		folderName = String.format("upload%s/%s/%s", isProdEnv ? "" : "/test", tokenType, token);
+		return folderName;
+	}
 	
 	public static String hashWithSHA256(String valueToHash, String salt) {
 		try {
@@ -51,6 +58,13 @@ public class HisBaseUtils {
 			return num;
 		}
 		return null;
+	}
+	public static String checkChinaMobile(String mobile) throws Exception {
+		String cleanMobile = formatChinaMobile(mobile);
+		if (cleanMobile == null) {
+			throw new Exception("您输入的"+mobile+"不是有效的中国大陆手机号");
+		}
+		return cleanMobile;
 	}
 	
 	public static String getCacheAccessKey(HisUserContext ctx) {
@@ -205,9 +219,6 @@ public class HisBaseUtils {
 	}
 
 }
-
-
-
 
 
 

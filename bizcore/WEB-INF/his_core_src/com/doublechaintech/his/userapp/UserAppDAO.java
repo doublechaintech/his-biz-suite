@@ -7,6 +7,11 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.objectaccess.ObjectAccess;
+import com.doublechaintech.his.listaccess.ListAccess;
+import com.doublechaintech.his.secuser.SecUser;
+
 import com.doublechaintech.his.secuser.SecUserDAO;
 import com.doublechaintech.his.objectaccess.ObjectAccessDAO;
 import com.doublechaintech.his.listaccess.ListAccessDAO;
@@ -66,6 +71,13 @@ public interface UserAppDAO{
  	public void analyzeUserAppBySecUser(SmartList<UserApp> resultList, String secUserId, Map<String,Object> options);
 
  
- }
+ 
+	// 需要一个加载引用我的对象的enhance方法:ListAccess的app的ListAccessList
+	public SmartList<ListAccess> loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:ObjectAccess的app的ObjectAccessList
+	public SmartList<ObjectAccess> loadOurObjectAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception;
+	
+}
 
 

@@ -384,7 +384,7 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 	
 	
 
-	protected void checkParamsForAddingSecUser(HisUserContext userContext, String secUserBlockingId, String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingSecUser(HisUserContext userContext, String secUserBlockingId, String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -401,6 +401,12 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 		
 		userContext.getChecker().checkPwdOfSecUser(pwd);
 		
+		userContext.getChecker().checkWeixinOpenidOfSecUser(weixinOpenid);
+		
+		userContext.getChecker().checkWeixinAppidOfSecUser(weixinAppid);
+		
+		userContext.getChecker().checkAccessTokenOfSecUser(accessToken);
+		
 		userContext.getChecker().checkVerificationCodeOfSecUser(verificationCode);
 		
 		userContext.getChecker().checkVerificationCodeExpireOfSecUser(verificationCodeExpire);
@@ -413,12 +419,12 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 
 	
 	}
-	public  SecUserBlocking addSecUser(HisUserContext userContext, String secUserBlockingId, String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId, String [] tokensExpr) throws Exception
+	public  SecUserBlocking addSecUser(HisUserContext userContext, String secUserBlockingId, String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingSecUser(userContext,secUserBlockingId,login, mobile, email, pwd, verificationCode, verificationCodeExpire, lastLoginTime, domainId,tokensExpr);
+		checkParamsForAddingSecUser(userContext,secUserBlockingId,login, mobile, email, pwd, weixinOpenid, weixinAppid, accessToken, verificationCode, verificationCodeExpire, lastLoginTime, domainId,tokensExpr);
 		
-		SecUser secUser = createSecUser(userContext,login, mobile, email, pwd, verificationCode, verificationCodeExpire, lastLoginTime, domainId);
+		SecUser secUser = createSecUser(userContext,login, mobile, email, pwd, weixinOpenid, weixinAppid, accessToken, verificationCode, verificationCodeExpire, lastLoginTime, domainId);
 		
 		SecUserBlocking secUserBlocking = loadSecUserBlocking(userContext, secUserBlockingId, allTokens());
 		synchronized(secUserBlocking){ 
@@ -431,7 +437,7 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 			return present(userContext,secUserBlocking, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingSecUserProperties(HisUserContext userContext, String secUserBlockingId,String id,String login,String mobile,String email,String pwd,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingSecUserProperties(HisUserContext userContext, String secUserBlockingId,String id,String login,String mobile,String email,String pwd,String weixinOpenid,String weixinAppid,String accessToken,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSecUserBlocking(secUserBlockingId);
 		userContext.getChecker().checkIdOfSecUser(id);
@@ -440,6 +446,9 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 		userContext.getChecker().checkMobileOfSecUser( mobile);
 		userContext.getChecker().checkEmailOfSecUser( email);
 		userContext.getChecker().checkPwdOfSecUser( pwd);
+		userContext.getChecker().checkWeixinOpenidOfSecUser( weixinOpenid);
+		userContext.getChecker().checkWeixinAppidOfSecUser( weixinAppid);
+		userContext.getChecker().checkAccessTokenOfSecUser( accessToken);
 		userContext.getChecker().checkVerificationCodeOfSecUser( verificationCode);
 		userContext.getChecker().checkVerificationCodeExpireOfSecUser( verificationCodeExpire);
 		userContext.getChecker().checkLastLoginTimeOfSecUser( lastLoginTime);
@@ -447,9 +456,9 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 		userContext.getChecker().throwExceptionIfHasErrors(SecUserBlockingManagerException.class);
 		
 	}
-	public  SecUserBlocking updateSecUserProperties(HisUserContext userContext, String secUserBlockingId, String id,String login,String mobile,String email,String pwd,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	public  SecUserBlocking updateSecUserProperties(HisUserContext userContext, String secUserBlockingId, String id,String login,String mobile,String email,String pwd,String weixinOpenid,String weixinAppid,String accessToken,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingSecUserProperties(userContext,secUserBlockingId,id,login,mobile,email,pwd,verificationCode,verificationCodeExpire,lastLoginTime,tokensExpr);
+		checkParamsForUpdatingSecUserProperties(userContext,secUserBlockingId,id,login,mobile,email,pwd,weixinOpenid,weixinAppid,accessToken,verificationCode,verificationCodeExpire,lastLoginTime,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -468,6 +477,9 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 		item.updateMobile( mobile );
 		item.updateEmail( email );
 		item.updatePwd( pwd );
+		item.updateWeixinOpenid( weixinOpenid );
+		item.updateWeixinAppid( weixinAppid );
+		item.updateAccessToken( accessToken );
 		item.updateVerificationCode( verificationCode );
 		item.updateVerificationCodeExpire( verificationCodeExpire );
 		item.updateLastLoginTime( lastLoginTime );
@@ -481,7 +493,7 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 	}
 	
 	
-	protected SecUser createSecUser(HisUserContext userContext, String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId) throws Exception{
+	protected SecUser createSecUser(HisUserContext userContext, String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId) throws Exception{
 
 		SecUser secUser = new SecUser();
 		
@@ -490,6 +502,9 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 		secUser.setMobile(mobile);		
 		secUser.setEmail(email);		
 		secUser.setClearTextOfPwd(pwd);		
+		secUser.setWeixinOpenid(weixinOpenid);		
+		secUser.setWeixinAppid(weixinAppid);		
+		secUser.setAccessToken(accessToken);		
 		secUser.setVerificationCode(verificationCode);		
 		secUser.setVerificationCodeExpire(verificationCodeExpire);		
 		secUser.setLastLoginTime(lastLoginTime);		
@@ -622,6 +637,18 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 		
 		if(SecUser.PWD_PROPERTY.equals(property)){
 			userContext.getChecker().checkPwdOfSecUser(parseString(newValueExpr));
+		}
+		
+		if(SecUser.WEIXIN_OPENID_PROPERTY.equals(property)){
+			userContext.getChecker().checkWeixinOpenidOfSecUser(parseString(newValueExpr));
+		}
+		
+		if(SecUser.WEIXIN_APPID_PROPERTY.equals(property)){
+			userContext.getChecker().checkWeixinAppidOfSecUser(parseString(newValueExpr));
+		}
+		
+		if(SecUser.ACCESS_TOKEN_PROPERTY.equals(property)){
+			userContext.getChecker().checkAccessTokenOfSecUser(parseString(newValueExpr));
 		}
 		
 		if(SecUser.VERIFICATION_CODE_PROPERTY.equals(property)){

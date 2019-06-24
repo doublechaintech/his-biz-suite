@@ -32,7 +32,10 @@ import com.doublechaintech.his.formaction.FormActionDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements GenericFormDAO{
 
@@ -125,7 +128,7 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public GenericForm load(String id,Map<String,Object> options) throws Exception{
@@ -1440,6 +1443,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	public SmartList<GenericForm> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getGenericFormMapper());
 	}
+	
+	
+
 }
 
 

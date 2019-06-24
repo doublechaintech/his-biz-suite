@@ -44,6 +44,9 @@ const fieldLabels = {
   mobile: '手机号码',
   email: '电子邮件',
   pwd: '密码',
+  weixinOpenid: 'Weixin Openid',
+  weixinAppid: 'Weixin Appid',
+  accessToken: '访问令牌',
   verificationCode: '验证码',
   verificationCodeExpire: '验证码过期',
   lastLoginTime: '最后登录时间',
@@ -59,6 +62,9 @@ const displayColumns = [
   { title: fieldLabels.mobile, debugtype: 'string_china_mobile_phone', dataIndex: 'mobile', width: '15',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.email, debugtype: 'string', dataIndex: 'email', width: '23',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.pwd, debugtype: 'string_password', dataIndex: 'pwd', width: '11',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.weixinOpenid, debugtype: 'string', dataIndex: 'weixinOpenid', width: '29',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.weixinAppid, debugtype: 'string', dataIndex: 'weixinAppid', width: '23',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.accessToken, debugtype: 'string', dataIndex: 'accessToken', width: '22',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.verificationCode, debugtype: 'int', dataIndex: 'verificationCode', width: '11',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.verificationCodeExpire, dataIndex: 'verificationCodeExpire', render: (text, record) =>renderDateTimeCell(text,record), sorter: true},
   { title: fieldLabels.lastLoginTime, dataIndex: 'lastLoginTime', render: (text, record) =>renderDateTimeCell(text,record), sorter: true},
@@ -83,6 +89,9 @@ const renderItemOfList=(secUser,targetComponent)=>{
 <Description term="手机号码">{secUser.mobile}</Description> 
 <Description term="电子邮件">{secUser.email}</Description> 
 <Description term="密码">{secUser.pwd}</Description> 
+<Description term="Weixin Openid">{secUser.weixinOpenid}</Description> 
+<Description term="Weixin Appid">{secUser.weixinAppid}</Description> 
+<Description term="访问令牌">{secUser.accessToken}</Description> 
 <Description term="验证码">{secUser.verificationCode}</Description> 
 <Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
 <Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 

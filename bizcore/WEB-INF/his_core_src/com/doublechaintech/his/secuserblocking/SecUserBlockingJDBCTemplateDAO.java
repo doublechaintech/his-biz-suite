@@ -26,7 +26,10 @@ import com.doublechaintech.his.secuser.SecUserDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implements SecUserBlockingDAO{
 
@@ -62,7 +65,7 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public SecUserBlocking load(String id,Map<String,Object> options) throws Exception{
@@ -733,6 +736,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	public SmartList<SecUserBlocking> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getSecUserBlockingMapper());
 	}
+	
+	
+
 }
 
 

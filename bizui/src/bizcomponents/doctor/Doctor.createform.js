@@ -18,7 +18,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '魏松全',
-  hospitalId: 'H000001',
+  hospitalId: 'H00000001',
 }
 */
 

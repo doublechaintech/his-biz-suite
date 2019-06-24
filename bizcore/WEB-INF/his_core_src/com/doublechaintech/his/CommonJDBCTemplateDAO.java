@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
 
 import javax.sql.DataSource;
@@ -21,7 +22,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.terapico.caf.DateTime;
 import com.terapico.utils.TextUtil;
-
+import java.util.Arrays;
 
 
 public abstract class CommonJDBCTemplateDAO extends BaseEntity{
@@ -1088,7 +1089,8 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			return new HashMap<>();
 		}
  		String SQL = "select " + target +" as id, count(*) as count from "+this.getTableName()+" where "+target+" in (" + TextUtil.repeat("?", ids.length, ",", true) +") group by " + target;
- 		List<Map<String, Object>> result = this.getJdbcTemplateObject().queryForList(SQL, ids);
+ 		Object [] parametersArray = ids;
+ 		List<Map<String, Object>> result = this.getJdbcTemplateObject().queryForList(SQL, parametersArray);
  		if (result == null || result.isEmpty()) {
  			return new HashMap<>();
  		}
@@ -1397,9 +1399,6 @@ class CountingResultMap extends HashMap<String, Integer> {
 	}
 	
 }
-
-
-
 
 
 

@@ -1,6 +1,7 @@
 package com.terapico.caf;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -65,7 +66,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		List<String> urlElements = parse(request);
 
 		if (urlElements.size() < start + 1) {
-			throw new InvocationException("No sufficient parameter to call");
+			throw new InvocationException("No sufficient parameter to call"+ String.join(" and ", urlElements) );
 		}
 
 		Object targetObject = getBean(request, urlElements);
@@ -79,7 +80,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		if (targetMethod == null) {
 			throw new InvocationException("Not able to find the target method to call： " +request.getRequestURI());
 		}
-		if(!hasRightNumberOfParameters(urlElements,targetMethod)){
+		if(!hasRightNumberOfParameters(request,urlElements,targetMethod)){
 			Object []parameters=this.getCandidateParameters(urlElements);
 			return buildFormContext(getBeanName(urlElements),targetMethod,parameters);
 		}
@@ -95,8 +96,11 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 
 	}
 	protected List<String> parse(HttpServletRequest request) throws InvocationException {
-		if(request.getMethod()=="POST"){
+		if(request.getMethod().equals("POST")){
 			return this.parsePost(request);
+		}
+		if(request.getMethod().equals("PUT")){
+			return this.parsePut(request);
 		}
 		return this.parseGet(request);
 	}
@@ -121,12 +125,27 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		context.setParameters(new Object[]{beanName,targetMethod,parameters});
 		return context;
 	}
-	protected boolean hasRightNumberOfParameters(List<String> urlElements,Method targetMethod)
+	
+	protected int expectedCountOfParameters(HttpServletRequest request, List<String> urlElements,Method targetMethod)
 	{
+		
+		if(this.isPutRequest(request)) {
+			return 1;
+		}
+		
 		int size=urlElements.size();
+		
+		return (size-start-2);
+		
+	}
+	
+	protected boolean hasRightNumberOfParameters(HttpServletRequest request, List<String> urlElements,Method targetMethod)
+	{
 		Type [] parameterTypes=targetMethod.getGenericParameterTypes();
 		
-		return (size-start-2)==parameterTypes.length;
+		int expectedParameterCount = this.expectedCountOfParameters(request, urlElements, targetMethod);
+		
+		return expectedParameterCount == parameterTypes.length;
 		
 	}
 	
@@ -167,6 +186,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		// Object [] parameters=new String[urlElements.size()-start-2];
 		Object elements[] = urlElements.toArray();
 		Object[] parameters = Arrays.copyOfRange(elements, start+2, urlElements.size());
+		if(isPutRequest(request)){
+			return getPutParameters(parameterTypes, parameters,request);
+		}
 		checkParametersLength(parameterTypes,parameters);
 		
 		if(isGetRequest(request)){
@@ -175,6 +197,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		if(isPostRequest(request)){
 			return getPostParameters(parameterTypes, parameters,request);
 		}
+		
 		return getParameters(parameterTypes, parameters,request);
 
 	}
@@ -187,6 +210,33 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 	protected Object[] getParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return super.getParameters(types, parameters);
+	}
+	/* 处理PUT请求，只是允许两种情况
+	 * 如果这个函数包括了userContext，那么允许两个参数
+	 * 如果这个函数没有包括userContext，那么只是允许一个参数
+	 * 没有UC的情况下，只是允许一个参数
+	 * 
+	 * */
+	protected Object[] getPutParameters(Type[] types, Object[] parameters, HttpServletRequest request) {
+		int length = types.length;
+		
+		if(length == 0) {
+			return new Object[] {};
+			//
+		}
+		if(length > 1) {
+			throw new IllegalArgumentException("For put method without a userContext parameter, only one parameter allowed");
+		}
+		//only one parameter allowed, the body should be a json object string
+		String strExpr = this.readBodyAsString(request);
+		System.out.print("PUT CONTENT: "+ strExpr);
+		
+		Object object = ReflectionTool.convertOnlyOneParameter(types,strExpr);
+		
+		//return new Object[] {strExpr};
+		return new Object[] {object};
+		
+	
 	}
 	
 	/*
@@ -252,6 +302,9 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 	protected boolean isGetRequest(HttpServletRequest request){
 		return request.getMethod().equalsIgnoreCase("GET");
 	}
+	protected boolean isPutRequest(HttpServletRequest request){
+		return request.getMethod().equalsIgnoreCase("PUT");
+	}
 	protected boolean isPostRequest(HttpServletRequest request){
 		return request.getMethod().equalsIgnoreCase("POST");
 	}
@@ -267,7 +320,67 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		return findSingleMethod(targetObject,methodName);
 
 	}
+	
+	protected String readBodyAsString(HttpServletRequest request) {
+		String str=null;
+		StringBuilder resultString =new StringBuilder();
+		try {
+			while ((str = request.getReader().readLine()) != null) {
+				resultString.append(str);
+			}
+			return resultString.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
+	
+	protected List<String> parsePut(HttpServletRequest request) throws InvocationException  {
 
+		List<String> parameters = new ArrayList<String>(10);
+		String requestURI = this.getRequestPath(request);
+		
+		System.out.println("PUT : "+requestURI);
+		
+		
+		String array[] = requestURI.split("/");
+		//System.out.println("GET : "+requestURI);
+		//Only method name should be parsed
+		
+		for (int i = 0; i < array.length; i++) {
+			if(i>2) {
+				break;//ignore any parameter for put
+			}
+			try {
+				String val = URLDecoder.decode(array[i], "UTF-8").trim();
+				System.out.println("array["+i+"]:"+val);
+				parameters.add(val);
+			} catch (UnsupportedEncodingException e) {
+				throw new InvocationException("Encoding UTF-8 is not supported");
+			}
+			//the last parameter sh
+		}
+		
+		//String body = this.readBodyAsString(request);
+		
+		//parameters.add(body);
+		
+		/*
+		try {
+			while ((str = request.getReader().readLine()) != null) {
+				resultString.append(str);
+			}
+			System.out.println("PUT data: "+resultString);
+			parameters.add(resultString.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		// System.out.println(URLDecoder.decode(schema[2],"UTF-8"));
+		return parameters;
+		
+	}
+	
 	protected List<String> parsePost(HttpServletRequest request) throws InvocationException  {
 
 		List<String> parameters = new ArrayList<String>(10);

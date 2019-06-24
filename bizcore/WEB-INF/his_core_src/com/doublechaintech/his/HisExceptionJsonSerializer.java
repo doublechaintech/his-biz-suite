@@ -120,6 +120,3 @@ public class HisExceptionJsonSerializer extends  JsonSerializer<HisException> {
 
 
 
-
-
-

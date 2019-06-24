@@ -1,5 +1,5 @@
 
-# 界面通过特别技术自动生成
+# 整个应用通过知识图谱自动生成
 
 <img src='/doc/his-sys-interface.png'  width="400"/>
 

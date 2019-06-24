@@ -28,7 +28,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements PeriodDAO{
  
@@ -73,7 +76,7 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public Period load(String id,Map<String,Object> options) throws Exception{
@@ -974,6 +977,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	public SmartList<Period> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getPeriodMapper());
 	}
+	
+	
+
 }
 
 

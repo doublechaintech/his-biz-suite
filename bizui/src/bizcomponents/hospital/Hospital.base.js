@@ -69,8 +69,9 @@ const renderItemOfList=(hospital,targetComponent)=>{
 <Description term="地址">{hospital.address}</Description> 
 <Description term="电话">{hospital.telephone}</Description> 
 	
+        
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

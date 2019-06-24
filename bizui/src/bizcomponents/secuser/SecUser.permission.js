@@ -33,6 +33,9 @@ const internalSummaryOf = (secUser,targetComponent) =>{
 <Description term="手机号码">{secUser.mobile}</Description> 
 <Description term="电子邮件">{secUser.email}</Description> 
 <Description term="密码">{secUser.pwd}</Description> 
+<Description term="Weixin Openid">{secUser.weixinOpenid}</Description> 
+<Description term="Weixin Appid">{secUser.weixinAppid}</Description> 
+<Description term="访问令牌">{secUser.accessToken}</Description> 
 <Description term="验证码">{secUser.verificationCode}</Description> 
 <Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
 <Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 

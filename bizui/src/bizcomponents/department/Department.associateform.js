@@ -19,7 +19,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '放射科',
-  hospitalId: 'H000001',
+  hospitalId: 'H00000001',
 }
 */
 

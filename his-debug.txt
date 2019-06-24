@@ -77,6 +77,9 @@ Login|登录
 Mobile|手机号码
 Email|电子邮件
 Pwd|密码
+Weixin Openid|Weixin Openid
+Weixin Appid|Weixin Appid
+Access Token|访问令牌
 Verification Code|验证码
 Verification Code Expire|验证码过期
 Last Login Time|最后登录时间

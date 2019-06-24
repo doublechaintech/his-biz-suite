@@ -310,6 +310,23 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof DoctorAssignment){
+		
+			
+			DoctorAssignment dest =(DoctorAssignment)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeUpdateTime(getUpdateTime());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

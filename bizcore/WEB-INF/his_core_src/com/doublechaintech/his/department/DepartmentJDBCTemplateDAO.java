@@ -30,7 +30,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements DepartmentDAO{
  
@@ -94,7 +97,7 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public Department load(String id,Map<String,Object> options) throws Exception{
@@ -1287,6 +1290,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	public SmartList<Department> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDepartmentMapper());
 	}
+	
+	
+
 }
 
 

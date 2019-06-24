@@ -7,6 +7,13 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.period.Period;
+import com.doublechaintech.his.expensetype.ExpenseType;
+import com.doublechaintech.his.doctor.Doctor;
+import com.doublechaintech.his.department.Department;
+
 import com.doublechaintech.his.department.DepartmentDAO;
 import com.doublechaintech.his.doctor.DoctorDAO;
 import com.doublechaintech.his.expensetype.ExpenseTypeDAO;
@@ -86,6 +93,7 @@ public interface DoctorScheduleDAO{
  	public void analyzeDoctorScheduleByHospital(SmartList<DoctorSchedule> resultList, String hospitalId, Map<String,Object> options);
 
  
- }
+ 
+}
 
 

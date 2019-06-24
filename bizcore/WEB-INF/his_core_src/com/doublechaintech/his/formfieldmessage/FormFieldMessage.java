@@ -320,6 +320,24 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof FormFieldMessage){
+		
+			
+			FormFieldMessage dest =(FormFieldMessage)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeTitle(getTitle());
+			dest.mergeParameterName(getParameterName());
+			dest.mergeLevel(getLevel());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

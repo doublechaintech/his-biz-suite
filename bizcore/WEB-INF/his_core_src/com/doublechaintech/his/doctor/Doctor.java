@@ -182,13 +182,13 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 	
 	
 	public void setShotImage(String shotImage){
-		this.mShotImage = trimString(shotImage);;
+		this.mShotImage = trimString(encodeUrl(shotImage));;
 	}
 	public String getShotImage(){
 		return this.mShotImage;
 	}
 	public Doctor updateShotImage(String shotImage){
-		this.mShotImage = trimString(shotImage);;
+		this.mShotImage = trimString(encodeUrl(shotImage));;
 		this.changed = true;
 		return this;
 	}
@@ -557,6 +557,24 @@ public class Doctor extends BaseEntity implements  java.io.Serializable{
 
 		}
 		super.copyTo(baseDest);
+		return baseDest;
+	}
+	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof Doctor){
+		
+			
+			Doctor dest =(Doctor)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeShotImage(getShotImage());
+			dest.mergeUpdateTime(getUpdateTime());
+			dest.mergeVersion(getVersion());
+
+		}
 		return baseDest;
 	}
 	

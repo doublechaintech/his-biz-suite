@@ -30,7 +30,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements ExpenseTypeDAO{
  
@@ -94,7 +97,7 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%06d";
+		return getShortName(this.getName())+"%08d";
 	}
 	
 	public ExpenseType load(String id,Map<String,Object> options) throws Exception{
@@ -1293,6 +1296,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	public SmartList<ExpenseType> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getExpenseTypeMapper());
 	}
+	
+	
+
 }
 
 

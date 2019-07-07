@@ -1,71 +1,69 @@
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="logo.png" type="image/x-icon">
-    <title>四川德杉浩睿科技有限责任公司</title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.1/examples/jumbotron/jumbotron.css" rel="stylesheet">
-  </head>
-
-  <body>
-
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">小黄龙</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-    </nav>
-
-    <main role="main">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <div class="container">
-          <h1 class="display-3">四川德杉浩睿科技有限责任公司</h1>
-          <p>小黄龙回收是专业从事再生资源智慧绿色回收及智能智造一体化解决方案的科技平台。致力于互联网/物联网+城市环卫系统/再生资源系统“两网融合”的高效智慧的绿色回收体系。</p>
-
-				<p>小黄龙回收通过互联网SAAS服务、大数据、人工智能和物联网、智能智造、智能检测等先进科技，实现对生活垃圾、工业废品、弃废机构的前端分类回收、分拣、运输、集中处理的“物联网+智能回收” 新模式和新业态。
-                小黄龙回收打通线上线下回收行业生态圈，赋能并将群众、废品回收商、再生资源产业、垃圾处理事业单位等有机整合，打造一套高效、智能、数据化、可监控、安全、完整的B2b2C形态废品回收生态链。</p>
-				<p>小黄龙回收创新的提出并践行B2b2C模式：B分拣中心/打包站 &lt;&lt; b废品回收站 &lt;&lt;C废品回收个体/收荒匠（Collector），不断的研发和升级再生资源智能智造系统，为回收行业B端企业及客户提供智能智造软硬件解决方案的系统平台，包含分拣中心、打包站管理系统及仓促管理系统、回收站管理系统及仓储保险、从业安全等金融服务解决方案提供等。
-</p>
-			
-
-        </div>
-      </div>
-
-     
-        <hr>
-
-      </div> <!-- /container -->
-
-    </main>
-
-    <footer class="container">
-      <p>&copy; 四川德杉浩睿科技有限责任公司</p>
-    </footer>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"><\/script>')</script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
-  </body>
-</html>
-
-
-
-
-
-
-
+insert into sec_user_data values('SU000001','User000001','13900000001','1000001@qq.com','258D9BB89BBC1F2A6CDDD3A4CB300E6CD9B83F3FC9984619DF1A59F6051F1F44','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000001','双链小超全国运营中心','SU000001','store','T','MXWR','RetailStoreCountryCenter','RSCC00000001','/link/to/app','1');
+insert into user_app_data values('UA000002','My Account','SU000001','lock','T','MXWR','SecUser','SU000001','/link/to/app','1'); 
+insert into sec_user_data values('SU000002','User000002','13900000002','1000002@qq.com','7FEABCC19D638787655F9FFC2C22755D5771184D85D000147D643D22F6617F7B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000003','双链小超省中心','SU000002','store','T','MXWR','RetailStoreProvinceCenter','RSPC00000001','/link/to/app','1');
+insert into user_app_data values('UA000004','My Account','SU000002','lock','T','MXWR','SecUser','SU000002','/link/to/app','1'); 
+insert into sec_user_data values('SU000003','User000003','13900000003','1000003@qq.com','8169C17063461B0B0CC210CE5EF682E9517A19170F7DCA3C76170229D765DE7A','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000005','双链小超城市服务中心','SU000003','city','T','MXWR','RetailStoreCityServiceCenter','RSCSC00000001','/link/to/app','1');
+insert into user_app_data values('UA000006','My Account','SU000003','lock','T','MXWR','SecUser','SU000003','/link/to/app','1'); 
+insert into sec_user_data values('SU000004','User000004','13900000004','1000004@qq.com','025745F4A4EA0C11059911E40714470F323C42836B1137D66AD3F85210A725CF','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000007','城市合伙人','SU000004','city','T','MXWR','CityPartner','CP00000001','/link/to/app','1');
+insert into user_app_data values('UA000008','My Account','SU000004','lock','T','MXWR','SecUser','SU000004','/link/to/app','1'); 
+insert into sec_user_data values('SU000005','User000005','13900000005','1000005@qq.com','F8D472FBE8716BFB66C0A9BC73208FE4C5971051D240D9AC3B5EBCEF05CD5FFA','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000009','潜在的客户','SU000005','om','T','MXWR','PotentialCustomer','PC00000001','/link/to/app','1');
+insert into user_app_data values('UA000010','My Account','SU000005','lock','T','MXWR','SecUser','SU000005','/link/to/app','1'); 
+insert into sec_user_data values('SU000006','User000006','13900000006','1000006@qq.com','FEE10F101DD4B9D2C98FAA1A672821DF22B9FA662528ED5B885B60C0979E6530','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000011','双链小超','SU000006','store','T','MXWR','RetailStore','RS00000001','/link/to/app','1');
+insert into user_app_data values('UA000012','My Account','SU000006','lock','T','MXWR','SecUser','SU000006','/link/to/app','1'); 
+insert into sec_user_data values('SU000007','User000007','13900000007','1000007@qq.com','016B4A47737559D64FC1369AA4D8CFD0B47E11F4C6219E80946C0E47A4C1C74B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000013','生超会员','SU000007','store','T','MXWR','RetailStoreMember','RSM00000001','/link/to/app','1');
+insert into user_app_data values('UA000014','My Account','SU000007','lock','T','MXWR','SecUser','SU000007','/link/to/app','1'); 
+insert into sec_user_data values('SU000008','User000008','13900000008','1000008@qq.com','3DD09D08D4A34BD5367C120455333331A0E1D012FC3305AEE702107B03FDA311','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000015','消费者订单','SU000008','first-order','T','MXWR','ConsumerOrder','CO00000001','/link/to/app','1');
+insert into user_app_data values('UA000016','My Account','SU000008','lock','T','MXWR','SecUser','SU000008','/link/to/app','1'); 
+insert into sec_user_data values('SU000009','User000009','13900000009','1000009@qq.com','8ECA1BC35EC1B832DE602E278203B99FA6395ED23F6C4428450FE3512266B7A8','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000017','产品供应商','SU000009','apper','T','MXWR','GoodsSupplier','GS00000001','/link/to/app','1');
+insert into user_app_data values('UA000018','My Account','SU000009','lock','T','MXWR','SecUser','SU000009','/link/to/app','1'); 
+insert into sec_user_data values('SU000010','User000010','13900000010','1000010@qq.com','A2A6C75CE3F23C1756D1A4DF43AFEE7D25FE2726925A5AD9157D23073CFCBE2A','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000019','供应订单','SU000010','first-order','T','MXWR','SupplyOrder','SO00000001','/link/to/app','1');
+insert into user_app_data values('UA000020','My Account','SU000010','lock','T','MXWR','SecUser','SU000010','/link/to/app','1'); 
+insert into sec_user_data values('SU000011','User000011','13900000011','1000011@qq.com','0DA7439FCC9C3C54DD9F8A6CC50141FAFF9443A80507BD3FA332474A59CF1E4B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000021','生超的订单','SU000011','store','T','MXWR','RetailStoreOrder','RSO00000001','/link/to/app','1');
+insert into user_app_data values('UA000022','My Account','SU000011','lock','T','MXWR','SecUser','SU000011','/link/to/app','1'); 
+insert into sec_user_data values('SU000012','User000012','13900000012','1000012@qq.com','F6EA28692696304975223A15F42335C078D0A14DF8FB1DBC34DC4328E55E9428','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000023','仓库','SU000012','warehouse','T','MXWR','Warehouse','W00000001','/link/to/app','1');
+insert into user_app_data values('UA000024','My Account','SU000012','lock','T','MXWR','SecUser','SU000012','/link/to/app','1'); 
+insert into sec_user_data values('SU000013','User000013','13900000013','1000013@qq.com','59D53828EE0A84D385E25B1394648115971690AACAB4F77841DDB10D60E6661C','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000025','货架','SU000013','asterisk','T','MXWR','GoodsShelf','GS00000001','/link/to/app','1');
+insert into user_app_data values('UA000026','My Account','SU000013','lock','T','MXWR','SecUser','SU000013','/link/to/app','1'); 
+insert into sec_user_data values('SU000014','User000014','13900000014','1000014@qq.com','50D3D254F86D290337E3B83EF356B913E1F5093B803AD48D2E0BC59E9309194B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000027','运输车队','SU000014','backspace','T','MXWR','TransportFleet','TF00000001','/link/to/app','1');
+insert into user_app_data values('UA000028','My Account','SU000014','lock','T','MXWR','SecUser','SU000014','/link/to/app','1'); 
+insert into sec_user_data values('SU000015','User000015','13900000015','1000015@qq.com','75CD84F62C9C413B8F366D883D29D8DD95FDF68C588893C45F68DCBB4DF03905','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000029','运输任务','SU000015','tasks','T','MXWR','TransportTask','TT00000001','/link/to/app','1');
+insert into user_app_data values('UA000030','My Account','SU000015','lock','T','MXWR','SecUser','SU000015','/link/to/app','1'); 
+insert into sec_user_data values('SU000016','User000016','13900000016','1000016@qq.com','EEBE214BE0970861D97A6DC68A36EE1529075E10D7C14F961C1BF74228B70B8A','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000031','账套','SU000016','headset','T','MXWR','AccountSet','AS00000001','/link/to/app','1');
+insert into user_app_data values('UA000032','My Account','SU000016','lock','T','MXWR','SecUser','SU000016','/link/to/app','1'); 
+insert into sec_user_data values('SU000017','User000017','13900000017','1000017@qq.com','C37E721BD259B06E7221367D8808A8283AE56AFD387F404FFF7A62535064C217','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000033','会计凭证','SU000017','basketball-ball','T','MXWR','AccountingDocument','AD00000001','/link/to/app','1');
+insert into user_app_data values('UA000034','My Account','SU000017','lock','T','MXWR','SecUser','SU000017','/link/to/app','1'); 
+insert into sec_user_data values('SU000018','User000018','13900000018','1000018@qq.com','9A783D466D9076F8AADF564D3A42D8FC75341B0F39F218A3FC93C071A91F724C','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000035','工资等级','SU000018','ad','T','MXWR','SalaryGrade','SG00000001','/link/to/app','1');
+insert into user_app_data values('UA000036','My Account','SU000018','lock','T','MXWR','SecUser','SU000018','/link/to/app','1'); 
+insert into sec_user_data values('SU000019','User000019','13900000019','1000019@qq.com','0B34D82ACE51E52A5B0BC0EE9D13CA4B022DFFB2E2C4D1C687995B74FDAD86D1','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000037','观','SU000019','street-view','T','MXWR','View','V00000001','/link/to/app','1');
+insert into user_app_data values('UA000038','My Account','SU000019','lock','T','MXWR','SecUser','SU000019','/link/to/app','1'); 
+insert into sec_user_data values('SU000020','User000020','13900000020','1000020@qq.com','55BF0A7E8AF57AE2CC16D2D53DE8D670204614B7C7AF2E70C34586EC0EABDE13','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000039','员工','SU000020','blackberry','T','MXWR','Employee','E00000001','/link/to/app','1');
+insert into user_app_data values('UA000040','My Account','SU000020','lock','T','MXWR','SecUser','SU000020','/link/to/app','1'); 
+insert into sec_user_data values('SU000021','User000021','13900000021','1000021@qq.com','0320BEE5B930A5E9897C73919EEE92EEA59768AFEDFB141040B4D16A67303212','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000041','用户域','SU000021','user','T','MXWR','UserDomain','UD00000001','/link/to/app','1');
+insert into user_app_data values('UA000042','My Account','SU000021','lock','T','MXWR','SecUser','SU000021','/link/to/app','1'); 
+insert into sec_user_data values('SU000022','User000022','13900000022','1000022@qq.com','1647992FD5B5ABA16BFB44AB69EBF62B570B941218C4B21FF2ECEECEE89E22EB','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000043','SEC的用户','SU000022','user','T','MXWR','SecUser','SU00000001','/link/to/app','1');
+insert into user_app_data values('UA000044','My Account','SU000022','lock','T','MXWR','SecUser','SU000022','/link/to/app','1'); 
+insert into sec_user_data values('SU000023','User000023','13900000023','1000023@qq.com','3E26D4C1FE499EC82C01D391958BAB4DD228A5C1B05A9B732D3A18F0F690D5C0','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD00000001',NULL,'INIT',1);
+insert into user_app_data values('UA000045','用户应用程序','SU000023','user','T','MXWR','UserApp','UA00000001','/link/to/app','1');
+insert into user_app_data values('UA000046','My Account','SU000023','lock','T','MXWR','SecUser','SU000023','/link/to/app','1'); 

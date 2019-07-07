@@ -28,7 +28,7 @@ public class HospitalCustomManagerImpl extends HospitalManagerImpl{
 		
 	}
 	public Hospital requestNew(HisUserContext userContext,Hospital value) {
-		System.out.print("run some thins");
+		
 		
 		userContext.log(value+"");
 		

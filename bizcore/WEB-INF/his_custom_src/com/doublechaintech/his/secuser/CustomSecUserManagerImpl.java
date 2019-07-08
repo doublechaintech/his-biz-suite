@@ -566,28 +566,8 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         	return;
         }
         
-        ServletInputStream ins;
-        try {
-            ins = request.getInputStream();
-
-            if (ins != null) {
-                if (ins.available() > 0) {
-                	// throw new IllegalStateException("input stream can read");
-                    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-                    byte[] buff = new byte[1024];
-                    int n = 0;
-                    while ((n = ins.read(buff)) > 0) {
-                        bout.write(buff, 0, n);
-                    }
-
-                    userContext.setRequestBody(bout.toByteArray());
-                } else {
-                    throw new IllegalStateException("input stream cannot read");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
+        
     }
     
     protected String getRemoteIP(HttpServletRequest request){

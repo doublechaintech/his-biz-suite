@@ -229,7 +229,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 		}
 		//only one parameter allowed, the body should be a json object string
 		String strExpr = this.readBodyAsString(request);
-		System.out.print("PUT CONTENT: "+ strExpr);
+		// System.out.print("PUT CONTENT: "+ strExpr);
 		
 		Object object = ReflectionTool.convertOnlyOneParameter(types,strExpr);
 		

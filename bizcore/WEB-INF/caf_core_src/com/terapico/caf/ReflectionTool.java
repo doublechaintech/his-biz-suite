@@ -1,12 +1,10 @@
 package com.terapico.caf;
 
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,9 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -66,7 +62,7 @@ public class ReflectionTool {
 	}
 	public static boolean hasRemoteInitiableInterface(Type parameterType) {
 		
-		return RemoteInitiatable.class.isAssignableFrom((Class) parameterType);
+		return RemoteInitiable.class.isAssignableFrom((Class) parameterType);
 		
 	}
 	
@@ -102,7 +98,7 @@ public class ReflectionTool {
 			Object responseObj = mapper.readValue(value, (Class)firstParameterType);
 			return responseObj;
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			return null;
 		} 
 

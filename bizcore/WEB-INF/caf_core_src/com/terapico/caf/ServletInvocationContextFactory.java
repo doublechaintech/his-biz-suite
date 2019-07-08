@@ -330,7 +330,7 @@ public class ServletInvocationContextFactory  extends ReflectionTool implements 
 			}
 			return resultString.toString();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			return null;
 		}
 	}

@@ -120,8 +120,13 @@
 			<field name="mobile" type="string_china_mobile_phone" checkType="ChinaMobilePhone" min="0" max="11" description="手机号码" />
 			<field name="email" type="string" checkType="StringLengthRange" min="0" max="76" description="电子邮件" />
 			<field name="pwd" type="string_password" checkType="Password" min="3" max="28" description="密码" />
+<<<<<<< HEAD
 			<field name="weixin_openid" type="string" checkType="StringLengthRange" min="0" max="128" description="微信openid" />
 			<field name="weixin_appid" type="string" checkType="StringLengthRange" min="0" max="128" description="微信Appid" />
+=======
+			<field name="weixin_openid" type="string" checkType="StringLengthRange" min="0" max="128" description="Weixin Openid" />
+			<field name="weixin_appid" type="string" checkType="StringLengthRange" min="0" max="128" description="Weixin Appid" />
+>>>>>>> 5a174cc2dc8f941e7db426d0719b65c3a9ec0547
 			<field name="access_token" type="string" checkType="StringLengthRange" min="0" max="128" description="访问令牌" />
 			<field name="verification_code" type="int" checkType="IntegerRange" min="0" max="9999999" description="验证码" />
 			<field name="verification_code_expire" type="date_time" checkType="DateTime" min="1900-01-01T00:00:00" max="2099-12-31T09:09:09" description="验证码过期" />

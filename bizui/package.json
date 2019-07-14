@@ -90,9 +90,7 @@
     "stylelint-config-prettier": "^3.0.4",
     "stylelint-config-standard": "^18.0.0"
   },
-  "optionalDependencies": {
-    "puppeteer": "^1.1.1"
-  },
+
   "lint-staged": {
     "**/*.{js,jsx,less}": [
       "prettier --write",

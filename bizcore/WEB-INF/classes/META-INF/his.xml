@@ -14,6 +14,12 @@
 	<!-- dbcp 2.6 https://commons.apache.org/proper/commons-dbcp/configuration.html -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
 	
+<<<<<<< HEAD
+=======
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+	
+>>>>>>> 5a174cc2dc8f941e7db426d0719b65c3a9ec0547
 		<property name="url" value="${app.database.jdbcURL}" />
 		<property name="username" value="${app.database.username}" />
 		<property name="password" value="${app.database.password}" />

@@ -652,8 +652,8 @@ public class ExpenseTypeManagerImpl extends CustomHisCheckerManager implements E
 			String expenseItemIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfExpenseType(expenseTypeId);
-		for(String expenseItemId: expenseItemIds){
-			userContext.getChecker().checkIdOfExpenseItem(expenseItemId);
+		for(String expenseItemIdItem: expenseItemIds){
+			userContext.getChecker().checkIdOfExpenseItem(expenseItemIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(ExpenseTypeManagerException.class);
@@ -927,8 +927,8 @@ public class ExpenseTypeManagerImpl extends CustomHisCheckerManager implements E
 			String doctorScheduleIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfExpenseType(expenseTypeId);
-		for(String doctorScheduleId: doctorScheduleIds){
-			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleId);
+		for(String doctorScheduleIdItem: doctorScheduleIds){
+			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(ExpenseTypeManagerException.class);

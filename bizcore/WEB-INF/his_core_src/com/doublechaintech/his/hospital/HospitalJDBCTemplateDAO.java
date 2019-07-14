@@ -36,7 +36,10 @@ import com.doublechaintech.his.period.PeriodDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements HospitalDAO{
 
@@ -1038,9 +1041,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(ExpenseType expenseType: externalExpenseTypeList){
+		for(ExpenseType expenseTypeItem: externalExpenseTypeList){
 
-			expenseType.clearFromAll();
+			expenseTypeItem.clearFromAll();
 		}
 		
 		
@@ -1066,9 +1069,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(Period period: externalPeriodList){
+		for(Period periodItem: externalPeriodList){
 
-			period.clearFromAll();
+			periodItem.clearFromAll();
 		}
 		
 		
@@ -1094,9 +1097,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(ExpenseItem expenseItem: externalExpenseItemList){
+		for(ExpenseItem expenseItemItem: externalExpenseItemList){
 
-			expenseItem.clearFromAll();
+			expenseItemItem.clearFromAll();
 		}
 		
 		
@@ -1126,9 +1129,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(ExpenseItem expenseItem: externalExpenseItemList){
-			expenseItem.clearExpenseType();
-			expenseItem.clearHospital();
+		for(ExpenseItem expenseItemItem: externalExpenseItemList){
+			expenseItemItem.clearExpenseType();
+			expenseItemItem.clearHospital();
 			
 		}
 		
@@ -1166,9 +1169,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(Doctor doctor: externalDoctorList){
+		for(Doctor doctorItem: externalDoctorList){
 
-			doctor.clearFromAll();
+			doctorItem.clearFromAll();
 		}
 		
 		
@@ -1194,9 +1197,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(Department department: externalDepartmentList){
+		for(Department departmentItem: externalDepartmentList){
 
-			department.clearFromAll();
+			departmentItem.clearFromAll();
 		}
 		
 		
@@ -1222,9 +1225,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
 
-			doctorSchedule.clearFromAll();
+			doctorScheduleItem.clearFromAll();
 		}
 		
 		
@@ -1254,9 +1257,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDoctor();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDoctor();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -1298,9 +1301,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearPeriod();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearPeriod();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -1342,9 +1345,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDepartment();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDepartment();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -1386,9 +1389,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearExpenseType();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearExpenseType();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -2164,6 +2167,89 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	public SmartList<Hospital> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getHospitalMapper());
 	}
+	
+	
+    
+	public Map<String, Integer> countBySql(String sql, Object[] params) {
+		if (params == null || params.length == 0) {
+			return new HashMap<>();
+		}
+		List<Map<String, Object>> result = this.getJdbcTemplateObject().queryForList(sql, params);
+		if (result == null || result.isEmpty()) {
+			return new HashMap<>();
+		}
+		Map<String, Integer> cntMap = new HashMap<>();
+		for (Map<String, Object> data : result) {
+			String key = (String) data.get("id");
+			Number value = (Number) data.get("count");
+			cntMap.put(key, value.intValue());
+		}
+		this.logSQLAndParameters("countBySql", sql, params, cntMap.size() + " Counts");
+		return cntMap;
+	}
+
+	public Integer singleCountBySql(String sql, Object[] params) {
+		Integer cnt = this.getJdbcTemplateObject().queryForObject(sql, params, Integer.class);
+		logSQLAndParameters("singleCountBySql", sql, params, cnt + "");
+		return cnt;
+	}
+
+	public BigDecimal summaryBySql(String sql, Object[] params) {
+		BigDecimal cnt = this.getJdbcTemplateObject().queryForObject(sql, params, BigDecimal.class);
+		logSQLAndParameters("summaryBySql", sql, params, cnt + "");
+		return cnt == null ? BigDecimal.ZERO : cnt;
+	}
+
+	public <T> List<T> queryForList(String sql, Object[] params, Class<T> claxx) {
+		List<T> result = this.getJdbcTemplateObject().queryForList(sql, params, claxx);
+		logSQLAndParameters("queryForList", sql, params, result.size() + " items");
+		return result;
+	}
+
+	public Map<String, Object> queryForMap(String sql, Object[] params) throws DataAccessException {
+		Map<String, Object> result = null;
+		try {
+			result = this.getJdbcTemplateObject().queryForMap(sql, params);
+		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			// 空结果，返回null
+		}
+		logSQLAndParameters("queryForObject", sql, params, result == null ? "not found" : String.valueOf(result));
+		return result;
+	}
+
+	public <T> T queryForObject(String sql, Object[] params, Class<T> claxx) throws DataAccessException {
+		T result = null;
+		try {
+			result = this.getJdbcTemplateObject().queryForObject(sql, params, claxx);
+		} catch (org.springframework.dao.EmptyResultDataAccessException e) {
+			// 空结果，返回null
+		}
+		logSQLAndParameters("queryForObject", sql, params, result == null ? "not found" : String.valueOf(result));
+		return result;
+	}
+
+	public List<Map<String, Object>> queryAsMapList(String sql, Object[] params) {
+		List<Map<String, Object>> result = getJdbcTemplateObject().queryForList(sql, params);
+		logSQLAndParameters("queryAsMapList", sql, params, result.size() + " items");
+		return result;
+	}
+
+	public synchronized int updateBySql(String sql, Object[] params) {
+		int result = getJdbcTemplateObject().update(sql, params);
+		logSQLAndParameters("updateBySql", sql, params, result + " items");
+		return result;
+	}
+
+	public void execSqlWithRowCallback(String sql, Object[] args, RowCallbackHandler callback) {
+		getJdbcTemplateObject().query(sql, args, callback);
+	}
+
+	public void executeSql(String sql) {
+		logSQLAndParameters("executeSql", sql, new Object[] {}, "");
+		getJdbcTemplateObject().execute(sql);
+	}
+
+
 }
 
 

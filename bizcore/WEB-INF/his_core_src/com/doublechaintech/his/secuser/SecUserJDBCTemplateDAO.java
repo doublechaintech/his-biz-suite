@@ -32,7 +32,10 @@ import com.doublechaintech.his.secuserblocking.SecUserBlockingDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUserDAO{
  
@@ -770,32 +773,35 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
  		return prepareSecUserCreateParameters(secUser);
  	}
  	protected Object[] prepareSecUserUpdateParameters(SecUser secUser){
- 		Object[] parameters = new Object[13];
+ 		Object[] parameters = new Object[16];
  
  		parameters[0] = secUser.getLogin();
  		parameters[1] = secUser.getMobile();
  		parameters[2] = secUser.getEmail();
  		parameters[3] = secUser.getPwd();
- 		parameters[4] = secUser.getVerificationCode();
- 		parameters[5] = secUser.getVerificationCodeExpire();
- 		parameters[6] = secUser.getLastLoginTime(); 	
+ 		parameters[4] = secUser.getWeixinOpenid();
+ 		parameters[5] = secUser.getWeixinAppid();
+ 		parameters[6] = secUser.getAccessToken();
+ 		parameters[7] = secUser.getVerificationCode();
+ 		parameters[8] = secUser.getVerificationCodeExpire();
+ 		parameters[9] = secUser.getLastLoginTime(); 	
  		if(secUser.getDomain() != null){
- 			parameters[7] = secUser.getDomain().getId();
+ 			parameters[10] = secUser.getDomain().getId();
  		}
   	
  		if(secUser.getBlocking() != null){
- 			parameters[8] = secUser.getBlocking().getId();
+ 			parameters[11] = secUser.getBlocking().getId();
  		}
  
- 		parameters[9] = secUser.getCurrentStatus();		
- 		parameters[10] = secUser.nextVersion();
- 		parameters[11] = secUser.getId();
- 		parameters[12] = secUser.getVersion();
+ 		parameters[12] = secUser.getCurrentStatus();		
+ 		parameters[13] = secUser.nextVersion();
+ 		parameters[14] = secUser.getId();
+ 		parameters[15] = secUser.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareSecUserCreateParameters(SecUser secUser){
-		Object[] parameters = new Object[11];
+		Object[] parameters = new Object[14];
 		String newSecUserId=getNextId();
 		secUser.setId(newSecUserId);
 		parameters[0] =  secUser.getId();
@@ -804,20 +810,23 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
  		parameters[2] = secUser.getMobile();
  		parameters[3] = secUser.getEmail();
  		parameters[4] = secUser.getPwd();
- 		parameters[5] = secUser.getVerificationCode();
- 		parameters[6] = secUser.getVerificationCodeExpire();
- 		parameters[7] = secUser.getLastLoginTime(); 	
+ 		parameters[5] = secUser.getWeixinOpenid();
+ 		parameters[6] = secUser.getWeixinAppid();
+ 		parameters[7] = secUser.getAccessToken();
+ 		parameters[8] = secUser.getVerificationCode();
+ 		parameters[9] = secUser.getVerificationCodeExpire();
+ 		parameters[10] = secUser.getLastLoginTime(); 	
  		if(secUser.getDomain() != null){
- 			parameters[8] = secUser.getDomain().getId();
+ 			parameters[11] = secUser.getDomain().getId();
  		
  		}
  		 	
  		if(secUser.getBlocking() != null){
- 			parameters[9] = secUser.getBlocking().getId();
+ 			parameters[12] = secUser.getBlocking().getId();
  		
  		}
  		
- 		parameters[10] = secUser.getCurrentStatus();		
+ 		parameters[13] = secUser.getCurrentStatus();		
  				
  		return parameters;
  	}
@@ -908,9 +917,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			return secUser;
 		}
 		
-		for(UserApp userApp: externalUserAppList){
+		for(UserApp userAppItem: externalUserAppList){
 
-			userApp.clearFromAll();
+			userAppItem.clearFromAll();
 		}
 		
 		
@@ -940,9 +949,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			return secUser;
 		}
 		
-		for(UserApp userApp: externalUserAppList){
-			userApp.clearObjectId();
-			userApp.clearSecUser();
+		for(UserApp userAppItem: externalUserAppList){
+			userAppItem.clearObjectId();
+			userAppItem.clearSecUser();
 			
 		}
 		
@@ -980,9 +989,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			return secUser;
 		}
 		
-		for(LoginHistory loginHistory: externalLoginHistoryList){
+		for(LoginHistory loginHistoryItem: externalLoginHistoryList){
 
-			loginHistory.clearFromAll();
+			loginHistoryItem.clearFromAll();
 		}
 		
 		
@@ -1282,6 +1291,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 	public SmartList<SecUser> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getSecUserMapper());
 	}
+	
+	
+
 }
 
 

@@ -48,7 +48,7 @@ const optionList =(listAccess)=>{return [
 	  {"title":'读权限',"value":listAccess.readPermission,"parameterName":"readPermission"},
   {"title":'创建权限',"value":listAccess.createPermission,"parameterName":"createPermission"},
   {"title":'删除权限',"value":listAccess.deletePermission,"parameterName":"deletePermission"},
-  {"title":'更新许可',"value":listAccess.updatePermission,"parameterName":"updatePermission"},
+  {"title":'更新权限',"value":listAccess.updatePermission,"parameterName":"updatePermission"},
   {"title":'执行权限',"value":listAccess.executionPermission,"parameterName":"executionPermission"},
 ]}
 

@@ -3,8 +3,13 @@ package com.terapico.utils;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +25,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class DebugUtil {
     private static ObjectMapper _mapper = null;
-
-    public static void dumpAsJson(Object object, boolean pretty) throws Exception {
+    private static final NumberFormat cashFormat = new DecimalFormat("#,##0.00");
+    
+    public static String dumpAsJson(Object object, boolean pretty) throws Exception {
         ObjectMapper mapper = getObjectMapper();
         String jsonStr = null;
         if (pretty) {
@@ -30,6 +36,7 @@ public class DebugUtil {
             jsonStr = mapper.writeValueAsString(object);
         }
         System.out.println(jsonStr);
+        return jsonStr;
     }
 
     public static ObjectMapper getObjectMapper() {
@@ -43,9 +50,20 @@ public class DebugUtil {
         return _mapper;
     }
     
-    public static Map<String, Object> toMap(Object data) throws IOException {
-    	ObjectMapper mapper = getObjectMapper();
+    public static Map<String, Object> toMap(Object data, String className) throws IOException {
+    	ObjectMapper mapper = new ObjectMapper();
+    	mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    	mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     	String jsonStr = mapper.writeValueAsString(data);
+    	if (className != null && className.endsWith("Form")) {
+    		if (data instanceof Map && ((Map) data).containsKey("form")) {
+    			System.out.println("新BaseViewPage对象,跳过包装");
+    		}else {
+	    		Map<String, Object> mapResult = new HashMap<>();
+	    		mapResult.put("form", mapper.readValue(jsonStr, Map.class));
+	    		return mapResult;
+    		}
+    	}
     	return mapper.readValue(jsonStr, Map.class);
     }
     public static void renderHashMap(Map<String, Object> map, Writer out, int level) throws IOException {
@@ -67,7 +85,7 @@ public class DebugUtil {
     		// String key = ent.getKey();
     		Object value = map.get(key);
     		
-    		if (value instanceof Map && key.toLowerCase().endsWith("form")) {
+    		if (value instanceof Map && (key.toLowerCase().endsWith("form") && !key.toLowerCase().endsWith("platform"))) {
     			Map<String, Object> form = (Map<String, Object>) value;
     			template = "<div class=\"form-container\">";
     			out.write(String.format(template));
@@ -169,7 +187,7 @@ public class DebugUtil {
 			return;
 		}
 		String template="<div class='common_value_content'>%s</div>" ;
-		if (key.equals("imageUrl") || key.toLowerCase().endsWith("image")) {
+		if (isImageData(key, value)) {
 			template = "<image class='image_value' src='%s?x-oss-process=style/small'/>";
 			out.write(String.format(template, value));
 			return;
@@ -180,6 +198,8 @@ public class DebugUtil {
 			out.write(String.format(template, value, value));
 			return;
 		}
+		
+		
 		
 		if (value instanceof Map) {
 			renderHashMap((Map<String, Object>) value, out, level);
@@ -192,8 +212,30 @@ public class DebugUtil {
 			}
 			return;
 		}
+		if (value instanceof Number && (key.toLowerCase().endsWith("time") || key.toLowerCase().endsWith("date"))) {
+			template = "<div class='common_value_content' ondblclick='handleDbClick(this)'>%s</div>";
+			out.write(String.format(template, DateTimeUtil.formatDate(new Date(((Number)value).longValue()), null)));
+			return;
+		}
+		if (value instanceof Number && (key.toLowerCase().endsWith("price") || key.toLowerCase().endsWith("date"))) {
+			template = "<div class='common_value_content' ondblclick='handleDbClick(this)'>%s</div>";
+			out.write(String.format(template, cashFormat.format(new BigDecimal(value.toString()))));
+			return;
+		}
 		template="<div class='common_value_content' ondblclick='handleDbClick(this)'>%s</div>" ;
 		out.write(String.format(template, value));
+	}
+
+	public static boolean isImageData(String key, Object value) {
+		if ( key.equals("imageUrl") || key.toLowerCase().endsWith("image")) {
+			return true;
+		}
+		
+		if (key.endsWith("Logo")) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	private static boolean putArchorLink(String key, Object value, Writer out) throws IOException {

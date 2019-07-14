@@ -7,6 +7,10 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.expensetype.ExpenseType;
+
 import com.doublechaintech.his.expensetype.ExpenseTypeDAO;
 import com.doublechaintech.his.hospital.HospitalDAO;
 
@@ -59,6 +63,7 @@ public interface ExpenseItemDAO{
  	public void analyzeExpenseItemByHospital(SmartList<ExpenseItem> resultList, String hospitalId, Map<String,Object> options);
 
  
- }
+ 
+}
 
 

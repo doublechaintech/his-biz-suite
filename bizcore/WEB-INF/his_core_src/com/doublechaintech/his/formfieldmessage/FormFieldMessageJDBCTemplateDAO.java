@@ -26,7 +26,10 @@ import com.doublechaintech.his.genericform.GenericFormDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class FormFieldMessageJDBCTemplateDAO extends HisNamingServiceDAO implements FormFieldMessageDAO{
  
@@ -551,6 +554,9 @@ public class FormFieldMessageJDBCTemplateDAO extends HisNamingServiceDAO impleme
 	public SmartList<FormFieldMessage> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getFormFieldMessageMapper());
 	}
+	
+	
+
 }
 
 

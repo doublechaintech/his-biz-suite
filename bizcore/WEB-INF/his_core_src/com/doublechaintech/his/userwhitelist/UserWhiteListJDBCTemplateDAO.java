@@ -26,7 +26,10 @@ import com.doublechaintech.his.userdomain.UserDomainDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class UserWhiteListJDBCTemplateDAO extends HisNamingServiceDAO implements UserWhiteListDAO{
  
@@ -549,6 +552,9 @@ public class UserWhiteListJDBCTemplateDAO extends HisNamingServiceDAO implements
 	public SmartList<UserWhiteList> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getUserWhiteListMapper());
 	}
+	
+	
+
 }
 
 

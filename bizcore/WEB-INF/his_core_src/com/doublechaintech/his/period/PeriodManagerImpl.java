@@ -638,8 +638,8 @@ public class PeriodManagerImpl extends CustomHisCheckerManager implements Period
 			String doctorScheduleIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfPeriod(periodId);
-		for(String doctorScheduleId: doctorScheduleIds){
-			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleId);
+		for(String doctorScheduleIdItem: doctorScheduleIds){
+			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(PeriodManagerException.class);

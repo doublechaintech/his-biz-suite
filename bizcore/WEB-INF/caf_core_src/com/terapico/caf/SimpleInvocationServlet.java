@@ -14,9 +14,27 @@ public class SimpleInvocationServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
+	protected void doPut2(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		String str=null;
+		StringBuilder resultString =new StringBuilder();
+		
+		while ((str = request.getReader().readLine()) != null) {
+			resultString.append(str);
+		}
+		response.getWriter().print(resultString.toString());
+	}
+	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		this.doTheJob(request, response);
+	}
+	protected void doTheJob(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException{
 		long start = System.currentTimeMillis();
 		InvocationResult result = getResult(request, response);
 		long javaCallInterval = System.currentTimeMillis();
@@ -27,8 +45,14 @@ public class SimpleInvocationServlet extends HttpServlet {
 
 				+ (renderCallInterval - start) + "ms/" + (javaCallInterval - start) + "ms/"
 				+ (renderCallInterval - javaCallInterval) + "ms for TOTAL/BACKEND/RENDERING");
+		
 	}
-
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		this.doTheJob(request, response);
+	}
+	
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,7 +64,7 @@ public class SimpleInvocationServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 		// Access-Control-Expose-Headers
 		String reqedHeaders = request.getHeader("Access-Control-Request-Headers");
-		response.addHeader("Access-Control-Allow-Headers", reqedHeaders);
+		response.addHeader("Access-Control-Allow-Headers", reqedHeaders+", X-Redirect, X-Env-Type, X-Env-Name");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
 		return;
 
@@ -49,6 +73,10 @@ public class SimpleInvocationServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		this.doTheJob(request, response);
+		
+		/*
 		long start = System.currentTimeMillis();
 		InvocationResult result = getResult(request, response);
 		long javaCallInterval = System.currentTimeMillis();
@@ -58,6 +86,7 @@ public class SimpleInvocationServlet extends HttpServlet {
 
 				+ (renderCallInterval - start) + "ms/" + (javaCallInterval - start) + "ms/"
 				+ (renderCallInterval - javaCallInterval) + "ms for TOTAL/BACKEND/RENDERING");
+		*/		
 	}
 
 	protected void render(HttpServletRequest request, HttpServletResponse response, InvocationResult result)

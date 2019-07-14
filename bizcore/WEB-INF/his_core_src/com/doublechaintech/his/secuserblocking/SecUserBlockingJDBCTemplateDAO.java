@@ -26,7 +26,10 @@ import com.doublechaintech.his.secuser.SecUserDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implements SecUserBlockingDAO{
 
@@ -503,9 +506,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 			return secUserBlocking;
 		}
 		
-		for(SecUser secUser: externalSecUserList){
+		for(SecUser secUserItem: externalSecUserList){
 
-			secUser.clearFromAll();
+			secUserItem.clearFromAll();
 		}
 		
 		
@@ -535,9 +538,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 			return secUserBlocking;
 		}
 		
-		for(SecUser secUser: externalSecUserList){
-			secUser.clearDomain();
-			secUser.clearBlocking();
+		for(SecUser secUserItem: externalSecUserList){
+			secUserItem.clearDomain();
+			secUserItem.clearBlocking();
 			
 		}
 		
@@ -733,6 +736,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	public SmartList<SecUserBlocking> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getSecUserBlockingMapper());
 	}
+	
+	
+
 }
 
 

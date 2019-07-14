@@ -34,16 +34,29 @@ public class JWTUtil {
 		}
 	}
 	
-	public static String getJwtToken(String userId, String userUploadHome) {
+	@Deprecated
+	/**
+	 * replaced with getJwtToken(String userId, String userUploadHome, String envType, Date now);
+	 * @param userId
+	 * @param userUploadHome
+	 * @param envType
+	 * @return
+	 */
+	public static String getJwtToken(String userId, String userUploadHome, String envType) {
+		return getJwtToken(userId, userUploadHome, envType, new Date());
+	}
+	
+	public static String getJwtToken(String userId, String userUploadHome, String envType, Date now) {
 		try {
 			
 		    Algorithm algorithm = Algorithm.HMAC256(getSecret());
 		    String token = JWT.create()
 		        .withIssuer(getIssuer())
 		        .withKeyId(userId)
-		        .withIssuedAt(new Date())
-		        .withExpiresAt(DateTimeUtil.addMonths(new Date(), 12))
+		        .withIssuedAt(now)
+		        .withExpiresAt(DateTimeUtil.addDays(now, 7, false))
 		        .withClaim("userUploadHome", userUploadHome)
+		        .withClaim("envType", envType)
 		        .withArrayClaim("tags", new String[] {userId})
 		        .sign(algorithm);
 		    return token;

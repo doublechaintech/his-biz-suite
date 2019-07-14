@@ -640,6 +640,26 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof ExpenseType){
+		
+			
+			ExpenseType dest =(ExpenseType)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeHelperChars(getHelperChars());
+			dest.mergeStatus(getStatus());
+			dest.mergeDescription(getDescription());
+			dest.mergeUpdateTime(getUpdateTime());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

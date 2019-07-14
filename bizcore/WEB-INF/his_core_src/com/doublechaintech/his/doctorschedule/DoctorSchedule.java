@@ -560,6 +560,27 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof DoctorSchedule){
+		
+			
+			DoctorSchedule dest =(DoctorSchedule)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeScheduleDate(getScheduleDate());
+			dest.mergeAvailable(getAvailable());
+			dest.mergePrice(getPrice());
+			dest.mergeCreateTime(getCreateTime());
+			dest.mergeUpdateTime(getUpdateTime());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

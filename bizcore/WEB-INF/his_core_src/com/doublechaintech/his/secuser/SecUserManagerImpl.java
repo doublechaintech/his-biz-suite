@@ -196,7 +196,7 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
  	
 
 
-	public SecUser createSecUser(HisUserContext userContext,String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId) throws Exception
+	public SecUser createSecUser(HisUserContext userContext,String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId) throws Exception
 	{
 		
 		
@@ -207,6 +207,9 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		userContext.getChecker().checkMobileOfSecUser(mobile);
 		userContext.getChecker().checkEmailOfSecUser(email);
 		userContext.getChecker().checkPwdOfSecUser(pwd);
+		userContext.getChecker().checkWeixinOpenidOfSecUser(weixinOpenid);
+		userContext.getChecker().checkWeixinAppidOfSecUser(weixinAppid);
+		userContext.getChecker().checkAccessTokenOfSecUser(accessToken);
 		userContext.getChecker().checkVerificationCodeOfSecUser(verificationCode);
 		userContext.getChecker().checkVerificationCodeExpireOfSecUser(verificationCodeExpire);
 		userContext.getChecker().checkLastLoginTimeOfSecUser(lastLoginTime);
@@ -220,6 +223,9 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		secUser.setMobile(mobile);
 		secUser.setEmail(email);
 		secUser.setClearTextOfPwd(pwd);
+		secUser.setWeixinOpenid(weixinOpenid);
+		secUser.setWeixinAppid(weixinAppid);
+		secUser.setAccessToken(accessToken);
 		secUser.setVerificationCode(verificationCode);
 		secUser.setVerificationCodeExpire(verificationCodeExpire);
 		secUser.setLastLoginTime(lastLoginTime);
@@ -264,6 +270,15 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		}
 		if(SecUser.PWD_PROPERTY.equals(property)){
 			userContext.getChecker().checkPwdOfSecUser(parseString(newValueExpr));
+		}
+		if(SecUser.WEIXIN_OPENID_PROPERTY.equals(property)){
+			userContext.getChecker().checkWeixinOpenidOfSecUser(parseString(newValueExpr));
+		}
+		if(SecUser.WEIXIN_APPID_PROPERTY.equals(property)){
+			userContext.getChecker().checkWeixinAppidOfSecUser(parseString(newValueExpr));
+		}
+		if(SecUser.ACCESS_TOKEN_PROPERTY.equals(property)){
+			userContext.getChecker().checkAccessTokenOfSecUser(parseString(newValueExpr));
 		}
 		if(SecUser.VERIFICATION_CODE_PROPERTY.equals(property)){
 			userContext.getChecker().checkVerificationCodeOfSecUser(parseInt(newValueExpr));
@@ -821,8 +836,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 			String userAppIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSecUser(secUserId);
-		for(String userAppId: userAppIds){
-			userContext.getChecker().checkIdOfUserApp(userAppId);
+		for(String userAppIdItem: userAppIds){
+			userContext.getChecker().checkIdOfUserApp(userAppIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
@@ -1085,8 +1100,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 			String loginHistoryIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSecUser(secUserId);
-		for(String loginHistoryId: loginHistoryIds){
-			userContext.getChecker().checkIdOfLoginHistory(loginHistoryId);
+		for(String loginHistoryIdItem: loginHistoryIds){
+			userContext.getChecker().checkIdOfLoginHistory(loginHistoryIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);

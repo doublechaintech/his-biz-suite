@@ -26,7 +26,10 @@ import com.doublechaintech.his.genericform.GenericFormDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class FormActionJDBCTemplateDAO extends HisNamingServiceDAO implements FormActionDAO{
  
@@ -555,10 +558,10 @@ public class FormActionJDBCTemplateDAO extends HisNamingServiceDAO implements Fo
 	public SmartList<FormAction> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getFormActionMapper());
 	}
+	
+	
+
 }
-
-
-
 
 
 

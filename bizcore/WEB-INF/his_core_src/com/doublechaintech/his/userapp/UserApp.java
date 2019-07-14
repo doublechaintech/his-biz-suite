@@ -725,6 +725,28 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof UserApp){
+		
+			
+			UserApp dest =(UserApp)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeTitle(getTitle());
+			dest.mergeAppIcon(getAppIcon());
+			dest.mergeFullAccess(getFullAccess());
+			dest.mergePermission(getPermission());
+			dest.mergeObjectType(getObjectType());
+			dest.mergeObjectId(getObjectId());
+			dest.mergeLocation(getLocation());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

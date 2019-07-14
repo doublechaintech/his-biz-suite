@@ -30,7 +30,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements ExpenseTypeDAO{
  
@@ -743,9 +746,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(ExpenseItem expenseItem: externalExpenseItemList){
+		for(ExpenseItem expenseItemItem: externalExpenseItemList){
 
-			expenseItem.clearFromAll();
+			expenseItemItem.clearFromAll();
 		}
 		
 		
@@ -775,9 +778,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(ExpenseItem expenseItem: externalExpenseItemList){
-			expenseItem.clearHospital();
-			expenseItem.clearExpenseType();
+		for(ExpenseItem expenseItemItem: externalExpenseItemList){
+			expenseItemItem.clearHospital();
+			expenseItemItem.clearExpenseType();
 			
 		}
 		
@@ -815,9 +818,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
 
-			doctorSchedule.clearFromAll();
+			doctorScheduleItem.clearFromAll();
 		}
 		
 		
@@ -847,9 +850,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDoctor();
-			doctorSchedule.clearExpenseType();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDoctor();
+			doctorScheduleItem.clearExpenseType();
 			
 		}
 		
@@ -891,9 +894,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearPeriod();
-			doctorSchedule.clearExpenseType();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearPeriod();
+			doctorScheduleItem.clearExpenseType();
 			
 		}
 		
@@ -935,9 +938,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDepartment();
-			doctorSchedule.clearExpenseType();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDepartment();
+			doctorScheduleItem.clearExpenseType();
 			
 		}
 		
@@ -979,9 +982,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 			return expenseType;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearHospital();
-			doctorSchedule.clearExpenseType();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearHospital();
+			doctorScheduleItem.clearExpenseType();
 			
 		}
 		
@@ -1293,6 +1296,9 @@ public class ExpenseTypeJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	public SmartList<ExpenseType> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getExpenseTypeMapper());
 	}
+	
+	
+
 }
 
 

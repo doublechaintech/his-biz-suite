@@ -7,6 +7,11 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+import com.doublechaintech.his.expenseitem.ExpenseItem;
+
 import com.doublechaintech.his.expenseitem.ExpenseItemDAO;
 import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
 import com.doublechaintech.his.hospital.HospitalDAO;
@@ -86,6 +91,13 @@ public interface ExpenseTypeDAO{
  	public void analyzeExpenseTypeByHospital(SmartList<ExpenseType> resultList, String hospitalId, Map<String,Object> options);
 
  
- }
+ 
+	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的expenseType的ExpenseItemList
+	public SmartList<ExpenseItem> loadOurExpenseItemList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的expenseType的DoctorScheduleList
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<ExpenseType> us, Map<String,Object> options) throws Exception;
+	
+}
 
 

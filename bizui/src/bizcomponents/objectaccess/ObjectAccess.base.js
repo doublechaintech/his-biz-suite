@@ -78,7 +78,7 @@ const renderItemOfList=(objectAccess,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={objectAccess.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	
 	<DescriptionList  key={objectAccess.id} size="small" col="4">
 <Description term="ID">{objectAccess.id}</Description> 
 <Description term="名称">{objectAccess.name}</Description> 
@@ -97,7 +97,7 @@ const renderItemOfList=(objectAccess,targetComponent)=>{
 	
         
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

@@ -1,5 +1,5 @@
 
-# 界面通过特别技术自动生成
+# 整个应用通过知识图谱自动生成
 
 <img src='/doc/his-sys-interface.png'  width="400"/>
 
@@ -13,8 +13,8 @@
 
 https://demo.doublechaintech.com/admin/his/#/home
 
-* 医院登录: 13900000001/DoubleChain!y1
-* 医生登录：13900000002/DoubleChain!y1
+* 医院登录: 13900000001/admin123
+* 医生登录：13900000002/admin123
 
 新演示已运行于国产数据库南大通用GBase 8s之上
 

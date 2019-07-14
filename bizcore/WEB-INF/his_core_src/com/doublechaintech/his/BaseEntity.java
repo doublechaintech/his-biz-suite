@@ -20,10 +20,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.terapico.caf.DateTime;
-import com.terapico.caf.RemoteInitiatable;
+import com.terapico.caf.RemoteInitiable;
 import com.terapico.utils.TextUtil;
 
-public class BaseEntity implements Serializable, RemoteInitiatable{
+public class BaseEntity implements Serializable, RemoteInitiable{
 	public  void ensureAccess(Map<String,Object> accessTokens) {
 		
 		List<SmartList<?>> allLists = this.getAllRelatedLists();

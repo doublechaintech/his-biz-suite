@@ -86,6 +86,9 @@ const internalSummaryOf = (secUser,targetComponent) =>{
 <Description term="手机号码">{secUser.mobile}</Description> 
 <Description term="电子邮件">{secUser.email}</Description> 
 <Description term="密码">{secUser.pwd}</Description> 
+<Description term="微信openid">{secUser.weixinOpenid}</Description> 
+<Description term="微信Appid">{secUser.weixinAppid}</Description> 
+<Description term="访问令牌">{secUser.accessToken}</Description> 
 <Description term="验证码">{secUser.verificationCode}</Description> 
 <Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
 <Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
@@ -131,7 +134,7 @@ class SecUserDashboard extends Component {
     	cardsSource: this.props.secUser,returnURL,displayName,
   		subItems: [
 {name: 'userAppList', displayName:'用户应用程序',type:'userApp',count:userAppCount,addFunction: true, role: 'userApp', metaInfo: userAppListMetaInfo, renderItem: GlobalComponents.UserAppBase.renderItemOfList},
-{name: 'loginHistoryList', displayName:'登录历史',type:'loginHistory',count:loginHistoryCount,addFunction: true, role: 'loginHistory', metaInfo: loginHistoryListMetaInfo, renderItem: GlobalComponents.LoginHistoryBase.renderItemOfList},
+{name: 'loginHistoryList', displayName:'登录历史',type:'loginHistory',count:loginHistoryCount,addFunction: false, role: 'loginHistory', metaInfo: loginHistoryListMetaInfo, renderItem: GlobalComponents.LoginHistoryBase.renderItemOfList},
     
       	],
   	};

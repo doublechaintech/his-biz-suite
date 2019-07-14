@@ -7,6 +7,10 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.hospital.Hospital;
+import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+
 import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
 import com.doublechaintech.his.hospital.HospitalDAO;
 
@@ -74,6 +78,10 @@ public interface PeriodDAO{
  	public void analyzePeriodByHospital(SmartList<Period> resultList, String hospitalId, Map<String,Object> options);
 
  
- }
+ 
+	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的period的DoctorScheduleList
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Period> us, Map<String,Object> options) throws Exception;
+	
+}
 
 

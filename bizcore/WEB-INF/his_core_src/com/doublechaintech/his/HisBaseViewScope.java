@@ -29,6 +29,7 @@ import com.doublechaintech.his.formaction.FormAction;
 public class HisBaseViewScope {
 
 	protected static SerializeScope HospitalBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
 		.field(Hospital.NAME_PROPERTY)
 		.field(Hospital.ADDRESS_PROPERTY)
@@ -40,6 +41,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseTypeBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseType.ID_PROPERTY)
 		.field(ExpenseType.NAME_PROPERTY)
 		.field(ExpenseType.HELPER_CHARS_PROPERTY)
@@ -53,6 +55,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope PeriodBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
 		;
@@ -62,6 +65,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseItemBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseItem.ID_PROPERTY)
 		.field(ExpenseItem.NAME_PROPERTY)
 		.field(ExpenseItem.PRICE_PROPERTY)
@@ -73,6 +77,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Doctor.ID_PROPERTY)
 		.field(Doctor.NAME_PROPERTY)
 		.field(Doctor.SHOT_IMAGE_PROPERTY)
@@ -84,6 +89,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DepartmentBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Department.ID_PROPERTY)
 		.field(Department.NAME_PROPERTY)
 		.field(Department.UPDATE_TIME_PROPERTY)
@@ -94,6 +100,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorAssignmentBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorAssignment.ID_PROPERTY)
 		.field(DoctorAssignment.NAME_PROPERTY)
 		.field(DoctorAssignment.UPDATE_TIME_PROPERTY)
@@ -104,6 +111,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorScheduleBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorSchedule.ID_PROPERTY)
 		.field(DoctorSchedule.NAME_PROPERTY)
 		.field(DoctorSchedule.SCHEDULE_DATE_PROPERTY)
@@ -118,6 +126,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserDomainBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
 		.field(UserDomain.NAME_PROPERTY)
 		;
@@ -127,6 +136,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserWhiteListBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserWhiteList.ID_PROPERTY)
 		.field(UserWhiteList.USER_IDENTITY_PROPERTY)
 		.field(UserWhiteList.USER_SPECIAL_FUNCTIONS_PROPERTY)
@@ -137,11 +147,15 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUser.ID_PROPERTY)
 		.field(SecUser.LOGIN_PROPERTY)
 		.field(SecUser.MOBILE_PROPERTY)
 		.field(SecUser.EMAIL_PROPERTY)
 		.field(SecUser.PWD_PROPERTY)
+		.field(SecUser.WEIXIN_OPENID_PROPERTY)
+		.field(SecUser.WEIXIN_APPID_PROPERTY)
+		.field(SecUser.ACCESS_TOKEN_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
@@ -153,6 +167,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBlockingBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUserBlocking.ID_PROPERTY)
 		.field(SecUserBlocking.WHO_PROPERTY)
 		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
@@ -164,6 +179,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserAppBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserApp.ID_PROPERTY)
 		.field(UserApp.TITLE_PROPERTY)
 		.field(UserApp.APP_ICON_PROPERTY)
@@ -179,6 +195,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ListAccessBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ListAccess.ID_PROPERTY)
 		.field(ListAccess.NAME_PROPERTY)
 		.field(ListAccess.INTERNAL_NAME_PROPERTY)
@@ -194,6 +211,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ObjectAccessBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ObjectAccess.ID_PROPERTY)
 		.field(ObjectAccess.NAME_PROPERTY)
 		.field(ObjectAccess.OBJECT_TYPE_PROPERTY)
@@ -213,6 +231,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope LoginHistoryBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(LoginHistory.ID_PROPERTY)
 		.field(LoginHistory.LOGIN_TIME_PROPERTY)
 		.field(LoginHistory.FROM_IP_PROPERTY)
@@ -224,6 +243,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope GenericFormBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(GenericForm.ID_PROPERTY)
 		.field(GenericForm.TITLE_PROPERTY)
 		.field(GenericForm.DESCRIPTION_PROPERTY)
@@ -234,6 +254,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormMessageBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormMessage.ID_PROPERTY)
 		.field(FormMessage.TITLE_PROPERTY)
 		.field(FormMessage.LEVEL_PROPERTY)
@@ -244,6 +265,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldMessageBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormFieldMessage.ID_PROPERTY)
 		.field(FormFieldMessage.TITLE_PROPERTY)
 		.field(FormFieldMessage.PARAMETER_NAME_PROPERTY)
@@ -255,6 +277,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormField.ID_PROPERTY)
 		.field(FormField.LABEL_PROPERTY)
 		.field(FormField.LOCALE_KEY_PROPERTY)
@@ -278,6 +301,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormActionBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormAction.ID_PROPERTY)
 		.field(FormAction.LABEL_PROPERTY)
 		.field(FormAction.LOCALE_KEY_PROPERTY)
@@ -291,6 +315,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope HospitalBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
 		.field(Hospital.NAME_PROPERTY)
 		.field(Hospital.ADDRESS_PROPERTY)
@@ -302,6 +327,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseTypeBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseType.ID_PROPERTY)
 		.field(ExpenseType.NAME_PROPERTY)
 		.field(ExpenseType.HELPER_CHARS_PROPERTY)
@@ -315,6 +341,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope PeriodBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
 		;
@@ -324,6 +351,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseItemBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseItem.ID_PROPERTY)
 		.field(ExpenseItem.NAME_PROPERTY)
 		.field(ExpenseItem.PRICE_PROPERTY)
@@ -335,6 +363,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Doctor.ID_PROPERTY)
 		.field(Doctor.NAME_PROPERTY)
 		.field(Doctor.SHOT_IMAGE_PROPERTY)
@@ -346,6 +375,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DepartmentBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Department.ID_PROPERTY)
 		.field(Department.NAME_PROPERTY)
 		.field(Department.UPDATE_TIME_PROPERTY)
@@ -356,6 +386,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorAssignmentBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorAssignment.ID_PROPERTY)
 		.field(DoctorAssignment.NAME_PROPERTY)
 		.field(DoctorAssignment.UPDATE_TIME_PROPERTY)
@@ -366,6 +397,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorScheduleBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorSchedule.ID_PROPERTY)
 		.field(DoctorSchedule.NAME_PROPERTY)
 		.field(DoctorSchedule.SCHEDULE_DATE_PROPERTY)
@@ -380,6 +412,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserDomainBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
 		.field(UserDomain.NAME_PROPERTY)
 		;
@@ -389,6 +422,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserWhiteListBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserWhiteList.ID_PROPERTY)
 		.field(UserWhiteList.USER_IDENTITY_PROPERTY)
 		.field(UserWhiteList.USER_SPECIAL_FUNCTIONS_PROPERTY)
@@ -399,11 +433,15 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUser.ID_PROPERTY)
 		.field(SecUser.LOGIN_PROPERTY)
 		.field(SecUser.MOBILE_PROPERTY)
 		.field(SecUser.EMAIL_PROPERTY)
 		.field(SecUser.PWD_PROPERTY)
+		.field(SecUser.WEIXIN_OPENID_PROPERTY)
+		.field(SecUser.WEIXIN_APPID_PROPERTY)
+		.field(SecUser.ACCESS_TOKEN_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
@@ -415,6 +453,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBlockingBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUserBlocking.ID_PROPERTY)
 		.field(SecUserBlocking.WHO_PROPERTY)
 		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
@@ -426,6 +465,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserAppBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserApp.ID_PROPERTY)
 		.field(UserApp.TITLE_PROPERTY)
 		.field(UserApp.APP_ICON_PROPERTY)
@@ -441,6 +481,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ListAccessBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ListAccess.ID_PROPERTY)
 		.field(ListAccess.NAME_PROPERTY)
 		.field(ListAccess.INTERNAL_NAME_PROPERTY)
@@ -456,6 +497,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ObjectAccessBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ObjectAccess.ID_PROPERTY)
 		.field(ObjectAccess.NAME_PROPERTY)
 		.field(ObjectAccess.OBJECT_TYPE_PROPERTY)
@@ -475,6 +517,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope LoginHistoryBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(LoginHistory.ID_PROPERTY)
 		.field(LoginHistory.LOGIN_TIME_PROPERTY)
 		.field(LoginHistory.FROM_IP_PROPERTY)
@@ -486,6 +529,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope GenericFormBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(GenericForm.ID_PROPERTY)
 		.field(GenericForm.TITLE_PROPERTY)
 		.field(GenericForm.DESCRIPTION_PROPERTY)
@@ -496,6 +540,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormMessageBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormMessage.ID_PROPERTY)
 		.field(FormMessage.TITLE_PROPERTY)
 		.field(FormMessage.LEVEL_PROPERTY)
@@ -506,6 +551,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldMessageBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormFieldMessage.ID_PROPERTY)
 		.field(FormFieldMessage.TITLE_PROPERTY)
 		.field(FormFieldMessage.PARAMETER_NAME_PROPERTY)
@@ -517,6 +563,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormField.ID_PROPERTY)
 		.field(FormField.LABEL_PROPERTY)
 		.field(FormField.LOCALE_KEY_PROPERTY)
@@ -540,6 +587,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormActionBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormAction.ID_PROPERTY)
 		.field(FormAction.LABEL_PROPERTY)
 		.field(FormAction.LOCALE_KEY_PROPERTY)
@@ -553,6 +601,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope HospitalBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
 		.field(Hospital.NAME_PROPERTY)
 		.field(Hospital.ADDRESS_PROPERTY)
@@ -570,6 +619,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseTypeBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseType.ID_PROPERTY)
 		.field(ExpenseType.NAME_PROPERTY)
 		.field(ExpenseType.HELPER_CHARS_PROPERTY)
@@ -586,6 +636,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope PeriodBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
 		.field(Period.HOSPITAL_PROPERTY, getHospitalSummaryScope())
@@ -597,6 +648,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseItemBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseItem.ID_PROPERTY)
 		.field(ExpenseItem.NAME_PROPERTY)
 		.field(ExpenseItem.PRICE_PROPERTY)
@@ -610,6 +662,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Doctor.ID_PROPERTY)
 		.field(Doctor.NAME_PROPERTY)
 		.field(Doctor.SHOT_IMAGE_PROPERTY)
@@ -624,6 +677,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DepartmentBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Department.ID_PROPERTY)
 		.field(Department.NAME_PROPERTY)
 		.field(Department.HOSPITAL_PROPERTY, getHospitalSummaryScope())
@@ -637,6 +691,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorAssignmentBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorAssignment.ID_PROPERTY)
 		.field(DoctorAssignment.NAME_PROPERTY)
 		.field(DoctorAssignment.DOCTOR_PROPERTY, getDoctorSummaryScope())
@@ -649,6 +704,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorScheduleBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorSchedule.ID_PROPERTY)
 		.field(DoctorSchedule.NAME_PROPERTY)
 		.field(DoctorSchedule.DOCTOR_PROPERTY, getDoctorSummaryScope())
@@ -668,6 +724,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserDomainBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
 		.field(UserDomain.NAME_PROPERTY)
 		.field(UserDomain.USER_WHITE_LIST_LIST, getUserWhiteListSecondaryListItemScope())
@@ -679,6 +736,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserWhiteListBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserWhiteList.ID_PROPERTY)
 		.field(UserWhiteList.USER_IDENTITY_PROPERTY)
 		.field(UserWhiteList.USER_SPECIAL_FUNCTIONS_PROPERTY)
@@ -690,11 +748,15 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUser.ID_PROPERTY)
 		.field(SecUser.LOGIN_PROPERTY)
 		.field(SecUser.MOBILE_PROPERTY)
 		.field(SecUser.EMAIL_PROPERTY)
 		.field(SecUser.PWD_PROPERTY)
+		.field(SecUser.WEIXIN_OPENID_PROPERTY)
+		.field(SecUser.WEIXIN_APPID_PROPERTY)
+		.field(SecUser.ACCESS_TOKEN_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
@@ -710,6 +772,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBlockingBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUserBlocking.ID_PROPERTY)
 		.field(SecUserBlocking.WHO_PROPERTY)
 		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
@@ -722,6 +785,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserAppBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserApp.ID_PROPERTY)
 		.field(UserApp.TITLE_PROPERTY)
 		.field(UserApp.SEC_USER_PROPERTY, getSecUserSummaryScope())
@@ -740,6 +804,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ListAccessBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ListAccess.ID_PROPERTY)
 		.field(ListAccess.NAME_PROPERTY)
 		.field(ListAccess.INTERNAL_NAME_PROPERTY)
@@ -756,6 +821,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ObjectAccessBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ObjectAccess.ID_PROPERTY)
 		.field(ObjectAccess.NAME_PROPERTY)
 		.field(ObjectAccess.OBJECT_TYPE_PROPERTY)
@@ -776,6 +842,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope LoginHistoryBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(LoginHistory.ID_PROPERTY)
 		.field(LoginHistory.LOGIN_TIME_PROPERTY)
 		.field(LoginHistory.FROM_IP_PROPERTY)
@@ -788,6 +855,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope GenericFormBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(GenericForm.ID_PROPERTY)
 		.field(GenericForm.TITLE_PROPERTY)
 		.field(GenericForm.DESCRIPTION_PROPERTY)
@@ -802,6 +870,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormMessageBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormMessage.ID_PROPERTY)
 		.field(FormMessage.TITLE_PROPERTY)
 		.field(FormMessage.FORM_PROPERTY, getGenericFormSummaryScope())
@@ -813,6 +882,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldMessageBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormFieldMessage.ID_PROPERTY)
 		.field(FormFieldMessage.TITLE_PROPERTY)
 		.field(FormFieldMessage.PARAMETER_NAME_PROPERTY)
@@ -825,6 +895,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormField.ID_PROPERTY)
 		.field(FormField.LABEL_PROPERTY)
 		.field(FormField.LOCALE_KEY_PROPERTY)
@@ -849,6 +920,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormActionBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormAction.ID_PROPERTY)
 		.field(FormAction.LABEL_PROPERTY)
 		.field(FormAction.LOCALE_KEY_PROPERTY)
@@ -863,6 +935,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope HospitalBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
 		.field(Hospital.NAME_PROPERTY)
 		.field(Hospital.ADDRESS_PROPERTY)
@@ -880,6 +953,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseTypeBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseType.ID_PROPERTY)
 		.field(ExpenseType.NAME_PROPERTY)
 		.field(ExpenseType.HELPER_CHARS_PROPERTY)
@@ -896,6 +970,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope PeriodBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
 		.field(Period.HOSPITAL_PROPERTY, getHospitalSummaryScope())
@@ -907,6 +982,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ExpenseItemBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ExpenseItem.ID_PROPERTY)
 		.field(ExpenseItem.NAME_PROPERTY)
 		.field(ExpenseItem.PRICE_PROPERTY)
@@ -920,6 +996,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Doctor.ID_PROPERTY)
 		.field(Doctor.NAME_PROPERTY)
 		.field(Doctor.SHOT_IMAGE_PROPERTY)
@@ -934,6 +1011,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DepartmentBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Department.ID_PROPERTY)
 		.field(Department.NAME_PROPERTY)
 		.field(Department.HOSPITAL_PROPERTY, getHospitalSummaryScope())
@@ -947,6 +1025,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorAssignmentBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorAssignment.ID_PROPERTY)
 		.field(DoctorAssignment.NAME_PROPERTY)
 		.field(DoctorAssignment.DOCTOR_PROPERTY, getDoctorSummaryScope())
@@ -959,6 +1038,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope DoctorScheduleBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(DoctorSchedule.ID_PROPERTY)
 		.field(DoctorSchedule.NAME_PROPERTY)
 		.field(DoctorSchedule.DOCTOR_PROPERTY, getDoctorSummaryScope())
@@ -978,6 +1058,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserDomainBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
 		.field(UserDomain.NAME_PROPERTY)
 		.field(UserDomain.USER_WHITE_LIST_LIST, getUserWhiteListListItemScope())
@@ -989,6 +1070,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserWhiteListBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserWhiteList.ID_PROPERTY)
 		.field(UserWhiteList.USER_IDENTITY_PROPERTY)
 		.field(UserWhiteList.USER_SPECIAL_FUNCTIONS_PROPERTY)
@@ -1000,11 +1082,15 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUser.ID_PROPERTY)
 		.field(SecUser.LOGIN_PROPERTY)
 		.field(SecUser.MOBILE_PROPERTY)
 		.field(SecUser.EMAIL_PROPERTY)
 		.field(SecUser.PWD_PROPERTY)
+		.field(SecUser.WEIXIN_OPENID_PROPERTY)
+		.field(SecUser.WEIXIN_APPID_PROPERTY)
+		.field(SecUser.ACCESS_TOKEN_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
@@ -1020,6 +1106,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope SecUserBlockingBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(SecUserBlocking.ID_PROPERTY)
 		.field(SecUserBlocking.WHO_PROPERTY)
 		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
@@ -1032,6 +1119,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope UserAppBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserApp.ID_PROPERTY)
 		.field(UserApp.TITLE_PROPERTY)
 		.field(UserApp.SEC_USER_PROPERTY, getSecUserSummaryScope())
@@ -1050,6 +1138,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ListAccessBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ListAccess.ID_PROPERTY)
 		.field(ListAccess.NAME_PROPERTY)
 		.field(ListAccess.INTERNAL_NAME_PROPERTY)
@@ -1066,6 +1155,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope ObjectAccessBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ObjectAccess.ID_PROPERTY)
 		.field(ObjectAccess.NAME_PROPERTY)
 		.field(ObjectAccess.OBJECT_TYPE_PROPERTY)
@@ -1086,6 +1176,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope LoginHistoryBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(LoginHistory.ID_PROPERTY)
 		.field(LoginHistory.LOGIN_TIME_PROPERTY)
 		.field(LoginHistory.FROM_IP_PROPERTY)
@@ -1098,6 +1189,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope GenericFormBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(GenericForm.ID_PROPERTY)
 		.field(GenericForm.TITLE_PROPERTY)
 		.field(GenericForm.DESCRIPTION_PROPERTY)
@@ -1112,6 +1204,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormMessageBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormMessage.ID_PROPERTY)
 		.field(FormMessage.TITLE_PROPERTY)
 		.field(FormMessage.FORM_PROPERTY, getGenericFormSummaryScope())
@@ -1123,6 +1216,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldMessageBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormFieldMessage.ID_PROPERTY)
 		.field(FormFieldMessage.TITLE_PROPERTY)
 		.field(FormFieldMessage.PARAMETER_NAME_PROPERTY)
@@ -1135,6 +1229,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormFieldBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormField.ID_PROPERTY)
 		.field(FormField.LABEL_PROPERTY)
 		.field(FormField.LOCALE_KEY_PROPERTY)
@@ -1159,6 +1254,7 @@ public class HisBaseViewScope {
 	}
 
 	protected static SerializeScope FormActionBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(FormAction.ID_PROPERTY)
 		.field(FormAction.LABEL_PROPERTY)
 		.field(FormAction.LOCALE_KEY_PROPERTY)
@@ -1175,9 +1271,6 @@ public class HisBaseViewScope {
 	
 
 }
-
-
-
 
 
 

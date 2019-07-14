@@ -2,6 +2,7 @@ package com.doublechaintech.his;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import com.doublechaintech.his.hospital.Hospital;
 import com.doublechaintech.his.hospital.HospitalDAO;
@@ -283,6 +284,7 @@ public class DAOGroup {
 
 	private interface BasicLoader{
 	    BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception;
+	    void enhanceList(DAOGroup daoGoup, List list) throws Exception;
 	    BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception;
 	    BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception;
 	}
@@ -294,6 +296,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getHospitalDAO().load(id, HospitalTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getHospitalDAO().enhanceList((List<Hospital>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -311,6 +317,10 @@ public class DAOGroup {
 				return daoGoup.getExpenseTypeDAO().load(id, ExpenseTypeTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getExpenseTypeDAO().enhanceList((List<ExpenseType>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getExpenseTypeDAO().load(id, tokens);
 			}
@@ -324,6 +334,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getPeriodDAO().load(id, PeriodTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getPeriodDAO().enhanceList((List<Period>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -341,6 +355,10 @@ public class DAOGroup {
 				return daoGoup.getExpenseItemDAO().load(id, ExpenseItemTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getExpenseItemDAO().enhanceList((List<ExpenseItem>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getExpenseItemDAO().load(id, tokens);
 			}
@@ -354,6 +372,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getDoctorDAO().load(id, DoctorTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getDoctorDAO().enhanceList((List<Doctor>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -371,6 +393,10 @@ public class DAOGroup {
 				return daoGoup.getDepartmentDAO().load(id, DepartmentTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getDepartmentDAO().enhanceList((List<Department>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getDepartmentDAO().load(id, tokens);
 			}
@@ -384,6 +410,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getDoctorAssignmentDAO().load(id, DoctorAssignmentTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getDoctorAssignmentDAO().enhanceList((List<DoctorAssignment>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -401,6 +431,10 @@ public class DAOGroup {
 				return daoGoup.getDoctorScheduleDAO().load(id, DoctorScheduleTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getDoctorScheduleDAO().enhanceList((List<DoctorSchedule>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getDoctorScheduleDAO().load(id, tokens);
 			}
@@ -414,6 +448,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getUserDomainDAO().load(id, UserDomainTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getUserDomainDAO().enhanceList((List<UserDomain>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -431,6 +469,10 @@ public class DAOGroup {
 				return daoGoup.getUserWhiteListDAO().load(id, UserWhiteListTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getUserWhiteListDAO().enhanceList((List<UserWhiteList>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getUserWhiteListDAO().load(id, tokens);
 			}
@@ -444,6 +486,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getSecUserDAO().load(id, SecUserTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getSecUserDAO().enhanceList((List<SecUser>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -461,6 +507,10 @@ public class DAOGroup {
 				return daoGoup.getSecUserBlockingDAO().load(id, SecUserBlockingTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getSecUserBlockingDAO().enhanceList((List<SecUserBlocking>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getSecUserBlockingDAO().load(id, tokens);
 			}
@@ -474,6 +524,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getUserAppDAO().load(id, UserAppTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getUserAppDAO().enhanceList((List<UserApp>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -491,6 +545,10 @@ public class DAOGroup {
 				return daoGoup.getListAccessDAO().load(id, ListAccessTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getListAccessDAO().enhanceList((List<ListAccess>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getListAccessDAO().load(id, tokens);
 			}
@@ -504,6 +562,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getObjectAccessDAO().load(id, ObjectAccessTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getObjectAccessDAO().enhanceList((List<ObjectAccess>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -521,6 +583,10 @@ public class DAOGroup {
 				return daoGoup.getLoginHistoryDAO().load(id, LoginHistoryTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getLoginHistoryDAO().enhanceList((List<LoginHistory>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getLoginHistoryDAO().load(id, tokens);
 			}
@@ -534,6 +600,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getGenericFormDAO().load(id, GenericFormTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getGenericFormDAO().enhanceList((List<GenericForm>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -551,6 +621,10 @@ public class DAOGroup {
 				return daoGoup.getFormMessageDAO().load(id, FormMessageTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getFormMessageDAO().enhanceList((List<FormMessage>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormMessageDAO().load(id, tokens);
 			}
@@ -564,6 +638,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getFormFieldMessageDAO().load(id, FormFieldMessageTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getFormFieldMessageDAO().enhanceList((List<FormFieldMessage>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -581,6 +659,10 @@ public class DAOGroup {
 				return daoGoup.getFormFieldDAO().load(id, FormFieldTokens.withoutLists());
 			}
 			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getFormFieldDAO().enhanceList((List<FormField>)list);
+			}
+			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormFieldDAO().load(id, tokens);
 			}
@@ -594,6 +676,10 @@ public class DAOGroup {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
 				return daoGoup.getFormActionDAO().load(id, FormActionTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getFormActionDAO().enhanceList((List<FormAction>)list);
 			}
 			@Override
 			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
@@ -641,6 +727,14 @@ public class DAOGroup {
 	    	e.printStackTrace();
 	    	return null;
 	    }
+	}
+	public <T> void enhanceList(List list, Class<T> clazz) throws Exception{
+	    BasicLoader loader = internalLoaderMap.get(clazz.getName());
+	    if (loader == null) {
+	    	return ;
+	    }
+
+	    loader.enhanceList(this, list);
 	}
 }
 

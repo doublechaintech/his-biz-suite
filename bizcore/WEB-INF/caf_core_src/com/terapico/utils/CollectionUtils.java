@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 
 public class CollectionUtils {
@@ -49,5 +51,24 @@ public class CollectionUtils {
 			}
 		}
 		list.add(value);
+	}
+
+	public static void addToList(List<Object> params, Object ... values) {
+		if (values == null || values.length == 0) {
+			return;
+		}
+		Stream.of(values).forEach(it->{
+			params.add(it);
+		});
+	}
+
+	public static void shortList(List<? extends Object> list, int maxLength) {
+		if (list == null || list.size() <= maxLength || maxLength <= 1) {
+			return;
+		}
+		while(list.size() > maxLength) {
+			list.remove(list.size() - 1);
+		}
+		
 	}
 }

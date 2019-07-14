@@ -7,6 +7,9 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.userapp.UserApp;
+
 import com.doublechaintech.his.userapp.UserAppDAO;
 
 
@@ -50,6 +53,7 @@ public interface ObjectAccessDAO{
  	public void analyzeObjectAccessByApp(SmartList<ObjectAccess> resultList, String userAppId, Map<String,Object> options);
 
  
- }
+ 
+}
 
 

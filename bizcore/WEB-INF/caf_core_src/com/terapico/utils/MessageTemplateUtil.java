@@ -13,14 +13,14 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class MessageTemplateUtil {
 	public static class MessageTemplate {
-		protected Map<Integer, String> declaration;
+		protected Map<String, Integer> declaration;
 		protected String template;
 		protected Map<String, String> i18nTemplates;
 		
-		public Map<Integer, String> getDeclaration() {
+		public Map<String, Integer> getDeclaration() {
 			return declaration;
 		}
-		public void setDeclaration(Map<Integer, String> declaration) {
+		public void setDeclaration(Map<String, Integer> declaration) {
 			this.declaration = declaration;
 		}
 		public String getTemplate() {
@@ -57,8 +57,9 @@ public class MessageTemplateUtil {
 		if (tmpl.getDeclaration() == null || params == null) {
 			return list;
 		}
-		tmpl.getDeclaration().forEach((key, value)->{
-			CollectionUtils.addItem(list, key, params.get(value));
+		params.forEach((key,val)->{
+			int idx = tmpl.getDeclaration().get(key);
+			CollectionUtils.addItem(list, idx, val);
 		});
 		return list;
 	}

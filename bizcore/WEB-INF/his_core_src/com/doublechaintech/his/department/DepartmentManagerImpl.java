@@ -632,8 +632,8 @@ public class DepartmentManagerImpl extends CustomHisCheckerManager implements De
 			String doctorAssignmentIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfDepartment(departmentId);
-		for(String doctorAssignmentId: doctorAssignmentIds){
-			userContext.getChecker().checkIdOfDoctorAssignment(doctorAssignmentId);
+		for(String doctorAssignmentIdItem: doctorAssignmentIds){
+			userContext.getChecker().checkIdOfDoctorAssignment(doctorAssignmentIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(DepartmentManagerException.class);
@@ -903,8 +903,8 @@ public class DepartmentManagerImpl extends CustomHisCheckerManager implements De
 			String doctorScheduleIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfDepartment(departmentId);
-		for(String doctorScheduleId: doctorScheduleIds){
-			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleId);
+		for(String doctorScheduleIdItem: doctorScheduleIds){
+			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(DepartmentManagerException.class);

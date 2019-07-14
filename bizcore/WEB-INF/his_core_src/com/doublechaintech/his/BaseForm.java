@@ -820,6 +820,45 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField weixinOpenidFromSecUser(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("微信openid");
+		field.setLocaleKey("sec_user.weixin_openid");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写微信openid");
+		return field;
+	}
+
+	protected FormField weixinAppidFromSecUser(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("微信Appid");
+		field.setLocaleKey("sec_user.weixin_appid");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写微信Appid");
+		return field;
+	}
+
+	protected FormField accessTokenFromSecUser(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("访问令牌");
+		field.setLocaleKey("sec_user.access_token");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写访问令牌");
+		return field;
+	}
+
 	protected FormField verificationCodeFromSecUser(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("验证码");
@@ -1147,14 +1186,14 @@ public class BaseForm extends GenericForm{
 
 	protected FormField updatePermissionFromListAccess(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("更新许可");
+		field.setLabel("更新权限");
 		field.setLocaleKey("list_access.update_permission");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
 		field.setType("switch");
 		field.setRequired(true);
-		field.setPlaceholder("请填写更新许可");
+		field.setPlaceholder("请填写更新权限");
 		return field;
 	}
 

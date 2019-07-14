@@ -280,6 +280,23 @@ public class UserWhiteList extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof UserWhiteList){
+		
+			
+			UserWhiteList dest =(UserWhiteList)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeUserIdentity(getUserIdentity());
+			dest.mergeUserSpecialFunctions(getUserSpecialFunctions());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

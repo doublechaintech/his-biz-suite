@@ -62,7 +62,7 @@ const renderItemOfList=(doctorAssignment,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={doctorAssignment.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	
 	<DescriptionList  key={doctorAssignment.id} size="small" col="4">
 <Description term="ID">{doctorAssignment.id}</Description> 
 <Description term="名称">{doctorAssignment.name}</Description> 
@@ -74,7 +74,7 @@ const renderItemOfList=(doctorAssignment,targetComponent)=>{
 	
         
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

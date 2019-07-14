@@ -28,7 +28,10 @@ import com.doublechaintech.his.doctor.DoctorDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class DoctorAssignmentJDBCTemplateDAO extends HisNamingServiceDAO implements DoctorAssignmentDAO{
  
@@ -694,6 +697,9 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisNamingServiceDAO impleme
 	public SmartList<DoctorAssignment> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDoctorAssignmentMapper());
 	}
+	
+	
+
 }
 
 

@@ -43,7 +43,7 @@ const fieldLabels = {
   readPermission: '读权限',
   createPermission: '创建权限',
   deletePermission: '删除权限',
-  updatePermission: '更新许可',
+  updatePermission: '更新权限',
   executionPermission: '执行权限',
   app: '应用程序',
 
@@ -70,7 +70,7 @@ const renderItemOfList=(listAccess,targetComponent)=>{
 	const userContext = null
 	return (
 	<div key={listAccess.id}>
-	 <Divider style={{ margin: '16px 0' }} />
+	
 	<DescriptionList  key={listAccess.id} size="small" col="4">
 <Description term="ID">{listAccess.id}</Description> 
 <Description term="名称">{listAccess.name}</Description> 
@@ -80,7 +80,7 @@ const renderItemOfList=(listAccess,targetComponent)=>{
 	
         
       </DescriptionList>
-      
+       <Divider style={{ height: '2px' }} />
       </div>
 	)
 

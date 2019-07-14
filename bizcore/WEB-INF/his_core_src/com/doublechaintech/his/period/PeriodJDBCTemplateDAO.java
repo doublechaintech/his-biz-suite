@@ -28,7 +28,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements PeriodDAO{
  
@@ -612,9 +615,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			return period;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
 
-			doctorSchedule.clearFromAll();
+			doctorScheduleItem.clearFromAll();
 		}
 		
 		
@@ -644,9 +647,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			return period;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDoctor();
-			doctorSchedule.clearPeriod();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDoctor();
+			doctorScheduleItem.clearPeriod();
 			
 		}
 		
@@ -688,9 +691,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			return period;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDepartment();
-			doctorSchedule.clearPeriod();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDepartment();
+			doctorScheduleItem.clearPeriod();
 			
 		}
 		
@@ -732,9 +735,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			return period;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearExpenseType();
-			doctorSchedule.clearPeriod();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearExpenseType();
+			doctorScheduleItem.clearPeriod();
 			
 		}
 		
@@ -776,9 +779,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 			return period;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearHospital();
-			doctorSchedule.clearPeriod();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearHospital();
+			doctorScheduleItem.clearPeriod();
 			
 		}
 		
@@ -974,6 +977,9 @@ public class PeriodJDBCTemplateDAO extends HisNamingServiceDAO implements Period
 	public SmartList<Period> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getPeriodMapper());
 	}
+	
+	
+
 }
 
 

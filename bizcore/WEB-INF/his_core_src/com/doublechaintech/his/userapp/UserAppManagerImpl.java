@@ -693,8 +693,8 @@ public class UserAppManagerImpl extends CustomHisCheckerManager implements UserA
 			String listAccessIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserApp(userAppId);
-		for(String listAccessId: listAccessIds){
-			userContext.getChecker().checkIdOfListAccess(listAccessId);
+		for(String listAccessIdItem: listAccessIds){
+			userContext.getChecker().checkIdOfListAccess(listAccessIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
@@ -1001,8 +1001,8 @@ public class UserAppManagerImpl extends CustomHisCheckerManager implements UserA
 			String objectAccessIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserApp(userAppId);
-		for(String objectAccessId: objectAccessIds){
-			userContext.getChecker().checkIdOfObjectAccess(objectAccessId);
+		for(String objectAccessIdItem: objectAccessIds){
+			userContext.getChecker().checkIdOfObjectAccess(objectAccessIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);

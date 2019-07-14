@@ -30,7 +30,10 @@ import com.doublechaintech.his.listaccess.ListAccessDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserAppDAO{
  
@@ -731,9 +734,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			return userApp;
 		}
 		
-		for(ListAccess listAccess: externalListAccessList){
+		for(ListAccess listAccessItem: externalListAccessList){
 
-			listAccess.clearFromAll();
+			listAccessItem.clearFromAll();
 		}
 		
 		
@@ -759,9 +762,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			return userApp;
 		}
 		
-		for(ObjectAccess objectAccess: externalObjectAccessList){
+		for(ObjectAccess objectAccessItem: externalObjectAccessList){
 
-			objectAccess.clearFromAll();
+			objectAccessItem.clearFromAll();
 		}
 		
 		
@@ -1061,6 +1064,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 	public SmartList<UserApp> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getUserAppMapper());
 	}
+	
+	
+
 }
 
 

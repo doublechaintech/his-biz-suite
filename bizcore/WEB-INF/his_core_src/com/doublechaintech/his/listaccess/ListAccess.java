@@ -480,6 +480,28 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		return baseDest;
 	}
 	
+	public BaseEntity mergePrimitiveDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof ListAccess){
+		
+			
+			ListAccess dest =(ListAccess)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeInternalName(getInternalName());
+			dest.mergeReadPermission(getReadPermission());
+			dest.mergeCreatePermission(getCreatePermission());
+			dest.mergeDeletePermission(getDeletePermission());
+			dest.mergeUpdatePermission(getUpdatePermission());
+			dest.mergeExecutionPermission(getExecutionPermission());
+			dest.mergeVersion(getVersion());
+
+		}
+		return baseDest;
+	}
+	
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

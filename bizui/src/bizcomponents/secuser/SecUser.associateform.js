@@ -22,9 +22,12 @@ const testValues = {
   mobile: '13900000001',
   email: '',
   pwd: 'C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95',
+  weixinOpenid: 'wx123456789abcdefghijklmn',
+  weixinAppid: 'wxapp12098410239840',
+  accessToken: 'jwt_token_12345678',
   verificationCode: '0',
-  verificationCodeExpire: '2019-05-14 15:23:40',
-  lastLoginTime: '2019-05-10 14:57:06',
+  verificationCodeExpire: '2019-07-09 10:34:19',
+  lastLoginTime: '2019-06-26 17:59:08',
   domainId: 'UD000001',
 }
 */
@@ -177,6 +180,36 @@ class SecUserAssociateForm extends Component {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input size="large" placeholder="密码" />
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={12}>
+                <Form.Item label={fieldLabels.weixinOpenid} {...formItemLayout}>
+                  {getFieldDecorator('weixinOpenid', {
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large" placeholder="微信openid" />
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={12}>
+                <Form.Item label={fieldLabels.weixinAppid} {...formItemLayout}>
+                  {getFieldDecorator('weixinAppid', {
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large" placeholder="微信Appid" />
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={12}>
+                <Form.Item label={fieldLabels.accessToken} {...formItemLayout}>
+                  {getFieldDecorator('accessToken', {
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large" placeholder="访问令牌" />
                   )}
                 </Form.Item>
               </Col>

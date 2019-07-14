@@ -32,7 +32,10 @@ import com.doublechaintech.his.formaction.FormActionDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements GenericFormDAO{
 
@@ -822,9 +825,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormMessage formMessage: externalFormMessageList){
+		for(FormMessage formMessageItem: externalFormMessageList){
 
-			formMessage.clearFromAll();
+			formMessageItem.clearFromAll();
 		}
 		
 		
@@ -850,9 +853,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormFieldMessage formFieldMessage: externalFormFieldMessageList){
+		for(FormFieldMessage formFieldMessageItem: externalFormFieldMessageList){
 
-			formFieldMessage.clearFromAll();
+			formFieldMessageItem.clearFromAll();
 		}
 		
 		
@@ -878,9 +881,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormField formField: externalFormFieldList){
+		for(FormField formFieldItem: externalFormFieldList){
 
-			formField.clearFromAll();
+			formFieldItem.clearFromAll();
 		}
 		
 		
@@ -906,9 +909,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormAction formAction: externalFormActionList){
+		for(FormAction formActionItem: externalFormActionList){
 
-			formAction.clearFromAll();
+			formActionItem.clearFromAll();
 		}
 		
 		
@@ -1440,6 +1443,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	public SmartList<GenericForm> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getGenericFormMapper());
 	}
+	
+	
+
 }
 
 

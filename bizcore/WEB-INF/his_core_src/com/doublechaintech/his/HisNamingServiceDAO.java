@@ -312,6 +312,3 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 
 
 
-
-
-

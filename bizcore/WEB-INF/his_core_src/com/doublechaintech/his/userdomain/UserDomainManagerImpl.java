@@ -468,8 +468,8 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 			String userWhiteListIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserDomain(userDomainId);
-		for(String userWhiteListId: userWhiteListIds){
-			userContext.getChecker().checkIdOfUserWhiteList(userWhiteListId);
+		for(String userWhiteListIdItem: userWhiteListIds){
+			userContext.getChecker().checkIdOfUserWhiteList(userWhiteListIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(UserDomainManagerException.class);
@@ -609,7 +609,7 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 
 
 
-	protected void checkParamsForAddingSecUser(HisUserContext userContext, String userDomainId, String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingSecUser(HisUserContext userContext, String userDomainId, String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -626,6 +626,12 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 		
 		userContext.getChecker().checkPwdOfSecUser(pwd);
 		
+		userContext.getChecker().checkWeixinOpenidOfSecUser(weixinOpenid);
+		
+		userContext.getChecker().checkWeixinAppidOfSecUser(weixinAppid);
+		
+		userContext.getChecker().checkAccessTokenOfSecUser(accessToken);
+		
 		userContext.getChecker().checkVerificationCodeOfSecUser(verificationCode);
 		
 		userContext.getChecker().checkVerificationCodeExpireOfSecUser(verificationCodeExpire);
@@ -636,12 +642,12 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 
 	
 	}
-	public  UserDomain addSecUser(HisUserContext userContext, String userDomainId, String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	public  UserDomain addSecUser(HisUserContext userContext, String userDomainId, String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingSecUser(userContext,userDomainId,login, mobile, email, pwd, verificationCode, verificationCodeExpire, lastLoginTime,tokensExpr);
+		checkParamsForAddingSecUser(userContext,userDomainId,login, mobile, email, pwd, weixinOpenid, weixinAppid, accessToken, verificationCode, verificationCodeExpire, lastLoginTime,tokensExpr);
 		
-		SecUser secUser = createSecUser(userContext,login, mobile, email, pwd, verificationCode, verificationCodeExpire, lastLoginTime);
+		SecUser secUser = createSecUser(userContext,login, mobile, email, pwd, weixinOpenid, weixinAppid, accessToken, verificationCode, verificationCodeExpire, lastLoginTime);
 		
 		UserDomain userDomain = loadUserDomain(userContext, userDomainId, allTokens());
 		synchronized(userDomain){ 
@@ -654,7 +660,7 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 			return present(userContext,userDomain, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingSecUserProperties(HisUserContext userContext, String userDomainId,String id,String login,String mobile,String email,String pwd,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingSecUserProperties(HisUserContext userContext, String userDomainId,String id,String login,String mobile,String email,String pwd,String weixinOpenid,String weixinAppid,String accessToken,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserDomain(userDomainId);
 		userContext.getChecker().checkIdOfSecUser(id);
@@ -663,6 +669,9 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 		userContext.getChecker().checkMobileOfSecUser( mobile);
 		userContext.getChecker().checkEmailOfSecUser( email);
 		userContext.getChecker().checkPwdOfSecUser( pwd);
+		userContext.getChecker().checkWeixinOpenidOfSecUser( weixinOpenid);
+		userContext.getChecker().checkWeixinAppidOfSecUser( weixinAppid);
+		userContext.getChecker().checkAccessTokenOfSecUser( accessToken);
 		userContext.getChecker().checkVerificationCodeOfSecUser( verificationCode);
 		userContext.getChecker().checkVerificationCodeExpireOfSecUser( verificationCodeExpire);
 		userContext.getChecker().checkLastLoginTimeOfSecUser( lastLoginTime);
@@ -670,9 +679,9 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 		userContext.getChecker().throwExceptionIfHasErrors(UserDomainManagerException.class);
 		
 	}
-	public  UserDomain updateSecUserProperties(HisUserContext userContext, String userDomainId, String id,String login,String mobile,String email,String pwd,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	public  UserDomain updateSecUserProperties(HisUserContext userContext, String userDomainId, String id,String login,String mobile,String email,String pwd,String weixinOpenid,String weixinAppid,String accessToken,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingSecUserProperties(userContext,userDomainId,id,login,mobile,email,pwd,verificationCode,verificationCodeExpire,lastLoginTime,tokensExpr);
+		checkParamsForUpdatingSecUserProperties(userContext,userDomainId,id,login,mobile,email,pwd,weixinOpenid,weixinAppid,accessToken,verificationCode,verificationCodeExpire,lastLoginTime,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -691,6 +700,9 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 		item.updateMobile( mobile );
 		item.updateEmail( email );
 		item.updatePwd( pwd );
+		item.updateWeixinOpenid( weixinOpenid );
+		item.updateWeixinAppid( weixinAppid );
+		item.updateAccessToken( accessToken );
 		item.updateVerificationCode( verificationCode );
 		item.updateVerificationCodeExpire( verificationCodeExpire );
 		item.updateLastLoginTime( lastLoginTime );
@@ -704,7 +716,7 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 	}
 	
 	
-	protected SecUser createSecUser(HisUserContext userContext, String login, String mobile, String email, String pwd, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime) throws Exception{
+	protected SecUser createSecUser(HisUserContext userContext, String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime) throws Exception{
 
 		SecUser secUser = new SecUser();
 		
@@ -713,6 +725,9 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 		secUser.setMobile(mobile);		
 		secUser.setEmail(email);		
 		secUser.setClearTextOfPwd(pwd);		
+		secUser.setWeixinOpenid(weixinOpenid);		
+		secUser.setWeixinAppid(weixinAppid);		
+		secUser.setAccessToken(accessToken);		
 		secUser.setVerificationCode(verificationCode);		
 		secUser.setVerificationCodeExpire(verificationCodeExpire);		
 		secUser.setLastLoginTime(lastLoginTime);		
@@ -737,8 +752,8 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 			String secUserIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserDomain(userDomainId);
-		for(String secUserId: secUserIds){
-			userContext.getChecker().checkIdOfSecUser(secUserId);
+		for(String secUserIdItem: secUserIds){
+			userContext.getChecker().checkIdOfSecUser(secUserIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(UserDomainManagerException.class);
@@ -842,6 +857,18 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 		
 		if(SecUser.PWD_PROPERTY.equals(property)){
 			userContext.getChecker().checkPwdOfSecUser(parseString(newValueExpr));
+		}
+		
+		if(SecUser.WEIXIN_OPENID_PROPERTY.equals(property)){
+			userContext.getChecker().checkWeixinOpenidOfSecUser(parseString(newValueExpr));
+		}
+		
+		if(SecUser.WEIXIN_APPID_PROPERTY.equals(property)){
+			userContext.getChecker().checkWeixinAppidOfSecUser(parseString(newValueExpr));
+		}
+		
+		if(SecUser.ACCESS_TOKEN_PROPERTY.equals(property)){
+			userContext.getChecker().checkAccessTokenOfSecUser(parseString(newValueExpr));
 		}
 		
 		if(SecUser.VERIFICATION_CODE_PROPERTY.equals(property)){

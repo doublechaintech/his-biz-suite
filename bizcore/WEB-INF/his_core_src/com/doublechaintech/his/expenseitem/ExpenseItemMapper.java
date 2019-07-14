@@ -72,10 +72,10 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
  		if( expenseTypeId.isEmpty()){
  			return;
  		}
- 		ExpenseType expenseType = expenseItem.getExpenseType();
- 		if( expenseType != null ){
+ 		ExpenseType lexpenseType = expenseItem.getExpenseType();
+ 		if( lexpenseType != null ){
  			//if the root object 'expenseItem' already have the property, just set the id for it;
- 			expenseType.setId(expenseTypeId);
+ 			lexpenseType.setId(expenseTypeId);
  			
  			return;
  		}
@@ -90,10 +90,10 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
  		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Hospital hospital = expenseItem.getHospital();
- 		if( hospital != null ){
+ 		Hospital lhospital = expenseItem.getHospital();
+ 		if( lhospital != null ){
  			//if the root object 'expenseItem' already have the property, just set the id for it;
- 			hospital.setId(hospitalId);
+ 			lhospital.setId(hospitalId);
  			
  			return;
  		}

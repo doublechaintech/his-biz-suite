@@ -7,6 +7,14 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+import com.doublechaintech.his.period.Period;
+import com.doublechaintech.his.expensetype.ExpenseType;
+import com.doublechaintech.his.expenseitem.ExpenseItem;
+import com.doublechaintech.his.doctor.Doctor;
+import com.doublechaintech.his.department.Department;
+
 import com.doublechaintech.his.expenseitem.ExpenseItemDAO;
 import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
 import com.doublechaintech.his.department.DepartmentDAO;
@@ -109,6 +117,25 @@ public interface HospitalDAO{
 	
 	
 	public SmartList<Hospital> queryList(String sql, Object ... parmeters);
+
+	// 需要一个加载引用我的对象的enhance方法:ExpenseType的hospital的ExpenseTypeList
+	public SmartList<ExpenseType> loadOurExpenseTypeList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:Period的hospital的PeriodList
+	public SmartList<Period> loadOurPeriodList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:ExpenseItem的hospital的ExpenseItemList
+	public SmartList<ExpenseItem> loadOurExpenseItemList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:Doctor的hospital的DoctorList
+	public SmartList<Doctor> loadOurDoctorList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:Department的hospital的DepartmentList
+	public SmartList<Department> loadOurDepartmentList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception;
+	
+	// 需要一个加载引用我的对象的enhance方法:DoctorSchedule的hospital的DoctorScheduleList
+	public SmartList<DoctorSchedule> loadOurDoctorScheduleList(HisUserContext userContext, List<Hospital> us, Map<String,Object> options) throws Exception;
+	
 }
 
 

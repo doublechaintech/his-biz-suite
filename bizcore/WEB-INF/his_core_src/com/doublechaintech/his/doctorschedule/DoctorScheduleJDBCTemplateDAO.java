@@ -34,7 +34,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class DoctorScheduleJDBCTemplateDAO extends HisNamingServiceDAO implements DoctorScheduleDAO{
  
@@ -1089,6 +1092,9 @@ public class DoctorScheduleJDBCTemplateDAO extends HisNamingServiceDAO implement
 	public SmartList<DoctorSchedule> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDoctorScheduleMapper());
 	}
+	
+	
+
 }
 
 

@@ -7,6 +7,9 @@ import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
+
+import com.doublechaintech.his.userdomain.UserDomain;
+
 import com.doublechaintech.his.userdomain.UserDomainDAO;
 
 
@@ -50,6 +53,7 @@ public interface UserWhiteListDAO{
  	public void analyzeUserWhiteListByDomain(SmartList<UserWhiteList> resultList, String userDomainId, Map<String,Object> options);
 
  
- }
+ 
+}
 
 

@@ -30,7 +30,10 @@ import com.doublechaintech.his.hospital.HospitalDAO;
 
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowCallbackHandler;
+
 
 public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements DepartmentDAO{
  
@@ -737,9 +740,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorAssignment doctorAssignment: externalDoctorAssignmentList){
+		for(DoctorAssignment doctorAssignmentItem: externalDoctorAssignmentList){
 
-			doctorAssignment.clearFromAll();
+			doctorAssignmentItem.clearFromAll();
 		}
 		
 		
@@ -769,9 +772,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorAssignment doctorAssignment: externalDoctorAssignmentList){
-			doctorAssignment.clearDoctor();
-			doctorAssignment.clearDepartment();
+		for(DoctorAssignment doctorAssignmentItem: externalDoctorAssignmentList){
+			doctorAssignmentItem.clearDoctor();
+			doctorAssignmentItem.clearDepartment();
 			
 		}
 		
@@ -809,9 +812,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
 
-			doctorSchedule.clearFromAll();
+			doctorScheduleItem.clearFromAll();
 		}
 		
 		
@@ -841,9 +844,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDoctor();
-			doctorSchedule.clearDepartment();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDoctor();
+			doctorScheduleItem.clearDepartment();
 			
 		}
 		
@@ -885,9 +888,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearPeriod();
-			doctorSchedule.clearDepartment();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearPeriod();
+			doctorScheduleItem.clearDepartment();
 			
 		}
 		
@@ -929,9 +932,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearExpenseType();
-			doctorSchedule.clearDepartment();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearExpenseType();
+			doctorScheduleItem.clearDepartment();
 			
 		}
 		
@@ -973,9 +976,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 			return department;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearHospital();
-			doctorSchedule.clearDepartment();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearHospital();
+			doctorScheduleItem.clearDepartment();
 			
 		}
 		
@@ -1287,6 +1290,9 @@ public class DepartmentJDBCTemplateDAO extends HisNamingServiceDAO implements De
 	public SmartList<Department> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDepartmentMapper());
 	}
+	
+	
+
 }
 
 

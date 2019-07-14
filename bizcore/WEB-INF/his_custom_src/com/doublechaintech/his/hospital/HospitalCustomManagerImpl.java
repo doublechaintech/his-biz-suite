@@ -12,14 +12,32 @@
 
 
 package com.doublechaintech.his.hospital;
-import java.util.Date;
 import com.doublechaintech.his.HisUserContext;
+import com.terapico.uccaf.BaseUserContext;
 
 public class HospitalCustomManagerImpl extends HospitalManagerImpl{
+	
+	@Override
+	public Object checkAccess(BaseUserContext baseUserContext, String methodName, Object[] parameters)
+			throws IllegalAccessException {
+	
+		if(methodName.startsWith("request")){
+            return accessOK();
+        }
+		return super.checkAccess(baseUserContext, methodName, parameters);
+		
+	}
+	public Hospital requestNew(HisUserContext userContext,Hospital value) {
+		
+		
+		userContext.log(value+"");
+		
+		return value;
+		
+	}
 
 
-
-
+	
 
 }
 

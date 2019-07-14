@@ -14,6 +14,9 @@
     </bean>  -->
     
     
+    
+    
+    
 	<import resource="classpath*:/META-INF/his.xml" />
 	<import resource="classpath*:/META-INF/his_manager.xml" />
 	

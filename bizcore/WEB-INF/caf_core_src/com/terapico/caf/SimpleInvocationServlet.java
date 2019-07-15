@@ -64,7 +64,7 @@ public class SimpleInvocationServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 		// Access-Control-Expose-Headers
 		String reqedHeaders = request.getHeader("Access-Control-Request-Headers");
-		response.addHeader("Access-Control-Allow-Headers", reqedHeaders);
+		response.addHeader("Access-Control-Allow-Headers", reqedHeaders+", X-Redirect, X-Env-Type, X-Env-Name");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
 		return;
 

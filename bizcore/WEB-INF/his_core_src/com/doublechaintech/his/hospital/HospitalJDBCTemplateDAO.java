@@ -170,7 +170,7 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public Hospital load(String id,Map<String,Object> options) throws Exception{
@@ -1041,9 +1041,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(ExpenseType expenseType: externalExpenseTypeList){
+		for(ExpenseType expenseTypeItem: externalExpenseTypeList){
 
-			expenseType.clearFromAll();
+			expenseTypeItem.clearFromAll();
 		}
 		
 		
@@ -1069,9 +1069,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(Period period: externalPeriodList){
+		for(Period periodItem: externalPeriodList){
 
-			period.clearFromAll();
+			periodItem.clearFromAll();
 		}
 		
 		
@@ -1097,9 +1097,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(ExpenseItem expenseItem: externalExpenseItemList){
+		for(ExpenseItem expenseItemItem: externalExpenseItemList){
 
-			expenseItem.clearFromAll();
+			expenseItemItem.clearFromAll();
 		}
 		
 		
@@ -1129,9 +1129,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(ExpenseItem expenseItem: externalExpenseItemList){
-			expenseItem.clearExpenseType();
-			expenseItem.clearHospital();
+		for(ExpenseItem expenseItemItem: externalExpenseItemList){
+			expenseItemItem.clearExpenseType();
+			expenseItemItem.clearHospital();
 			
 		}
 		
@@ -1169,9 +1169,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(Doctor doctor: externalDoctorList){
+		for(Doctor doctorItem: externalDoctorList){
 
-			doctor.clearFromAll();
+			doctorItem.clearFromAll();
 		}
 		
 		
@@ -1197,9 +1197,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(Department department: externalDepartmentList){
+		for(Department departmentItem: externalDepartmentList){
 
-			department.clearFromAll();
+			departmentItem.clearFromAll();
 		}
 		
 		
@@ -1225,9 +1225,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
 
-			doctorSchedule.clearFromAll();
+			doctorScheduleItem.clearFromAll();
 		}
 		
 		
@@ -1257,9 +1257,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDoctor();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDoctor();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -1301,9 +1301,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearPeriod();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearPeriod();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -1345,9 +1345,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearDepartment();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearDepartment();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		
@@ -1389,9 +1389,9 @@ public class HospitalJDBCTemplateDAO extends HisNamingServiceDAO implements Hosp
 			return hospital;
 		}
 		
-		for(DoctorSchedule doctorSchedule: externalDoctorScheduleList){
-			doctorSchedule.clearExpenseType();
-			doctorSchedule.clearHospital();
+		for(DoctorSchedule doctorScheduleItem: externalDoctorScheduleList){
+			doctorScheduleItem.clearExpenseType();
+			doctorScheduleItem.clearHospital();
 			
 		}
 		

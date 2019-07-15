@@ -43,7 +43,7 @@ const fieldLabels = {
   readPermission: '读权限',
   createPermission: '创建权限',
   deletePermission: '删除权限',
-  updatePermission: '更新许可',
+  updatePermission: '更新权限',
   executionPermission: '执行权限',
   app: '应用程序',
 

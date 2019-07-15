@@ -20,14 +20,14 @@ const testValues = {
   login: 'login',
   mobile: '13900000001',
   email: '',
-  pwd: '1B0837F50CCED8BAC0DE12C3834F69EA018EF13A11DB9EE48C74FA07E606A32B',
+  pwd: 'C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95',
   weixinOpenid: 'wx123456789abcdefghijklmn',
   weixinAppid: 'wxapp12098410239840',
   accessToken: 'jwt_token_12345678',
   verificationCode: '0',
-  verificationCodeExpire: '2019-06-03 00:53:35',
-  lastLoginTime: '2019-06-15 18:02:01',
-  domainId: 'UD00000001',
+  verificationCodeExpire: '2019-07-03 04:32:02',
+  lastLoginTime: '2019-06-24 08:20:25',
+  domainId: 'UD000001',
 }
 */
 
@@ -256,7 +256,7 @@ class SecUserCreateForm extends Component {
                   {getFieldDecorator('weixinOpenid', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="Weixin Openid" />
+                    <Input size="large" placeholder="微信openid" />
                   )}
                 </Form.Item>
               </Col>
@@ -266,7 +266,7 @@ class SecUserCreateForm extends Component {
                   {getFieldDecorator('weixinAppid', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="Weixin Appid" />
+                    <Input size="large" placeholder="微信Appid" />
                   )}
                 </Form.Item>
               </Col>

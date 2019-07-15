@@ -9,7 +9,19 @@ public class CustomRelation extends BaseRelation{
 	{
 		super.prepareRelation();
 		//Uncomment to make any change to the relation type
+		//replaceGenericRelation("ExpenseType"                           , BaseRelation.TRUST_CHAIN_ALL, "hospital");
+		//replaceGenericRelation("Period"                                , BaseRelation.TRUST_CHAIN_ALL, "hospital");
+		//replaceGenericRelation("ExpenseItem"                           , BaseRelation.TRUST_CHAIN_ALL, "expenseType");
+		//replaceGenericRelation("ExpenseItem"                           , BaseRelation.TRUST_CHAIN_ALL, "hospital");
 		//replaceGenericRelation("Doctor"                                , BaseRelation.TRUST_CHAIN_ALL, "hospital");
+		//replaceGenericRelation("Department"                            , BaseRelation.TRUST_CHAIN_ALL, "hospital");
+		//replaceGenericRelation("DoctorAssignment"                      , BaseRelation.TRUST_CHAIN_ALL, "doctor");
+		//replaceGenericRelation("DoctorAssignment"                      , BaseRelation.TRUST_CHAIN_ALL, "department");
+		//replaceGenericRelation("DoctorSchedule"                        , BaseRelation.TRUST_CHAIN_ALL, "doctor");
+		//replaceGenericRelation("DoctorSchedule"                        , BaseRelation.TRUST_CHAIN_ALL, "period");
+		//replaceGenericRelation("DoctorSchedule"                        , BaseRelation.TRUST_CHAIN_ALL, "department");
+		//replaceGenericRelation("DoctorSchedule"                        , BaseRelation.TRUST_CHAIN_ALL, "expenseType");
+		//replaceGenericRelation("DoctorSchedule"                        , BaseRelation.TRUST_CHAIN_ALL, "hospital");
 		//replaceGenericRelation("UserWhiteList"                         , BaseRelation.TRUST_CHAIN_ALL, "domain");
 		//replaceGenericRelation("SecUser"                               , BaseRelation.TRUST_CHAIN_ALL, "domain");
 		//replaceGenericRelation("UserApp"                               , BaseRelation.TRUST_CHAIN_ALL, "secUser");
@@ -32,8 +44,26 @@ public class CustomRelation extends BaseRelation{
 		Just uncomment the definition line and replaceRelationIndex line to replace existing one.
 		
 		*/
+		//String [] expenseTypeRelatedObjectNames = {"hospital:Hospital"};
+		//replaceRelationIndex("ExpenseType",expenseTypeRelatedObjectNames);
+
+		//String [] periodRelatedObjectNames = {"hospital:Hospital"};
+		//replaceRelationIndex("Period",periodRelatedObjectNames);
+
+		//String [] expenseItemRelatedObjectNames = {"expense_type:ExpenseType","hospital:Hospital"};
+		//replaceRelationIndex("ExpenseItem",expenseItemRelatedObjectNames);
+
 		//String [] doctorRelatedObjectNames = {"hospital:Hospital"};
 		//replaceRelationIndex("Doctor",doctorRelatedObjectNames);
+
+		//String [] departmentRelatedObjectNames = {"hospital:Hospital"};
+		//replaceRelationIndex("Department",departmentRelatedObjectNames);
+
+		//String [] doctorAssignmentRelatedObjectNames = {"doctor:Doctor","department:Department"};
+		//replaceRelationIndex("DoctorAssignment",doctorAssignmentRelatedObjectNames);
+
+		//String [] doctorScheduleRelatedObjectNames = {"doctor:Doctor","period:Period","department:Department","expense_type:ExpenseType","hospital:Hospital"};
+		//replaceRelationIndex("DoctorSchedule",doctorScheduleRelatedObjectNames);
 
 		//String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		//replaceRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);
@@ -84,9 +114,6 @@ public class CustomRelation extends BaseRelation{
 	}
 
 }
-
-
-
 
 
 

@@ -468,8 +468,8 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 			String userWhiteListIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserDomain(userDomainId);
-		for(String userWhiteListId: userWhiteListIds){
-			userContext.getChecker().checkIdOfUserWhiteList(userWhiteListId);
+		for(String userWhiteListIdItem: userWhiteListIds){
+			userContext.getChecker().checkIdOfUserWhiteList(userWhiteListIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(UserDomainManagerException.class);
@@ -752,8 +752,8 @@ public class UserDomainManagerImpl extends CustomHisCheckerManager implements Us
 			String secUserIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfUserDomain(userDomainId);
-		for(String secUserId: secUserIds){
-			userContext.getChecker().checkIdOfSecUser(secUserId);
+		for(String secUserIdItem: secUserIds){
+			userContext.getChecker().checkIdOfSecUser(secUserIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(UserDomainManagerException.class);

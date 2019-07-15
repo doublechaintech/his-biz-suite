@@ -70,10 +70,10 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
  		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Hospital hospital = doctor.getHospital();
- 		if( hospital != null ){
+ 		Hospital lhospital = doctor.getHospital();
+ 		if( lhospital != null ){
  			//if the root object 'doctor' already have the property, just set the id for it;
- 			hospital.setId(hospitalId);
+ 			lhospital.setId(hospitalId);
  			
  			return;
  		}

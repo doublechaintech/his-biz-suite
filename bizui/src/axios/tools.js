@@ -101,7 +101,7 @@ export const joinParameters = parameters => {
 const formatPostData = value => {
   console.log('value', value);
 
-  if (typeof value == 'undefined') {
+  if (typeof value === 'undefined') {
     return null;
   }
   if (value == null) {

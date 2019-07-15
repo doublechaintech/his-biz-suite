@@ -24,12 +24,6 @@ public class LoginFormSerializer  extends JsonSerializer<LoginForm>{
 		
 	}
 	
-	
-	
-	
-	
-	
-	
 	protected String getErrorMessage(LoginForm form) {
 		if(form.getErrorMessageList().isEmpty()) {
 			return null;

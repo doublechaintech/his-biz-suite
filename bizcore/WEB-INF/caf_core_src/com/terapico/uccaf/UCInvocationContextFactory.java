@@ -11,8 +11,16 @@ import com.terapico.caf.InvocationContext;
 import com.terapico.caf.InvocationException;
 import com.terapico.caf.ServletInvocationContextFactory;
 import com.terapico.caf.SimpleInvocationContext;
+import org.springframework.context.ApplicationContext;
 
 public class UCInvocationContextFactory extends ServletInvocationContextFactory {
+	public UCInvocationContextFactory(ApplicationContext pApplicationContext) {
+		super(pApplicationContext);
+	}
+
+	public UCInvocationContextFactory(){
+		super();
+	}
 
 	/*
 	 * 检查第一个参数的类型，如果是基于BaseUserContext的，那么就内部构造一个UserContext出来，
@@ -38,6 +46,7 @@ public class UCInvocationContextFactory extends ServletInvocationContextFactory 
 		
 	}
 	
+
 	@Override
 	protected Object[] getParameters(Type[] types, Object[] parameters,HttpServletRequest request) {
 		// FIXME: need to make some improvement to make the code better, 
@@ -156,7 +165,7 @@ public class UCInvocationContextFactory extends ServletInvocationContextFactory 
 			request.setAttribute("userContext", uc);
 			return uc;
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 			throw new RuntimeException("User Context is not able to init" + e.getMessage());
 		}
 		

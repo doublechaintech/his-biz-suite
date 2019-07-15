@@ -75,15 +75,17 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 		}
 		return resultMap;
 	}
-	public void addAction(String groupName, String title, String code, String linkToUrl) {
+	public ButtonViewComponent addAction(String groupName, String title, String code, String linkToUrl) {
 		List<ButtonViewComponent> actionList = ensureActionGroups(groupName);
 		ButtonViewComponent btn = new ButtonViewComponent(title);
 		btn.setTag(code);
 		btn.setLinkToUrl(linkToUrl);
 		actionList.add(btn);
+		return btn;
 	}
-	public void addAction(String groupName, ButtonViewComponent actionButton) {
+	public ButtonViewComponent addAction(String groupName, ButtonViewComponent actionButton) {
 		ensureActionGroups(groupName).add(actionButton);
+		return actionButton;
 	}
 	private List<ButtonViewComponent> ensureActionGroups(String groupName) {
 		if (actionGroups == null) {

@@ -44,8 +44,8 @@ const fieldLabels = {
   mobile: '手机号码',
   email: '电子邮件',
   pwd: '密码',
-  weixinOpenid: 'Weixin Openid',
-  weixinAppid: 'Weixin Appid',
+  weixinOpenid: '微信openid',
+  weixinAppid: '微信Appid',
   accessToken: '访问令牌',
   verificationCode: '验证码',
   verificationCodeExpire: '验证码过期',
@@ -89,8 +89,8 @@ const renderItemOfList=(secUser,targetComponent)=>{
 <Description term="手机号码">{secUser.mobile}</Description> 
 <Description term="电子邮件">{secUser.email}</Description> 
 <Description term="密码">{secUser.pwd}</Description> 
-<Description term="Weixin Openid">{secUser.weixinOpenid}</Description> 
-<Description term="Weixin Appid">{secUser.weixinAppid}</Description> 
+<Description term="微信openid">{secUser.weixinOpenid}</Description> 
+<Description term="微信Appid">{secUser.weixinAppid}</Description> 
 <Description term="访问令牌">{secUser.accessToken}</Description> 
 <Description term="验证码">{secUser.verificationCode}</Description> 
 <Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 

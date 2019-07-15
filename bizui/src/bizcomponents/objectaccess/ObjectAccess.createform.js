@@ -28,7 +28,7 @@ const testValues = {
   list7: 'catalogList',
   list8: 'catalogList',
   list9: 'catalogList',
-  appId: 'UA00000001',
+  appId: 'UA000001',
 }
 */
 

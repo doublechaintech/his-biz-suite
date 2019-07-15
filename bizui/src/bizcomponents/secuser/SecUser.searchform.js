@@ -293,7 +293,7 @@ componentDidMount() {
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="Weixin Openid">
+            <FormItem label="微信openid">
               {getFieldDecorator('weixinOpenid')(
                 <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
@@ -301,7 +301,7 @@ componentDidMount() {
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="Weixin Appid">
+            <FormItem label="微信Appid">
               {getFieldDecorator('weixinAppid')(
                 <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}

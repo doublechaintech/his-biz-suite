@@ -65,7 +65,7 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public SecUserBlocking load(String id,Map<String,Object> options) throws Exception{
@@ -506,9 +506,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 			return secUserBlocking;
 		}
 		
-		for(SecUser secUser: externalSecUserList){
+		for(SecUser secUserItem: externalSecUserList){
 
-			secUser.clearFromAll();
+			secUserItem.clearFromAll();
 		}
 		
 		
@@ -538,9 +538,9 @@ public class SecUserBlockingJDBCTemplateDAO extends HisNamingServiceDAO implemen
 			return secUserBlocking;
 		}
 		
-		for(SecUser secUser: externalSecUserList){
-			secUser.clearDomain();
-			secUser.clearBlocking();
+		for(SecUser secUserItem: externalSecUserList){
+			secUserItem.clearDomain();
+			secUserItem.clearBlocking();
 			
 		}
 		

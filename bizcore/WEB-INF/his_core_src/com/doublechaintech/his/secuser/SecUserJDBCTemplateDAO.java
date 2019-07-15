@@ -108,7 +108,7 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public SecUser load(String id,Map<String,Object> options) throws Exception{
@@ -917,9 +917,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			return secUser;
 		}
 		
-		for(UserApp userApp: externalUserAppList){
+		for(UserApp userAppItem: externalUserAppList){
 
-			userApp.clearFromAll();
+			userAppItem.clearFromAll();
 		}
 		
 		
@@ -949,9 +949,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			return secUser;
 		}
 		
-		for(UserApp userApp: externalUserAppList){
-			userApp.clearObjectId();
-			userApp.clearSecUser();
+		for(UserApp userAppItem: externalUserAppList){
+			userAppItem.clearObjectId();
+			userAppItem.clearSecUser();
 			
 		}
 		
@@ -989,9 +989,9 @@ public class SecUserJDBCTemplateDAO extends HisNamingServiceDAO implements SecUs
 			return secUser;
 		}
 		
-		for(LoginHistory loginHistory: externalLoginHistoryList){
+		for(LoginHistory loginHistoryItem: externalLoginHistoryList){
 
-			loginHistory.clearFromAll();
+			loginHistoryItem.clearFromAll();
 		}
 		
 		

@@ -84,7 +84,9 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 	public Map<String,String> getLocaleMap(){
 		
 		init();
-		return englishMap;
+
+		return chineseMap;
+
 		
 	}
 	

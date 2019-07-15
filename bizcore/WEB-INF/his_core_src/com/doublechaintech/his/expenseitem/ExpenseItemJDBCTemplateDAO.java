@@ -66,7 +66,7 @@ public class ExpenseItemJDBCTemplateDAO extends HisNamingServiceDAO implements E
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public ExpenseItem load(String id,Map<String,Object> options) throws Exception{

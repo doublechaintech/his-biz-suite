@@ -56,10 +56,10 @@ public class PeriodMapper extends BaseRowMapper<Period>{
  		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Hospital hospital = period.getHospital();
- 		if( hospital != null ){
+ 		Hospital lhospital = period.getHospital();
+ 		if( lhospital != null ){
  			//if the root object 'period' already have the property, just set the id for it;
- 			hospital.setId(hospitalId);
+ 			lhospital.setId(hospitalId);
  			
  			return;
  		}

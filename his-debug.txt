@@ -77,14 +77,14 @@ Login|登录
 Mobile|手机号码
 Email|电子邮件
 Pwd|密码
-Weixin Openid|Weixin Openid
-Weixin Appid|Weixin Appid
+Weixin Openid|微信openid
+Weixin Appid|微信Appid
 Access Token|访问令牌
 Verification Code|验证码
 Verification Code Expire|验证码过期
 Last Login Time|最后登录时间
 Domain|域
-Blocking|屏蔽
+Block|屏蔽
 Block|屏蔽
 Current Status|当前状态
 Version|版本
@@ -112,7 +112,7 @@ Internal Name|内部名称
 Read Permission|读权限
 Create Permission|创建权限
 Delete Permission|删除权限
-Update Permission|更新许可
+Update Permission|更新权限
 Execution Permission|执行权限
 App|应用程序
 Version|版本
@@ -184,25 +184,28 @@ Level|水平
 Url|url
 Form|形式
 Version|版本
-Transfer to Another Hospital|转到另一家医院
-Transfer to Another Expense Type|转移到另一种费用类型
-Transfer to Another Period|转到另一个时期
-Transfer to Another Expense Item|转到其他费用项目
-Transfer to Another Doctor|转到另一位医生那里
-Transfer to Another Department|调到另一个部门
-Transfer to Another Doctor Assignment|转到另一个医生的任务
-Transfer to Another Doctor Schedule|转移到另一个医生的时间表
-Transfer to Another User Domain|转移到另一个用户域
-Transfer to Another User White List|转移到另一个用户白名单
-Transfer to Another Sec User|转移到另一个SEC用户
-Transfer to Another Sec User Blocking|转移到另一个SEC用户阻塞
-Transfer to Another User App|转移到另一个用户应用程序
-Transfer to Another List Access|转移到另一个列表访问
-Transfer to Another Object Access|转移到另一个对象访问
-Transfer to Another Login History|转移到另一个登录历史
-Transfer to Another Generic Form|转移到另一个通用表单
-Transfer to Another Form Message|转到另一个表单消息
-Transfer to Another Form Field Message|转到另一个表单字段消息
-Transfer to Another Form Field|转到另一个表单字段
-Transfer to Another Form Action|转移到另一个表单动作
+Transfer to Another Hospital|转移到医院
+Transfer to Another Hospital|转移到医院
+Transfer to Another Expense Type|转入费用类
+Transfer to Another Hospital|转移到医院
+Transfer to Another Hospital|转移到医院
+Transfer to Another Hospital|转移到医院
+Transfer to Another Doctor|转移到医生
+Transfer to Another Department|转移到部门
+Transfer to Another Doctor|转移到医生
+Transfer to Another Period|转移到时间
+Transfer to Another Department|转移到部门
+Transfer to Another Expense Type|转入费用类
+Transfer to Another Hospital|转移到医院
+Transfer to Another Domain|转移到域
+Transfer to Another Domain|转移到域
+Transfer to Another Block|转移到阻塞
+Transfer to Another Sec User|转移给Sec用户
+Transfer to Another App|转移到应用程序
+Transfer to Another App|转移到应用程序
+Transfer to Another Sec User|转移给Sec用户
+Transfer to Another Form|转移到形式
+Transfer to Another Form|转移到形式
+Transfer to Another Form|转移到形式
+Transfer to Another Form|转移到形式
 

@@ -606,8 +606,8 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			String expenseTypeIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
-		for(String expenseTypeId: expenseTypeIds){
-			userContext.getChecker().checkIdOfExpenseType(expenseTypeId);
+		for(String expenseTypeIdItem: expenseTypeIds){
+			userContext.getChecker().checkIdOfExpenseType(expenseTypeIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
@@ -852,8 +852,8 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			String periodIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
-		for(String periodId: periodIds){
-			userContext.getChecker().checkIdOfPeriod(periodId);
+		for(String periodIdItem: periodIds){
+			userContext.getChecker().checkIdOfPeriod(periodIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
@@ -1097,8 +1097,8 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			String expenseItemIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
-		for(String expenseItemId: expenseItemIds){
-			userContext.getChecker().checkIdOfExpenseItem(expenseItemId);
+		for(String expenseItemIdItem: expenseItemIds){
+			userContext.getChecker().checkIdOfExpenseItem(expenseItemIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
@@ -1341,8 +1341,8 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			String doctorIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
-		for(String doctorId: doctorIds){
-			userContext.getChecker().checkIdOfDoctor(doctorId);
+		for(String doctorIdItem: doctorIds){
+			userContext.getChecker().checkIdOfDoctor(doctorIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
@@ -1580,8 +1580,8 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			String departmentIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
-		for(String departmentId: departmentIds){
-			userContext.getChecker().checkIdOfDepartment(departmentId);
+		for(String departmentIdItem: departmentIds){
+			userContext.getChecker().checkIdOfDepartment(departmentIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
@@ -1851,8 +1851,8 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			String doctorScheduleIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
-		for(String doctorScheduleId: doctorScheduleIds){
-			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleId);
+		for(String doctorScheduleIdItem: doctorScheduleIds){
+			userContext.getChecker().checkIdOfDoctorSchedule(doctorScheduleIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);

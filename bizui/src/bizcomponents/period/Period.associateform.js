@@ -19,7 +19,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '上午',
-  hospitalId: 'H00000001',
+  hospitalId: 'H000001',
 }
 */
 

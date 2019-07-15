@@ -55,7 +55,7 @@ public class FormActionJDBCTemplateDAO extends HisNamingServiceDAO implements Fo
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public FormAction load(String id,Map<String,Object> options) throws Exception{

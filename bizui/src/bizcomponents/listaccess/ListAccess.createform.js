@@ -19,7 +19,7 @@ const testValues = {};
 const testValues = {
   name: '列表',
   internalName: 'levelOneCategoryList',
-  appId: 'UA00000001',
+  appId: 'UA000001',
 }
 */
 

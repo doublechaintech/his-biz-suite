@@ -323,7 +323,7 @@ class SecUserUpdateForm extends Component {
                     initialValue: selectedRow.weixinOpenid,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="Weixin Openid" />
+                    <Input size="large" placeholder="微信openid" />
                     
                   )}
                 </Form.Item>
@@ -335,7 +335,7 @@ class SecUserUpdateForm extends Component {
                     initialValue: selectedRow.weixinAppid,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="Weixin Appid" />
+                    <Input size="large" placeholder="微信Appid" />
                     
                   )}
                 </Form.Item>

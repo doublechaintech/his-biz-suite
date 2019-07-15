@@ -86,7 +86,7 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public UserDomain load(String id,Map<String,Object> options) throws Exception{
@@ -609,9 +609,9 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 			return userDomain;
 		}
 		
-		for(UserWhiteList userWhiteList: externalUserWhiteListList){
+		for(UserWhiteList userWhiteListItem: externalUserWhiteListList){
 
-			userWhiteList.clearFromAll();
+			userWhiteListItem.clearFromAll();
 		}
 		
 		
@@ -637,9 +637,9 @@ public class UserDomainJDBCTemplateDAO extends HisNamingServiceDAO implements Us
 			return userDomain;
 		}
 		
-		for(SecUser secUser: externalSecUserList){
+		for(SecUser secUserItem: externalSecUserList){
 
-			secUser.clearFromAll();
+			secUserItem.clearFromAll();
 		}
 		
 		

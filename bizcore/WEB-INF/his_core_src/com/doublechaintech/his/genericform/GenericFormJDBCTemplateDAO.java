@@ -128,7 +128,7 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public GenericForm load(String id,Map<String,Object> options) throws Exception{
@@ -825,9 +825,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormMessage formMessage: externalFormMessageList){
+		for(FormMessage formMessageItem: externalFormMessageList){
 
-			formMessage.clearFromAll();
+			formMessageItem.clearFromAll();
 		}
 		
 		
@@ -853,9 +853,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormFieldMessage formFieldMessage: externalFormFieldMessageList){
+		for(FormFieldMessage formFieldMessageItem: externalFormFieldMessageList){
 
-			formFieldMessage.clearFromAll();
+			formFieldMessageItem.clearFromAll();
 		}
 		
 		
@@ -881,9 +881,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormField formField: externalFormFieldList){
+		for(FormField formFieldItem: externalFormFieldList){
 
-			formField.clearFromAll();
+			formFieldItem.clearFromAll();
 		}
 		
 		
@@ -909,9 +909,9 @@ public class GenericFormJDBCTemplateDAO extends HisNamingServiceDAO implements G
 			return genericForm;
 		}
 		
-		for(FormAction formAction: externalFormActionList){
+		for(FormAction formActionItem: externalFormActionList){
 
-			formAction.clearFromAll();
+			formActionItem.clearFromAll();
 		}
 		
 		

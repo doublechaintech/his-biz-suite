@@ -24,7 +24,7 @@ const testValues = {
   objectType: 'CarInspectionPlatform',
   objectId: 'CIP000001',
   location: '/link/to/app',
-  secUserId: 'SU00000001',
+  secUserId: 'SU000001',
 }
 */
 

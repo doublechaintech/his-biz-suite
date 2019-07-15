@@ -836,8 +836,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 			String userAppIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSecUser(secUserId);
-		for(String userAppId: userAppIds){
-			userContext.getChecker().checkIdOfUserApp(userAppId);
+		for(String userAppIdItem: userAppIds){
+			userContext.getChecker().checkIdOfUserApp(userAppIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
@@ -1100,8 +1100,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 			String loginHistoryIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSecUser(secUserId);
-		for(String loginHistoryId: loginHistoryIds){
-			userContext.getChecker().checkIdOfLoginHistory(loginHistoryId);
+		for(String loginHistoryIdItem: loginHistoryIds){
+			userContext.getChecker().checkIdOfLoginHistory(loginHistoryIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);

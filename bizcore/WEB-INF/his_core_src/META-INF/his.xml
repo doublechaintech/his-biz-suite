@@ -11,23 +11,21 @@
 	<!-- Creating TransactionManager Bean, since JDBC we are creating of type 
 		DataSourceTransactionManager -->
 	
-	
-	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+	<!-- dbcp 2.6 https://commons.apache.org/proper/commons-dbcp/configuration.html -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" >
 	
 		<property name="url" value="${app.database.jdbcURL}" />
 		<property name="username" value="${app.database.username}" />
 		<property name="password" value="${app.database.password}" />
 		<property name="driverClassName" value="${app.database.driverClass}" />
 		<property name="initialSize" value="${app.database.pool.initialSize}" />
-		<property name="maxActive" value="${app.database.pool.maxActive}" />
-		
-		
+		<property name="maxTotal" value="${app.database.pool.maxActive}" />
+
 		<property name="testOnBorrow" value="true" />
 		<property name="testWhileIdle" value="true" />
 		<property name="validationQuery" value="SELECT 1 from sec_user_data" />       
 		<property name="removeAbandonedTimeout" value="55" />
-		<property name="removeAbandoned" value="true"/>
+		<property name="removeAbandonedOnBorrow" value="true"/>
 
 	</bean>
 

@@ -532,8 +532,8 @@ public class SecUserBlockingManagerImpl extends CustomHisCheckerManager implemen
 			String secUserIds[],String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfSecUserBlocking(secUserBlockingId);
-		for(String secUserId: secUserIds){
-			userContext.getChecker().checkIdOfSecUser(secUserId);
+		for(String secUserIdItem: secUserIds){
+			userContext.getChecker().checkIdOfSecUser(secUserIdItem);
 		}
 		
 		userContext.getChecker().throwExceptionIfHasErrors(SecUserBlockingManagerException.class);

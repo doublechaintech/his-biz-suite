@@ -176,10 +176,10 @@ public class SecUserMapper extends BaseRowMapper<SecUser>{
  		if( userDomainId.isEmpty()){
  			return;
  		}
- 		UserDomain userDomain = secUser.getDomain();
- 		if( userDomain != null ){
+ 		UserDomain luserDomain = secUser.getDomain();
+ 		if( luserDomain != null ){
  			//if the root object 'secUser' already have the property, just set the id for it;
- 			userDomain.setId(userDomainId);
+ 			luserDomain.setId(userDomainId);
  			
  			return;
  		}
@@ -194,10 +194,10 @@ public class SecUserMapper extends BaseRowMapper<SecUser>{
  		if( secUserBlockingId.isEmpty()){
  			return;
  		}
- 		SecUserBlocking secUserBlocking = secUser.getBlocking();
- 		if( secUserBlocking != null ){
+ 		SecUserBlocking lsecUserBlocking = secUser.getBlocking();
+ 		if( lsecUserBlocking != null ){
  			//if the root object 'secUser' already have the property, just set the id for it;
- 			secUserBlocking.setId(secUserBlockingId);
+ 			lsecUserBlocking.setId(secUserBlockingId);
  			
  			return;
  		}

@@ -97,7 +97,7 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 	
 	protected String getIdFormat()
 	{
-		return getShortName(this.getName())+"%08d";
+		return getShortName(this.getName())+"%06d";
 	}
 	
 	public UserApp load(String id,Map<String,Object> options) throws Exception{
@@ -734,9 +734,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			return userApp;
 		}
 		
-		for(ListAccess listAccess: externalListAccessList){
+		for(ListAccess listAccessItem: externalListAccessList){
 
-			listAccess.clearFromAll();
+			listAccessItem.clearFromAll();
 		}
 		
 		
@@ -762,9 +762,9 @@ public class UserAppJDBCTemplateDAO extends HisNamingServiceDAO implements UserA
 			return userApp;
 		}
 		
-		for(ObjectAccess objectAccess: externalObjectAccessList){
+		for(ObjectAccess objectAccessItem: externalObjectAccessList){
 
-			objectAccess.clearFromAll();
+			objectAccessItem.clearFromAll();
 		}
 		
 		

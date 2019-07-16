@@ -83,6 +83,10 @@ public class SimpleInvocationContext implements InvocationContext {
 			wrapByte(stringBuilder,parameter.toString());
 			return;
 		}
+		if(parameter instanceof Password){
+			wrapByte(stringBuilder,"********");
+			return;
+		}
 		//
 		
 		if(ReflectionTool.isArrayOfBytesType(parameter.getClass())) {
@@ -91,9 +95,6 @@ public class SimpleInvocationContext implements InvocationContext {
 		}
 		
 		if(isArrayType(parameter.getClass())){
-			
-			//
-			
 			
 			Object []objects =(Object []) parameter;
 			stringBuilder.append("[");

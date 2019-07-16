@@ -158,6 +158,21 @@ public class ReflectionTool {
 		} 
 
 	}
+	
+	
+	protected boolean isPrimaryTypeOrOneStringConstructor(Class clazz) {
+		if(isPrimaryType(clazz)) {
+			return true;
+		}
+		Constructor constructor = getOneStringConstructor(clazz);
+		if(constructor != null) {
+			return true;
+		}
+		return false;
+		
+	}
+	
+	
 	protected Constructor getOneStringConstructor(Class clazz) {
 		Constructor constructors[] = clazz.getDeclaredConstructors();
 

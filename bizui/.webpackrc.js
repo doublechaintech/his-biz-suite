@@ -2,10 +2,8 @@ const path = require('path');
 
 export default {
   entry: 'src/index.js',
-  extraBabelPlugins: [
-    ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
-  ],
+  extraBabelPlugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]],
+  babel: { plugins: [['@babel/plugin-proposal-decorators', { legacy: false }]] },
   env: {
     development: {
       extraBabelPlugins: ['dva-hmr'],

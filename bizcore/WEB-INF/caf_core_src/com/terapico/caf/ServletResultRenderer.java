@@ -174,14 +174,17 @@ public class ServletResultRenderer {
 	private ObjectMapper objectMapper = null;
 
 	protected ObjectMapper getObjectMapper() {
+		return new ObjectMapper();
+		/*
 		if (objectMapper == null) {
 			objectMapper = new ObjectMapper();
+			return objectMapper;
 			// DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			// objectMapper.setDateFormat(df);
 		}
-
-		return objectMapper;
-
+		//return objectMapper;
+		return objectMapper.copy();
+		*/
 	}
 
 	protected void fillOrigin(InvocationResult result, HttpServletRequest request, HttpServletResponse response) {

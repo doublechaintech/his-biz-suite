@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190326T1029) @Sun Jul 14 20:24:46 CST 2019, 21 objects and 163 fields===========================
+=================Execute Report (Model Time 190320T1436) @Tue Jul 23 12:23:56 CST 2019, 21 objects and 163 fields===========================
 
 
 
@@ -111,7 +111,7 @@ Info: Add virtual field [doctor_schedules(es)] to <hospital>
 
 hospital{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('上和医院'), verb: false, required: true;
 		string	address('毕升路22号'), verb: false, required: true;
 		string	telephone('028-9123123'), verb: false, required: true;
@@ -129,7 +129,7 @@ hospital{
 
 expense_type{
 	fields(8){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
 		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
 		string	status('正常|停用'), verb: false, required: true;
@@ -146,7 +146,7 @@ expense_type{
 
 period{
 	fields(4){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('上午|下午|夜班'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
 		int	version('2147483647'), verb: false, required: true;
@@ -158,7 +158,7 @@ period{
 
 expense_item{
 	fields(7){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
 		money	price('$99999999999.00'), verb: false, required: true;
 		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
@@ -172,7 +172,7 @@ expense_item{
 
 doctor{
 	fields(6){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('魏松全'), verb: false, required: true;
 		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
@@ -187,7 +187,7 @@ doctor{
 
 department{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('放射科'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
 		date_time_update	update_time('updateTime()'), verb: false, required: true;
@@ -201,7 +201,7 @@ department{
 
 doctor_assignment{
 	fields(6){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('魏松全在内分泌科室上'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
 		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
@@ -214,7 +214,7 @@ doctor_assignment{
 
 doctor_schedule{
 	fields(13){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		date	schedule_date('2019-3-11'), verb: false, required: true;
@@ -234,7 +234,7 @@ doctor_schedule{
 
 hospital{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('上和医院'), verb: false, required: true;
 		string	address('毕升路22号'), verb: false, required: true;
 		string	telephone('028-9123123'), verb: false, required: true;
@@ -252,7 +252,7 @@ hospital{
 
 expense_type{
 	fields(8){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
 		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
 		string	status('正常|停用'), verb: false, required: true;
@@ -269,7 +269,7 @@ expense_type{
 
 period{
 	fields(4){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('上午|下午|夜班'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
 		int	version('2147483647'), verb: false, required: true;
@@ -281,7 +281,7 @@ period{
 
 expense_item{
 	fields(7){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
 		money	price('$99999999999.00'), verb: false, required: true;
 		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
@@ -295,7 +295,7 @@ expense_item{
 
 doctor{
 	fields(6){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('魏松全'), verb: false, required: true;
 		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
@@ -310,7 +310,7 @@ doctor{
 
 department{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('放射科'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
 		date_time_update	update_time('updateTime()'), verb: false, required: true;
@@ -324,7 +324,7 @@ department{
 
 doctor_assignment{
 	fields(6){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('魏松全在内分泌科室上'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
 		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
@@ -337,7 +337,7 @@ doctor_assignment{
 
 doctor_schedule{
 	fields(13){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
 		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
 		date	schedule_date('2019-3-11'), verb: false, required: true;
@@ -357,7 +357,7 @@ doctor_schedule{
 
 user_domain{
 	fields(3){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('用户区域'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
@@ -369,7 +369,7 @@ user_domain{
 
 user_white_list{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	user_identity('clariones|13808188512'), verb: false, required: true;
 		string	user_special_functions('tester;ios-spokesperson'), verb: false, required: true;
 		user_domain	domain('$(object)'), verb: false, required: true, referenceBy: userWhiteListList;
@@ -381,7 +381,7 @@ user_white_list{
 
 sec_user{
 	fields(15){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	login('login'), verb: false, required: true;
 		string_china_mobile_phone	mobile('13900000001'), verb: false, required: true;
 		string	email('|suddy_chang@163.com'), verb: false, required: false;
@@ -405,7 +405,7 @@ sec_user{
 
 sec_user_blocking{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	who('currentUser()'), verb: false, required: true;
 		date_time_create	block_time('createTime()'), verb: false, required: true;
 		string	comments('这个用户多次发送违反社区的帖子，现在把他给屏蔽了'), verb: false, required: true;
@@ -418,7 +418,7 @@ sec_user_blocking{
 
 user_app{
 	fields(10){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	title('审车平台|账户管理|接车公司|审车公司|维修公司|顾客'), verb: false, required: true;
 		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: userAppList;
 		string	app_icon('users|bank|wechat|bar-chart|user|users'), verb: false, required: true;
@@ -437,7 +437,7 @@ user_app{
 
 list_access{
 	fields(10){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('列表'), verb: false, required: true;
 		string	internal_name('levelOneCategoryList'), verb: false, required: true;
 		bool	read_permission('true'), verb: false, required: true;
@@ -454,7 +454,7 @@ list_access{
 
 object_access{
 	fields(14){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	name('控制访问列表1'), verb: false, required: true;
 		string	object_type('FranchiseeStoreCountryCenter|AccountSet'), verb: false, required: true;
 		string	list1('catalogList|levelOneCategoryList'), verb: false, required: true;
@@ -475,7 +475,7 @@ object_access{
 
 login_history{
 	fields(6){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		date_time_create	login_time('createTime()'), verb: false, required: true;
 		string	from_ip('192.168.1.1|192.168.1.2'), verb: false, required: true;
 		string	description('登陆成功'), verb: false, required: true;
@@ -488,7 +488,7 @@ login_history{
 
 generic_form{
 	fields(4){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	title('登记输入单'), verb: false, required: true;
 		string	description('姓名就是你身份证上的名字'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
@@ -503,7 +503,7 @@ generic_form{
 
 form_message{
 	fields(5){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	title('字段组合错误'), verb: false, required: true;
 		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formMessageList;
 		string	level('success|info|warning|danger'), verb: false, required: true;
@@ -515,7 +515,7 @@ form_message{
 
 form_field_message{
 	fields(6){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	title('输入错误'), verb: false, required: true;
 		string	parameter_name('name'), verb: false, required: true;
 		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formFieldMessageList;
@@ -528,7 +528,7 @@ form_field_message{
 
 form_field{
 	fields(18){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	label('姓名|年龄|出生地|国籍'), verb: false, required: true;
 		string	locale_key('name|age|birth_place|country'), verb: false, required: true;
 		string	parameter_name('name'), verb: false, required: true;
@@ -553,7 +553,7 @@ form_field{
 
 form_action{
 	fields(8){
-		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true;
 		string	label('功能'), verb: false, required: true;
 		string	locale_key('name'), verb: false, required: true;
 		string	action_key('save|update|remove'), verb: false, required: true;

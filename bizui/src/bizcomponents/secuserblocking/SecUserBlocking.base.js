@@ -55,23 +55,20 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(secUserBlocking,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={secUserBlocking.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={secUserBlocking.id}>
-	
-	<DescriptionList  key={secUserBlocking.id} size="small" col="4">
-<Description term="ID">{secUserBlocking.id}</Description> 
-<Description term="谁">{secUserBlocking.who}</Description> 
-<Description term="块时间">{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD')}</Description> 
-<Description term="评论">{secUserBlocking.comments}</Description> 
+      <DescriptionList  key={secUserBlocking.id} size="small" col="4">
+        <Description term="ID">{secUserBlocking.id}</Description> 
+        <Description term="谁">{secUserBlocking.who}</Description> 
+        <Description term="块时间">{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="评论">{secUserBlocking.comments}</Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

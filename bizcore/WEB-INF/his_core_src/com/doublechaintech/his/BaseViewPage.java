@@ -456,6 +456,15 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		handleOneData(resultMap, ssWrapper, "/", "data", object);
 		return (Map<String, Object>) resultMap.get("data");
 	}
+	
+	public static Map<String, Object> serialize(Object object, SerializeScope serializeScope) {
+		BaseViewPage tmpPage = new BaseViewPage() {	protected SerializeScope getSerializeScope() { return null;	} };
+		return tmpPage.serializeObject(object, serializeScope);
+	}
+	
+	protected void forceResponseAsListOfPage() {
+		userContext.forceResponseXClassHeader("com.terapico.moyi.appview.ListOfPage");
+	}
 }
 
 

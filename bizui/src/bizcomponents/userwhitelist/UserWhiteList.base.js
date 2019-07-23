@@ -45,7 +45,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'userWhiteList') , sorter: true },
   { title: fieldLabels.userIdentity, debugtype: 'string', dataIndex: 'userIdentity', width: '15',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.userSpecialFunctions, debugtype: 'string', dataIndex: 'userSpecialFunctions', width: '27',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.domain, dataIndex: 'domain', render: (text, record) => renderReferenceCell(text, record), sorter:true},
@@ -54,22 +54,19 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(userWhiteList,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={userWhiteList.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={userWhiteList.id}>
-	
-	<DescriptionList  key={userWhiteList.id} size="small" col="4">
-<Description term="ID">{userWhiteList.id}</Description> 
-<Description term="用户身份">{userWhiteList.userIdentity}</Description> 
-<Description term="用户特殊功能">{userWhiteList.userSpecialFunctions}</Description> 
+      <DescriptionList  key={userWhiteList.id} size="small" col="4">
+        <Description term="ID">{userWhiteList.id}</Description> 
+        <Description term="用户身份">{userWhiteList.userIdentity}</Description> 
+        <Description term="用户特殊功能">{userWhiteList.userSpecialFunctions}</Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

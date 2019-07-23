@@ -57,22 +57,19 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(doctor,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={doctor.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={doctor.id}>
-	
-	<DescriptionList  key={doctor.id} size="small" col="4">
-<Description term="ID">{doctor.id}</Description> 
-<Description term="名称">{doctor.name}</Description> 
-<Description term="更新时间">{ moment(doctor.updateTime).format('YYYY-MM-DD')}</Description> 
+      <DescriptionList  key={doctor.id} size="small" col="4">
+        <Description term="ID">{doctor.id}</Description> 
+        <Description term="名称">{doctor.name}</Description> 
+        <Description term="更新时间">{ moment(doctor.updateTime).format('YYYY-MM-DD')}</Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

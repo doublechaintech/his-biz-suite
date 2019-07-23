@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
-import com.doublechaintech.his.HisNamingServiceDAO;
+import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.AccessKey;
@@ -33,7 +33,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
 
-public class DoctorAssignmentJDBCTemplateDAO extends HisNamingServiceDAO implements DoctorAssignmentDAO{
+public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorAssignmentDAO{
  
  	
  	private  DoctorDAO  doctorDAO;

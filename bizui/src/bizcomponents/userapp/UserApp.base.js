@@ -66,28 +66,25 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(userApp,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={userApp.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={userApp.id}>
-	
-	<DescriptionList  key={userApp.id} size="small" col="4">
-<Description term="ID">{userApp.id}</Description> 
-<Description term="标题">{userApp.title}</Description> 
-<Description term="安全用户">{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):`${userApp.secUser.displayName}(${userApp.secUser.id})`}
-</Description>
-<Description term="应用程序图标">{userApp.appIcon}</Description> 
-<Description term="许可">{userApp.permission}</Description> 
-<Description term="访问对象类型">{userApp.objectType}</Description> 
-<Description term="对象ID">{userApp.objectId}</Description> 
-<Description term="位置">{userApp.location}</Description> 
+      <DescriptionList  key={userApp.id} size="small" col="4">
+        <Description term="ID">{userApp.id}</Description> 
+        <Description term="标题">{userApp.title}</Description> 
+        <Description term="安全用户">{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):`${userApp.secUser.displayName}(${userApp.secUser.id})`}
+        </Description>
+        <Description term="应用程序图标">{userApp.appIcon}</Description> 
+        <Description term="许可">{userApp.permission}</Description> 
+        <Description term="访问对象类型">{userApp.objectType}</Description> 
+        <Description term="对象ID">{userApp.objectId}</Description> 
+        <Description term="位置">{userApp.location}</Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

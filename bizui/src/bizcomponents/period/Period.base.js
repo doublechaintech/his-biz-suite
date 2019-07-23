@@ -53,21 +53,18 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(period,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={period.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={period.id}>
-	
-	<DescriptionList  key={period.id} size="small" col="4">
-<Description term="ID">{period.id}</Description> 
-<Description term="名称">{period.name}</Description> 
+      <DescriptionList  key={period.id} size="small" col="4">
+        <Description term="ID">{period.id}</Description> 
+        <Description term="名称">{period.name}</Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

@@ -18,9 +18,45 @@ export const ImageComponent = OssPictureEdit
  * @param msg       接口异常提示
  * @param headers   接口所需header配置
  */
+//axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+export const get1 = ({
+  url,
+  msg = '从服务器取得数据失败，请检查网络，或者咨询服务器管理员',
+  headers,
+}) =>
+  axios
+    .get(url, { headers: headers, withCredentials: true })
+    .then(res => res.data)
+    .catch(err => {
+      console.log(url);
+      message.warn(msg);
+    });
 
+export const get2 = ({
+  url,
+  msg = '从服务器取得数据失败，请检查网络，或者咨询服务器管理员',
+  headers,
+}) => {
+  const config = { method: 'get', url: url, headers: headers, withCredentials: false };
+  //res => {console.log(res.headers);console.log(res.data);return res.data;
+  axios
+    .get(url, headers)
+    .then(res => res.data)
+    .catch(err => {
+      console.log('err', err);
+      console.log(url);
+      message.warn(msg);
+    });
+};
 axios.defaults.withCredentials = true;
-
+export const get3 = ({ url, msg = '接口异常', headers }) =>
+  axios
+    .get(url, { headers, withCredentials: false })
+    .then(res => res.data)
+    .catch(err => {
+      console.log(err);
+      message.warn(msg);
+    });
 
 export const get = ({ url, msg = '接口异常', headers }) =>
   axios
@@ -41,20 +77,20 @@ export const get = ({ url, msg = '接口异常', headers }) =>
     });
 
 export const getURLPrefix = () => {
-  const url = new URL(window.location);
-  
-  if (url.hostname === 'localhost') {
-    return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`
-  }
-  if (url.hostname === '127.0.0.1') {
-    return `https://demo.doublechaintech.com/${SYSTEM_SHORT_NAME}/`
-  }
-
-
-  return `${url.origin}/${SYSTEM_SHORT_NAME}/`;
-
-};
-
+      const url = new URL(window.location);
+      
+      if (url.hostname === 'localhost') {
+        return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`
+      }
+      if (url.hostname === '127.0.0.1') {
+        return `https://demo.doublechaintech.com/${SYSTEM_SHORT_NAME}/`
+      }
+    
+    
+      return `${url.origin}/${SYSTEM_SHORT_NAME}/`;
+    
+    };
+    
 export const joinParameters = (parameters) => {
     const obj = parameters // {value1: 'prop1', value2: 'prop2', value3: 'prop3'}
     const arr = []

@@ -88,7 +88,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfHospital(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_HOSPITAL, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_HOSPITAL, messageList); 		
 		
 	}	 			
 	
@@ -128,7 +128,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfExpenseType(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_TYPE, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_EXPENSE_TYPE, messageList); 		
 		
 	}	 			
 	
@@ -184,7 +184,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfPeriod(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_PERIOD, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_PERIOD, messageList); 		
 		
 	}	 			
 	
@@ -216,7 +216,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfExpenseItem(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_ITEM, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_EXPENSE_ITEM, messageList); 		
 		
 	}	 			
 	
@@ -264,7 +264,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfDoctor(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DOCTOR, messageList); 		
 		
 	}	 			
 	
@@ -304,7 +304,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfDepartment(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DEPARTMENT, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DEPARTMENT, messageList); 		
 		
 	}	 			
 	
@@ -336,7 +336,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfDoctorAssignment(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_ASSIGNMENT, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DOCTOR_ASSIGNMENT, messageList); 		
 		
 	}	 			
 	
@@ -376,7 +376,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfDoctorSchedule(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_SCHEDULE, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DOCTOR_SCHEDULE, messageList); 		
 		
 	}	 			
 	
@@ -464,7 +464,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfUserDomain(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_USER_DOMAIN, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_USER_DOMAIN, messageList); 		
 		
 	}	 			
 	
@@ -488,7 +488,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfUserWhiteList(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_USER_WHITE_LIST, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_USER_WHITE_LIST, messageList); 		
 		
 	}	 			
 	
@@ -528,7 +528,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfSecUser(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_SEC_USER, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_SEC_USER, messageList); 		
 		
 	}	 			
 	
@@ -632,7 +632,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfSecUserBlocking(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_SEC_USER_BLOCKING, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_SEC_USER_BLOCKING, messageList); 		
 		
 	}	 			
 	
@@ -664,7 +664,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfUserApp(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_USER_APP, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_USER_APP, messageList); 		
 		
 	}	 			
 	
@@ -744,7 +744,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfListAccess(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_LIST_ACCESS, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_LIST_ACCESS, messageList); 		
 		
 	}	 			
 	
@@ -824,7 +824,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfObjectAccess(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_OBJECT_ACCESS, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_OBJECT_ACCESS, messageList); 		
 		
 	}	 			
 	
@@ -936,7 +936,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfLoginHistory(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_LOGIN_HISTORY, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_LOGIN_HISTORY, messageList); 		
 		
 	}	 			
 	
@@ -976,7 +976,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfGenericForm(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_GENERIC_FORM, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_GENERIC_FORM, messageList); 		
 		
 	}	 			
 	
@@ -1008,7 +1008,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfFormMessage(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_MESSAGE, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_MESSAGE, messageList); 		
 		
 	}	 			
 	
@@ -1048,7 +1048,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfFormFieldMessage(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_FIELD_MESSAGE, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_FIELD_MESSAGE, messageList); 		
 		
 	}	 			
 	
@@ -1096,7 +1096,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfFormField(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_FIELD, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_FIELD, messageList); 		
 		
 	}	 			
 	
@@ -1240,7 +1240,7 @@ public class HisCheckerManager extends BaseManagerImpl {
 	protected void checkIdOfFormAction(HisUserContext userContext, String id, List<Message> messageList)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_ACTION, messageList); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_ACTION, messageList); 		
 		
 	}	 			
 	

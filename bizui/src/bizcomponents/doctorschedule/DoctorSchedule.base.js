@@ -53,7 +53,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '33',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.doctor, dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record), sorter:true},
   { title: fieldLabels.scheduleDate, dataIndex: 'scheduleDate', render: (text, record) =>renderDateCell(text,record), sorter: true },

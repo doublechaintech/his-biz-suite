@@ -27,7 +27,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfHospital(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_HOSPITAL ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_HOSPITAL ); 		
 		
 		return this;
 	}	 			
@@ -72,7 +72,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfExpenseType(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_TYPE ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_EXPENSE_TYPE ); 		
 		
 		return this;
 	}	 			
@@ -135,7 +135,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfPeriod(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_PERIOD ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_PERIOD ); 		
 		
 		return this;
 	}	 			
@@ -171,7 +171,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfExpenseItem(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_EXPENSE_ITEM ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_EXPENSE_ITEM ); 		
 		
 		return this;
 	}	 			
@@ -225,7 +225,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfDoctor(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DOCTOR ); 		
 		
 		return this;
 	}	 			
@@ -270,7 +270,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfDepartment(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DEPARTMENT ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DEPARTMENT ); 		
 		
 		return this;
 	}	 			
@@ -306,7 +306,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfDoctorAssignment(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_ASSIGNMENT ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DOCTOR_ASSIGNMENT ); 		
 		
 		return this;
 	}	 			
@@ -351,7 +351,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfDoctorSchedule(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_DOCTOR_SCHEDULE ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_DOCTOR_SCHEDULE ); 		
 		
 		return this;
 	}	 			
@@ -450,7 +450,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfUserDomain(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_USER_DOMAIN ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_USER_DOMAIN ); 		
 		
 		return this;
 	}	 			
@@ -477,7 +477,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfUserWhiteList(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_USER_WHITE_LIST ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_USER_WHITE_LIST ); 		
 		
 		return this;
 	}	 			
@@ -522,7 +522,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfSecUser(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_SEC_USER ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_SEC_USER ); 		
 		
 		return this;
 	}	 			
@@ -639,7 +639,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfSecUserBlocking(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_SEC_USER_BLOCKING ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_SEC_USER_BLOCKING ); 		
 		
 		return this;
 	}	 			
@@ -675,7 +675,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfUserApp(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_USER_APP ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_USER_APP ); 		
 		
 		return this;
 	}	 			
@@ -765,7 +765,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfListAccess(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_LIST_ACCESS ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_LIST_ACCESS ); 		
 		
 		return this;
 	}	 			
@@ -855,7 +855,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfObjectAccess(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_OBJECT_ACCESS ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_OBJECT_ACCESS ); 		
 		
 		return this;
 	}	 			
@@ -981,7 +981,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfLoginHistory(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_LOGIN_HISTORY ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_LOGIN_HISTORY ); 		
 		
 		return this;
 	}	 			
@@ -1026,7 +1026,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfGenericForm(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_GENERIC_FORM ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_GENERIC_FORM ); 		
 		
 		return this;
 	}	 			
@@ -1062,7 +1062,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfFormMessage(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_MESSAGE ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_MESSAGE ); 		
 		
 		return this;
 	}	 			
@@ -1107,7 +1107,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfFormFieldMessage(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_FIELD_MESSAGE ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_FIELD_MESSAGE ); 		
 		
 		return this;
 	}	 			
@@ -1161,7 +1161,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfFormField(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_FIELD ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_FIELD ); 		
 		
 		return this;
 	}	 			
@@ -1323,7 +1323,7 @@ public class HisChecker extends BaseChecker{
 	public HisChecker checkIdOfFormAction(String id)
 	{
 		
-	 	checkStringLengthRange(id,5, 64,ID_OF_FORM_ACTION ); 		
+	 	checkStringLengthRange(id,2, 64,ID_OF_FORM_ACTION ); 		
 		
 		return this;
 	}	 			

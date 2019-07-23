@@ -39,6 +39,7 @@ import com.doublechaintech.his.Message;
 import com.terapico.uccaf.BaseUserContext;
 import com.terapico.uccaf.UserContextProvider;
 import com.terapico.caf.BeanFactory;
+import com.terapico.caf.Password;
 import com.terapico.utils.TextUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -120,7 +121,8 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
             String hasedPassword = this.hashStringWithSHA256(newPassword, user.getId());
             user.setPwd(hasedPassword);
             this.saveSecUser(userContext, user, SecUserTokens.withoutLists());
-            return this.loginWithMobile(userContext, mobile, newPassword);
+            Password pwd = new Password(newPassword);
+            return this.loginWithMobile(userContext, mobile, pwd);
             
             
         } catch (Exception e) {
@@ -349,13 +351,13 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     }
 
     public Object loginWithEmail(HisUserContext userContext, String email,
-            String password) {
+            Password password) {
 
         return loginInternal(userContext,"email",email, password);
     
     }
     public Object login(HisUserContext userContext, String email,
-            String password) {
+            Password password) {
 		if (email.matches("1[3-9]\\d{9}")) {
     		return loginWithMobile(userContext, email, password);
     	}
@@ -363,13 +365,13 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     
     }
     public Object loginWithLogin(HisUserContext userContext, String email,
-            String password) {
+            Password password) {
 
         return loginInternal(userContext,"login",email, password);
     
     }
     public Object loginWithMobile(HisUserContext userContext, String email,
-            String password) {
+            Password password) {
         return loginInternal(userContext,"mobile",email, password);
     
     }
@@ -387,12 +389,12 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     }
     // return a form or a user
     protected Object loginInternal(HisUserContext userContext, String type, String userId,
-            String password) {
+            Password password) {
 
         try {
             SecUser user = this.loadUserWith(userContext, type, userId);
             
-            String hashedPassed = this.hashStringWithSHA256(password, user.getId());
+            String hashedPassed = this.hashStringWithSHA256(password.getClearTextPassword(), user.getId());
             log("hashed pass: "+ hashedPassed);
             log("stored pass: "+user.getPwd());
             
@@ -677,8 +679,8 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         if(methodName.startsWith("verificationCodeForm")){
             return accessOK();
         }
-
-		String managementAccessMethods[] = new String[] { "updateAppPermission","updateListAccess" ,"loadUserAppWithUser" ,"updateListAccess" };
+	
+		String managementAccessMethods[] = new String[] { "updateAppPermission","updateListAccess" ,"loadUserAppWithUser" ,"updateListAccess","testIfHasManagementAccess" };
 
 		if(this.isOneOf(methodName, managementAccessMethods)) {
 			
@@ -693,15 +695,15 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 
 	protected boolean isMe(UserApp app, String objectType, String objectId) {
 
-		if (!app.getObjectType().equals(objectType)) {
+		if (!app.getObjectType().equalsIgnoreCase(objectType)) {
 			return false;
 		}
-		if (app.getObjectId().equals(objectId)) {
+		if (!app.getObjectId().equals(objectId)) {
 			return false;
 		}
 		return true;
 	}
-
+	
 	protected void checkUserHasManagementAccess(HisUserContext userContext, String objectType, String objectId)
 			throws SecUserManagerException {
 

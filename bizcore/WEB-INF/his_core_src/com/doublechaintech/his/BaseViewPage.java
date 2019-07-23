@@ -267,6 +267,9 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		}
 		List<Object> resultList = new ArrayList<>(asList.size());
 		for (Object item : asList) {
+			if (item == null) {
+				continue;
+			}
 			String outputName = fieldScope.getAliasName() == null ? key : fieldScope.getAliasName();
 			CustomSerializer cSerializer = getCustomSerializerByObject(item);
 			// 如果有自定义的序列化方法，优先使用自定义的

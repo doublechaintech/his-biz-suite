@@ -96,12 +96,8 @@ export default {
         yield put({ type: 'showhome', payload: { data } });
         return;
       }
-
       const locationPath = calcLocationPath(data.class, data.id, 'dashboard');
       const location = { pathname: `/${locationPath}`, state: data };
-      const menuData = calcMenuData(data.class);
-      const targetApp = { id: data.id, title: data.displayName };
-      yield put({ type: 'breadcrumb/selectApp', payload: { targetApp, location, menuData } });
       yield put(routerRedux.push(location));
     },
     *gotoApp({ payload }, { call, put }) {

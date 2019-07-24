@@ -58,18 +58,19 @@ export default class ImagePreview extends React.Component {
 
   render() {
    
-    const {imageLocation,imageTitle,showTitleUnderImage} = this.props;
+    const {imageLocation,imageTitle,showTitleUnderImage, imageStyle, imageSize} = this.props;
     const {previewVisible,previewImage} = this.state;
-    //const {fileList} = this.state;
+    // const {fileList} = this.state;
     const suffix = " | 图片预览";
     const modalTitle = imageTitle?imageTitle+suffix:suffix;
+    const internalImageStyle = imageStyle || {height:80, width:80}
     
-
     return (
       <div className="clearfix" style={{textAlign:"center"}}>
         <img
           src={resizeDispayImageInList(imageLocation)}
-          style={{height:80, width:80}}
+         
+          style={internalImageStyle}
           title={imageLocation}
           alt={imageLocation}
           onClick={(event)=>this.handlePreview(event,imageLocation)}

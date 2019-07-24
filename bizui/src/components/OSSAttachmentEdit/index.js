@@ -92,11 +92,6 @@ export default class OSSPictureEdit extends React.Component {
   };
 
   beforeUpload = file => {
-
-    if(true){
-      return false
-    }
-
     let reader = new FileReader();
     const { token } = this.state;
     const OSS_IMAGE_FILE_PATH = token.userHome;
@@ -185,55 +180,10 @@ export default class OSSPictureEdit extends React.Component {
 
     const uploadButton = (
       <div>
-        <Icon type="upload" />
+        <Icon type="plus" />
         <div className="ant-upload-text">{buttonTitle}</div>
       </div>
     );
-    const renderType= (icon) => (
-      <div>
-        <Icon type={icon} />
-        <div className="ant-upload-text">已经上传</div>
-      </div>
-    );
-    const renderCover=(uploadFileList)=>{
-      if(uploadFileList.length === 0){
-        return uploadButton;
-      }
-      const fileSufix = uploadFileList[0].toLowerCase()
-
-      const fileMapper=[
-        {type:"jpg",cover: "file-image"},
-        {type:"jpeg",cover: "file-image"},
-        {type:"png",cover: "file-image"},
-        {type:"gif",cover: "file-image"},
-        {type:"xls",cover: "file-excel"},
-        {type:"xlsx",cover: "file-excel"},
-        {type:"pdf",cover: "file-pdf"},
-        {type:"doc",cover: "file-word"},
-        {type:"docx",cover: "file-word"},
-        
-        
-
-      ]
-
-      const type = fileMapper.filter(item=>item.type===fileSufix)
-
-      if(!type){
-        renderType("file")
-      }
-      if(type === "file-image"){
-        return null // the image will be shown
-      }
-
-      return renderType(type)
-      
-
-
-
-    }
-
-    
-    
     return (
       <div className="clearfix">
         <Upload
@@ -244,9 +194,9 @@ export default class OSSPictureEdit extends React.Component {
           onChange={handleChange}
           multiple={false}
           beforeUpload={this.beforeUpload}
-          showUploadList={false}
-        > 
-          {internalFileList.length >= 1 ? uploadedButton: uploadButton}
+        >
+          <Icon type="file-excel"/>
+          {internalFileList.length >= 1 ? null : uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}

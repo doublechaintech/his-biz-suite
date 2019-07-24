@@ -132,7 +132,7 @@ const renderForNumbers = aggregatedData => {
           return null;
         }
 
-        if (visitData.length < 5) {
+        if (visitData.length < 10) {
           return null;
         }
         let ChartComp = MiniArea;
@@ -187,7 +187,7 @@ const renderForTimeLine = aggregatedData => {
   if (!data.dataArray) {
     return null;
   }
-  if (data.dataArray.length === 0) {
+  if (data.dataArray.length < 10) {
     return null;
   }
   const option = {
@@ -360,6 +360,7 @@ const defaultImageListOf = (mainObject, imageList) => {
           <Col span={4} key={index}>
             <ImagePreview
               imageTitle={item.title}
+              imageStyle={{width:400}}
               showTitleUnderImage={true}
               imageLocation={item.imageLocation}
             >

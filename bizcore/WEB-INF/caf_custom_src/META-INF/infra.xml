@@ -71,7 +71,7 @@
         <property name="stopWordsProvider" ref="stopWordsProvider"/>
         <property name="enabled" value="true"/>
     </bean>
-
+	<!--
     <bean id="kafkaMessageEventService" class="com.skynet.infrastructure.kafkaservice.KafkaMessageEventService">
         <property name="producerProperties">
             <props>
@@ -83,7 +83,7 @@
                 <prop key="value.deserializer">org.apache.kafka.common.serialization.StringDeserializer</prop>
             </props>
         </property>
-    </bean>
+    </bean>-->
 </beans>
 
 

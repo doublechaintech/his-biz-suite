@@ -1,5 +1,4 @@
 
-
 /*
 
 这里面放置你需要定制的行为，可以增加方法，也可以重写原来的方法，主要是增加新的约束和关联。
@@ -10,16 +9,35 @@
 
 */
 
-
 package com.doublechaintech.his.secuser;
+
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.http.ProtocolType;
+import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
 import com.doublechaintech.his.HisUserContext;
+import com.doublechaintech.his.userapp.UserApp;
+import com.skynet.infrastructure.AliyunOSSService;
 
-public class SecUserCustomManagerImpl extends CustomSecUserManagerImpl{
+public class SecUserCustomManagerImpl extends CustomSecUserManagerImpl {
 
+	public Map<String, Object> testoss(HisUserContext userContext) throws SecUserManagerException {
 
+		AliyunOSSService service = new AliyunOSSService();
 
+		String key = this.getCurrentAppKey(userContext);
+		UserApp userApp = (UserApp) userContext.getCachedObject(key, UserApp.class);
 
+		if (userApp == null) {
+			throwExceptionWithMessage("请先登录");
+		}
+		String folderName = String.format("upload/%s/%s", userApp.getObjectType(), userApp.getObjectId());
+		Map<String, Object> ossToken = service.genToken(folderName);
+		System.out.println("ossToken=" + ossToken);
+		return ossToken;
 
+	}
 }
-

@@ -70,6 +70,7 @@ const uploadPath = (path, file) => {
 };
 
 const uploadToOss = (self, path, file) => {
+  
   const url = uploadPath(path, file);
   return new Promise((resolve, reject) => {
     client(self)
@@ -91,47 +92,7 @@ export default class OSSPictureEdit extends React.Component {
     token: {},
   };
 
-  beforeUpload = file => {
-
-    if(true){
-      return false
-    }
-
-    let reader = new FileReader();
-    const { token } = this.state;
-    const OSS_IMAGE_FILE_PATH = token.userHome;
-
-    reader.readAsDataURL(file);
-    console.log('The file is', file);
-    const { buttonTitle, handleChange, handlePreview } = this.props;
-    reader.onloadend = () => {
-      uploadToOss(this, OSS_IMAGE_FILE_PATH, file).then(data => {
-        console.log('data from server', data);
-        
-        notification.success({
-          message: `上传成功`,
-          description: `上传成功`,
-        })
-        
-
-        const fileList = [
-          {
-            uid: file.uid,
-            name: data.name,
-            status: 'done',
-            type: data.type,
-            result: token.prefix + '/' + encodeURIComponent(data.name),
-            url: token.prefix + '/' + encodeURIComponent(data.name),
-            response: token.prefix + '/' + encodeURIComponent(data.name),
-          },
-        ];
-        const event = { fileList };
-        handleChange(event);
-      });
-    };
-    return false;
-  };
-
+ 
   componentDidMount() {
     const getSTSURL = () => {
       const url = new URL(window.location);
@@ -150,6 +111,61 @@ export default class OSSPictureEdit extends React.Component {
     const { fileList } = this.props;
     this.setState({ fileList });
   }
+
+  beforeUpload = file => {
+    const { buttonTitle, handleChange, handlePreview } = this.props;
+    /*
+    if(true){
+      const fileList = [
+        {
+          uid: file.uid,
+          name: file.name}]
+      
+      // const event = { fileList };
+      console.log(' event ', event);
+      this.setState({ fileList });
+      console.log(' fileList in beforeUpload ', fileList);
+      return false
+    }*/
+    
+    const reader = new FileReader();
+    const { token } = this.state;
+    const OSS_IMAGE_FILE_PATH = token.userHome;
+
+    reader.readAsDataURL(file);
+   
+   
+    reader.onloadend = () => {
+      uploadToOss(this, OSS_IMAGE_FILE_PATH, file).then(data => {
+        console.log('data from server', data);
+        
+        notification.success({
+          message: `上传成功`,
+          description: `上传成功`,
+        })
+        
+
+        const fileList = [
+          {
+            uid: file.uid,
+            name: data.name,
+            status: 'done',
+            type: data.type,
+            result: `${token.prefix}/${encodeURIComponent(data.name)}`,
+            url: `${token.prefix}/${encodeURIComponent(data.name)}`,
+            response: `${token.prefix}/${encodeURIComponent(data.name)}`,
+          },
+        ];
+        const event = { fileList };
+        handleChange(event);
+      });
+    };
+    return false;
+  };
+
+
+
+
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = file => {
@@ -175,6 +191,7 @@ export default class OSSPictureEdit extends React.Component {
 
   render() {
     const { previewVisible, previewImage } = this.state;
+    const componentFileList = this.state.fileList
     const { fileList } = this.props;
     const { buttonTitle, handleChange, handlePreview } = this.props;
     //const {fileList} = this.state;
@@ -185,22 +202,22 @@ export default class OSSPictureEdit extends React.Component {
 
     const uploadButton = (
       <div>
-        <Icon type="upload" />
+        <Icon type="upload" style={{fontSize:30}}/>
         <div className="ant-upload-text">{buttonTitle}</div>
       </div>
     );
-    const renderType= (icon) => (
-      <div>
-        <Icon type={icon} />
-        <div className="ant-upload-text">已经上传</div>
-      </div>
-    );
-    const renderCover=(uploadFileList)=>{
-      if(uploadFileList.length === 0){
-        return uploadButton;
-      }
-      const fileSufix = uploadFileList[0].toLowerCase()
 
+    const coverIconFromList=(uploadFileList)=>{
+      if(!uploadFileList){
+        return ("file-unknown")
+      }
+      if(uploadFileList.length === 0){
+        return ("file-unknown")
+      }
+      const firstFile = uploadFileList[0]
+      console.log("firstFile",firstFile);
+      const firstFileSufix = (firstFile.url||firstFile.name).split('.').pop().toLowerCase();
+      console.log("firstFileSufix",firstFileSufix);
       const fileMapper=[
         {type:"jpg",cover: "file-image"},
         {type:"jpeg",cover: "file-image"},
@@ -211,28 +228,67 @@ export default class OSSPictureEdit extends React.Component {
         {type:"pdf",cover: "file-pdf"},
         {type:"doc",cover: "file-word"},
         {type:"docx",cover: "file-word"},
+        {type:"zip",cover: "file-zip"},
+        {type:"rar",cover: "file-zip"},
         
         
 
       ]
 
-      const type = fileMapper.filter(item=>item.type===fileSufix)
+      const types = fileMapper.filter(item=>item.type===firstFileSufix)
 
-      if(!type){
-        renderType("file")
+      if(!types){
+        return  ("file-unknown")
       }
-      if(type === "file-image"){
-        return null // the image will be shown
+      if(types.length === 0){
+        return ("file-unknown")
       }
 
-      return renderType(type)
+      const firstType = types[0]
       
-
-
+      return (firstType.cover)
 
     }
 
+    const determinShowUploadList=(uploadFileList)=>{
+       const coverIcon = coverIconFromList(uploadFileList)
+       console.log("determinShowUploadList", coverIcon)
+       console.log("determinShowUploadList", coverIcon === "file-image")
+       if(coverIcon === "file-image"){
+         return true
+       }
+       return false
+    }
+
+    const renderType= (icon) => (
+      <div>
+        <Icon type={icon} style={{fontSize:30}}/>
+        <div className="ant-upload-text">已经上传</div>
+      </div>
+    );
+    const renderCover=(uploadFileList)=>{
+      if(!uploadFileList){
+        return uploadButton;
+      }
+      if(uploadFileList.length === 0){
+        return uploadButton;
+      }
+      
+      const coverIcon = coverIconFromList(uploadFileList)
+      if(coverIcon === "file-image"){
+        return null
+      }
+      return renderType(coverIcon)
+
+    }
+
+    const showUploadList = determinShowUploadList(internalFileList)
+
     
+
+    console.log("componentFileList",componentFileList,"state",this.state)
+    console.log("showUploadList === true",showUploadList === true)
+    // const showUploadList = true
     
     return (
       <div className="clearfix">
@@ -244,9 +300,9 @@ export default class OSSPictureEdit extends React.Component {
           onChange={handleChange}
           multiple={false}
           beforeUpload={this.beforeUpload}
-          showUploadList={false}
+          showUploadList={showUploadList}
         > 
-          {internalFileList.length >= 1 ? uploadedButton: uploadButton}
+          {renderCover(internalFileList)}
         </Upload>
         <Modal
           visible={previewVisible}

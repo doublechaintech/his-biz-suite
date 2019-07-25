@@ -120,7 +120,11 @@ export default class ImagePreview extends React.Component {
     const internalImageStyle = imageStyle || {height:80, width:80}
 
     if(notImageFile(imageLocation)){
-      return  <div className="clearfix" style={{textAlign:"center"}}><Icon type={coverIconFromFileName(imageLocation)} style={{fontSize:30}}/></div>
+      return  <div className="clearfix" style={{textAlign:"center"}} >
+        <a href={imageLocation} target="_blank">
+        <Icon type={coverIconFromFileName(imageLocation)} style={{fontSize:30}}/>
+        </a>
+        </div>
     }
     
 

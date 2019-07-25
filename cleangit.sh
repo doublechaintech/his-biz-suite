@@ -4,7 +4,10 @@ git add .
 git commit -m"commit for removing extra files"
 git pull
 git push
+bizcore/WEB-INF/caf_core_src/com/skynet/infrastructure/AliyunBaseService.java
+
 git filter-branch --force --index-filter 'git rm -r —cached --ignore-unmatch bizcore/WEB-INF/classes' --prune-empty --tag-name-filter cat -- --all
+git filter-branch --force --index-filter 'git rm -r —cached --ignore-unmatch bizcore/WEB-INF/caf_core_src/com/skynet/infrastructure/AliyunBaseService.java' --prune-empty --tag-name-filter cat -- --all
 git filter-branch --force --index-filter 'git rm -r —cached --ignore-unmatch bizcore/.gradle' --prune-empty --tag-name-filter cat -- --all
 git filter-branch --force --index-filter 'git rm -r —cached --ignore-unmatch bizcore/WEB-INF/caf_custom_src/META-INF/infra.properties' --prune-empty --tag-name-filter cat -- --all
 git filter-branch --force --index-filter 'git rm -r —cached --ignore-unmatch bizcore/WEB-INF/lib' --prune-empty --tag-name-filter cat -- --all

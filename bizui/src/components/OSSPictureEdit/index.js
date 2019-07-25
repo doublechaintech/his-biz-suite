@@ -66,7 +66,8 @@ const client = self => {
 };
 
 const uploadPath = (path, file) => {
-  return `${path}/${file.name.split('.')[0]}-${file.uid}.${file.type.split('/')[1]}`;
+  const firstFileSufix = (file.url||file.name).split('.').pop().toLowerCase();
+  return `${path}/${file.uid}.${firstFileSufix}`;
 };
 
 const uploadToOss = (self, path, file) => {
@@ -95,10 +96,9 @@ export default class OSSPictureEdit extends React.Component {
  
   componentDidMount() {
     const getSTSURL = () => {
-      const url = new URL(window.location);
-
+      // const url = new URL(window.location);
       return (
-        getURLPrefix() + 'secUserManager/testoss/'
+        `${getURLPrefix()}secUserManager/testoss/`
       );
     };
 
@@ -114,20 +114,7 @@ export default class OSSPictureEdit extends React.Component {
 
   beforeUpload = file => {
     const { buttonTitle, handleChange, handlePreview } = this.props;
-    /*
-    if(true){
-      const fileList = [
-        {
-          uid: file.uid,
-          name: file.name}]
-      
-      // const event = { fileList };
-      console.log(' event ', event);
-      this.setState({ fileList });
-      console.log(' fileList in beforeUpload ', fileList);
-      return false
-    }*/
-    
+
     const reader = new FileReader();
     const { token } = this.state;
     const OSS_IMAGE_FILE_PATH = token.userHome;
@@ -230,6 +217,7 @@ export default class OSSPictureEdit extends React.Component {
         {type:"docx",cover: "file-word"},
         {type:"zip",cover: "file-zip"},
         {type:"rar",cover: "file-zip"},
+        {type:"txt",cover: "file-text"},
         
         
 

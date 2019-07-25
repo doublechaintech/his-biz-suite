@@ -9,6 +9,8 @@ import ImageUpload from '../components/ImageUpload';
 import OssPictureEdit from '../components/OSSPictureEdit';
 
 export const ImageComponent = OssPictureEdit
+
+
 //for BBT only
 //export const ImageComponent = ImageUpload;
 

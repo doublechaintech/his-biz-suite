@@ -2,6 +2,24 @@ import { Upload, Icon, Modal } from 'antd';
 import axios from 'axios';
 import { getURLPrefix } from '../../axios/tools';
 import { notification } from 'antd'
+
+
+const fileMapper=[
+  {type:"jpg",cover: "file-image"},
+  {type:"jpeg",cover: "file-image"},
+  {type:"png",cover: "file-image"},
+  {type:"gif",cover: "file-image"},
+  {type:"xls",cover: "file-excel"},
+  {type:"xlsx",cover: "file-excel"},
+  {type:"pdf",cover: "file-pdf"},
+  {type:"doc",cover: "file-word"},
+  {type:"docx",cover: "file-word"},
+  {type:"zip",cover: "file-zip"},
+  {type:"rar",cover: "file-zip"},
+  {type:"txt",cover: "file-text"},
+
+]
+
 const appendStyle=(imageLocation, style)=>{
 
   if(!imageLocation){
@@ -205,23 +223,7 @@ export default class OSSPictureEdit extends React.Component {
       console.log("firstFile",firstFile);
       const firstFileSufix = (firstFile.url||firstFile.name).split('.').pop().toLowerCase();
       console.log("firstFileSufix",firstFileSufix);
-      const fileMapper=[
-        {type:"jpg",cover: "file-image"},
-        {type:"jpeg",cover: "file-image"},
-        {type:"png",cover: "file-image"},
-        {type:"gif",cover: "file-image"},
-        {type:"xls",cover: "file-excel"},
-        {type:"xlsx",cover: "file-excel"},
-        {type:"pdf",cover: "file-pdf"},
-        {type:"doc",cover: "file-word"},
-        {type:"docx",cover: "file-word"},
-        {type:"zip",cover: "file-zip"},
-        {type:"rar",cover: "file-zip"},
-        {type:"txt",cover: "file-text"},
-        
-        
-
-      ]
+      
 
       const types = fileMapper.filter(item=>item.type===firstFileSufix)
 

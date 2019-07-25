@@ -6,6 +6,14 @@ const resizeDispayImageInList=(imageLocation)=>resizeDispayImage(imageLocation,"
 
 const resizeDispayImageForPreview=(imageLocation)=>resizeDispayImage(imageLocation,"xlarge")
 
+
+const notImageFile=(imageLocation)=>{
+  const mapperList = ["pdf","zip","doc","docx","xls","xlsx"]
+  const firstFileSufix = imageLocation.split('.').pop().toLowerCase();
+  const types=mapperList.filter(item=>item===firstFileSufix);
+  return types.length === 1
+
+}
 const resizeDispayImage=(imageLocation, style)=>{
 
 
@@ -15,9 +23,17 @@ const resizeDispayImage=(imageLocation, style)=>{
   if(!imageLocation.indexOf){
     return imageLocation
   }
+
+
+  if(notImageFile(imageLocation)){
+    return imageLocation // ignore path
+  }
+
   if(imageLocation.indexOf("?")<0){
     return `${imageLocation}?x-oss-process=style/${style}`
   }
+
+
   return imageLocation.replace("small",style)
 
 }
@@ -64,8 +80,15 @@ export default class ImagePreview extends React.Component {
     const suffix = " | 图片预览";
     const modalTitle = imageTitle?imageTitle+suffix:suffix;
     const internalImageStyle = imageStyle || {height:80, width:80}
+
+    if(notImageFile(imageLocation)){
+      return  <div className="clearfix" style={{textAlign:"center"}}><Icon type="download" style={{fontSize:30}}/></div>
+    }
     
+
+
     return (
+
       <div className="clearfix" style={{textAlign:"center"}}>
         <img
           src={resizeDispayImageInList(imageLocation)}

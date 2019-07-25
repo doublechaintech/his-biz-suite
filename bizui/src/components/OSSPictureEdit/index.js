@@ -181,7 +181,7 @@ export default class OSSPictureEdit extends React.Component {
     const componentFileList = this.state.fileList
     const { fileList } = this.props;
     const { buttonTitle, handleChange, handlePreview } = this.props;
-    //const {fileList} = this.state;
+    // const {fileList} = this.state;
     const internalFileList = fileList ? fileList : [];
     console.log('file list in render', fileList);
     const suffix = ' | 图片预览';

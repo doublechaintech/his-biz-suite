@@ -44,6 +44,19 @@ public class FilterTabsViewComponent extends BaseViewComponent {
     public String getActiveTab() {
         return activeTab;
     }
+    public String getActiveTabTitle() {
+    	if(this.content == null) {
+            return null;
+        }
+        List<Map<String, Object>> contentList = (List<Map<String, Object>>) content;
+        for(Map<String, Object> item: contentList) {
+            String code = (String) item.get("code");
+            if (code.equals(getActiveTab())) {
+            	return (String) item.get("text");
+            }
+        }
+        return activeTab;
+    }
 
     public void setActiveTab(String activeTab) {
         this.activeTab = activeTab;

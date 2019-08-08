@@ -4,6 +4,7 @@ package  com.doublechaintech.his;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.Format;
+import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -123,6 +124,21 @@ public class BaseChecker {
 			String propertyKey) {
 		checkStringLengthRange(value, 15, 15, propertyKey);
 	}
+	
+	protected void checkBaseEntityReference(BaseEntity value, boolean isRequired,String propertyKey) {
+		if(!isRequired) {
+			return;
+		}
+		if(value!=null) {
+			return;
+		}
+		//this value is required but not null, this will produce a message
+		packMessage(messageList, "OBJECT_NOT_ALLOW_TO_BE_NULL",propertyKey,new Object[]{propertyKey, value, isRequired},
+					"您输入的 对象'"+propertyKey+"' 的值'"+value+"'不允许为空.");
+		
+		
+	}
+	
 	protected void checkStringLengthRange(String value, int minLength, int maxLength,
 			String propertyKey) {
 	
@@ -446,6 +462,38 @@ public class BaseChecker {
 		}
 
 	}
+	public void throwExceptionIfHasErrors(Class<? extends Exception> exceptionClazz) throws Exception {
+		if(messageList.isEmpty()){
+			return;
+		}
+		
+		for(Message message: messageList){
+			String subject = message.getSubject();
+			String template = userContext.getLocaleKey(subject);
+			if(template==null){
+				//not found, it is fine to use hard coded value
+				userContext.log("Check Result "+message.getBody());
+				continue;
+			}
+			MessageFormat mf = new MessageFormat(template);
+			
+			String labelKey = message.getFirstParam();
+			String newLabel = userContext.getLocaleKey(labelKey);
+			message.setFirstParam(newLabel);
+			String newBody = mf.format(message.getParameters());
+			message.setBody(newBody);
+			userContext.log("Check Result "+message.getBody());
+			
+		}
+		
+		
+		Class [] classes = {List.class};
+		throw  exceptionClazz.getDeclaredConstructor(classes).newInstance(messageList);
+
+		
+	}
+	
+	
 	
 }
 

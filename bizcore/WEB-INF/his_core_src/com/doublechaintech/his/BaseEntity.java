@@ -129,14 +129,21 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 		this.displayName = displayName;
 	}
 	
-	public Object propertyOf(String propertyName) throws Exception{
-		String methodName="get"+propertyName.substring(0,1).toUpperCase()+propertyName.substring(1);
-		Method method = this.getClass().getDeclaredMethod(methodName, new Class[]{});
-		//field.setAccessible(true);
-		Object value = method.invoke(this, new Object[]{});
-		return value;
+	public Object propertyOf(String propertyName) {
 		
+		String methodNames[]={"get", propertyName.substring(0,1).toUpperCase() ,propertyName.substring(1)};
+		String methodName=String.join("", methodNames);
+		Method method;
+		try {
+			method = this.getClass().getDeclaredMethod(methodName, new Class[]{});
+			Object value = method.invoke(this, new Object[]{});
+			return value;
+		} catch (Exception e) {
+			String args[]={"the property", propertyName ,"is not found for this object."};
+			throw new IllegalArgumentException(String.join(" ",args));
+		}
 	}
+	
 	public void setPropertyOf(String propertyName, Object value) throws Exception{
         String methodName="set"+propertyName.substring(0,1).toUpperCase()+propertyName.substring(1);
         Method method = this.getClass().getMethod(methodName, new Class[]{value.getClass()});

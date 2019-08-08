@@ -4,6 +4,7 @@ package com.doublechaintech.his.doctorschedule;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -219,6 +220,50 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(NAME_PROPERTY.equals(property)){
+			return getName();
+		}
+		if(DOCTOR_PROPERTY.equals(property)){
+			return getDoctor();
+		}
+		if(SCHEDULE_DATE_PROPERTY.equals(property)){
+			return getScheduleDate();
+		}
+		if(PERIOD_PROPERTY.equals(property)){
+			return getPeriod();
+		}
+		if(DEPARTMENT_PROPERTY.equals(property)){
+			return getDepartment();
+		}
+		if(AVAILABLE_PROPERTY.equals(property)){
+			return getAvailable();
+		}
+		if(PRICE_PROPERTY.equals(property)){
+			return getPrice();
+		}
+		if(EXPENSE_TYPE_PROPERTY.equals(property)){
+			return getExpenseType();
+		}
+		if(CREATE_TIME_PROPERTY.equals(property)){
+			return getCreateTime();
+		}
+		if(UPDATE_TIME_PROPERTY.equals(property)){
+			return getUpdateTime();
+		}
+		if(HOSPITAL_PROPERTY.equals(property)){
+			return getHospital();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

@@ -4,6 +4,7 @@ package com.doublechaintech.his.userdomain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -97,6 +98,28 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(NAME_PROPERTY.equals(property)){
+			return getName();
+		}
+		if(USER_WHITE_LIST_LIST.equals(property)){
+			List<BaseEntity> list = getUserWhiteListList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(SEC_USER_LIST.equals(property)){
+			List<BaseEntity> list = getSecUserList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

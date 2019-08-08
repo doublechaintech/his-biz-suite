@@ -38,16 +38,15 @@ public class RedisCacheService implements CacheService {
         return jedis;
     }
 
-    ObjectMapper mapper;
+   
 
     protected ObjectMapper getMapper() {
-        if (mapper == null) {
-            mapper = new ObjectMapper();
-        }
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper;
+       ObjectMapper mapper;
+       mapper = new ObjectMapper();
+       mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+       return mapper;
     }
-
+    
     public Object[] mget(String keys[], Class<?>[] clazzes) {
         if (keys == null) {
             return new Object[0];
@@ -59,7 +58,7 @@ public class RedisCacheService implements CacheService {
         Jedis jedis = null;
         try {
             jedis = getJedis();
-
+            log("class"+jedis.getClass());
             // ticker.tick("init getJedis();");
 
             List<String> values = jedis.mget(keys);
@@ -81,20 +80,17 @@ public class RedisCacheService implements CacheService {
             return result;
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             return null;
         } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
+        	closeConnection(jedis);
         }
-
+        
     }
 
     public Object get(String key, Class<?> clazz) {
         // Ticker ticker = new Ticker();
 
-        log("getting " + clazz + " with key: " + key);
+        // log("getting " + clazz + " with key: " + key);
         Jedis jedis = null;
         try {
             jedis = getJedis();
@@ -113,19 +109,14 @@ public class RedisCacheService implements CacheService {
 
         } catch (Exception e) {
             log("getting " + clazz + " with key: " + key + " with an exception" + e.getMessage());
-            //e.printStackTrace();
-            // TODO Auto-generated catch block
             return null;
         } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
+        	closeConnection(jedis);
         }
 
     }
 
     private void log(String string) {
-        // TODO Auto-generated method stub
         System.out.println(string);
     }
 
@@ -150,13 +141,17 @@ public class RedisCacheService implements CacheService {
         } catch (JsonProcessingException e) {
             // is fine
         } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
+        	closeConnection(jedis);
         }
 
     }
-
+    protected void closeConnection(Jedis jedis) {
+    	
+    	if (jedis == null) {
+            return;
+        }
+    	jedis.close();
+    }
     public void remove(String key) {
 
         Jedis jedis = null;
@@ -164,9 +159,7 @@ public class RedisCacheService implements CacheService {
             jedis = getJedis();
             jedis.del(key);
         } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
+        	closeConnection(jedis);
         }
     }
 

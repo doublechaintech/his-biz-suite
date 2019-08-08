@@ -15,6 +15,7 @@ import org.apache.http.util.TextUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.terapico.caf.DateTime;
 import com.terapico.caf.form.ImageInfo;
+import com.terapico.utils.CollectionUtils;
 import com.terapico.utils.DateTimeUtil;
 import com.terapico.utils.DebugUtil;
 import com.terapico.utils.MapUtil;
@@ -162,6 +163,9 @@ public class BaseFormProcessor {
 	protected Map<String, Object> mapObjectListFieldIntoUiForm(boolean hidden, String paramName, List<Object> defaultValue) {
 		return basicFieldMapping(paramName, defaultValue, null, "object_list");
 	}
+	protected Map<String, Object> mapObjectListFieldIntoUiForm(boolean hidden, String paramName, List<Object> defaultValue, Object candidateValue) {
+		return basicFieldMapping(paramName, defaultValue, candidateValue, "object_list");
+	}
 	protected Object mapDateFieldIntoUiForm(String paramName, Date defaultValue) {
 		return basicFieldMapping(paramName, defaultValue, null, "date");
 	}
@@ -187,8 +191,8 @@ public class BaseFormProcessor {
 		return RequestUtil.getBooleanInput(params, paramName, false);
 	}
 	
-	protected Date pickDateParams(String strVal) {
-		return DateTimeUtil.parseInputDateTime(strVal);
+	protected Date pickDateParams(String paramName) {
+		return DateTimeUtil.parseInputDateTime(RequestUtil.getStringInput(params, paramName, null));
 	}
 
 	protected List<ImageInfo> pickImagesParams(String paramName) throws Exception {
@@ -232,6 +236,13 @@ public class BaseFormProcessor {
 		}
 		if (value instanceof List) {
 			return (List<Object>) value;
+		}
+		if (value instanceof String) {
+			String strVal = (String) value;
+			String[] strVals = strVal.trim().split("\\s*,\\s*");
+			if (strVals.length > 1) {
+				return CollectionUtils.toList(strVals);
+			}
 		}
 		List<Object> rst = new ArrayList<>();
 		rst.add(value);
@@ -400,14 +411,14 @@ public class BaseFormProcessor {
 	protected Object mapBigDecimalFieldIntoUiForm(boolean hidden, String paramName, BigDecimal defaultValue) {
 		return basicFieldMapping(paramName, defaultValue, null, hidden?"hidden":"number_bigdecimal");
 	}
-	protected boolean verifyBigDecimalInput(BigDecimal input, double minValue, double maxValue) {
+	protected boolean verifyBigDecimalInput(BigDecimal input, Double minValue, Double maxValue) {
 		if (input == null) {
 			return true;
 		}
-		if (minValue > input.doubleValue()) {
+		if (minValue != null && minValue > input.doubleValue()) {
 			return false;
 		}
-		if (maxValue < input.doubleValue()) {
+		if (maxValue != null && maxValue < input.doubleValue()) {
 			return false;
 		}
 		return true;

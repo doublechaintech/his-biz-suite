@@ -4,6 +4,7 @@ package com.doublechaintech.his.expensetype;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -186,6 +187,43 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(NAME_PROPERTY.equals(property)){
+			return getName();
+		}
+		if(HELPER_CHARS_PROPERTY.equals(property)){
+			return getHelperChars();
+		}
+		if(STATUS_PROPERTY.equals(property)){
+			return getStatus();
+		}
+		if(HOSPITAL_PROPERTY.equals(property)){
+			return getHospital();
+		}
+		if(DESCRIPTION_PROPERTY.equals(property)){
+			return getDescription();
+		}
+		if(UPDATE_TIME_PROPERTY.equals(property)){
+			return getUpdateTime();
+		}
+		if(EXPENSE_ITEM_LIST.equals(property)){
+			List<BaseEntity> list = getExpenseItemList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(DOCTOR_SCHEDULE_LIST.equals(property)){
+			List<BaseEntity> list = getDoctorScheduleList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

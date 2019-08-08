@@ -4,6 +4,7 @@ package com.doublechaintech.his.expenseitem;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -141,6 +142,32 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(NAME_PROPERTY.equals(property)){
+			return getName();
+		}
+		if(PRICE_PROPERTY.equals(property)){
+			return getPrice();
+		}
+		if(EXPENSE_TYPE_PROPERTY.equals(property)){
+			return getExpenseType();
+		}
+		if(HOSPITAL_PROPERTY.equals(property)){
+			return getHospital();
+		}
+		if(UPDATE_TIME_PROPERTY.equals(property)){
+			return getUpdateTime();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

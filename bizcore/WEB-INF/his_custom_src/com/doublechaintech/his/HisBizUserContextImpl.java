@@ -7,9 +7,12 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
+import com.terapico.caf.BlobObject;
 import com.terapico.caf.viewcomponent.ButtonViewComponent;
+import com.terapico.caf.viewcomponent.FilterTabsViewComponent;
 import com.terapico.caf.viewcomponent.PopupViewComponent;
 import com.terapico.utils.TextUtil;
+import com.doublechaintech.his.secuser.SecUser;
 
 public class HisBizUserContextImpl extends HisUserContextImpl{
 
@@ -31,6 +34,11 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 	protected PopupViewComponent popup;
 	protected Map<String, Object> toast;
 	protected String accessToken;
+	protected String jwtKeyId;
+	protected FilterTabsViewComponent tabs;
+	protected SecUser secUser;
+	protected String inputJwtToken;
+	protected String assignmentId;
 	protected BaseHisFormProcessor inputFormData;
 	protected BaseHisFormProcessor outputFormData;
 	
@@ -148,6 +156,7 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 	}
 	public String getFilter(String defaulValue) {
 		if (TextUtil.isBlank(filter)) {
+			setFilter(defaulValue);
 			return defaulValue;
 		}
 		return filter;
@@ -221,7 +230,62 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 	public void setOutputFormData(BaseHisFormProcessor outputFormData) {
 		this.outputFormData = outputFormData;
 	}
+	public String getJwtKeyId() {
+		return jwtKeyId;
+	}
+	public void setJwtKeyId(String jwtKeyId) {
+		this.jwtKeyId = jwtKeyId;
+	}
+	public FilterTabsViewComponent getTabs() {
+		return tabs;
+	}
+	public void setTabs(FilterTabsViewComponent tabs) {
+		this.tabs = tabs;
+	}
+	public SecUser getSecUser() {
+		return secUser;
+	}
+	public void setSecUser(SecUser secUser) {
+		this.secUser = secUser;
+	}
+	public String getInputJwtToken() {
+		return inputJwtToken;
+	}
+	public void setInputJwtToken(String inputJwtToken) {
+		this.inputJwtToken = inputJwtToken;
+	}
+	public String getAssignmentId() {
+		return assignmentId;
+	}
+	public void setAssignmentId(String assignmentId) {
+		this.assignmentId = assignmentId;
+	}
+	@Override
+	public void sendEmail(String to, String subject, String content) throws Exception {
+		if (!isProductEnvironment()) {
+			to = "wangyudong@doublechaintech.com";
+		}
+		super.sendEmail(to, subject, content);
+	}
 	
+	@Override
+	public void sendEmailWithAttachment(String to, String subject, String content, List<BlobObject> attachments)
+			throws Exception {
+		if (!isProductEnvironment()) {
+			to = "wangyudong@doublechaintech.com";
+		}
+		super.sendEmailWithAttachment(to, subject, content, attachments);
+	}
+	
+	@Override
+	public void sendMessage(String dest, String fromWho, String template, Map<String, String> parameters)
+			throws Exception {
+		if (!isProductEnvironment()) {
+			System.out.printf("send to %s: %s:%s\n", dest, template, String.valueOf(parameters));
+			return; // 短信直接不发
+		}
+		super.sendMessage(dest, fromWho, template, parameters);
+	}
 	// 这个对象仅用于在开发环境中, 用cookie来模拟react-client的 JWT header. 因为开发环境使用的是普通的浏览器,不能在A
 	// href的header中设置值.
 	protected Cookie[] cookies;

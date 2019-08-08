@@ -85,7 +85,7 @@ export default {
       	handleClientError(appLocaleName(userContext,'ServiceNotRegistered'))
       	return;
       }
-     
+      "react/dva_object_model.jsp"
       
       const data = yield call(serviceNameToCall, id, parameters)
       if(handleServerError(data)){

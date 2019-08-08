@@ -1,6 +1,6 @@
 package com.doublechaintech.his;
 
-public class CustomHisChecker extends HisChecker {
+public class CustomHisChecker extends HisObjectChecker {
 	
 	
 }

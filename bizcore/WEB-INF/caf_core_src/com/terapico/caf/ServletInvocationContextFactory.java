@@ -405,7 +405,7 @@ public class ServletInvocationContextFactory extends ReflectionTool implements I
 			}
 			try {
 				String val = URLDecoder.decode(array[i], "UTF-8").trim();
-				System.out.println("array[" + i + "]:" + val);
+				// System.out.println("array[" + i + "]:" + val);
 				parameters.add(val);
 			} catch (UnsupportedEncodingException e) {
 				throw new InvocationException("Encoding UTF-8 is not supported");
@@ -438,8 +438,8 @@ public class ServletInvocationContextFactory extends ReflectionTool implements I
 
 			try {
 				String name = URLDecoder.decode(array[i], "UTF-8").trim();
-				System.out
-						.println("array[" + i + "]:" + name + " = " + joinArray(",", request.getParameterValues(name)));
+//				System.out
+//						.println("array[" + i + "]:" + name + " = " + joinArray(",", request.getParameterValues(name)));
 				parameters.add(name);
 			} catch (UnsupportedEncodingException e) {
 				throw new InvocationException("Encoding UTF-8 is not supported");
@@ -479,7 +479,7 @@ public class ServletInvocationContextFactory extends ReflectionTool implements I
 
 			try {
 				String val = URLDecoder.decode(array[i], "UTF-8").trim();
-				System.out.println("array[" + i + "]:" + val);
+				// System.out.println("array[" + i + "]:" + val);
 				parameters.add(val);
 			} catch (UnsupportedEncodingException e) {
 				throw new InvocationException("Encoding UTF-8 is not supported");

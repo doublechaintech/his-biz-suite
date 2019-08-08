@@ -35,7 +35,10 @@ public class PooledRedisCacheService extends RedisCacheService implements CacheS
 
     public synchronized void ensurePool() {
         if (pool != null) {
-            return;
+        	if(!pool.isClosed()) {
+        		return;
+        	}
+            
         }
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMinIdle(2);
@@ -43,15 +46,47 @@ public class PooledRedisCacheService extends RedisCacheService implements CacheS
         jedisPoolConfig.setMaxTotal(10);
         jedisPoolConfig.setBlockWhenExhausted(true);
         jedisPoolConfig.setMaxWaitMillis(1000);
-        jedisPoolConfig.setSoftMinEvictableIdleTimeMillis(60000);
+        jedisPoolConfig.setSoftMinEvictableIdleTimeMillis(60);
         pool = new JedisPool(jedisPoolConfig, host, port, timeout, StringUtils.isEmpty(password) ? null : password, database);
     }
-
+    public void destoryPool() {
+    	ensurePool();
+    	pool.close();
+    }
     protected Jedis getJedis() {
 
 
         ensurePool();
         return pool.getResource();
+    }
+    
+    
+    public void report() {
+    	 ensurePool();
+    	 System.out.print(pool.getNumActive());
+    }
+    
+    public static void main(String args[]) {
+    	
+    	PooledRedisCacheService cache=new PooledRedisCacheService();
+    	
+    	cache.setHost("127.0.0.1");
+    	cache.setPort(6379);
+    	
+    	for(int i=0;i<100000;i++) {
+    		cache.put("yes", "no", 10000);
+    		cache.get("yes", String.class);
+    		//System.out.println(i);
+    	}
+    	
+    	
+    	//System.out.println("done");
+    	cache.report();
+    	cache.destoryPool();
+    	
+    	
+    	
+    	
     }
 
 

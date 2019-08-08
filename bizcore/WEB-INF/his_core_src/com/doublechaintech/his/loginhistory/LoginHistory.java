@@ -4,6 +4,7 @@ package com.doublechaintech.his.loginhistory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -136,6 +137,29 @@ public class LoginHistory extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(LOGIN_TIME_PROPERTY.equals(property)){
+			return getLoginTime();
+		}
+		if(FROM_IP_PROPERTY.equals(property)){
+			return getFromIp();
+		}
+		if(DESCRIPTION_PROPERTY.equals(property)){
+			return getDescription();
+		}
+		if(SEC_USER_PROPERTY.equals(property)){
+			return getSecUser();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

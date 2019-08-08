@@ -4,6 +4,7 @@ package com.doublechaintech.his.formfieldmessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -136,6 +137,29 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(TITLE_PROPERTY.equals(property)){
+			return getTitle();
+		}
+		if(PARAMETER_NAME_PROPERTY.equals(property)){
+			return getParameterName();
+		}
+		if(FORM_PROPERTY.equals(property)){
+			return getForm();
+		}
+		if(LEVEL_PROPERTY.equals(property)){
+			return getLevel();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

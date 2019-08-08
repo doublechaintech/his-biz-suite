@@ -197,9 +197,9 @@ public class UserContextImpl implements UserContext{
 		smtpService.sendWithAttachment(to, subject, content, attachments);
 	}
 	
-	public Object getCachedObject(String key,Class<?> clazz){
+	public <T> T getCachedObject(String key,Class<T> clazz){
 		ensureCacheService();
-		return cacheService.get(key,clazz);
+		return (T)cacheService.get(key,clazz);
 	}
 	protected void ensureCacheService(){
 		if(cacheService ==  null){
@@ -437,7 +437,7 @@ public class UserContextImpl implements UserContext{
 		setResponseHeader("X-Class", clazzName);
 	}
 	
-	public void setChecker(HisChecker checker) {
+	public void setChecker(HisObjectChecker checker) {
 		//Let His do the job :)
 		
 	}

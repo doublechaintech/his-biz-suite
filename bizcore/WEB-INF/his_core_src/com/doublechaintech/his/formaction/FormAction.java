@@ -4,6 +4,7 @@ package com.doublechaintech.his.formaction;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -178,6 +179,35 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(LABEL_PROPERTY.equals(property)){
+			return getLabel();
+		}
+		if(LOCALE_KEY_PROPERTY.equals(property)){
+			return getLocaleKey();
+		}
+		if(ACTION_KEY_PROPERTY.equals(property)){
+			return getActionKey();
+		}
+		if(LEVEL_PROPERTY.equals(property)){
+			return getLevel();
+		}
+		if(URL_PROPERTY.equals(property)){
+			return getUrl();
+		}
+		if(FORM_PROPERTY.equals(property)){
+			return getForm();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

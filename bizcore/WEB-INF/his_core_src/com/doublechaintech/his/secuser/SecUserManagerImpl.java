@@ -627,20 +627,20 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 //--------------------------------------------------------------
 	
 	 	
- 	protected SecUserBlocking loadSecUserBlocking(HisUserContext userContext, String newBlockingId, Map<String,Object> options) throws Exception
+ 	protected UserDomain loadUserDomain(HisUserContext userContext, String newDomainId, Map<String,Object> options) throws Exception
  	{
 		
- 		return userContext.getDAOGroup().getSecUserBlockingDAO().load(newBlockingId, options);
+ 		return userContext.getDAOGroup().getUserDomainDAO().load(newDomainId, options);
  	}
  	
  	
  	
 	
 	 	
- 	protected UserDomain loadUserDomain(HisUserContext userContext, String newDomainId, Map<String,Object> options) throws Exception
+ 	protected SecUserBlocking loadSecUserBlocking(HisUserContext userContext, String newBlockingId, Map<String,Object> options) throws Exception
  	{
 		
- 		return userContext.getDAOGroup().getUserDomainDAO().load(newDomainId, options);
+ 		return userContext.getDAOGroup().getSecUserBlockingDAO().load(newBlockingId, options);
  	}
  	
  	

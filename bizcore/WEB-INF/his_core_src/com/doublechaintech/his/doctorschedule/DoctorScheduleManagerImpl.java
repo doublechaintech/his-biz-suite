@@ -620,6 +620,16 @@ public class DoctorScheduleManagerImpl extends CustomHisCheckerManager implement
  //--------------------------------------------------------------
 	
 	 	
+ 	protected Period loadPeriod(HisUserContext userContext, String newPeriodId, Map<String,Object> options) throws Exception
+ 	{
+		
+ 		return userContext.getDAOGroup().getPeriodDAO().load(newPeriodId, options);
+ 	}
+ 	
+ 	
+ 	
+	
+	 	
  	protected Doctor loadDoctor(HisUserContext userContext, String newDoctorId, Map<String,Object> options) throws Exception
  	{
 		
@@ -630,10 +640,10 @@ public class DoctorScheduleManagerImpl extends CustomHisCheckerManager implement
  	
 	
 	 	
- 	protected Period loadPeriod(HisUserContext userContext, String newPeriodId, Map<String,Object> options) throws Exception
+ 	protected Hospital loadHospital(HisUserContext userContext, String newHospitalId, Map<String,Object> options) throws Exception
  	{
 		
- 		return userContext.getDAOGroup().getPeriodDAO().load(newPeriodId, options);
+ 		return userContext.getDAOGroup().getHospitalDAO().load(newHospitalId, options);
  	}
  	
  	
@@ -654,16 +664,6 @@ public class DoctorScheduleManagerImpl extends CustomHisCheckerManager implement
  	{
 		
  		return userContext.getDAOGroup().getDepartmentDAO().load(newDepartmentId, options);
- 	}
- 	
- 	
- 	
-	
-	 	
- 	protected Hospital loadHospital(HisUserContext userContext, String newHospitalId, Map<String,Object> options) throws Exception
- 	{
-		
- 		return userContext.getDAOGroup().getHospitalDAO().load(newHospitalId, options);
  	}
  	
  	

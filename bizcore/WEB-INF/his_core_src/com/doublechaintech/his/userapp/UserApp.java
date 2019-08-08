@@ -4,6 +4,7 @@ package com.doublechaintech.his.userapp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -228,6 +229,49 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(TITLE_PROPERTY.equals(property)){
+			return getTitle();
+		}
+		if(SEC_USER_PROPERTY.equals(property)){
+			return getSecUser();
+		}
+		if(APP_ICON_PROPERTY.equals(property)){
+			return getAppIcon();
+		}
+		if(FULL_ACCESS_PROPERTY.equals(property)){
+			return getFullAccess();
+		}
+		if(PERMISSION_PROPERTY.equals(property)){
+			return getPermission();
+		}
+		if(OBJECT_TYPE_PROPERTY.equals(property)){
+			return getObjectType();
+		}
+		if(OBJECT_ID_PROPERTY.equals(property)){
+			return getObjectId();
+		}
+		if(LOCATION_PROPERTY.equals(property)){
+			return getLocation();
+		}
+		if(LIST_ACCESS_LIST.equals(property)){
+			List<BaseEntity> list = getListAccessList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(OBJECT_ACCESS_LIST.equals(property)){
+			List<BaseEntity> list = getObjectAccessList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

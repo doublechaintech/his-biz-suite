@@ -4,6 +4,7 @@ package com.doublechaintech.his.userwhitelist;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -115,6 +116,26 @@ public class UserWhiteList extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(USER_IDENTITY_PROPERTY.equals(property)){
+			return getUserIdentity();
+		}
+		if(USER_SPECIAL_FUNCTIONS_PROPERTY.equals(property)){
+			return getUserSpecialFunctions();
+		}
+		if(DOMAIN_PROPERTY.equals(property)){
+			return getDomain();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

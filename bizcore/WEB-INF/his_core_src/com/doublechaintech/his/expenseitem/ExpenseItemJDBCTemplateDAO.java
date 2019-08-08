@@ -36,21 +36,21 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements ExpenseItemDAO{
  
  	
- 	private  ExpenseTypeDAO  expenseTypeDAO;
- 	public void setExpenseTypeDAO(ExpenseTypeDAO expenseTypeDAO){
-	 	this.expenseTypeDAO = expenseTypeDAO;
- 	}
- 	public ExpenseTypeDAO getExpenseTypeDAO(){
-	 	return this.expenseTypeDAO;
- 	}
- 
- 	
  	private  HospitalDAO  hospitalDAO;
  	public void setHospitalDAO(HospitalDAO hospitalDAO){
 	 	this.hospitalDAO = hospitalDAO;
  	}
  	public HospitalDAO getHospitalDAO(){
 	 	return this.hospitalDAO;
+ 	}
+ 
+ 	
+ 	private  ExpenseTypeDAO  expenseTypeDAO;
+ 	public void setExpenseTypeDAO(ExpenseTypeDAO expenseTypeDAO){
+	 	this.expenseTypeDAO = expenseTypeDAO;
+ 	}
+ 	public ExpenseTypeDAO getExpenseTypeDAO(){
+	 	return this.expenseTypeDAO;
  	}
 
 

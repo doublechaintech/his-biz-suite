@@ -23,6 +23,10 @@ public class MapUtil {
 			ensuerMapInstance();
 			return mapInstance;
 		}
+		public <T> Map<String, T> into_map(Class<T> clazz) {
+			ensuerMapInstance();
+			return (Map<String, T>)mapInstance;
+		}
 		
 	}
 	public static class _MapEntryUtil{
@@ -110,5 +114,10 @@ public class MapUtil {
 
 	public static MapBuilder put(String key, Object value) {
 		return new MapBuilder().put(key, value);
+	}
+	public static <T> Map<String, T> with(String key, T value) {
+		Map<String, T> map = new HashMap<>();
+		map.put(key, value);
+		return map;
 	}
 }

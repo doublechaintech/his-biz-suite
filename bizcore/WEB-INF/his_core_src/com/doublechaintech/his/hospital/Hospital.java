@@ -4,6 +4,7 @@ package com.doublechaintech.his.hospital;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -155,6 +156,50 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(NAME_PROPERTY.equals(property)){
+			return getName();
+		}
+		if(ADDRESS_PROPERTY.equals(property)){
+			return getAddress();
+		}
+		if(TELEPHONE_PROPERTY.equals(property)){
+			return getTelephone();
+		}
+		if(EXPENSE_TYPE_LIST.equals(property)){
+			List<BaseEntity> list = getExpenseTypeList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(PERIOD_LIST.equals(property)){
+			List<BaseEntity> list = getPeriodList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(EXPENSE_ITEM_LIST.equals(property)){
+			List<BaseEntity> list = getExpenseItemList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(DOCTOR_LIST.equals(property)){
+			List<BaseEntity> list = getDoctorList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(DEPARTMENT_LIST.equals(property)){
+			List<BaseEntity> list = getDepartmentList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+		if(DOCTOR_SCHEDULE_LIST.equals(property)){
+			List<BaseEntity> list = getDoctorScheduleList().stream().map(item->item).collect(Collectors.toList());
+			return list;
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

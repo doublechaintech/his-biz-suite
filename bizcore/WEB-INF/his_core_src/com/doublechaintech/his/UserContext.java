@@ -14,7 +14,7 @@ public interface UserContext extends BaseUserContext{
 	public void putToCache(String key, Object value, int timeToLiveInSeconds);	
 	public void cacheUser(Object value);
 	public Object userOf(Class<?> clazz);
-	public Object getCachedObject(String key,Class<?> clazz);
+	public <T> T getCachedObject(String key,Class<T> clazz);
 	public void removeFromCache(String key);
 	public void sendEmail(String to, String subject, String content) throws Exception;
 	public String tokenId();

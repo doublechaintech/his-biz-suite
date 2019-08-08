@@ -195,14 +195,14 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		return apps.get(0);
 	}
 	
-	private HisChecker checker;
-	public void setChecker(HisChecker checker) {
+	private HisObjectChecker checker;
+	public void setChecker(HisObjectChecker checker) {
 		this.checker = checker;
 		
 	}
 
 	@Override
-	public HisChecker getChecker() {
+	public HisObjectChecker getChecker() {
 		
 		if(this.checker==null) {
 			throw new IllegalStateException("每个实例必须配置Checker，请检查相关Spring的XML配置文件中 checker的配置");

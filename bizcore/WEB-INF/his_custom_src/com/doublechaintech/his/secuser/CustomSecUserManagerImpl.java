@@ -2,15 +2,14 @@
 package com.doublechaintech.his.secuser;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Enumeration;
 import java.util.HashMap;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import com.skynet.infrastructure.CacheService;
 import com.skynet.infrastructure.ESClient;
+import com.skynet.infrastructure.StorageService;
 import com.skynet.infrastructure.EventService;
 import com.skynet.infrastructure.GraphService;
 import com.skynet.infrastructure.SMTPService;
@@ -30,7 +29,7 @@ import com.doublechaintech.his.HisUserContext;
 import com.doublechaintech.his.userapp.*;
 import com.doublechaintech.his.listaccess.*;
 import com.doublechaintech.his.objectaccess.*;
-import com.doublechaintech.his.HisChecker;
+import com.doublechaintech.his.HisObjectChecker;
 import com.doublechaintech.his.loginhistory.LoginHistory;
 import com.doublechaintech.his.Message;
 
@@ -49,12 +48,21 @@ import java.lang.reflect.InvocationTargetException;
 
 public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         UserContextProvider {
-       protected String environmentName;
+    protected StorageService storageService;
+    protected String environmentName;
     protected Boolean productEnvironment;
     protected DAOGroup daoGroup;
     protected ManagerGroup managerGroup;
     protected EventService eventService;
     protected String checkerBeanName = "checker";
+    
+    public StorageService getStorageService() {
+        return storageService;
+    }
+
+    public void setStorageService(StorageService pStorageService) {
+        storageService = pStorageService;
+    }
     public String getCheckerBeanName() {
 		return checkerBeanName;
 	}
@@ -526,12 +534,12 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         this.publicMediaServicePrefix = publicMediaServicePrefix;
     }
     
-    protected HisChecker checker;
-    public HisChecker getChecker(){
+    protected HisObjectChecker checker;
+    public HisObjectChecker getChecker(){
         return checker;
     }
     
-    public void setChecker(HisChecker checker){
+    public void setChecker(HisObjectChecker checker){
         this.checker = checker;
     }
     
@@ -543,7 +551,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         userContext.setBeanFactory(beanFactory);
         userContext.setRemoteIP(getRemoteIP(request));
         userContext.setCacheService(cacheService);
-        userContext.setChecker((HisChecker)beanFactory.getBean(getCheckerBeanName()));
+        userContext.setChecker((HisObjectChecker)beanFactory.getBean(getCheckerBeanName()));
         userContext.setEsClient(esClient);
         userContext.setSmtpService(smtpService);
         userContext.setGraphService(graphService);
@@ -555,7 +563,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         	while(headerNames.hasMoreElements()) {
         		String name = headerNames.nextElement();
         		String value = request.getHeader(name);
-        		userContext.putHeader(name, value);
+        		userContext.putHeader(name.toLowerCase(), value);
         	}
         }
         userContext.setPublicMediaServicePrefix(getPublicMediaServicePrefix());
@@ -907,6 +915,20 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		
 	}
     
+    
+    public Map<String, Object> testoss(HisUserContext userContext) throws SecUserManagerException {
+
+		String key = this.getCurrentAppKey(userContext);
+		UserApp userApp = (UserApp) userContext.getCachedObject(key, UserApp.class);
+		if (userApp == null) {
+			throwExceptionWithMessage("用户要访问此功能，至少需要登录，并且选择了一个确定的App");
+		}
+		String folderName = String.format("upload/%s/%s", userApp.getObjectType(), userApp.getObjectId());
+		Map<String, Object> ossToken = storageService.genToken(folderName);
+		System.out.println("ossToken=" + ossToken);
+		return ossToken;
+
+	}
 
 }
 

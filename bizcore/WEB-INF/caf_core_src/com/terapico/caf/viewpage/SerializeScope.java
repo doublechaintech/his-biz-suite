@@ -14,6 +14,7 @@ import com.terapico.utils.TextUtil;
 public class SerializeScope {
 	public static final int NODE_SIMPLE = 0;
 	public static final int NODE_OBJECT = 1;
+	protected static final String ANY_FIELD_NAME = "__any_field__";
 	
 	protected Map<String, SerializeScope> fields;
 	protected boolean excludeMode = false;
@@ -25,8 +26,15 @@ public class SerializeScope {
 	protected boolean revers = false;
 	protected boolean showWhenNotEmpty = false;
 	protected boolean putInDataContainer = false;
+	protected boolean moveUp = false;
 	
-	
+	public boolean isMoveUp() {
+		return moveUp;
+	}
+	public void setMoveUp(boolean moveUp) {
+		this.moveUp = moveUp;
+	}
+
 	public boolean isPutInDataContainer() {
 		return putInDataContainer;
 	}
@@ -72,7 +80,11 @@ public class SerializeScope {
 		if (fields == null) {
 			return null;
 		}
-		return fields.get(fieldName);
+		SerializeScope rst = fields.get(fieldName);
+		if (rst == null) {
+			return fields.get(ANY_FIELD_NAME);
+		}
+		return rst;
 	}
 	
 	public static SerializeScope INCLUDE() {
@@ -92,9 +104,10 @@ public class SerializeScope {
 	}
 	public SerializeScope field(String fieldName, SerializeScope node) {
 		ensureFields();
-		node.nodeType = NODE_OBJECT;
-		fields.put(fieldName, node);
-		curNode = node;
+		SerializeScope newNode = node;
+		newNode.nodeType = NODE_OBJECT;
+		fields.put(fieldName, newNode);
+		curNode = newNode;
 		return this;
 	}
 
@@ -268,5 +281,23 @@ public class SerializeScope {
 		curNode = fields.get(propertyName);
 		return this;
 	}
+
+	public SerializeScope any_field_of(String fieldName, SerializeScope node) {
+		return field(fieldName, INCLUDE().field(ANY_FIELD_NAME, node));
+	}
+
+	public SerializeScope nothing() {
+		return this;
+	}
+
+	public SerializeScope move_up() {
+		if (curNode == null) {
+			throw new RuntimeException("method 'move_up()' must be invoked only after method 'field(xxx)'");
+		}
+		curNode.setMoveUp(true);
+		return this;
+	}
+	
+	
 	
 }

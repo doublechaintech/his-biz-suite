@@ -4,6 +4,7 @@ package com.doublechaintech.his.doctorassignment;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -120,6 +121,29 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(NAME_PROPERTY.equals(property)){
+			return getName();
+		}
+		if(DOCTOR_PROPERTY.equals(property)){
+			return getDoctor();
+		}
+		if(DEPARTMENT_PROPERTY.equals(property)){
+			return getDepartment();
+		}
+		if(UPDATE_TIME_PROPERTY.equals(property)){
+			return getUpdateTime();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

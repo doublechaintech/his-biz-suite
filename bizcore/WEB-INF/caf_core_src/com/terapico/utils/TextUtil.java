@@ -371,4 +371,11 @@ public class TextUtil {
 		String str = onlyNumber(inStr);
 		return str;
 	}
+
+	public static String nullIfBlank(String input) {
+		if (isBlank(input)) {
+			return null;
+		}
+		return input.trim();
+	}
 }

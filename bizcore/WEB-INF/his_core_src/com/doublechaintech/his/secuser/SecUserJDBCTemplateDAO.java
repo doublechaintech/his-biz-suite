@@ -40,21 +40,21 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 public class SecUserJDBCTemplateDAO extends HisBaseDAOImpl implements SecUserDAO{
  
  	
- 	private  SecUserBlockingDAO  secUserBlockingDAO;
- 	public void setSecUserBlockingDAO(SecUserBlockingDAO secUserBlockingDAO){
-	 	this.secUserBlockingDAO = secUserBlockingDAO;
- 	}
- 	public SecUserBlockingDAO getSecUserBlockingDAO(){
-	 	return this.secUserBlockingDAO;
- 	}
- 
- 	
  	private  UserDomainDAO  userDomainDAO;
  	public void setUserDomainDAO(UserDomainDAO userDomainDAO){
 	 	this.userDomainDAO = userDomainDAO;
  	}
  	public UserDomainDAO getUserDomainDAO(){
 	 	return this.userDomainDAO;
+ 	}
+ 
+ 	
+ 	private  SecUserBlockingDAO  secUserBlockingDAO;
+ 	public void setSecUserBlockingDAO(SecUserBlockingDAO secUserBlockingDAO){
+	 	this.secUserBlockingDAO = secUserBlockingDAO;
+ 	}
+ 	public SecUserBlockingDAO getSecUserBlockingDAO(){
+	 	return this.secUserBlockingDAO;
  	}
 
 

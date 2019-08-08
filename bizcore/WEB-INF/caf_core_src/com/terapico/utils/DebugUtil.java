@@ -41,7 +41,7 @@ public class DebugUtil {
 
     public static ObjectMapper getObjectMapper() {
         if (_mapper != null) {
-            return _mapper;
+            return _mapper.copy();
         }
         _mapper = new ObjectMapper();
         _mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -73,7 +73,7 @@ public class DebugUtil {
     	}
     	String template = "<div class='map_value_container map_level_%d'>";
     	out.write(String.format(template, level));
-    	template = "<div class='toggle_show_flag' onclick='toggleShow(this)'>"+getIconHtml()+"</div>";
+    	template = "<div class='toggle_show_flag toggle1' onclick='toggleShow(this)'>"+getIconHtml()+"</div>";
     	out.write(String.format(template));
     	
     	List<String> dispkeys = new ArrayList<>();
@@ -131,7 +131,7 @@ public class DebugUtil {
 					template = "<div><div class='map_value_title' ondblclick='handleDbClick(this)'>%s</div><span class='item_count'>(%d members)</span></div>";
 					out.write(String.format(template, key, ((Map) value).size()));
 				}
-    			template = "<div class='toggle_show_flag' onclick='toggleShow(this)'>"+getIconHtml()+"</div>";
+    			template = "<div class='toggle_show_flag  toggle2' onclick='toggleShow(this)'>"+getIconHtml()+"</div>";
             	out.write(String.format(template));
     			renderObject(key, value, out, level+1);
     			template = "</div>";
@@ -142,10 +142,10 @@ public class DebugUtil {
     		if (value instanceof List) {
     			template = "<div class='kv_row list_row'>";
             	out.write(String.format(template));
-            	template = "<div class='toggle_show_flag' onclick='toggleShow(this)'>"+getIconHtml()+"</div>";
+            	template = "<div class='toggle_show_flag  toggle3' onclick='toggleShow(this)'>"+getIconHtml()+"</div>";
             	out.write(String.format(template));
-    			template="<div><div class='list_value_title' ondblclick='handleDbClick(this)'>%s</div><span class='item_count'>(%d items)</span></div>" ;
-    			out.write(String.format(template, key, ((List) value).size()));
+    			template="<div class='list_container'><div class='list_value_title' ondblclick='handleDbClick(this)'>%s</div><span class='item_count'>(%d items)</span></div>" ;
+    			out.write(String.format(template, key+"[...]", ((List) value).size()));
     			List<Object> list = (List<Object>) value;
     			for(Object obj : list) {
     				renderObject(key, obj, out, level+1);
@@ -194,7 +194,7 @@ public class DebugUtil {
 		}
 		
 		if (key.equals("linkToUrl") || key.endsWith("LinkToUrl") || key.equals("nextPageUrl")) {
-			template = "<div><span ondblclick='handleDbClick(this)'>%s</span><a href='%s'>[GO]</a></div>";
+			template = "<div class='common_value_content'><span ondblclick='handleDbClick(this)'>%s</span><a href='%s'>[GO]</a></div>";
 			out.write(String.format(template, value, value));
 			return;
 		}

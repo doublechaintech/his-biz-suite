@@ -19,7 +19,7 @@ const fileMapper=[
 ]
 const coverIconFromFileName=(fileName)=>{
   if(!fileName){
-    return ("file-unknown")
+    return "file-unknown";
   }
   
 
@@ -47,6 +47,9 @@ const resizeDispayImageForPreview=(imageLocation)=>resizeDispayImage(imageLocati
 
 const notImageFile=(imageLocation)=>{
   const mapperList = ["pdf","zip","doc","docx","xls","xlsx"]
+  if(!imageLocation){
+    return true
+  }
   const firstFileSufix = imageLocation.split('.').pop().toLowerCase();
   const types=mapperList.filter(item=>item===firstFileSufix);
   return types.length === 1

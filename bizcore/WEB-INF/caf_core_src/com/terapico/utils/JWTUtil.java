@@ -13,7 +13,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 public class JWTUtil {
 	
 	
-	public static final String HEADER_NAME = "Authorization";
+	public static final String HEADER_NAME = "authorization";
 
 	public static DecodedJWT decodeToken(String token) {
 		if (TextUtil.isBlank(token)) {

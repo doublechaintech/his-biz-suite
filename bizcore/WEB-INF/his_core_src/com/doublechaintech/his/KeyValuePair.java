@@ -16,7 +16,15 @@ public class KeyValuePair {
 	private String key;
 	private Object value;
 	
+	public KeyValuePair() {
+		super();
+	}
 	
+	public KeyValuePair(String key, Object value) {
+		super();
+		this.key = key;
+		this.value = value;
+	}
 	
 }
 

@@ -4,6 +4,7 @@ package com.doublechaintech.his.formmessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
 import com.doublechaintech.his.BaseEntity;
@@ -115,6 +116,26 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+
+
+	
+	public Object propertyOf(String property) {
+     	
+		if(TITLE_PROPERTY.equals(property)){
+			return getTitle();
+		}
+		if(FORM_PROPERTY.equals(property)){
+			return getForm();
+		}
+		if(LEVEL_PROPERTY.equals(property)){
+			return getLevel();
+		}
+
+    		//other property not include here
+		return super.propertyOf(property);
+	}
+    
+    
 
 
 	

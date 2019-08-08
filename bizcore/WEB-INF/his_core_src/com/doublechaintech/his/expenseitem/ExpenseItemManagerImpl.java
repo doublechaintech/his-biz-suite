@@ -432,20 +432,20 @@ public class ExpenseItemManagerImpl extends CustomHisCheckerManager implements E
  //--------------------------------------------------------------
 	
 	 	
- 	protected ExpenseType loadExpenseType(HisUserContext userContext, String newExpenseTypeId, Map<String,Object> options) throws Exception
+ 	protected Hospital loadHospital(HisUserContext userContext, String newHospitalId, Map<String,Object> options) throws Exception
  	{
 		
- 		return userContext.getDAOGroup().getExpenseTypeDAO().load(newExpenseTypeId, options);
+ 		return userContext.getDAOGroup().getHospitalDAO().load(newHospitalId, options);
  	}
  	
  	
  	
 	
 	 	
- 	protected Hospital loadHospital(HisUserContext userContext, String newHospitalId, Map<String,Object> options) throws Exception
+ 	protected ExpenseType loadExpenseType(HisUserContext userContext, String newExpenseTypeId, Map<String,Object> options) throws Exception
  	{
 		
- 		return userContext.getDAOGroup().getHospitalDAO().load(newHospitalId, options);
+ 		return userContext.getDAOGroup().getExpenseTypeDAO().load(newExpenseTypeId, options);
  	}
  	
  	

@@ -42,6 +42,15 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorScheduleDAO{
  
  	
+ 	private  PeriodDAO  periodDAO;
+ 	public void setPeriodDAO(PeriodDAO periodDAO){
+	 	this.periodDAO = periodDAO;
+ 	}
+ 	public PeriodDAO getPeriodDAO(){
+	 	return this.periodDAO;
+ 	}
+ 
+ 	
  	private  DoctorDAO  doctorDAO;
  	public void setDoctorDAO(DoctorDAO doctorDAO){
 	 	this.doctorDAO = doctorDAO;
@@ -51,12 +60,12 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
  	}
  
  	
- 	private  PeriodDAO  periodDAO;
- 	public void setPeriodDAO(PeriodDAO periodDAO){
-	 	this.periodDAO = periodDAO;
+ 	private  HospitalDAO  hospitalDAO;
+ 	public void setHospitalDAO(HospitalDAO hospitalDAO){
+	 	this.hospitalDAO = hospitalDAO;
  	}
- 	public PeriodDAO getPeriodDAO(){
-	 	return this.periodDAO;
+ 	public HospitalDAO getHospitalDAO(){
+	 	return this.hospitalDAO;
  	}
  
  	
@@ -75,15 +84,6 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
  	}
  	public DepartmentDAO getDepartmentDAO(){
 	 	return this.departmentDAO;
- 	}
- 
- 	
- 	private  HospitalDAO  hospitalDAO;
- 	public void setHospitalDAO(HospitalDAO hospitalDAO){
-	 	this.hospitalDAO = hospitalDAO;
- 	}
- 	public HospitalDAO getHospitalDAO(){
-	 	return this.hospitalDAO;
  	}
 
 

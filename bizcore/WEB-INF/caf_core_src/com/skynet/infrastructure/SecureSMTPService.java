@@ -30,6 +30,7 @@ import javax.mail.internet.MimeUtility;
 import javax.mail.util.ByteArrayDataSource;
 
 import com.terapico.caf.BlobObject;
+import com.terapico.utils.TextUtil;
 
 public class SecureSMTPService extends DefaultSMTPService {
 
@@ -114,7 +115,7 @@ public class SecureSMTPService extends DefaultSMTPService {
 		// Replase the value assigned to smtpHostName String with your
 		// smtphost name
 		// eg : String smtpHostName="121.34.56.78";
-		String fromAddress = "report@bettbio.com";
+		String fromAddress = TextUtil.getExtVariable("SMTP_USERNAME", "report@bettbio.com");
 		String smtpHost="smtp.bettbio.com";
 		props.put("mail.smtp.from", "report@bettbio.com");
 		props.put("mail.smtp.host", "42.120.219.29");

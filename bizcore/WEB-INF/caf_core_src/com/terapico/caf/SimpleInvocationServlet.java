@@ -40,11 +40,16 @@ public class SimpleInvocationServlet extends HttpServlet {
 		long javaCallInterval = System.currentTimeMillis();
 		render(request, response, result);
 		long renderCallInterval = System.currentTimeMillis();
-
-		logInfo("#########################################The call took: "
-
-				+ (renderCallInterval - start) + "ms/" + (javaCallInterval - start) + "ms/"
-				+ (renderCallInterval - javaCallInterval) + "ms for TOTAL/BACKEND/RENDERING");
+		String logContent  = String.format(
+				"#########################################Took: %d/%d/%d of TOTAL/BACKEND/RENDERING for '%s' in millisecodns",
+				
+				 (renderCallInterval - start) ,
+				 (javaCallInterval - start),
+				 (renderCallInterval - javaCallInterval),request.getRequestURL().toString()
+				);
+		
+				
+		logInfo(logContent);
 		
 	}
 	@Override

@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.BeanCreationException;
+
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -176,11 +178,12 @@ public class ServletResultRenderer {
 	protected ObjectMapper getObjectMapper() {
 		if (objectMapper == null) {
 			objectMapper = new ObjectMapper();
+			return objectMapper;
 			// DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			// objectMapper.setDateFormat(df);
 		}
 
-		return objectMapper;
+		return objectMapper.copy();
 
 	}
 
@@ -196,7 +199,13 @@ public class ServletResultRenderer {
 		response.addHeader("Access-Control-Allow-Credentials", "true");
 
 	}
-
+	protected String renderLogResult(Object value) {
+		if(ReflectionTool.isPrimaryType(value.getClass())) {
+			return value.toString();
+		}
+		return "<Object>";
+		
+	}
 	protected void renderJson(InvocationResult result, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -211,8 +220,11 @@ public class ServletResultRenderer {
 		response.addHeader("X-Class", renderClass);
 		response.addHeader("Access-Control-Expose-Headers", "X-Class");
 		// Access-Control-Expose-Headers
-
-		log("Render JSON result with class: " + renderClass);
+		
+		log("Render JSON result with class: " + renderClass+"("+renderLogResult(result.getActualResult())+")");
+		//BeanCreationException
+		
+		
 		// Access-Control-Allow-Origin
 		fillOrigin(result, request, response);
 		// Access-Control-Allow-Credentials: true
@@ -226,6 +238,9 @@ public class ServletResultRenderer {
 			}
 		}
 
+		
+		
+		
 		// Gson gson = new Gson();
 		ObjectMapper mapper = getObjectMapper();
 		// Type t=new TypeToken<weather.WeatherResponse>().getType();
@@ -238,6 +253,16 @@ public class ServletResultRenderer {
 		 */
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.setSerializationInclusion(Include.NON_NULL);
+		
+		if(result.getActualResult() instanceof BeanCreationException) {
+			Message message =  constructionBeanCreateMessage();
+			String json = mapper.writeValueAsString(message);
+			response.setContentLength(json.getBytes(StandardCharsets.UTF_8).length);
+			response.getWriter().print(json);
+			return;
+		}
+		
+		
 		String json = mapper.writeValueAsString(result.getActualResult());
 		log("Render JSON result with size: " + json.length());
 		// log("Render JSON result: "+ json);
@@ -246,6 +271,14 @@ public class ServletResultRenderer {
 
 		return;
 
+	}
+	protected Message constructionBeanCreateMessage() {
+		Message message =  new Message();
+		message.setLevel("fatal");
+		message.setSourcePosition("spring configuration xml files");
+		message.setBody("Bean Creation Error, please check it from server side");
+		
+		return message;
 	}
 
 	private void log(String header) {

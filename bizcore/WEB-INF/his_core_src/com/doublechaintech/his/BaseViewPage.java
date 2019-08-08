@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.terapico.caf.viewcomponent.BaseViewComponent;
 import com.terapico.caf.viewcomponent.ButtonViewComponent;
 import com.terapico.caf.viewcomponent.FilterTabsViewComponent;
@@ -24,7 +29,32 @@ import com.terapico.utils.TextUtil;
 public abstract class BaseViewPage extends HashMap<String, Object> {
 	public static final String X_EMPTY_MESSAGE = "emptyMessage";
 	public static final String X_NEXT_PAGE_URL = "nextPageUrl";
+	private static final boolean OBJECT_HASHCODE = false;
 	
+	public void addHashCode(Map<String, Object> resultMap) {
+		if (resultMap == null || resultMap.isEmpty()) {
+			return;
+		}
+		String hashCode = calcResultMapHashCode(resultMap);
+		resultMap.put("hashCode", hashCode);
+	}
+	
+	protected String calcResultMapHashCode(Map<String, Object> resultMap) {
+		String str = "";
+		try {
+			str = getObjectMapper().writeValueAsString(resultMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return "HC"+str.hashCode();
+	}
+	protected ObjectMapper getObjectMapper() {
+		ObjectMapper _mapper = new ObjectMapper();
+        _mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        _mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        _mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        return _mapper;
+	}
 	public interface CustomSerializer {
 		Object serialize(SerializeScope serializeScope, Object value, String path);
 	}
@@ -72,10 +102,11 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	protected void beforeDoRendering() {
 		userContext.setResponseHeader("x-actor-class", this.getClass().getName());
 		addFieldToOwner(this, null, "pageTitle", this.getPageTitle());
+		addFieldToOwner(this, null, "linkToUrl", this.getLinkToUrl());
 	}
 
 	protected void afterDoRendering() {
-		// By default, nothing to do
+		this.addHashCode(this);
 	}
 
 	protected abstract SerializeScope getSerializeScope();
@@ -98,10 +129,20 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 			if ("object".equals(scope.getForceWhenEmpty())) {
 				owner.put(fieldName, new HashMap<String, Object>());
 			}
+			if ("string".equals(scope.getForceWhenEmpty())) {
+				owner.put(fieldName, "");
+			}
 			return;
 		}
 
-		owner.put(fieldName, fieldValue);
+		if (shouldMoveUp(scope, fieldValue)) {
+			owner.putAll((Map) fieldValue);
+		}else {
+			owner.put(fieldName, fieldValue);
+		}
+	}
+	protected boolean shouldMoveUp(SerializeScope scope, Object fieldValue) {
+		return scope != null && scope.isMoveUp() && fieldValue instanceof Map;
 	}
 
 	protected boolean isEmptyValue(Object fieldValue) {
@@ -154,6 +195,9 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		dataMap.forEach((key, value) -> {
 			handleOneData(resultMap, srlScope, path, key, value);
 		});
+		if (OBJECT_HASHCODE) {
+			addHashCode(resultMap);
+		}
 	}
 
 	protected void handleOneData(Map<String, Object> resultMap, SerializeScope srlScope, String path, String key,
@@ -230,14 +274,14 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 				return ((BigInteger)value).negate();
 			}
 			if (value instanceof String) {
-				return new StringBuffer((int) value).reverse().toString();
+				return new StringBuffer((String) value).reverse().toString();
 			}
 			// 其他数据类型忽略 reverse()
 		}
 		return value;
 	}
 
-	protected Object doRenderingBaseEntity(SerializeScope scope, BaseEntity value, String path) {
+	protected Map<String, Object> doRenderingBaseEntity(SerializeScope scope, BaseEntity value, String path) {
 		if (value == null) {
 			return null;
 		}
@@ -251,6 +295,9 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		}
 		// 再序列化附加字段
 		doRenderingMap(resultMap, scope, value.getValueMap(), path);
+		if (OBJECT_HASHCODE) {
+			addHashCode(resultMap);
+		}
 		return resultMap;
 	}
 
@@ -327,7 +374,10 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 				addFieldToOwner(metaData, fieldScope, X_NEXT_PAGE_URL,
 						dataList.valueByKey(X_NEXT_PAGE_URL));
 				if (resultList instanceof List) {
-					((List) resultList).remove(((List) resultList).size() - 1);
+					Map skey = (Map) ((List) resultList).remove(((List) resultList).size() - 1);
+					if (fieldScope.isPutInDataContainer()) {
+						dataContainer.remove(skey.get("id"));
+					}
 				}
 			} else {
 				metaData.put("hasNextPage", false);
@@ -452,8 +502,14 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 	
 	public Map<String, Object> serializeObject(Object object, SerializeScope serializeScope) {
 		Map<String, Object> resultMap = new HashMap<>();
-		SerializeScope ssWrapper = SerializeScope.INCLUDE().field("data", serializeScope);
+		SerializeScope ssWrapper = SerializeScope.INCLUDE().field("data", serializeScope).noListMeta();
 		handleOneData(resultMap, ssWrapper, "/", "data", object);
+		if (object instanceof Collection) {
+			return resultMap;
+		}
+		if (object != null && object.getClass().isArray()) {
+			return resultMap;
+		}
 		return (Map<String, Object>) resultMap.get("data");
 	}
 	
@@ -462,8 +518,24 @@ public abstract class BaseViewPage extends HashMap<String, Object> {
 		return tmpPage.serializeObject(object, serializeScope);
 	}
 	
+	public static Map<String, Object> serializeObjectNow(Object object, SerializeScope serializeScope) {
+        return serialize(object, serializeScope);
+    }
+
+
+    public static Map<String, Object> serializeObject(Object object, String... fields) {
+        SerializeScope scope = SerializeScope.INCLUDE();
+
+        if (fields != null) {
+            for (String field : fields) {
+                scope.field(field);
+            }
+        }
+        return serializeObjectNow(object, scope);
+    }
+    
 	protected void forceResponseAsListOfPage() {
-		userContext.forceResponseXClassHeader("com.terapico.moyi.appview.ListOfPage");
+		userContext.forceResponseXClassHeader("com.terapico.appview.ListOfPage");
 	}
 }
 

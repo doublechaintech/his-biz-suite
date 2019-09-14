@@ -62,7 +62,7 @@ export default {
     },
     selectApp(state, action) {
       console.log(action);
-      // const targetAppExpr = sessionStorage.getItem('targetApp');
+      //const targetAppExpr = sessionStorage.getItem('targetApp');
       const targetApp = action.payload.targetApp;
       const menuData = action.payload.menuData;
       const location = action.payload.location.pathname;
@@ -73,7 +73,7 @@ export default {
 
       const currentBreadcrumb = sessionObject(targetApp.id) || [];
 
-      // this is a new app
+      //this is a new app
       sessionObject('targetApp', targetApp);
       sessionObject('menuData', menuData);
 

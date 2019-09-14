@@ -306,11 +306,3 @@ componentDidMount() {
 export default Form.create()(LoginHistorySearchForm)
 
 
-
-
-
-
-
-
-
-

@@ -4,7 +4,6 @@ export default {
   entry: 'src/index.js',
   extraBabelPlugins: [
     ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
-    ['@babel/plugin-proposal-decorators', { legacy: true }],
   ],
   env: {
     development: {

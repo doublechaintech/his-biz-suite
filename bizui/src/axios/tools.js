@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import { message } from 'antd';
 import { SYSTEM_SHORT_NAME } from './config';
@@ -7,7 +8,7 @@ import PictureEdit from '../components/PictureEdit';
 import ImageUpload from '../components/ImageUpload';
 import OssPictureEdit from '../components/OSSPictureEdit';
 
-export const ImageComponent = OssPictureEdit;
+export const ImageComponent = OssPictureEdit
 //for BBT only
 //export const ImageComponent = ImageUpload;
 
@@ -56,10 +57,10 @@ export const get3 = ({ url, msg = '接口异常', headers }) =>
       console.log(err);
       message.warn(msg);
     });
-// const headers = { 'X-App-Version':"35",'Content-Type': 'application/x-www-form-urlencoded' }
+
 export const get = ({ url, msg = '接口异常', headers }) =>
   axios
-    .get(url, { headers: { 'X-App-Version': 35 } })
+    .get(url, headers)
     .then(function(res) {
       console.log('http headers', res.headers);
       const clazz = res.headers['x-class'];
@@ -77,69 +78,79 @@ export const get = ({ url, msg = '接口异常', headers }) =>
 
 export const getURLPrefix = () => {
   const url = new URL(window.location);
-
+  if (url.hostname === 'clariones.doublechaintech.com') {
+    //return `http://${url.hostname}:8080/naf/`
+    return `http://clariones.doublechaintech.com/naf/`;
+  }
+  if (url.hostname === '30.30.126.37') {
+    return `http://${url.hostname}:8080/naf/`;
+  }
   if (url.hostname === 'localhost') {
-    return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`;
+    return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`
   }
   if (url.hostname === '127.0.0.1') {
-    return `https://demo.doublechaintech.com/${SYSTEM_SHORT_NAME}/`;
+    return `https://demo.doublechaintech.com/${SYSTEM_SHORT_NAME}/`
   }
+  //return `http://xm.jl51.com.cn/cis/`
+
   return `${url.origin}/${SYSTEM_SHORT_NAME}/`;
+  //return `${url.origin}/${SYSTEM_SHORT_NAME}/`
 };
 
-export const joinParameters = parameters => {
-  const obj = parameters; // {value1: 'prop1', value2: 'prop2', value3: 'prop3'}
-  const arr = [];
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      arr.push(`${key}=${encodeURIComponent(obj[key])}`);
+export const joinParameters = (parameters) => {
+    const obj = parameters // {value1: 'prop1', value2: 'prop2', value3: 'prop3'}
+    const arr = []
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            arr.push(`${key}=${encodeURIComponent(obj[key])}`)
+        }
     }
-  }
-  const result = arr.join(';');
-  return result;
-};
-const formatPostData = value => {
-  console.log('value', value);
-
-  if (typeof value === 'undefined') {
-    return null;
-  }
-  if (value == null) {
-    return null;
-  }
-
-  if (value._isAMomentObject) {
-    return moment(value).format('YYYY-MM-DDTHH:mm:ss');
-  }
-
-  return value;
-};
-export const joinPostParameters = parameters => {
-  const obj = parameters; // {value1: 'prop1', value2: 'prop2', value3: 'prop3'}
-  console.log('joinPostParameters', parameters);
-  const arr = [];
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const value = obj[key];
-
-      const postValue = formatPostData(value);
-      if (value == null) {
-        continue;
-      }
-      if (!Array.isArray(value)) {
-        arr.push(key + '=' + encodeURIComponent(postValue));
-        continue;
-      }
-      for (const subKey in value) {
-        const subvalue = value[subKey];
-        arr.push(key + '=' + encodeURIComponent(subvalue));
-      }
+    const result = arr.join(';')
+    return result
+}
+const formatPostData = (value) => {
+    console.log("value", value)
+  
+    if (typeof value == 'undefined'){
+      return null
     }
-  }
+    if(value==null){
+      return null
+    }
 
+    if(value._isAMomentObject){
+        return moment(value).format('YYYY-MM-DDTHH:mm:ss');
+    }
+    
+  
+    return value
+}
+export const joinPostParameters = (parameters) => {
+    const obj = parameters // {value1: 'prop1', value2: 'prop2', value3: 'prop3'}
+    console.log("joinPostParameters",parameters)
+    const arr = []
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key]
+            
+            const postValue = formatPostData(value)
+            if(value==null){
+              continue
+            }
+            if (!Array.isArray(value)) {
+                arr.push(key + '=' + encodeURIComponent(postValue))
+                continue
+            }
+            for (const subKey in value) {
+                const subvalue = value[subKey]
+                arr.push(key + '=' + encodeURIComponent(subvalue))
+            }
+        }
+    }
+  
   const result = arr.join('&');
   return result;
-};
+}
 
 export const PREFIX = getURLPrefix();
 /**
@@ -159,19 +170,23 @@ export const PREFIX = getURLPrefix();
     headers,
   })*/
 
-export const postForm = ({ url, requestParameters, msg = '接口异常' }) => {
-  const headers = { 'X-App-Version': '35', 'Content-Type': 'application/x-www-form-urlencoded' };
-  const options = { headers };
+
+export const postForm = ({ url, requestParameters, msg = '接口异常'})=>{
+
+  
+  const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
   return post({
     url,
     data: joinPostParameters(requestParameters),
-    options,
-  });
-};
+    headers,
+  })
+}
 
-export const post = ({ url, data, msg = '接口异常', options }) =>
+
+
+export const post = ({ url, data, msg = '接口异常', headers }) =>
   axios
-    .post(url, data, options)
+    .post(url, data, headers)
     .then(res => res.data)
     .catch(err => {
       console.log(err);
@@ -245,7 +260,7 @@ export const mapBackToImageValuesSkynetMediaServer = convertedImagesValues => {
   return targetImages;
 };
 //export const mapBackToImageValues = mapBackToImageValuesSkynetMediaServer;
-export const mapBackToImageValues = mapBackToImageValuesFlatResponse;
+export  const mapBackToImageValues = mapBackToImageValuesFlatResponse;
 //BBT
 
 export const mapFromImageValues = (selectedRow, imageKeys) => {
@@ -263,7 +278,9 @@ export const mapFromImageValues = (selectedRow, imageKeys) => {
   return targetImages;
 };
 
-export function playSound(sound) {
-  var audio = new Audio(sound + '.mp3');
+
+
+export function playSound(sound){
+  var audio = new Audio(sound+'.mp3');
   audio.play();
 }

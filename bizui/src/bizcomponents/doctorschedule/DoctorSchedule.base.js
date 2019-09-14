@@ -53,7 +53,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'doctorSchedule') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '33',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.doctor, dataIndex: 'doctor', render: (text, record) => renderReferenceCell(text, record), sorter:true},
   { title: fieldLabels.scheduleDate, dataIndex: 'scheduleDate', render: (text, record) =>renderDateCell(text,record), sorter: true },
@@ -70,34 +70,31 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(doctorSchedule,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={doctorSchedule.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={doctorSchedule.id}>
-	
-	<DescriptionList  key={doctorSchedule.id} size="small" col="4">
-<Description term="ID">{doctorSchedule.id}</Description> 
-<Description term="名称">{doctorSchedule.name}</Description> 
-<Description term="医生">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.doctor.displayName}(${doctorSchedule.doctor.id})`}
-</Description>
-<Description term="安排日期">{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</Description> 
-<Description term="期">{doctorSchedule.period==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.period.displayName}(${doctorSchedule.period.id})`}
-</Description>
-<Description term="部门">{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.department.displayName}(${doctorSchedule.department.id})`}
-</Description>
-<Description term="可用">{doctorSchedule.available}</Description> 
-<Description term="价格">{doctorSchedule.price}</Description> 
-<Description term="费用类型">{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.expenseType.displayName}(${doctorSchedule.expenseType.id})`}
-</Description>
-<Description term="创建时间">{ moment(doctorSchedule.createTime).format('YYYY-MM-DD')}</Description> 
-<Description term="更新时间">{ moment(doctorSchedule.updateTime).format('YYYY-MM-DD')}</Description> 
+      <DescriptionList  key={doctorSchedule.id} size="small" col="4">
+        <Description term="ID">{doctorSchedule.id}</Description> 
+        <Description term="名称">{doctorSchedule.name}</Description> 
+        <Description term="医生"><div>{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.doctor.displayName}(${doctorSchedule.doctor.id})`}
+        </div></Description>
+        <Description term="安排日期"><div>{ moment(doctorSchedule.scheduleDate).format('YYYY-MM-DD')}</div></Description> 
+        <Description term="期"><div>{doctorSchedule.period==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.period.displayName}(${doctorSchedule.period.id})`}
+        </div></Description>
+        <Description term="部门"><div>{doctorSchedule.department==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.department.displayName}(${doctorSchedule.department.id})`}
+        </div></Description>
+        <Description term="可用"><div style={{"color":"red"}}>{doctorSchedule.available}</div></Description> 
+        <Description term="价格"><div style={{"color":"red"}}>{doctorSchedule.price}</div></Description> 
+        <Description term="费用类型"><div>{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.expenseType.displayName}(${doctorSchedule.expenseType.id})`}
+        </div></Description>
+        <Description term="创建时间"><div>{ moment(doctorSchedule.createTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
+        <Description term="更新时间"><div>{ moment(doctorSchedule.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

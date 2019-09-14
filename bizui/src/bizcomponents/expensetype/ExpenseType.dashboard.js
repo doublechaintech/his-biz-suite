@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-import BooleanOption from 'components/BooleanOption';
+import BooleanOption from '../../components/BooleanOption';
 import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal } from 'antd'
 import { Link, Route, Redirect} from 'dva/router'
 import numeral from 'numeral'
@@ -88,7 +88,7 @@ const internalSummaryOf = (expenseType,targetComponent) =>{
 <Description term="名称">{expenseType.name}</Description> 
 <Description term="辅助识字课">{expenseType.helperChars}</Description> 
 <Description term="状态">{expenseType.status}</Description> 
-<Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD')}</Description> 
+<Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD HH:mm')}</Description> 
 	
         {buildTransferModal(expenseType,targetComponent)}
       </DescriptionList>
@@ -155,10 +155,10 @@ class ExpenseTypeDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
+        {imageListOf(cardsData.cardsSource)}  
         {quickFunctions(cardsData)} 
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
         {renderSubjectList(cardsData)}       
         {largeTextOf(cardsData.cardsSource)}
         {renderExtraFooter(cardsData.cardsSource)}

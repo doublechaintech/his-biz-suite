@@ -47,7 +47,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'expenseItem') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '9',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.price, dataIndex: 'price', className:'money', render: (text, record) => renderMoneyCell(text, record), sorter: true  },
   { title: fieldLabels.expenseType, dataIndex: 'expenseType', render: (text, record) => renderReferenceCell(text, record), sorter:true},
@@ -58,25 +58,22 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(expenseItem,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={expenseItem.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={expenseItem.id}>
-	
-	<DescriptionList  key={expenseItem.id} size="small" col="4">
-<Description term="ID">{expenseItem.id}</Description> 
-<Description term="名称">{expenseItem.name}</Description> 
-<Description term="价格">{expenseItem.price}</Description> 
-<Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
-</Description>
-<Description term="更新时间">{ moment(expenseItem.updateTime).format('YYYY-MM-DD')}</Description> 
+      <DescriptionList  key={expenseItem.id} size="small" col="4">
+        <Description term="ID">{expenseItem.id}</Description> 
+        <Description term="名称">{expenseItem.name}</Description> 
+        <Description term="价格"><div style={{"color":"red"}}>{expenseItem.price}</div></Description> 
+        <Description term="费用类型"><div>{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
+        </div></Description>
+        <Description term="更新时间"><div>{ moment(expenseItem.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

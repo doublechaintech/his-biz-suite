@@ -49,7 +49,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'expenseType') , sorter: true },
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'expenseType') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.helperChars, debugtype: 'string', dataIndex: 'helperChars', width: '7',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.status, debugtype: 'string', dataIndex: 'status', width: '6',render: (text, record)=>renderTextCell(text,record)},
@@ -61,24 +61,21 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(expenseType,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={expenseType.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={expenseType.id}>
-	
-	<DescriptionList  key={expenseType.id} size="small" col="4">
-<Description term="ID">{expenseType.id}</Description> 
-<Description term="名称">{expenseType.name}</Description> 
-<Description term="辅助识字课">{expenseType.helperChars}</Description> 
-<Description term="状态">{expenseType.status}</Description> 
-<Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD')}</Description> 
+      <DescriptionList  key={expenseType.id} size="small" col="4">
+        <Description term="ID">{expenseType.id}</Description> 
+        <Description term="名称">{expenseType.name}</Description> 
+        <Description term="辅助识字课">{expenseType.helperChars}</Description> 
+        <Description term="状态">{expenseType.status}</Description> 
+        <Description term="更新时间"><div>{ moment(expenseType.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

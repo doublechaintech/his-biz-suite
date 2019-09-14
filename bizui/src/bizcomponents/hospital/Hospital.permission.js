@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-import BooleanOption from 'components/BooleanOption';
+import BooleanOption from '../../components/BooleanOption';
 import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal } from 'antd'
 import { Link, Route, Redirect} from 'dva/router'
 import numeral from 'numeral'
@@ -36,7 +36,13 @@ const internalSummaryOf = (hospital,targetComponent) =>{
       </DescriptionList>
 	)
 }
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  
+  
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} </div>)
 
+}
 
 const renderPermissionSetting = hospital => {
   const {HospitalBase} = GlobalComponents
@@ -55,14 +61,15 @@ class HospitalPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  hospital = this.props.hospital;
+    const  {hospital} = this.props
     const { id,displayName, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = hospital
-    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,
+    // const { returnURL } = this.props
+    const  returnURL = `/hospital/${id}/dashboard`
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",
+    	cardsSource: this.props.hospital,returnURL,displayName,
   		subItems: [
-{name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', data: hospital.expenseTypeList},
-{name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period', data: hospital.periodList},
-{name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: hospital.expenseItemList},
-{name: 'departmentList', displayName:'部门',type:'department',count:departmentCount,addFunction: true, role: 'department', data: hospital.departmentList},
+{name: 'doctorList', displayName:'医生',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor',  renderItem: GlobalComponents.DoctorBase.renderItemOfList},
+{name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule',  renderItem: GlobalComponents.DoctorScheduleBase.renderItemOfList},
     
       	],
   	};
@@ -72,7 +79,7 @@ class HospitalPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

@@ -47,7 +47,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'doctor') , sorter: true },
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'doctor') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '7',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.shotImage, dataIndex: 'shotImage', render: (text, record) => renderImageCell(text,record,'拍摄的图像') },
   { title: fieldLabels.hospital, dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record), sorter:true},
@@ -57,22 +57,19 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(doctor,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={doctor.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={doctor.id}>
-	
-	<DescriptionList  key={doctor.id} size="small" col="4">
-<Description term="ID">{doctor.id}</Description> 
-<Description term="名称">{doctor.name}</Description> 
-<Description term="更新时间">{ moment(doctor.updateTime).format('YYYY-MM-DD')}</Description> 
+      <DescriptionList  key={doctor.id} size="small" col="4">
+        <Description term="ID">{doctor.id}</Description> 
+        <Description term="名称">{doctor.name}</Description> 
+        <Description term="更新时间"><div>{ moment(doctor.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

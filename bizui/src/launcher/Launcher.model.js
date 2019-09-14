@@ -5,6 +5,8 @@ import LauncherService from './Launcher.service';
 import GlobalComponents from '../custcomponents';
 import SystemConfig from '../axios/config';
 import defaultLocaleName from './Launcher.locale';
+
+
 let currentLocation = '';
 
 const launcherLocaleName = defaultLocaleName; //you can define your version here to replace default
@@ -96,12 +98,8 @@ export default {
         yield put({ type: 'showhome', payload: { data } });
         return;
       }
-
       const locationPath = calcLocationPath(data.class, data.id, 'dashboard');
       const location = { pathname: `/${locationPath}`, state: data };
-      const menuData = calcMenuData(data.class);
-      const targetApp = { id: data.id, title: data.displayName };
-      yield put({ type: 'breadcrumb/selectApp', payload: { targetApp, location, menuData } });
       yield put(routerRedux.push(location));
     },
     *gotoApp({ payload }, { call, put }) {

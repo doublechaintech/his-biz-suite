@@ -45,14 +45,14 @@ const removeExpenseTypeList = (targetObjectId, parameters) => {
 
 
 const addPeriod = (targetObjectId, parameters) => {
-  const url = `${PREFIX}hospitalManager/addPeriod/hospitalId/name/tokensExpr/`
+  const url = `${PREFIX}hospitalManager/addPeriod/hospitalId/name/code/tokensExpr/`
   const hospitalId = targetObjectId
   const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})
 }
 
 const updatePeriod = (targetObjectId, parameters) => {
-  const url = `${PREFIX}hospitalManager/updatePeriodProperties/hospitalId/id/name/tokensExpr/`
+  const url = `${PREFIX}hospitalManager/updatePeriodProperties/hospitalId/id/name/code/tokensExpr/`
   const hospitalId = targetObjectId
   const requestParameters = { ...parameters, hospitalId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

@@ -14,7 +14,7 @@ export default {
     },
     effects: {
       *executeAction({ payload }, { call, put }) { 
-        // const {ProvinceService} = GlobalComponents;
+        //const {ProvinceService} = GlobalComponents;
         const {action, url,successAction}= payload
         if(!url){
             return
@@ -22,7 +22,7 @@ export default {
        // yield put({ type: 'showLoading', payload })
         const data = yield call(ActionCenterService.execute, payload.url)
         console.log("action center received data",data) 
-        // const {successAction} = payload.successAction
+        //const {successAction} = payload.successAction
         notification.success({
             message: `${action.actionName}成功`,
             description: `${action.actionName}执行成功`,

@@ -1,4 +1,32 @@
--- BUILD WITH MODEL TIME 190326T1029
+-- BUILD WITH MODEL TIME 190825T0024
+
+create database if not exists his_190825T002444;
+use his_190825T002444
+-- use table_name as parameter does not work :(-, changed to t_name then works
+drop PROCEDURE if exists  BACKUP;
+DELIMITER $$  
+CREATE PROCEDURE BACKUP()  
+BEGIN  
+	DECLARE t_name varchar(160);
+	DECLARE done INT DEFAULT FALSE;
+	DECLARE cur CURSOR FOR SELECT TABLE_NAME  FROM information_schema.tables  WHERE table_schema='his';
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=TRUE;
+	OPEN cur;
+	read_loop: LOOP
+ 		FETCH cur INTO t_name;
+ 		IF done THEN
+      		LEAVE read_loop;
+    	END IF;
+ 		set @renamestat=concat("rename table his.",t_name," to his_190825T002444.",t_name);
+ 		PREPARE stmt FROM @renamestat; 
+ 		execute stmt;
+ 	END LOOP;
+ 	CLOSE cur;
+END$$  
+DELIMITER ;
+
+call BACKUP;
+
 drop database  if exists his;
 create database his;
 -- alter  database his  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -31,6 +59,7 @@ drop table  if exists period_data;
 create table period_data (
 	id                            	varchar(48)          not null            comment 'ID',
 	name                          	varchar(8)                               comment '名称',
+	code                          	varchar(36)                              comment '代码',
 	hospital                      	varchar(48)                              comment '医院',
 	version                       	int                                      comment '版本',
 	primary key(id)
@@ -272,6 +301,25 @@ create table form_action_data (
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = "表单动作";
 
+drop table  if exists candidate_container_data;
+create table candidate_container_data (
+	id                            	varchar(48)          not null            comment 'ID',
+	name                          	varchar(28)                              comment '名称',
+	version                       	int                                      comment '版本',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = "候选人容器";
+
+drop table  if exists candidate_element_data;
+create table candidate_element_data (
+	id                            	varchar(48)          not null            comment 'ID',
+	name                          	varchar(200)                             comment '名称',
+	type                          	varchar(200)                             comment '类型',
+	image                         	varchar(512) CHARACTER SET ascii COLLATE ascii_general_ci                     comment '图片',
+	container                     	varchar(48)                              comment '容器',
+	version                       	int                                      comment '版本',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = "候选人元素";
+
 
 
 
@@ -279,40 +327,39 @@ insert into hospital_data values
 	('H000001','上和医院','毕升路22号','028-9123123','1');
 
 insert into expense_type_data values
-	('ET000001','诊疗费','zlf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-06-29 20:11:58','1'),
-	('ET000002','治疗费','zlf','停用','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-06-24 12:09:43','1'),
-	('ET000003','检查费','jcf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-07-08 08:15:35','1');
+	('ET000001','诊疗费','zlf','正常','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-08-17 10:53:17','1'),
+	('ET000002','治疗费','zlf','停用','H000001','    一段样例文字。    一段样例文字。\n可以分段。可以分段。\n\n可以空行。可以空行。\n\n','2019-08-15 15:32:31','1');
 
 insert into period_data values
-	('P000001','上午','H000001','1'),
-	('P000002','下午','H000001','1'),
-	('P000003','夜班','H000001','1');
+	('MORNING','上午','MORNING','H000001','1'),
+	('AFTERNOON','下午','AFTERNOON','H000001','1'),
+	('NIGHT','夜班','NIGHT','H000001','1');
 
 insert into expense_item_data values
-	('EI000001','专家诊疗费','95946694656.00','ET000001','H000001','2019-06-23 05:37:10','1'),
-	('EI000002','血常规','72410431488.00','ET000001','H000001','2019-07-12 16:15:58','1'),
-	('EI000003','煎药费','82742673408.00','ET000002','H000001','2019-07-08 14:32:43','1'),
-	('EI000004','专家诊疗费','75465998336.00','ET000003','H000001','2019-06-28 09:35:55','1');
+	('EI000001','专家诊疗费','86241296384.00','ET000001','H000001','2019-08-11 13:39:59','1'),
+	('EI000002','血常规','71704748032.00','ET000001','H000001','2019-08-11 19:37:03','1'),
+	('EI000003','煎药费','98750070784.00','ET000002','H000001','2019-08-12 00:12:53','1'),
+	('EI000004','专家诊疗费','80265617408.00','ET000002','H000001','2019-08-13 06:44:50','1');
 
 insert into doctor_data values
-	('D000001','魏松全','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-07-10 02:38:59','1'),
-	('D000002','魏松全0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-06-26 03:16:00','1');
+	('D000001','魏松全','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-08-24 13:12:16','1'),
+	('D000002','魏松全0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/snap.shot00/400/300/red/','H000001','2019-08-19 14:49:37','1');
 
 insert into department_data values
-	('D000001','放射科','H000001','2019-07-12 17:28:47','1'),
-	('D000002','放射科0002','H000001','2019-07-02 21:03:26','1');
+	('D000001','放射科','H000001','2019-08-11 19:44:25','1'),
+	('D000002','放射科0002','H000001','2019-08-13 19:34:16','1');
 
 insert into doctor_assignment_data values
-	('DA000001','魏松全在内分泌科室上','D000001','D000001','2019-07-11 08:57:21','1'),
-	('DA000002','魏松全在内分泌科室上0002','D000001','D000001','2019-07-03 10:30:23','1'),
-	('DA000003','魏松全在内分泌科室上0003','D000002','D000002','2019-07-13 12:44:43','1'),
-	('DA000004','魏松全在内分泌科室上0004','D000002','D000002','2019-07-01 02:05:57','1');
+	('DA000001','魏松全在内分泌科室上','D000001','D000001','2019-08-13 17:42:20','1'),
+	('DA000002','魏松全在内分泌科室上0002','D000001','D000001','2019-08-23 02:11:38','1'),
+	('DA000003','魏松全在内分泌科室上0003','D000002','D000002','2019-08-12 03:02:22','1'),
+	('DA000004','魏松全在内分泌科室上0004','D000002','D000002','2019-08-05 09:42:34','1');
 
 insert into doctor_schedule_data values
-	('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','D000001','2018-06-26','P000001','D000001','16','103.70','ET000001','2019-07-04 15:29:51','2019-06-27 19:26:11','H000001','1'),
-	('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','D000001','2017-07-29','P000001','D000001','17','116.94','ET000001','2019-07-04 23:01:29','2019-07-10 11:19:47','H000001','1'),
-	('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','D000002','2017-12-11','P000002','D000002','19','91.58','ET000002','2019-07-12 13:35:07','2019-07-09 17:58:30','H000001','1'),
-	('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','D000002','2019-05-08','P000003','D000002','20','98.06','ET000003','2019-07-02 18:50:28','2019-07-01 01:53:16','H000001','1');
+	('DS000001','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10','D000001','2018-02-15','MORNING','D000001','20','113.15','ET000001','2019-08-12 10:21:42','2019-08-21 14:20:04','H000001','1'),
+	('DS000002','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100002','D000001','2016-10-17','MORNING','D000001','15','94.98','ET000001','2019-08-24 16:38:52','2019-08-19 18:59:19','H000001','1'),
+	('DS000003','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100003','D000002','2017-11-21','AFTERNOON','D000002','17','92.89','ET000002','2019-08-24 02:59:02','2019-08-18 14:46:20','H000001','1'),
+	('DS000004','2019年3月11日魏松全在内分泌科坐班收诊疗费,每个100004','D000002','2018-03-15','NIGHT','D000002','20','116.74','ET000002','2019-08-13 14:36:06','2019-08-17 22:56:10','H000001','1');
 
 insert into user_domain_data values
 	('UD000001','用户区域','1');
@@ -322,45 +369,43 @@ insert into user_white_list_data values
 	('UWL000002','13808188512','tester;ios-spokesperson0002','UD000001','1');
 
 insert into sec_user_data values
-	('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','wx123456789abcdefghijklmn','wxapp12098410239840','jwt_token_12345678','0','2019-07-13 08:36:26','2019-07-02 07:51:33','UD000001',NULL,'BLOCKED','1'),
-	('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','wx123456789abcdefghijklmn0002','wxapp120984102398400002','jwt_token_123456780002','9999999','2019-07-14 11:27:07','2019-07-07 15:30:19','UD000001',NULL,'BLOCKED0002','1');
+	('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','wx123456789abcdefghijklmn','wxapp12098410239840','jwt_token_12345678','0','2019-08-05 20:55:51','2019-08-10 01:31:21','UD000001',NULL,'BLOCKED','1'),
+	('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','wx123456789abcdefghijklmn0002','wxapp120984102398400002','jwt_token_123456780002','9999999','2019-08-15 23:17:41','2019-08-14 18:49:55','UD000001',NULL,'BLOCKED0002','1');
 
 insert into sec_user_blocking_data values
-	('SUB000001','currentUser()','2019-07-03 05:41:32','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+	('SUB000001','currentUser()','2019-08-05 00:18:09','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 insert into user_app_data values
 	('UA000001','审车平台','SU000001','users','1','MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1'),
 	('UA000002','账户管理','SU000001','bank','1','MXWR','UserDomain','UD000001','/link/to/app0002','1'),
-	('UA000003','接车公司','SU000001','wechat','1','MXWR','CarReceivingServiceCompany','CRSC000001','/link/to/app0003','1'),
-	('UA000004','审车公司','SU000002','bar-chart','1','MXWR','CarInspectionServiceCompany','CISC000001','/link/to/app0004','1'),
-	('UA000005','维修公司','SU000002','user','1','MXWR','CarRepairingServiceCompany','CRSC000001','/link/to/app0005','1'),
-	('UA000006','顾客','SU000002','users','1','MXWR','CustomerInfo','CI000001','/link/to/app0006','1');
+	('UA000003','接车公司','SU000002','wechat','1','MXWR','CarReceivingServiceCompany','CRSC000001','/link/to/app0003','1'),
+	('UA000004','审车公司','SU000002','bar-chart','1','MXWR','CarInspectionServiceCompany','CISC000001','/link/to/app0004','1');
 
 insert into list_access_data values
 	('LA000001','列表','levelOneCategoryList','1','1','1','1','1','UA000001','1'),
 	('LA000002','列表0002','levelOneCategoryList0002','1','1','1','1','1','UA000001','1'),
 	('LA000003','列表0003','levelOneCategoryList0003','1','1','1','1','1','UA000002','1'),
-	('LA000004','列表0004','levelOneCategoryList0004','1','1','1','1','1','UA000003','1'),
-	('LA000005','列表0005','levelOneCategoryList0005','1','1','1','1','1','UA000004','1'),
-	('LA000006','列表0006','levelOneCategoryList0006','1','1','1','1','1','UA000004','1'),
-	('LA000007','列表0007','levelOneCategoryList0007','1','1','1','1','1','UA000005','1'),
-	('LA000008','列表0008','levelOneCategoryList0008','1','1','1','1','1','UA000006','1');
+	('LA000004','列表0004','levelOneCategoryList0004','1','1','1','1','1','UA000002','1'),
+	('LA000005','列表0005','levelOneCategoryList0005','1','1','1','1','1','UA000003','1'),
+	('LA000006','列表0006','levelOneCategoryList0006','1','1','1','1','1','UA000003','1'),
+	('LA000007','列表0007','levelOneCategoryList0007','1','1','1','1','1','UA000004','1'),
+	('LA000008','列表0008','levelOneCategoryList0008','1','1','1','1','1','UA000004','1');
 
 insert into object_access_data values
 	('OA000001','控制访问列表1','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000001','1'),
 	('OA000002','控制访问列表10002','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000001','1'),
 	('OA000003','控制访问列表10003','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000002','1'),
-	('OA000004','控制访问列表10004','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000003','1'),
-	('OA000005','控制访问列表10005','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000004','1'),
-	('OA000006','控制访问列表10006','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000004','1'),
-	('OA000007','控制访问列表10007','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000005','1'),
-	('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000006','1');
+	('OA000004','控制访问列表10004','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000002','1'),
+	('OA000005','控制访问列表10005','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000003','1'),
+	('OA000006','控制访问列表10006','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000003','1'),
+	('OA000007','控制访问列表10007','FranchiseeStoreCountryCenter','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','catalogList','UA000004','1'),
+	('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000004','1');
 
 insert into login_history_data values
-	('LH000001','2019-06-25 23:31:58','192.168.1.1','登陆成功','SU000001','1'),
-	('LH000002','2019-07-02 15:43:30','192.168.1.2','登陆成功0002','SU000001','1'),
-	('LH000003','2019-06-25 16:31:25','192.168.1.1','登陆成功0003','SU000002','1'),
-	('LH000004','2019-07-04 21:29:19','192.168.1.2','登陆成功0004','SU000002','1');
+	('LH000001','2019-08-11 22:40:36','192.168.1.1','登陆成功','SU000001','1'),
+	('LH000002','2019-08-15 10:16:50','192.168.1.2','登陆成功0002','SU000001','1'),
+	('LH000003','2019-08-24 13:07:21','192.168.1.1','登陆成功0003','SU000002','1'),
+	('LH000004','2019-08-21 07:50:49','192.168.1.2','登陆成功0004','SU000002','1');
 
 insert into generic_form_data values
 	('GF000001','登记输入单','姓名就是你身份证上的名字','1');
@@ -375,13 +420,18 @@ insert into form_field_message_data values
 
 insert into form_field_data values
 	('FF000001','姓名','name','name','text','GF000001','姓名就是你身份证上的名字','李一一','姓名就是你身份证上的名字','基础信息','maybe any value','a value expression','1','1','1','','','1'),
-	('FF000002','年龄','age','name0002','longtext','GF000001','姓名就是你身份证上的名字0002','李一一0002','姓名就是你身份证上的名字0002','扩展信息','maybe any value0002','a value expression0002','1','1','1','','','1'),
-	('FF000003','出生地','birth_place','name0003','date','GF000001','姓名就是你身份证上的名字0003','李一一0003','姓名就是你身份证上的名字0003','基础信息','maybe any value0003','a value expression0003','1','1','1','','','1'),
-	('FF000004','国籍','country','name0004','date_time','GF000001','姓名就是你身份证上的名字0004','李一一0004','姓名就是你身份证上的名字0004','扩展信息','maybe any value0004','a value expression0004','1','1','1','男,女','男,女','1');
+	('FF000002','年龄','age','name0002','longtext','GF000001','姓名就是你身份证上的名字0002','李一一0002','姓名就是你身份证上的名字0002','扩展信息','maybe any value0002','a value expression0002','1','1','1','','','1');
 
 insert into form_action_data values
 	('FA000001','功能','name','save','default','genericFormManager/name/name0002/name0003/','GF000001','1'),
 	('FA000002','功能0002','name0002','update','warning','genericFormManager/name/name0002/name0003/0002','GF000001','1');
+
+insert into candidate_container_data values
+	('CC000001','我只是一个容器','1');
+
+insert into candidate_element_data values
+	('CE000001','搜索到的匹配字段','类型描述','https://demo.doublechaintech.com/demodata/imageManager/genImage/100/400/200/grey/','CC000001','1'),
+	('CE000002','搜索到的匹配字段0002','类型描述0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/100/400/200/grey/','CC000001','1');
 
 
 
@@ -480,6 +530,12 @@ create unique index idx_form_action_version on form_action_data(id, version);
 
 alter table form_action_data add constraint form_action4form_fk
 	foreign key(form) references generic_form_data(id) on delete cascade on update cascade;
+create unique index idx_candidate_container_version on candidate_container_data(id, version);
+
+create unique index idx_candidate_element_version on candidate_element_data(id, version);
+
+alter table candidate_element_data add constraint candidate_element4container_fk
+	foreign key(container) references candidate_container_data(id) on delete cascade on update cascade;
 -- create extra index for time, number and mobile phone
 
 create index hospital4version_idx on hospital_data(version);
@@ -521,7 +577,8 @@ create index form_message4version_idx on form_message_data(version);
 create index form_field_message4version_idx on form_field_message_data(version);
 create index form_field4version_idx on form_field_data(version);
 create index form_action4version_idx on form_action_data(version);
-
+create index candidate_container4version_idx on candidate_container_data(version);
+create index candidate_element4version_idx on candidate_element_data(version);
 
 
 
@@ -563,11 +620,14 @@ insert into user_app_data values('UA000012','我的账户','SU000006','lock',1,'
 insert into sec_user_data values('SU000007','User000007','13900000007','1000007@qq.com','A9652F0D7C1ACCB421BAF55EB3E7286AFA8F591897F1AE4CEB6A76402CCBE803', 'weixin_openid_000007', 'weixin_appid_000007', 'jwt_token_000007' ,'9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
 insert into user_app_data values('UA000013','用户应用程序','SU000007','user',1,'MXWR','UserApp','UA000001','/link/to/app','1');
 insert into user_app_data values('UA000014','我的账户','SU000007','lock',1,'MXWR','SecUser','SU000007','/link/to/app','1');
+insert into sec_user_data values('SU000008','User000008','13900000008','1000008@qq.com','A4B83C2652CD6BECE5C7909576555B313078D7EE50AA028F26B8F0245C191B4B', 'weixin_openid_000008', 'weixin_appid_000008', 'jwt_token_000008' ,'9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
+insert into user_app_data values('UA000015','候选人容器','SU000008','at',1,'MXWR','CandidateContainer','CC000001','/link/to/app','1');
+insert into user_app_data values('UA000016','我的账户','SU000008','lock',1,'MXWR','SecUser','SU000008','/link/to/app','1');
 
 /* ------------------------------------------------------------------------ */
 
 
-
+select id,pwd from sec_user_data;
 
 /*
 | 角色        | 用户名           | 密码         |
@@ -579,6 +639,7 @@ insert into user_app_data values('UA000014','我的账户','SU000007','lock',1,'
 |用户域|13900000005|DoubleChain!y1|
 |安全用户|13900000006|DoubleChain!y1|
 |用户应用程序|13900000007|DoubleChain!y1|
+|候选人容器|13900000008|DoubleChain!y1|
 
 
 */
@@ -586,7 +647,7 @@ insert into user_app_data values('UA000014','我的账户','SU000007','lock',1,'
 
 
 /* start with data patch */
-/* The sql file is not found from: /home/philip/resin-3.1.12/webapps/sky/data-patch/his.sql */
+/* The sql file is not found from: /Users/Philip/githome/web-code-generator/sky/data-patch/his.sql */
 
 
 /*

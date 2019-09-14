@@ -279,6 +279,18 @@ class PeriodUpdateForm extends Component {
                 </Form.Item>
               </Col>
 
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.code} {...formItemLayout}>
+                  {getFieldDecorator('code', {
+                    initialValue: selectedRow.code,
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large" placeholder="代码" disabled/>
+                    
+                  )}
+                </Form.Item>
+              </Col>
+
             </Row>
           </Form>  
         </Card>

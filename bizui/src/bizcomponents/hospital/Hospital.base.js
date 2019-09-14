@@ -47,7 +47,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20', render: (text, record)=>renderTextCell(text,record,'hospital') , sorter: true },
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'hospital') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '8',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.address, debugtype: 'string', dataIndex: 'address', width: '10',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.telephone, debugtype: 'string', dataIndex: 'telephone', width: '15',render: (text, record)=>renderTextCell(text,record)},
@@ -56,23 +56,20 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(hospital,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={hospital.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={hospital.id}>
-	
-	<DescriptionList  key={hospital.id} size="small" col="4">
-<Description term="ID">{hospital.id}</Description> 
-<Description term="名称">{hospital.name}</Description> 
-<Description term="地址">{hospital.address}</Description> 
-<Description term="电话">{hospital.telephone}</Description> 
+      <DescriptionList  key={hospital.id} size="small" col="4">
+        <Description term="ID">{hospital.id}</Description> 
+        <Description term="名称">{hospital.name}</Description> 
+        <Description term="地址">{hospital.address}</Description> 
+        <Description term="电话">{hospital.telephone}</Description> 
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

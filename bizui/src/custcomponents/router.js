@@ -29,6 +29,8 @@ function RouterConfig({ history }) {
 	const {ListAccessBizApp} = GlobalComponents
 	const {ObjectAccessBizApp} = GlobalComponents
 	const {LoginHistoryBizApp} = GlobalComponents
+	const {CandidateContainerBizApp} = GlobalComponents
+	const {CandidateElementBizApp} = GlobalComponents
 
 
 
@@ -36,8 +38,8 @@ function RouterConfig({ history }) {
     <LocaleProvider locale={zhCN}>
       <Router history={history}>
         <Switch>
-         <Route path="/home" component={Launcher} />
-         <Route path="/forgetpass" component={ForgetPasswordForm} />
+          <Route path="/home" component={Launcher} />
+          <Route path="/forgetpass" component={ForgetPasswordForm} />
           <Route path="/hospital/" component={HospitalBizApp} />
           <Route path="/expenseType/" component={ExpenseTypeBizApp} />
           <Route path="/period/" component={PeriodBizApp} />
@@ -54,7 +56,9 @@ function RouterConfig({ history }) {
           <Route path="/listAccess/" component={ListAccessBizApp} />
           <Route path="/objectAccess/" component={ObjectAccessBizApp} />
           <Route path="/loginHistory/" component={LoginHistoryBizApp} />
-         <Route path="/" component={Launcher} />
+          <Route path="/candidateContainer/" component={CandidateContainerBizApp} />
+          <Route path="/candidateElement/" component={CandidateElementBizApp} />
+          <Route path="/" component={Launcher} />
         </Switch>
       </Router>
     </LocaleProvider>

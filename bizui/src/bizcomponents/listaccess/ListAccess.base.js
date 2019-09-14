@@ -50,7 +50,7 @@ const fieldLabels = {
 }
 
 const displayColumns = [
-  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '20',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'listAccess') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '6',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.internalName, debugtype: 'string', dataIndex: 'internalName', width: '24',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.readPermission, dataIndex: 'readPermission', render: (text, record) =>renderBooleanCell(text, record), sorter:true },
@@ -64,24 +64,21 @@ const displayColumns = [
 // refernce to https://ant.design/components/list-cn/
 const renderItemOfList=(listAccess,targetComponent)=>{
 
+  const userContext = null
+  return (
+    <div key={listAccess.id}>
 	
-	
-	
-	const userContext = null
-	return (
-	<div key={listAccess.id}>
-	
-	<DescriptionList  key={listAccess.id} size="small" col="4">
-<Description term="ID">{listAccess.id}</Description> 
-<Description term="名称">{listAccess.name}</Description> 
-<Description term="内部名称">{listAccess.internalName}</Description> 
-<Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
-</Description>
+      <DescriptionList  key={listAccess.id} size="small" col="4">
+        <Description term="ID">{listAccess.id}</Description> 
+        <Description term="名称">{listAccess.name}</Description> 
+        <Description term="内部名称">{listAccess.internalName}</Description> 
+        <Description term="应用程序"><div>{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
+        </div></Description>
 	
         
       </DescriptionList>
-       <Divider style={{ height: '2px' }} />
-      </div>
+      <Divider style={{ height: '2px' }} />
+    </div>
 	)
 
 }

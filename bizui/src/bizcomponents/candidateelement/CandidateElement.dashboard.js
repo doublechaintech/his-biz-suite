@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
-import BooleanOption from 'components/BooleanOption';
-import { Divider,Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal, } from 'antd'
+import BooleanOption from '../../components/BooleanOption';
+import { Row, Col, Icon, Card, Tabs, Table, Radio, DatePicker, Tooltip, Menu, Dropdown,Badge, Switch,Select,Form,AutoComplete,Modal } from 'antd'
 import { Link, Route, Redirect} from 'dva/router'
 import numeral from 'numeral'
 import {
@@ -15,7 +15,7 @@ import Trend from '../../components/Trend'
 import NumberInfo from '../../components/NumberInfo'
 import { getTimeDistance } from '../../utils/utils'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout'
-import styles from './Hospital.dashboard.less'
+import styles from './CandidateElement.dashboard.less'
 import DescriptionList from '../../components/DescriptionList';
 import ImagePreview from '../../components/ImagePreview';
 import GlobalComponents from '../../custcomponents';
@@ -27,10 +27,9 @@ const {aggregateDataset,calcKey, defaultHideCloseTrans,
   defaultExecuteTrans,defaultHandleTransferSearch,defaultShowTransferModel,
   defaultRenderExtraHeader,
   defaultSubListsOf,defaultRenderAnalytics,
-  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,defaultQuickFunctions,defaultRenderSubjectList
+  defaultRenderExtraFooter,renderForTimeLine,renderForNumbers,
+  defaultQuickFunctions, defaultRenderSubjectList,
 }= DashboardTool
-
-
 
 
 
@@ -40,18 +39,20 @@ const { RangePicker } = DatePicker
 const { Option } = Select
 
 
-const imageList =(hospital)=>{return [
-	 ]}
+const imageList =(candidateElement)=>{return [
+	   {"title":'图片',"imageLocation":candidateElement.image},
+]}
 
-const internalImageListOf = (hospital) =>defaultImageListOf(hospital,imageList)
+const internalImageListOf = (candidateElement) =>defaultImageListOf(candidateElement,imageList)
 
-const optionList =(hospital)=>{return [ 
+const optionList =(candidateElement)=>{return [ 
 	]}
 
 const buildTransferModal = defaultBuildTransferModal
 const showTransferModel = defaultShowTransferModel
-const internalSettingListOf = (hospital) =>defaultSettingListOf(hospital, optionList)
-const internalLargeTextOf = (hospital) =>{
+const internalRenderSubjectList = defaultRenderSubjectList
+const internalSettingListOf = (candidateElement) =>defaultSettingListOf(candidateElement, optionList)
+const internalLargeTextOf = (candidateElement) =>{
 
 	return null
 	
@@ -74,22 +75,18 @@ const internalRenderTitle = (cardsData,targetComponent) =>{
 }
 
 
-const renderSubjectList = defaultRenderSubjectList
-
-
-const internalSummaryOf = (hospital,targetComponent) =>{
+const internalSummaryOf = (candidateElement,targetComponent) =>{
 	
 	
-	const {HospitalService} = GlobalComponents
+	const {CandidateElementService} = GlobalComponents
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{hospital.id}</Description> 
-<Description term="名称">{hospital.name}</Description> 
-<Description term="地址">{hospital.address}</Description> 
-<Description term="电话">{hospital.telephone}</Description> 
+<Description term="ID">{candidateElement.id}</Description> 
+<Description term="名称">{candidateElement.name}</Description> 
+<Description term="类型">{candidateElement.type}</Description> 
 	
-        {buildTransferModal(hospital,targetComponent)}
+        {buildTransferModal(candidateElement,targetComponent)}
       </DescriptionList>
 	)
 
@@ -97,7 +94,7 @@ const internalSummaryOf = (hospital,targetComponent) =>{
 
 const internalQuickFunctions = defaultQuickFunctions
 
-class HospitalDashboard extends Component {
+class CandidateElementDashboard extends Component {
 
  state = {
     transferModalVisiable: false,
@@ -108,7 +105,7 @@ class HospitalDashboard extends Component {
     transferServiceName:"",
     currentValue:"",
     transferTargetParameterName:"",  
-    defaultType: 'hospital'
+    defaultType: 'candidateElement'
 
 
   }
@@ -119,20 +116,15 @@ class HospitalDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, expenseTypeListMetaInfo, periodListMetaInfo, expenseItemListMetaInfo, doctorListMetaInfo, departmentListMetaInfo, doctorScheduleListMetaInfo, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = this.props.hospital
-    if(!this.props.hospital.class){
+    const { id,displayName,  } = this.props.candidateElement
+    if(!this.props.candidateElement.class){
       return null
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"医院",cardsFor: "hospital",
-    	cardsSource: this.props.hospital,returnURL,displayName,
+    const cardsData = {cardsName:"候选人元素",cardsFor: "candidateElement",
+    	cardsSource: this.props.candidateElement,returnURL,displayName,
   		subItems: [
-{name: 'doctorList', displayName:'医生',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo,
-  renderItem: GlobalComponents.DoctorBase.renderItemOfList},
-{name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo,
-  renderItem: GlobalComponents.DoctorScheduleBase.renderItemOfList,
-},
     
       	],
   	};
@@ -147,6 +139,8 @@ class HospitalDashboard extends Component {
     const renderExtraFooter = this.props.renderExtraFooter || internalRenderExtraFooter
     const renderAnalytics = this.props.renderAnalytics || defaultRenderAnalytics
     const quickFunctions = this.props.quickFunctions || internalQuickFunctions
+    const renderSubjectList = this.props.renderSubjectList || internalRenderSubjectList
+    
     return (
 
       <PageHeaderLayout
@@ -156,14 +150,14 @@ class HospitalDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
+        {imageListOf(cardsData.cardsSource)}  
         {quickFunctions(cardsData)} 
-        {renderSubjectList(cardsData)} 
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}        
+        {renderSubjectList(cardsData)}       
         {largeTextOf(cardsData.cardsSource)}
         {renderExtraFooter(cardsData.cardsSource)}
-  
+  		
       </PageHeaderLayout>
     
     )
@@ -171,8 +165,8 @@ class HospitalDashboard extends Component {
 }
 
 export default connect(state => ({
-  hospital: state._hospital,
+  candidateElement: state._candidateElement,
   returnURL: state.breadcrumb.returnURL,
   
-}))(Form.create()(HospitalDashboard))
+}))(Form.create()(CandidateElementDashboard))
 

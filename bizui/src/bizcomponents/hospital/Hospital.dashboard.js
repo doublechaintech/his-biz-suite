@@ -81,10 +81,10 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
   const userContext = null
   return (<Menu>
     <Menu.Item key="profile">
-  <Link to={`/hospital/${targetComponent.props.hospital.id}/permission`}><Icon type="safety-certificate" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
+  <Link to={`/hospital/${targetComponent.props.hospital.id}/permission`}><Icon type="safety-certificate" theme="twoTone" twoToneColor="#52c41a"/><span>{appLocaleName(userContext,"Permission")}</span></Link>
 </Menu.Item>
 <Menu.Item key="permission">
-  <Link to={`/hospital/${targetComponent.props.hospital.id}/profile`}><Icon type="cluster" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
+  <Link to={`/hospital/${targetComponent.props.hospital.id}/profile`}><Icon type="cluster"  twoToneColor="#52c41a"/><span>{appLocaleName(userContext,"Profile")}</span></Link>
 </Menu.Item> </Menu>)
 
 }

@@ -56,7 +56,7 @@ class HospitalProfile extends Component {
     const  hospital = this.props.hospital;
     const { id,displayName, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = hospital
     const  returnURL = `/hospital/${id}/dashboard`
-    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,returnURL,
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,returnURL,displayName,
   		subItems: [
 {name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType',  renderItem: GlobalComponents.ExpenseTypeBase.renderItemOfList},
 {name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period',  renderItem: GlobalComponents.PeriodBase.renderItemOfList},

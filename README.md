@@ -48,7 +48,8 @@ https://demo.doublechaintech.com/admin/his/#/home
         _features="setting"
     />
     <period  
-        name="上午|下午|夜班"   
+        name="上午|下午|夜班"
+	code="morning|afternoon|night"
         hospital="$(hospital)"         
         _features="status"   />
     <expense_item

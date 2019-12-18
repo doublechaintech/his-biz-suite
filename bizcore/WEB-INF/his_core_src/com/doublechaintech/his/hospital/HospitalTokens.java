@@ -207,7 +207,7 @@ public class HospitalTokens extends CommonTokens{
 	}
 	
 	public HospitalTokens searchAllTextOfPeriodList(String verb, String value){	
-		String field = "id|name";
+		String field = "id|name|code";
 		addSearchMoreOptions(PERIOD_LIST,periodListSearchCounter++, field, verb, value);
 		return this;
 	}

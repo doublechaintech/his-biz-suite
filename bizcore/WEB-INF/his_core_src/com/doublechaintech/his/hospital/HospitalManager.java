@@ -37,9 +37,9 @@ public interface HospitalManager{
 
 	*/
 
-	//public  PeriodManager getPeriodManager(HisUserContext userContext, String hospitalId, String name ,String [] tokensExpr)  throws Exception;
+	//public  PeriodManager getPeriodManager(HisUserContext userContext, String hospitalId, String name, String code ,String [] tokensExpr)  throws Exception;
 	
-	public  Hospital addPeriod(HisUserContext userContext, String hospitalId, String name , String [] tokensExpr)  throws Exception;
+	public  Hospital addPeriod(HisUserContext userContext, String hospitalId, String name, String code , String [] tokensExpr)  throws Exception;
 	public  Hospital removePeriod(HisUserContext userContext, String hospitalId, String periodId, int periodVersion,String [] tokensExpr)  throws Exception;
 	public  Hospital updatePeriod(HisUserContext userContext, String hospitalId, String periodId, int periodVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

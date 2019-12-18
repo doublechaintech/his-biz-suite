@@ -20,6 +20,7 @@ import com.doublechaintech.his.HisUserContext;
 import com.doublechaintech.his.HisCheckerManager;
 import com.doublechaintech.his.CustomHisCheckerManager;
 
+import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.objectaccess.ObjectAccess;
 import com.doublechaintech.his.listaccess.ListAccess;
 import com.doublechaintech.his.secuser.SecUser;
@@ -152,6 +153,10 @@ public class UserAppManagerImpl extends CustomHisCheckerManager implements UserA
 		addAction(userContext, userApp, tokens,"@copy","cloneUserApp","cloneUserApp/"+userApp.getId()+"/","main","primary");
 		
 		addAction(userContext, userApp, tokens,"user_app.transfer_to_sec_user","transferToAnotherSecUser","transferToAnotherSecUser/"+userApp.getId()+"/","main","primary");
+		addAction(userContext, userApp, tokens,"user_app.addQuickLink","addQuickLink","addQuickLink/"+userApp.getId()+"/","quickLinkList","primary");
+		addAction(userContext, userApp, tokens,"user_app.removeQuickLink","removeQuickLink","removeQuickLink/"+userApp.getId()+"/","quickLinkList","primary");
+		addAction(userContext, userApp, tokens,"user_app.updateQuickLink","updateQuickLink","updateQuickLink/"+userApp.getId()+"/","quickLinkList","primary");
+		addAction(userContext, userApp, tokens,"user_app.copyQuickLinkFrom","copyQuickLinkFrom","copyQuickLinkFrom/"+userApp.getId()+"/","quickLinkList","primary");
 		addAction(userContext, userApp, tokens,"user_app.addListAccess","addListAccess","addListAccess/"+userApp.getId()+"/","listAccessList","primary");
 		addAction(userContext, userApp, tokens,"user_app.removeListAccess","removeListAccess","removeListAccess/"+userApp.getId()+"/","listAccessList","primary");
 		addAction(userContext, userApp, tokens,"user_app.updateListAccess","updateListAccess","updateListAccess/"+userApp.getId()+"/","listAccessList","primary");
@@ -349,6 +354,7 @@ public class UserAppManagerImpl extends CustomHisCheckerManager implements UserA
 	}
 	protected Map<String,Object> viewTokens(){
 		return tokens().allTokens()
+		.sortQuickLinkListWith("id","desc")
 		.sortListAccessListWith("id","desc")
 		.sortObjectAccessListWith("id","desc")
 		.analyzeAllLists().done();
@@ -565,6 +571,268 @@ public class UserAppManagerImpl extends CustomHisCheckerManager implements UserA
 	
 	
 	
+
+	protected void checkParamsForAddingQuickLink(HisUserContext userContext, String userAppId, String name, String icon, String imagePath, String linkTarget,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfUserApp(userAppId);
+
+		
+		userContext.getChecker().checkNameOfQuickLink(name);
+		
+		userContext.getChecker().checkIconOfQuickLink(icon);
+		
+		userContext.getChecker().checkImagePathOfQuickLink(imagePath);
+		
+		userContext.getChecker().checkLinkTargetOfQuickLink(linkTarget);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
+
+	
+	}
+	public  UserApp addQuickLink(HisUserContext userContext, String userAppId, String name, String icon, String imagePath, String linkTarget, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingQuickLink(userContext,userAppId,name, icon, imagePath, linkTarget,tokensExpr);
+		
+		QuickLink quickLink = createQuickLink(userContext,name, icon, imagePath, linkTarget);
+		
+		UserApp userApp = loadUserApp(userContext, userAppId, allTokens());
+		synchronized(userApp){ 
+			//Will be good when the userApp loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			userApp.addQuickLink( quickLink );		
+			userApp = saveUserApp(userContext, userApp, tokens().withQuickLinkList().done());
+			
+			userContext.getManagerGroup().getQuickLinkManager().onNewInstanceCreated(userContext, quickLink);
+			return present(userContext,userApp, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingQuickLinkProperties(HisUserContext userContext, String userAppId,String id,String name,String icon,String imagePath,String linkTarget,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfUserApp(userAppId);
+		userContext.getChecker().checkIdOfQuickLink(id);
+		
+		userContext.getChecker().checkNameOfQuickLink( name);
+		userContext.getChecker().checkIconOfQuickLink( icon);
+		userContext.getChecker().checkImagePathOfQuickLink( imagePath);
+		userContext.getChecker().checkLinkTargetOfQuickLink( linkTarget);
+
+		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
+		
+	}
+	public  UserApp updateQuickLinkProperties(HisUserContext userContext, String userAppId, String id,String name,String icon,String imagePath,String linkTarget, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingQuickLinkProperties(userContext,userAppId,id,name,icon,imagePath,linkTarget,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withQuickLinkListList()
+				.searchQuickLinkListWith(QuickLink.ID_PROPERTY, "is", id).done();
+		
+		UserApp userAppToUpdate = loadUserApp(userContext, userAppId, options);
+		
+		if(userAppToUpdate.getQuickLinkList().isEmpty()){
+			throw new UserAppManagerException("QuickLink is NOT FOUND with id: '"+id+"'");
+		}
+		
+		QuickLink item = userAppToUpdate.getQuickLinkList().first();
+		
+		item.updateName( name );
+		item.updateIcon( icon );
+		item.updateImagePath( imagePath );
+		item.updateLinkTarget( linkTarget );
+
+		
+		//checkParamsForAddingQuickLink(userContext,userAppId,name, code, used,tokensExpr);
+		UserApp userApp = saveUserApp(userContext, userAppToUpdate, tokens().withQuickLinkList().done());
+		synchronized(userApp){ 
+			return present(userContext,userApp, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected QuickLink createQuickLink(HisUserContext userContext, String name, String icon, String imagePath, String linkTarget) throws Exception{
+
+		QuickLink quickLink = new QuickLink();
+		
+		
+		quickLink.setName(name);		
+		quickLink.setIcon(icon);		
+		quickLink.setImagePath(imagePath);		
+		quickLink.setLinkTarget(linkTarget);		
+		quickLink.setCreateTime(userContext.now());
+	
+		
+		return quickLink;
+	
+		
+	}
+	
+	protected QuickLink createIndexedQuickLink(String id, int version){
+
+		QuickLink quickLink = new QuickLink();
+		quickLink.setId(id);
+		quickLink.setVersion(version);
+		return quickLink;			
+		
+	}
+	
+	protected void checkParamsForRemovingQuickLinkList(HisUserContext userContext, String userAppId, 
+			String quickLinkIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfUserApp(userAppId);
+		for(String quickLinkIdItem: quickLinkIds){
+			userContext.getChecker().checkIdOfQuickLink(quickLinkIdItem);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
+		
+	}
+	public  UserApp removeQuickLinkList(HisUserContext userContext, String userAppId, 
+			String quickLinkIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingQuickLinkList(userContext, userAppId,  quickLinkIds, tokensExpr);
+			
+			
+			UserApp userApp = loadUserApp(userContext, userAppId, allTokens());
+			synchronized(userApp){ 
+				//Will be good when the userApp loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getUserAppDAO().planToRemoveQuickLinkList(userApp, quickLinkIds, allTokens());
+				userApp = saveUserApp(userContext, userApp, tokens().withQuickLinkList().done());
+				deleteRelationListInGraph(userContext, userApp.getQuickLinkList());
+				return present(userContext,userApp, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingQuickLink(HisUserContext userContext, String userAppId, 
+		String quickLinkId, int quickLinkVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfUserApp( userAppId);
+		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
+		userContext.getChecker().checkVersionOfQuickLink(quickLinkVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
+	
+	}
+	public  UserApp removeQuickLink(HisUserContext userContext, String userAppId, 
+		String quickLinkId, int quickLinkVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingQuickLink(userContext,userAppId, quickLinkId, quickLinkVersion,tokensExpr);
+		
+		QuickLink quickLink = createIndexedQuickLink(quickLinkId, quickLinkVersion);
+		UserApp userApp = loadUserApp(userContext, userAppId, allTokens());
+		synchronized(userApp){ 
+			//Will be good when the userApp loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			userApp.removeQuickLink( quickLink );		
+			userApp = saveUserApp(userContext, userApp, tokens().withQuickLinkList().done());
+			deleteRelationInGraph(userContext, quickLink);
+			return present(userContext,userApp, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingQuickLink(HisUserContext userContext, String userAppId, 
+		String quickLinkId, int quickLinkVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfUserApp( userAppId);
+		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
+		userContext.getChecker().checkVersionOfQuickLink(quickLinkVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
+	
+	}
+	public  UserApp copyQuickLinkFrom(HisUserContext userContext, String userAppId, 
+		String quickLinkId, int quickLinkVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingQuickLink(userContext,userAppId, quickLinkId, quickLinkVersion,tokensExpr);
+		
+		QuickLink quickLink = createIndexedQuickLink(quickLinkId, quickLinkVersion);
+		UserApp userApp = loadUserApp(userContext, userAppId, allTokens());
+		synchronized(userApp){ 
+			//Will be good when the userApp loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			
+			
+			userApp.copyQuickLinkFrom( quickLink );		
+			userApp = saveUserApp(userContext, userApp, tokens().withQuickLinkList().done());
+			
+			userContext.getManagerGroup().getQuickLinkManager().onNewInstanceCreated(userContext, (QuickLink)userApp.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,userApp, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingQuickLink(HisUserContext userContext, String userAppId, String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfUserApp(userAppId);
+		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
+		userContext.getChecker().checkVersionOfQuickLink(quickLinkVersion);
+		
+
+		if(QuickLink.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfQuickLink(parseString(newValueExpr));
+		}
+		
+		if(QuickLink.ICON_PROPERTY.equals(property)){
+			userContext.getChecker().checkIconOfQuickLink(parseString(newValueExpr));
+		}
+		
+		if(QuickLink.IMAGE_PATH_PROPERTY.equals(property)){
+			userContext.getChecker().checkImagePathOfQuickLink(parseString(newValueExpr));
+		}
+		
+		if(QuickLink.LINK_TARGET_PROPERTY.equals(property)){
+			userContext.getChecker().checkLinkTargetOfQuickLink(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(UserAppManagerException.class);
+	
+	}
+	
+	public  UserApp updateQuickLink(HisUserContext userContext, String userAppId, String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingQuickLink(userContext, userAppId, quickLinkId, quickLinkVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withQuickLinkList().searchQuickLinkListWith(QuickLink.ID_PROPERTY, "eq", quickLinkId).done();
+		
+		
+		
+		UserApp userApp = loadUserApp(userContext, userAppId, loadTokens);
+		
+		synchronized(userApp){ 
+			//Will be good when the userApp loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//userApp.removeQuickLink( quickLink );	
+			//make changes to AcceleraterAccount.
+			QuickLink quickLinkIndex = createIndexedQuickLink(quickLinkId, quickLinkVersion);
+		
+			QuickLink quickLink = userApp.findTheQuickLink(quickLinkIndex);
+			if(quickLink == null){
+				throw new UserAppManagerException(quickLink+" is NOT FOUND" );
+			}
+			
+			quickLink.changeProperty(property, newValueExpr);
+			
+			userApp = saveUserApp(userContext, userApp, tokens().withQuickLinkList().done());
+			return present(userContext,userApp, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
 
 	protected void checkParamsForAddingListAccess(HisUserContext userContext, String userAppId, String name, String internalName, boolean readPermission, boolean createPermission, boolean deletePermission, boolean updatePermission, boolean executionPermission,String [] tokensExpr) throws Exception{
 		

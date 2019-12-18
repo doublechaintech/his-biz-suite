@@ -16,7 +16,7 @@ public class DoctorScheduleTable{
 	
 
 	//only this package can use this, so the scope is default, not public, not private either nor protected
-	static final String TABLE_NAME="doctor_schedule_data";
+	public static final String TABLE_NAME="doctor_schedule_data";
 	static final String COLUMN_ID = "id";
 	static final String COLUMN_NAME = "name";
 	static final String COLUMN_DOCTOR = "doctor";
@@ -31,10 +31,10 @@ public class DoctorScheduleTable{
 	static final String COLUMN_HOSPITAL = "hospital";
 	static final String COLUMN_VERSION = "version";
  
-	static final String []ALL_CLOUMNS = {COLUMN_ID, 
+	public static final String []ALL_CLOUMNS = {COLUMN_ID, 
 		COLUMN_NAME, COLUMN_DOCTOR, COLUMN_SCHEDULE_DATE, COLUMN_PERIOD, COLUMN_DEPARTMENT, COLUMN_AVAILABLE, COLUMN_PRICE, COLUMN_EXPENSE_TYPE, COLUMN_CREATE_TIME, COLUMN_UPDATE_TIME, COLUMN_HOSPITAL, 
 		COLUMN_VERSION};
-	static final String []NORMAL_CLOUMNS = {
+	public static final String []NORMAL_CLOUMNS = {
 		COLUMN_NAME, COLUMN_DOCTOR, COLUMN_SCHEDULE_DATE, COLUMN_PERIOD, COLUMN_DEPARTMENT, COLUMN_AVAILABLE, COLUMN_PRICE, COLUMN_EXPENSE_TYPE, COLUMN_CREATE_TIME, COLUMN_UPDATE_TIME, COLUMN_HOSPITAL
 		};
 	

@@ -83,6 +83,16 @@ public class SecUser extends BaseEntity implements  java.io.Serializable{
 	public 	SecUser(){
 		// lazy load for all the properties
 	}
+	public 	static SecUser withId(String id){
+		SecUser secUser = new SecUser();
+		secUser.setId(id);
+		// secUser.setVersion(Integer.MAX_VALUE);
+		return secUser;
+	}
+	public 	static SecUser refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setDomain( null );

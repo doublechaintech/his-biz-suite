@@ -23,13 +23,18 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (period,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
 <Description term="ID">{period.id}</Description> 
 <Description term="名称">{period.name}</Description> 
+<Description term="代码">{period.code}</Description> 
 	
       </DescriptionList>
 	)
@@ -53,9 +58,10 @@ class PeriodPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  period = this.props.period;
+    const  period = this.props.period
     const { id,displayName, doctorScheduleCount } = period
-    const cardsData = {cardsName:"期",cardsFor: "period",cardsSource: period,
+    const  returnURL = `/period/${id}/dashboard`
+    const cardsData = {cardsName:"期",cardsFor: "period",cardsSource: period,displayName,returnURL,
   		subItems: [
     
       	],
@@ -66,7 +72,7 @@ class PeriodPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

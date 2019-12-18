@@ -8,10 +8,12 @@ import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
 
+import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.objectaccess.ObjectAccess;
 import com.doublechaintech.his.listaccess.ListAccess;
 import com.doublechaintech.his.secuser.SecUser;
 
+import com.doublechaintech.his.quicklink.QuickLinkDAO;
 import com.doublechaintech.his.secuser.SecUserDAO;
 import com.doublechaintech.his.objectaccess.ObjectAccessDAO;
 import com.doublechaintech.his.listaccess.ListAccessDAO;
@@ -45,16 +47,23 @@ public interface UserAppDAO{
 	public UserApp disconnectFromAll(String userAppId, int version) throws Exception;
 	public int deleteAll() throws Exception;
 
+	public QuickLinkDAO getQuickLinkDAO();
+		
 	public ListAccessDAO getListAccessDAO();
 		
 	public ObjectAccessDAO getObjectAccessDAO();
 		
 	
+ 	public SmartList<UserApp> requestCandidateUserAppForQuickLink(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
  	public SmartList<UserApp> requestCandidateUserAppForListAccess(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<UserApp> requestCandidateUserAppForObjectAccess(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
 	
+	public UserApp planToRemoveQuickLinkList(UserApp userApp, String quickLinkIds[], Map<String,Object> options)throws Exception;
+
+
 	public UserApp planToRemoveListAccessList(UserApp userApp, String listAccessIds[], Map<String,Object> options)throws Exception;
 
 
@@ -72,6 +81,9 @@ public interface UserAppDAO{
 
  
  
+	// 需要一个加载引用我的对象的enhance方法:QuickLink的app的QuickLinkList
+	public SmartList<QuickLink> loadOurQuickLinkList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception;
+	
 	// 需要一个加载引用我的对象的enhance方法:ListAccess的app的ListAccessList
 	public SmartList<ListAccess> loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception;
 	

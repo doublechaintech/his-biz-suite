@@ -1,7 +1,7 @@
 
 
 
-=================Execute Report (Model Time 190326T1029) @Thu Aug 08 15:57:52 CST 2019, 21 objects and 163 fields===========================
+=================Execute Report (Model Time 190826T1611) @Mon Sep 16 18:37:41 CST 2019, 24 objects and 181 fields===========================
 
 
 
@@ -145,9 +145,10 @@ expense_type{
 } depth=1; isRoot = false
 
 period{
-	fields(4){
+	fields(5){
 		string	id('ABCD'), verb: false, required: true;
 		string	name('上午|下午|夜班'), verb: false, required: true;
+		string	code('MORNING|AFTERNOON|NIGHT'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
 		int	version('2147483647'), verb: false, required: true;
 	}
@@ -268,9 +269,10 @@ expense_type{
 } depth=1; isRoot = false
 
 period{
-	fields(4){
+	fields(5){
 		string	id('ABCD'), verb: false, required: true;
 		string	name('上午|下午|夜班'), verb: false, required: true;
+		string	code('MORNING|AFTERNOON|NIGHT'), verb: false, required: true;
 		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
 		int	version('2147483647'), verb: false, required: true;
 	}
@@ -429,11 +431,27 @@ user_app{
 		string	location('/link/to/app'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(2){
+	references field(3){
+		quickLinkList	app(__no_group)--app;
 		listAccessList	app(__no_group)--app;
 		objectAccessList	app(__no_group)--app;
 	}
 } depth=2; isRoot = false
+
+quick_link{
+	fields(8){
+		string	id('ABCD'), verb: false, required: true;
+		string	name('列表'), verb: false, required: true;
+		string	icon('facebook|google'), verb: false, required: true;
+		string_image	image_path('y-200-200-red.jpg'), verb: false, required: true;
+		string	link_target('列表'), verb: false, required: true;
+		date_time_create	create_time('createTime()'), verb: false, required: true;
+		user_app	app('$(object)'), verb: false, required: true, referenceBy: quickLinkList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=3; isRoot = false
 
 list_access{
 	fields(10){
@@ -560,6 +578,30 @@ form_action{
 		string	level('default|warning|danger|primary'), verb: false, required: true;
 		string	url('genericFormManager/name/name0002/name0003/'), verb: false, required: true;
 		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formActionList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=1; isRoot = false
+
+candidate_container{
+	fields(3){
+		string	id('ABCD'), verb: false, required: true;
+		string	name('我只是一个容器'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		candidateElementList	container(__no_group)--container;
+	}
+} depth=0; isRoot = true
+
+candidate_element{
+	fields(6){
+		string	id('ABCD'), verb: false, required: true;
+		string	name('搜索到的匹配字段'), verb: false, required: true;
+		string	type('类型描述'), verb: false, required: true;
+		string_image	image('1.jpg'), verb: false, required: true;
+		candidate_container	container('$(object)'), verb: false, required: true, referenceBy: candidateElementList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){

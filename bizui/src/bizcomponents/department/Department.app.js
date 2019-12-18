@@ -145,15 +145,7 @@ class DepartmentBizApp extends React.PureComponent {
         )}
         )}
 
-       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
-       			<Menu.Item key="profile">
-               		<Link to={`/department/${this.props.department.id}/permission`}><Icon type="safety-certificate" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
-             	</Menu.Item>
-             	<Menu.Item key="permission">
-               		<Link to={`/department/${this.props.department.id}/profile`}><Icon type="cluster" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
-             	</Menu.Item> 
-      
-        	</SubMenu>
+       		
         
            </Menu>
     )
@@ -172,6 +164,7 @@ class DepartmentBizApp extends React.PureComponent {
       data: state._department.doctorAssignmentList,
       metaInfo: state._department.doctorAssignmentListMetaInfo,
       count: state._department.doctorAssignmentCount,
+      returnURL: `/department/${state._department.id}/dashboard`,
       currentPage: state._department.doctorAssignmentCurrentPageNumber,
       searchFormParameters: state._department.doctorAssignmentSearchFormParameters,
       searchParameters: {...state._department.searchParameters},
@@ -221,6 +214,7 @@ class DepartmentBizApp extends React.PureComponent {
       data: state._department.doctorScheduleList,
       metaInfo: state._department.doctorScheduleListMetaInfo,
       count: state._department.doctorScheduleCount,
+      returnURL: `/department/${state._department.id}/dashboard`,
       currentPage: state._department.doctorScheduleCurrentPageNumber,
       searchFormParameters: state._department.doctorScheduleSearchFormParameters,
       searchParameters: {...state._department.searchParameters},

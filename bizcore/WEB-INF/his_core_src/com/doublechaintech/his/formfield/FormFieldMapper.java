@@ -106,10 +106,10 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
  		if( genericFormId.isEmpty()){
  			return;
  		}
- 		GenericForm lgenericForm = formField.getForm();
- 		if( lgenericForm != null ){
+ 		GenericForm genericForm = formField.getForm();
+ 		if( genericForm != null ){
  			//if the root object 'formField' already have the property, just set the id for it;
- 			lgenericForm.setId(genericFormId);
+ 			genericForm.setId(genericFormId);
  			
  			return;
  		}

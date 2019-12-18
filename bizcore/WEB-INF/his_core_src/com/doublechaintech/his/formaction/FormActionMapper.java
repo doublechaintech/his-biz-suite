@@ -108,10 +108,10 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
  		if( genericFormId.isEmpty()){
  			return;
  		}
- 		GenericForm lgenericForm = formAction.getForm();
- 		if( lgenericForm != null ){
+ 		GenericForm genericForm = formAction.getForm();
+ 		if( genericForm != null ){
  			//if the root object 'formAction' already have the property, just set the id for it;
- 			lgenericForm.setId(genericFormId);
+ 			genericForm.setId(genericFormId);
  			
  			return;
  		}
@@ -140,10 +140,5 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
  	}
  	
 }
-
-
-
-
-
 
 

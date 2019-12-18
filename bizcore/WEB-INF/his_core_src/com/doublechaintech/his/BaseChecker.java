@@ -11,8 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import com.terapico.caf.DateTime;
+
 
 public class BaseChecker {
 	protected HisUserContext userContext;
@@ -21,6 +25,47 @@ public class BaseChecker {
 	public HisUserContext getUserContext() {
 		return userContext;
 	}
+	Stack<String>positonsStack;
+	
+	protected void pushPosition(String value) {
+		if(positonsStack==null) {
+			positonsStack = new Stack<String>();
+		}
+		positonsStack.push(value);
+	}
+	protected void popPosition() {
+		if(positonsStack==null) {
+			return;
+		}
+		positonsStack.pop();
+	}
+	protected String currentPosition() {
+		if(positonsStack==null) {
+			return "";
+		}
+		return positonsStack.stream().collect( Collectors.joining( "." ) );
+		
+	}
+	AtomicInteger baseEntityListArrayIndex = null; 
+	protected void endList(List<BaseEntity> transactionList) {
+		baseEntityListArrayIndex = null;
+		
+	}
+
+	protected void startList(List<BaseEntity> transactionList) {
+		
+		baseEntityListArrayIndex = new AtomicInteger();
+		
+	}
+	protected BaseEntity eachOfList(BaseEntity entity) {
+		if(baseEntityListArrayIndex != null) {
+			baseEntityListArrayIndex.incrementAndGet();
+		}
+		
+		return entity;
+		
+	}
+	
 	public void setUserContext(HisUserContext ctx){
 		this.userContext = ctx;
 	}
@@ -112,7 +157,9 @@ public class BaseChecker {
  		errorMsg.setParameters(parameters);
  		errorMsg.setBody(defaultMessage);
  		errorMsg.setPropertyKey(propertykey);
+    errorMsg.setSourcePosition(this.currentPosition());
  		messageList.add(errorMsg);
+    
 		return;
 	}
 	
@@ -466,7 +513,10 @@ public class BaseChecker {
 		if(messageList.isEmpty()){
 			return;
 		}
-		
+		if(userContext==null) {
+			Class [] classes = {List.class};
+			throw  exceptionClazz.getDeclaredConstructor(classes).newInstance(messageList);
+		}
 		for(Message message: messageList){
 			String subject = message.getSubject();
 			String template = userContext.getLocaleKey(subject);

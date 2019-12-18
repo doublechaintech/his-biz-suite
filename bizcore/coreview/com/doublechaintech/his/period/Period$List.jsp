@@ -101,6 +101,9 @@
 <c:if test="${param.referName ne 'name'}">
 	<th>${userContext.localeMap['period.name']}</th>
 </c:if>
+<c:if test="${param.referName ne 'code'}">
+	<th>${userContext.localeMap['period.code']}</th>
+</c:if>
 <c:if test="${param.referName ne 'hospital'}">
 	<th>${userContext.localeMap['period.hospital']}</th>
 </c:if>
@@ -111,6 +114,7 @@
 			<c:forEach var="item" items="${periodList}">
 				<tr currentVersion='${item.version}' id="period-${item.id}" ><td><a class="link-action-removed" href="./periodManager/view/${item.id}/"> ${item.id}</a></td>
 <c:if test="${param.referName ne 'name'}">	<td contenteditable='true' class='edit-value'  propertyToChange='name' storedCellValue='${item.name}' prefix='${ownerBeanName}Manager/updatePeriod/${result.id}/${item.id}/'>${item.name}</td>
+</c:if><c:if test="${param.referName ne 'code'}">	<td contenteditable='true' class='edit-value'  propertyToChange='code' storedCellValue='${item.code}' prefix='${ownerBeanName}Manager/updatePeriod/${result.id}/${item.id}/'>${item.code}</td>
 </c:if><c:if test="${param.referName ne 'hospital'}">
 	<td class="select_candidate_td"
 			data-candidate-method="./periodManager/requestCandidateHospital/${ownerBeanName}/${item.id}/"

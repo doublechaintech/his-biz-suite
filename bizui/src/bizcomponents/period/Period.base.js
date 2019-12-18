@@ -37,9 +37,17 @@ const menuData = {menuName:"期", menuFor: "period",
   		],
 }
 
+
+const settingMenuData = {menuName:"期", menuFor: "period",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
+  code: '代码',
   hospital: '医院',
 
 }
@@ -47,6 +55,7 @@ const fieldLabels = {
 const displayColumns = [
   { title: fieldLabels.id, debugtype: 'string', dataIndex: 'id', width: '8', render: (text, record)=>renderTextCell(text,record,'period') , sorter: true },
   { title: fieldLabels.name, debugtype: 'string', dataIndex: 'name', width: '6',render: (text, record)=>renderTextCell(text,record)},
+  { title: fieldLabels.code, debugtype: 'string', dataIndex: 'code', width: '13',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.hospital, dataIndex: 'hospital', render: (text, record) => renderReferenceCell(text, record), sorter:true},
 
 ]
@@ -60,6 +69,7 @@ const renderItemOfList=(period,targetComponent)=>{
       <DescriptionList  key={period.id} size="small" col="4">
         <Description term="ID">{period.id}</Description> 
         <Description term="名称">{period.name}</Description> 
+        <Description term="代码">{period.code}</Description> 
 	
         
       </DescriptionList>

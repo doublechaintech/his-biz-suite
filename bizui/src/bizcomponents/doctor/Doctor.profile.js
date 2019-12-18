@@ -55,8 +55,8 @@ class DoctorProfile extends Component {
     // eslint-disable-next-line max-len
     const  doctor = this.props.doctor;
     const { id,displayName, doctorAssignmentCount, doctorScheduleCount } = doctor
-
-    const cardsData = {cardsName:"医生",cardsFor: "doctor",cardsSource: doctor,
+    const  returnURL = `/doctor/${id}/dashboard`
+    const cardsData = {cardsName:"医生",cardsFor: "doctor",cardsSource: doctor,displayName,returnURL,
   		subItems: [
 {name: 'doctorAssignmentList', displayName:'医生的任务',type:'doctorAssignment',count:doctorAssignmentCount,addFunction: true, role: 'doctorAssignment',  renderItem: GlobalComponents.DoctorAssignmentBase.renderItemOfList},
      
@@ -71,8 +71,8 @@ class DoctorProfile extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
-        content={summaryOf(cardsData.cardsSource,this)}
+        title={internalRenderTitle(cardsData, this)}
+        content={summaryOf(cardsData.cardsSource, this)}
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}

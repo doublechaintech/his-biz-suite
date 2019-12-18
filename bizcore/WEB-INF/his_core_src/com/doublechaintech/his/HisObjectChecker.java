@@ -1,382 +1,662 @@
 package com.doublechaintech.his;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
-
 public class HisObjectChecker extends HisChecker{
-	public HisChecker checkHospitalAsObject(BaseEntity hospitalAsBaseEntity){
 
-		checkIdOfHospital((String)hospitalAsBaseEntity.propertyOf("id"));
-		checkNameOfHospital((String)hospitalAsBaseEntity.propertyOf("name"));
-		checkAddressOfHospital((String)hospitalAsBaseEntity.propertyOf("address"));
-		checkTelephoneOfHospital((String)hospitalAsBaseEntity.propertyOf("telephone"));
-		checkVersionOfHospital((int)hospitalAsBaseEntity.propertyOf("version"));
-		checkExpenseTypeListOfHospital((List<BaseEntity>)hospitalAsBaseEntity.propertyOf("expenseTypeList"));
-		checkPeriodListOfHospital((List<BaseEntity>)hospitalAsBaseEntity.propertyOf("periodList"));
-		checkExpenseItemListOfHospital((List<BaseEntity>)hospitalAsBaseEntity.propertyOf("expenseItemList"));
-		checkDoctorListOfHospital((List<BaseEntity>)hospitalAsBaseEntity.propertyOf("doctorList"));
-		checkDepartmentListOfHospital((List<BaseEntity>)hospitalAsBaseEntity.propertyOf("departmentList"));
-		checkDoctorScheduleListOfHospital((List<BaseEntity>)hospitalAsBaseEntity.propertyOf("doctorScheduleList"));
+	Set<BaseEntity> checkedObjectSet;
+	
+	protected void markAsChecked(BaseEntity baseEntity) {
+		if(checkedObjectSet==null) {
+			checkedObjectSet =  new HashSet<BaseEntity>();
+		}
+		checkedObjectSet.add(baseEntity);
+		
+		
+	}
+	
+	protected boolean isChecked(BaseEntity baseEntity) {
+		if(checkedObjectSet==null) {
+			return false;
+			
+		}
+		return checkedObjectSet.contains(baseEntity);
+	}
+	@FunctionalInterface
+	public interface CheckerParameterFunction<P1> {
+		HisChecker apply(P1 valueToCheck);
+	}
+	@FunctionalInterface
+	public interface AssignParameterFunction {
+		HisObjectChecker apply(BaseEntity targetEntity);
+	}
+	
+	protected boolean isReferenceObject(BaseEntity target) {
+		
+		if(target.getId()==null) {
+			return false;
+		}
+		if(target.getId().isEmpty()) {
+			return false;
+		}
+		if(target.getVersion() > 0) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	protected boolean isObjectForCreate(BaseEntity target) {
+		if(target.getVersion() > 0) {
+			return false;
+		}
+		if(target.getId()==null) {
+			return true;
+		}
+		if(!target.getId().isEmpty()) {
+			return false;
+		}
+		
+		
+		return true;
+		
+	}
+	protected void setEntityProperty(BaseEntity targetEntity, String property, Object value) {
+		if(!targetEntity.isChanged()) {
+			return;
+		}
+		try {
+			targetEntity.setPropertyOf(property, value);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(concat("set property <",property,"> with value ",value.toString()," of ",targetEntity.toString()," failed"));
+		}
+		
+	}
+	
+	public <T> HisObjectChecker commonObjectPropertyAssign(BaseEntity target, String propertyName, AssignParameterFunction assigmentFunction) {
+		assigmentFunction.apply(target);
+		return this;
+	}
+	public <T> HisObjectChecker commonObjectPropertyCheck(BaseEntity target, String propertyName, CheckerParameterFunction<T> checkerFunction) {
+		
+		
+		if(!target.isChanged()) {
+			return this;
+		}
+		
+		if(isReferenceObject(target)&&!propertyName.equals("id")) {
+			//this is an object reference, so all other properties except id check will be ignored
+			//id will be checked in this case
+			return this; //with an Id, but version is 0 regard as refencer
+		}
+		if(isObjectForCreate(target)&&propertyName.equals("id")) {
+			// ignore check id for new object to create
+			return this;
+		}
+		pushPosition(propertyName);
+		T valueToCheck=(T)target.propertyOf(propertyName);
+		checkerFunction.apply(valueToCheck);
+		popPosition();
+		
+		return this;
+	}
+	public  HisChecker commonObjectElementCheck(BaseEntity target, String propertyName, CheckerParameterFunction<BaseEntity> checkerFunction) {
+		
+		pushPosition(propertyName);
+		checkerFunction.apply(target);
+		popPosition();
+		return this;
+	}
+	protected String wrapArrayIndex(int andIncrement) {
+		return "["+andIncrement+"]";
+	}
+	protected String concat(String ...args) {
+		
+		return Arrays.asList(args).stream().collect(Collectors.joining(""));
+		
+	}
+	// use like commonObjectPropertyCheck(changeRequestAsBaseEntity,"name",this::checkNameOfChangeRequest);
+
+	public HisObjectChecker checkAndFixHospital(BaseEntity hospitalAsBaseEntity){
+
+		if( isChecked(hospitalAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(hospitalAsBaseEntity);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"id",this::checkIdOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"name",this::checkNameOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"address",this::checkAddressOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"telephone",this::checkTelephoneOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"version",this::checkVersionOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"expenseTypeList",this::checkExpenseTypeListOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"periodList",this::checkPeriodListOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"expenseItemList",this::checkExpenseItemListOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"doctorList",this::checkDoctorListOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"departmentList",this::checkDepartmentListOfHospital);
+		commonObjectPropertyCheck(hospitalAsBaseEntity,"doctorScheduleList",this::checkDoctorScheduleListOfHospital);
 		return this;
 
 	}
 
-	public HisChecker checkExpenseTypeAsObject(BaseEntity expenseTypeAsBaseEntity){
+	public HisObjectChecker checkAndFixExpenseType(BaseEntity expenseTypeAsBaseEntity){
 
-		checkIdOfExpenseType((String)expenseTypeAsBaseEntity.propertyOf("id"));
-		checkNameOfExpenseType((String)expenseTypeAsBaseEntity.propertyOf("name"));
-		checkHelperCharsOfExpenseType((String)expenseTypeAsBaseEntity.propertyOf("helperChars"));
-		checkStatusOfExpenseType((String)expenseTypeAsBaseEntity.propertyOf("status"));
-		checkHospitalOfExpenseType((BaseEntity)expenseTypeAsBaseEntity.propertyOf("hospital"));
-		checkDescriptionOfExpenseType((String)expenseTypeAsBaseEntity.propertyOf("description"));
-		checkVersionOfExpenseType((int)expenseTypeAsBaseEntity.propertyOf("version"));
-		checkExpenseItemListOfExpenseType((List<BaseEntity>)expenseTypeAsBaseEntity.propertyOf("expenseItemList"));
-		checkDoctorScheduleListOfExpenseType((List<BaseEntity>)expenseTypeAsBaseEntity.propertyOf("doctorScheduleList"));
+		if( isChecked(expenseTypeAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(expenseTypeAsBaseEntity);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"id",this::checkIdOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"name",this::checkNameOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"helperChars",this::checkHelperCharsOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"status",this::checkStatusOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"hospital",this::checkHospitalOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"description",this::checkDescriptionOfExpenseType);
+		commonObjectPropertyAssign(expenseTypeAsBaseEntity,"updateTime",this::assignUpdateTimeOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"version",this::checkVersionOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"expenseItemList",this::checkExpenseItemListOfExpenseType);
+		commonObjectPropertyCheck(expenseTypeAsBaseEntity,"doctorScheduleList",this::checkDoctorScheduleListOfExpenseType);
 		return this;
 
 	}
 
-	public HisChecker checkPeriodAsObject(BaseEntity periodAsBaseEntity){
+	public HisObjectChecker checkAndFixPeriod(BaseEntity periodAsBaseEntity){
 
-		checkIdOfPeriod((String)periodAsBaseEntity.propertyOf("id"));
-		checkNameOfPeriod((String)periodAsBaseEntity.propertyOf("name"));
-		checkHospitalOfPeriod((BaseEntity)periodAsBaseEntity.propertyOf("hospital"));
-		checkVersionOfPeriod((int)periodAsBaseEntity.propertyOf("version"));
-		checkDoctorScheduleListOfPeriod((List<BaseEntity>)periodAsBaseEntity.propertyOf("doctorScheduleList"));
+		if( isChecked(periodAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(periodAsBaseEntity);
+		commonObjectPropertyCheck(periodAsBaseEntity,"id",this::checkIdOfPeriod);
+		commonObjectPropertyCheck(periodAsBaseEntity,"name",this::checkNameOfPeriod);
+		commonObjectPropertyCheck(periodAsBaseEntity,"code",this::checkCodeOfPeriod);
+		commonObjectPropertyCheck(periodAsBaseEntity,"hospital",this::checkHospitalOfPeriod);
+		commonObjectPropertyCheck(periodAsBaseEntity,"version",this::checkVersionOfPeriod);
+		commonObjectPropertyCheck(periodAsBaseEntity,"doctorScheduleList",this::checkDoctorScheduleListOfPeriod);
 		return this;
 
 	}
 
-	public HisChecker checkExpenseItemAsObject(BaseEntity expenseItemAsBaseEntity){
+	public HisObjectChecker checkAndFixExpenseItem(BaseEntity expenseItemAsBaseEntity){
 
-		checkIdOfExpenseItem((String)expenseItemAsBaseEntity.propertyOf("id"));
-		checkNameOfExpenseItem((String)expenseItemAsBaseEntity.propertyOf("name"));
-		checkPriceOfExpenseItem((BigDecimal)expenseItemAsBaseEntity.propertyOf("price"));
-		checkExpenseTypeOfExpenseItem((BaseEntity)expenseItemAsBaseEntity.propertyOf("expenseType"));
-		checkHospitalOfExpenseItem((BaseEntity)expenseItemAsBaseEntity.propertyOf("hospital"));
-		checkVersionOfExpenseItem((int)expenseItemAsBaseEntity.propertyOf("version"));
+		if( isChecked(expenseItemAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(expenseItemAsBaseEntity);
+		commonObjectPropertyCheck(expenseItemAsBaseEntity,"id",this::checkIdOfExpenseItem);
+		commonObjectPropertyCheck(expenseItemAsBaseEntity,"name",this::checkNameOfExpenseItem);
+		commonObjectPropertyCheck(expenseItemAsBaseEntity,"price",this::checkPriceOfExpenseItem);
+		commonObjectPropertyCheck(expenseItemAsBaseEntity,"expenseType",this::checkExpenseTypeOfExpenseItem);
+		commonObjectPropertyCheck(expenseItemAsBaseEntity,"hospital",this::checkHospitalOfExpenseItem);
+		commonObjectPropertyAssign(expenseItemAsBaseEntity,"updateTime",this::assignUpdateTimeOfExpenseItem);
+		commonObjectPropertyCheck(expenseItemAsBaseEntity,"version",this::checkVersionOfExpenseItem);
 		return this;
 
 	}
 
-	public HisChecker checkDoctorAsObject(BaseEntity doctorAsBaseEntity){
+	public HisObjectChecker checkAndFixDoctor(BaseEntity doctorAsBaseEntity){
 
-		checkIdOfDoctor((String)doctorAsBaseEntity.propertyOf("id"));
-		checkNameOfDoctor((String)doctorAsBaseEntity.propertyOf("name"));
-		checkShotImageOfDoctor((String)doctorAsBaseEntity.propertyOf("shotImage"));
-		checkHospitalOfDoctor((BaseEntity)doctorAsBaseEntity.propertyOf("hospital"));
-		checkVersionOfDoctor((int)doctorAsBaseEntity.propertyOf("version"));
-		checkDoctorAssignmentListOfDoctor((List<BaseEntity>)doctorAsBaseEntity.propertyOf("doctorAssignmentList"));
-		checkDoctorScheduleListOfDoctor((List<BaseEntity>)doctorAsBaseEntity.propertyOf("doctorScheduleList"));
+		if( isChecked(doctorAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(doctorAsBaseEntity);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"id",this::checkIdOfDoctor);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"name",this::checkNameOfDoctor);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"shotImage",this::checkShotImageOfDoctor);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"hospital",this::checkHospitalOfDoctor);
+		commonObjectPropertyAssign(doctorAsBaseEntity,"updateTime",this::assignUpdateTimeOfDoctor);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"version",this::checkVersionOfDoctor);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"doctorAssignmentList",this::checkDoctorAssignmentListOfDoctor);
+		commonObjectPropertyCheck(doctorAsBaseEntity,"doctorScheduleList",this::checkDoctorScheduleListOfDoctor);
 		return this;
 
 	}
 
-	public HisChecker checkDepartmentAsObject(BaseEntity departmentAsBaseEntity){
+	public HisObjectChecker checkAndFixDepartment(BaseEntity departmentAsBaseEntity){
 
-		checkIdOfDepartment((String)departmentAsBaseEntity.propertyOf("id"));
-		checkNameOfDepartment((String)departmentAsBaseEntity.propertyOf("name"));
-		checkHospitalOfDepartment((BaseEntity)departmentAsBaseEntity.propertyOf("hospital"));
-		checkVersionOfDepartment((int)departmentAsBaseEntity.propertyOf("version"));
-		checkDoctorAssignmentListOfDepartment((List<BaseEntity>)departmentAsBaseEntity.propertyOf("doctorAssignmentList"));
-		checkDoctorScheduleListOfDepartment((List<BaseEntity>)departmentAsBaseEntity.propertyOf("doctorScheduleList"));
+		if( isChecked(departmentAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(departmentAsBaseEntity);
+		commonObjectPropertyCheck(departmentAsBaseEntity,"id",this::checkIdOfDepartment);
+		commonObjectPropertyCheck(departmentAsBaseEntity,"name",this::checkNameOfDepartment);
+		commonObjectPropertyCheck(departmentAsBaseEntity,"hospital",this::checkHospitalOfDepartment);
+		commonObjectPropertyAssign(departmentAsBaseEntity,"updateTime",this::assignUpdateTimeOfDepartment);
+		commonObjectPropertyCheck(departmentAsBaseEntity,"version",this::checkVersionOfDepartment);
+		commonObjectPropertyCheck(departmentAsBaseEntity,"doctorAssignmentList",this::checkDoctorAssignmentListOfDepartment);
+		commonObjectPropertyCheck(departmentAsBaseEntity,"doctorScheduleList",this::checkDoctorScheduleListOfDepartment);
 		return this;
 
 	}
 
-	public HisChecker checkDoctorAssignmentAsObject(BaseEntity doctorAssignmentAsBaseEntity){
+	public HisObjectChecker checkAndFixDoctorAssignment(BaseEntity doctorAssignmentAsBaseEntity){
 
-		checkIdOfDoctorAssignment((String)doctorAssignmentAsBaseEntity.propertyOf("id"));
-		checkNameOfDoctorAssignment((String)doctorAssignmentAsBaseEntity.propertyOf("name"));
-		checkDoctorOfDoctorAssignment((BaseEntity)doctorAssignmentAsBaseEntity.propertyOf("doctor"));
-		checkDepartmentOfDoctorAssignment((BaseEntity)doctorAssignmentAsBaseEntity.propertyOf("department"));
-		checkVersionOfDoctorAssignment((int)doctorAssignmentAsBaseEntity.propertyOf("version"));
+		if( isChecked(doctorAssignmentAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(doctorAssignmentAsBaseEntity);
+		commonObjectPropertyCheck(doctorAssignmentAsBaseEntity,"id",this::checkIdOfDoctorAssignment);
+		commonObjectPropertyCheck(doctorAssignmentAsBaseEntity,"name",this::checkNameOfDoctorAssignment);
+		commonObjectPropertyCheck(doctorAssignmentAsBaseEntity,"doctor",this::checkDoctorOfDoctorAssignment);
+		commonObjectPropertyCheck(doctorAssignmentAsBaseEntity,"department",this::checkDepartmentOfDoctorAssignment);
+		commonObjectPropertyAssign(doctorAssignmentAsBaseEntity,"updateTime",this::assignUpdateTimeOfDoctorAssignment);
+		commonObjectPropertyCheck(doctorAssignmentAsBaseEntity,"version",this::checkVersionOfDoctorAssignment);
 		return this;
 
 	}
 
-	public HisChecker checkDoctorScheduleAsObject(BaseEntity doctorScheduleAsBaseEntity){
+	public HisObjectChecker checkAndFixDoctorSchedule(BaseEntity doctorScheduleAsBaseEntity){
 
-		checkIdOfDoctorSchedule((String)doctorScheduleAsBaseEntity.propertyOf("id"));
-		checkNameOfDoctorSchedule((String)doctorScheduleAsBaseEntity.propertyOf("name"));
-		checkDoctorOfDoctorSchedule((BaseEntity)doctorScheduleAsBaseEntity.propertyOf("doctor"));
-		checkScheduleDateOfDoctorSchedule((Date)doctorScheduleAsBaseEntity.propertyOf("scheduleDate"));
-		checkPeriodOfDoctorSchedule((BaseEntity)doctorScheduleAsBaseEntity.propertyOf("period"));
-		checkDepartmentOfDoctorSchedule((BaseEntity)doctorScheduleAsBaseEntity.propertyOf("department"));
-		checkAvailableOfDoctorSchedule((int)doctorScheduleAsBaseEntity.propertyOf("available"));
-		checkPriceOfDoctorSchedule((BigDecimal)doctorScheduleAsBaseEntity.propertyOf("price"));
-		checkExpenseTypeOfDoctorSchedule((BaseEntity)doctorScheduleAsBaseEntity.propertyOf("expenseType"));
-		checkHospitalOfDoctorSchedule((BaseEntity)doctorScheduleAsBaseEntity.propertyOf("hospital"));
-		checkVersionOfDoctorSchedule((int)doctorScheduleAsBaseEntity.propertyOf("version"));
+		if( isChecked(doctorScheduleAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(doctorScheduleAsBaseEntity);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"id",this::checkIdOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"name",this::checkNameOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"doctor",this::checkDoctorOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"scheduleDate",this::checkScheduleDateOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"period",this::checkPeriodOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"department",this::checkDepartmentOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"available",this::checkAvailableOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"price",this::checkPriceOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"expenseType",this::checkExpenseTypeOfDoctorSchedule);
+		commonObjectPropertyAssign(doctorScheduleAsBaseEntity,"createTime",this::assignCreateTimeOfDoctorSchedule);
+		commonObjectPropertyAssign(doctorScheduleAsBaseEntity,"updateTime",this::assignUpdateTimeOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"hospital",this::checkHospitalOfDoctorSchedule);
+		commonObjectPropertyCheck(doctorScheduleAsBaseEntity,"version",this::checkVersionOfDoctorSchedule);
 		return this;
 
 	}
 
-	public HisChecker checkUserDomainAsObject(BaseEntity userDomainAsBaseEntity){
+	public HisObjectChecker checkAndFixUserDomain(BaseEntity userDomainAsBaseEntity){
 
-		checkIdOfUserDomain((String)userDomainAsBaseEntity.propertyOf("id"));
-		checkNameOfUserDomain((String)userDomainAsBaseEntity.propertyOf("name"));
-		checkVersionOfUserDomain((int)userDomainAsBaseEntity.propertyOf("version"));
-		checkUserWhiteListListOfUserDomain((List<BaseEntity>)userDomainAsBaseEntity.propertyOf("userWhiteListList"));
-		checkSecUserListOfUserDomain((List<BaseEntity>)userDomainAsBaseEntity.propertyOf("secUserList"));
+		if( isChecked(userDomainAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(userDomainAsBaseEntity);
+		commonObjectPropertyCheck(userDomainAsBaseEntity,"id",this::checkIdOfUserDomain);
+		commonObjectPropertyCheck(userDomainAsBaseEntity,"name",this::checkNameOfUserDomain);
+		commonObjectPropertyCheck(userDomainAsBaseEntity,"version",this::checkVersionOfUserDomain);
+		commonObjectPropertyCheck(userDomainAsBaseEntity,"userWhiteListList",this::checkUserWhiteListListOfUserDomain);
+		commonObjectPropertyCheck(userDomainAsBaseEntity,"secUserList",this::checkSecUserListOfUserDomain);
 		return this;
 
 	}
 
-	public HisChecker checkUserWhiteListAsObject(BaseEntity userWhiteListAsBaseEntity){
+	public HisObjectChecker checkAndFixUserWhiteList(BaseEntity userWhiteListAsBaseEntity){
 
-		checkIdOfUserWhiteList((String)userWhiteListAsBaseEntity.propertyOf("id"));
-		checkUserIdentityOfUserWhiteList((String)userWhiteListAsBaseEntity.propertyOf("userIdentity"));
-		checkUserSpecialFunctionsOfUserWhiteList((String)userWhiteListAsBaseEntity.propertyOf("userSpecialFunctions"));
-		checkDomainOfUserWhiteList((BaseEntity)userWhiteListAsBaseEntity.propertyOf("domain"));
-		checkVersionOfUserWhiteList((int)userWhiteListAsBaseEntity.propertyOf("version"));
+		if( isChecked(userWhiteListAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(userWhiteListAsBaseEntity);
+		commonObjectPropertyCheck(userWhiteListAsBaseEntity,"id",this::checkIdOfUserWhiteList);
+		commonObjectPropertyCheck(userWhiteListAsBaseEntity,"userIdentity",this::checkUserIdentityOfUserWhiteList);
+		commonObjectPropertyCheck(userWhiteListAsBaseEntity,"userSpecialFunctions",this::checkUserSpecialFunctionsOfUserWhiteList);
+		commonObjectPropertyCheck(userWhiteListAsBaseEntity,"domain",this::checkDomainOfUserWhiteList);
+		commonObjectPropertyCheck(userWhiteListAsBaseEntity,"version",this::checkVersionOfUserWhiteList);
 		return this;
 
 	}
 
-	public HisChecker checkSecUserAsObject(BaseEntity secUserAsBaseEntity){
+	public HisObjectChecker checkAndFixSecUser(BaseEntity secUserAsBaseEntity){
 
-		checkIdOfSecUser((String)secUserAsBaseEntity.propertyOf("id"));
-		checkLoginOfSecUser((String)secUserAsBaseEntity.propertyOf("login"));
-		checkMobileOfSecUser((String)secUserAsBaseEntity.propertyOf("mobile"));
-		checkEmailOfSecUser((String)secUserAsBaseEntity.propertyOf("email"));
-		checkPwdOfSecUser((String)secUserAsBaseEntity.propertyOf("pwd"));
-		checkWeixinOpenidOfSecUser((String)secUserAsBaseEntity.propertyOf("weixinOpenid"));
-		checkWeixinAppidOfSecUser((String)secUserAsBaseEntity.propertyOf("weixinAppid"));
-		checkAccessTokenOfSecUser((String)secUserAsBaseEntity.propertyOf("accessToken"));
-		checkVerificationCodeOfSecUser((int)secUserAsBaseEntity.propertyOf("verificationCode"));
-		checkVerificationCodeExpireOfSecUser((DateTime)secUserAsBaseEntity.propertyOf("verificationCodeExpire"));
-		checkLastLoginTimeOfSecUser((DateTime)secUserAsBaseEntity.propertyOf("lastLoginTime"));
-		checkDomainOfSecUser((BaseEntity)secUserAsBaseEntity.propertyOf("domain"));
-		checkVersionOfSecUser((int)secUserAsBaseEntity.propertyOf("version"));
-		checkUserAppListOfSecUser((List<BaseEntity>)secUserAsBaseEntity.propertyOf("userAppList"));
-		checkLoginHistoryListOfSecUser((List<BaseEntity>)secUserAsBaseEntity.propertyOf("loginHistoryList"));
+		if( isChecked(secUserAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(secUserAsBaseEntity);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"id",this::checkIdOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"login",this::checkLoginOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"mobile",this::checkMobileOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"email",this::checkEmailOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"pwd",this::checkPwdOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"weixinOpenid",this::checkWeixinOpenidOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"weixinAppid",this::checkWeixinAppidOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"accessToken",this::checkAccessTokenOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"verificationCode",this::checkVerificationCodeOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"verificationCodeExpire",this::checkVerificationCodeExpireOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"lastLoginTime",this::checkLastLoginTimeOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"domain",this::checkDomainOfSecUser);
+		commonObjectPropertyAssign(secUserAsBaseEntity,"currentStatus",this::assignCurrentStatusOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"version",this::checkVersionOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"userAppList",this::checkUserAppListOfSecUser);
+		commonObjectPropertyCheck(secUserAsBaseEntity,"loginHistoryList",this::checkLoginHistoryListOfSecUser);
 		return this;
 
 	}
 
-	public HisChecker checkSecUserBlockingAsObject(BaseEntity secUserBlockingAsBaseEntity){
+	public HisObjectChecker checkAndFixSecUserBlocking(BaseEntity secUserBlockingAsBaseEntity){
 
-		checkIdOfSecUserBlocking((String)secUserBlockingAsBaseEntity.propertyOf("id"));
-		checkWhoOfSecUserBlocking((String)secUserBlockingAsBaseEntity.propertyOf("who"));
-		checkCommentsOfSecUserBlocking((String)secUserBlockingAsBaseEntity.propertyOf("comments"));
-		checkVersionOfSecUserBlocking((int)secUserBlockingAsBaseEntity.propertyOf("version"));
-		checkSecUserListOfSecUserBlocking((List<BaseEntity>)secUserBlockingAsBaseEntity.propertyOf("secUserList"));
+		if( isChecked(secUserBlockingAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(secUserBlockingAsBaseEntity);
+		commonObjectPropertyCheck(secUserBlockingAsBaseEntity,"id",this::checkIdOfSecUserBlocking);
+		commonObjectPropertyCheck(secUserBlockingAsBaseEntity,"who",this::checkWhoOfSecUserBlocking);
+		commonObjectPropertyAssign(secUserBlockingAsBaseEntity,"blockTime",this::assignBlockTimeOfSecUserBlocking);
+		commonObjectPropertyCheck(secUserBlockingAsBaseEntity,"comments",this::checkCommentsOfSecUserBlocking);
+		commonObjectPropertyCheck(secUserBlockingAsBaseEntity,"version",this::checkVersionOfSecUserBlocking);
+		commonObjectPropertyCheck(secUserBlockingAsBaseEntity,"secUserList",this::checkSecUserListOfSecUserBlocking);
 		return this;
 
 	}
 
-	public HisChecker checkUserAppAsObject(BaseEntity userAppAsBaseEntity){
+	public HisObjectChecker checkAndFixUserApp(BaseEntity userAppAsBaseEntity){
 
-		checkIdOfUserApp((String)userAppAsBaseEntity.propertyOf("id"));
-		checkTitleOfUserApp((String)userAppAsBaseEntity.propertyOf("title"));
-		checkSecUserOfUserApp((BaseEntity)userAppAsBaseEntity.propertyOf("secUser"));
-		checkAppIconOfUserApp((String)userAppAsBaseEntity.propertyOf("appIcon"));
-		checkFullAccessOfUserApp((boolean)userAppAsBaseEntity.propertyOf("fullAccess"));
-		checkPermissionOfUserApp((String)userAppAsBaseEntity.propertyOf("permission"));
-		checkObjectTypeOfUserApp((String)userAppAsBaseEntity.propertyOf("objectType"));
-		checkObjectIdOfUserApp((String)userAppAsBaseEntity.propertyOf("objectId"));
-		checkLocationOfUserApp((String)userAppAsBaseEntity.propertyOf("location"));
-		checkVersionOfUserApp((int)userAppAsBaseEntity.propertyOf("version"));
-		checkListAccessListOfUserApp((List<BaseEntity>)userAppAsBaseEntity.propertyOf("listAccessList"));
-		checkObjectAccessListOfUserApp((List<BaseEntity>)userAppAsBaseEntity.propertyOf("objectAccessList"));
+		if( isChecked(userAppAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(userAppAsBaseEntity);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"id",this::checkIdOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"title",this::checkTitleOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"secUser",this::checkSecUserOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"appIcon",this::checkAppIconOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"fullAccess",this::checkFullAccessOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"permission",this::checkPermissionOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"objectType",this::checkObjectTypeOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"objectId",this::checkObjectIdOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"location",this::checkLocationOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"version",this::checkVersionOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"quickLinkList",this::checkQuickLinkListOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"listAccessList",this::checkListAccessListOfUserApp);
+		commonObjectPropertyCheck(userAppAsBaseEntity,"objectAccessList",this::checkObjectAccessListOfUserApp);
 		return this;
 
 	}
 
-	public HisChecker checkListAccessAsObject(BaseEntity listAccessAsBaseEntity){
+	public HisObjectChecker checkAndFixQuickLink(BaseEntity quickLinkAsBaseEntity){
 
-		checkIdOfListAccess((String)listAccessAsBaseEntity.propertyOf("id"));
-		checkNameOfListAccess((String)listAccessAsBaseEntity.propertyOf("name"));
-		checkInternalNameOfListAccess((String)listAccessAsBaseEntity.propertyOf("internalName"));
-		checkReadPermissionOfListAccess((boolean)listAccessAsBaseEntity.propertyOf("readPermission"));
-		checkCreatePermissionOfListAccess((boolean)listAccessAsBaseEntity.propertyOf("createPermission"));
-		checkDeletePermissionOfListAccess((boolean)listAccessAsBaseEntity.propertyOf("deletePermission"));
-		checkUpdatePermissionOfListAccess((boolean)listAccessAsBaseEntity.propertyOf("updatePermission"));
-		checkExecutionPermissionOfListAccess((boolean)listAccessAsBaseEntity.propertyOf("executionPermission"));
-		checkAppOfListAccess((BaseEntity)listAccessAsBaseEntity.propertyOf("app"));
-		checkVersionOfListAccess((int)listAccessAsBaseEntity.propertyOf("version"));
+		if( isChecked(quickLinkAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(quickLinkAsBaseEntity);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"id",this::checkIdOfQuickLink);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"name",this::checkNameOfQuickLink);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"icon",this::checkIconOfQuickLink);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"imagePath",this::checkImagePathOfQuickLink);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"linkTarget",this::checkLinkTargetOfQuickLink);
+		commonObjectPropertyAssign(quickLinkAsBaseEntity,"createTime",this::assignCreateTimeOfQuickLink);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"app",this::checkAppOfQuickLink);
+		commonObjectPropertyCheck(quickLinkAsBaseEntity,"version",this::checkVersionOfQuickLink);
 		return this;
 
 	}
 
-	public HisChecker checkObjectAccessAsObject(BaseEntity objectAccessAsBaseEntity){
+	public HisObjectChecker checkAndFixListAccess(BaseEntity listAccessAsBaseEntity){
 
-		checkIdOfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("id"));
-		checkNameOfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("name"));
-		checkObjectTypeOfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("objectType"));
-		checkList1OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list1"));
-		checkList2OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list2"));
-		checkList3OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list3"));
-		checkList4OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list4"));
-		checkList5OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list5"));
-		checkList6OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list6"));
-		checkList7OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list7"));
-		checkList8OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list8"));
-		checkList9OfObjectAccess((String)objectAccessAsBaseEntity.propertyOf("list9"));
-		checkAppOfObjectAccess((BaseEntity)objectAccessAsBaseEntity.propertyOf("app"));
-		checkVersionOfObjectAccess((int)objectAccessAsBaseEntity.propertyOf("version"));
+		if( isChecked(listAccessAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(listAccessAsBaseEntity);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"id",this::checkIdOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"name",this::checkNameOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"internalName",this::checkInternalNameOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"readPermission",this::checkReadPermissionOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"createPermission",this::checkCreatePermissionOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"deletePermission",this::checkDeletePermissionOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"updatePermission",this::checkUpdatePermissionOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"executionPermission",this::checkExecutionPermissionOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"app",this::checkAppOfListAccess);
+		commonObjectPropertyCheck(listAccessAsBaseEntity,"version",this::checkVersionOfListAccess);
 		return this;
 
 	}
 
-	public HisChecker checkLoginHistoryAsObject(BaseEntity loginHistoryAsBaseEntity){
+	public HisObjectChecker checkAndFixObjectAccess(BaseEntity objectAccessAsBaseEntity){
 
-		checkIdOfLoginHistory((String)loginHistoryAsBaseEntity.propertyOf("id"));
-		checkFromIpOfLoginHistory((String)loginHistoryAsBaseEntity.propertyOf("fromIp"));
-		checkDescriptionOfLoginHistory((String)loginHistoryAsBaseEntity.propertyOf("description"));
-		checkSecUserOfLoginHistory((BaseEntity)loginHistoryAsBaseEntity.propertyOf("secUser"));
-		checkVersionOfLoginHistory((int)loginHistoryAsBaseEntity.propertyOf("version"));
+		if( isChecked(objectAccessAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(objectAccessAsBaseEntity);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"id",this::checkIdOfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"name",this::checkNameOfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"objectType",this::checkObjectTypeOfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list1",this::checkList1OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list2",this::checkList2OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list3",this::checkList3OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list4",this::checkList4OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list5",this::checkList5OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list6",this::checkList6OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list7",this::checkList7OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list8",this::checkList8OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"list9",this::checkList9OfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"app",this::checkAppOfObjectAccess);
+		commonObjectPropertyCheck(objectAccessAsBaseEntity,"version",this::checkVersionOfObjectAccess);
 		return this;
 
 	}
 
-	public HisChecker checkGenericFormAsObject(BaseEntity genericFormAsBaseEntity){
+	public HisObjectChecker checkAndFixLoginHistory(BaseEntity loginHistoryAsBaseEntity){
 
-		checkIdOfGenericForm((String)genericFormAsBaseEntity.propertyOf("id"));
-		checkTitleOfGenericForm((String)genericFormAsBaseEntity.propertyOf("title"));
-		checkDescriptionOfGenericForm((String)genericFormAsBaseEntity.propertyOf("description"));
-		checkVersionOfGenericForm((int)genericFormAsBaseEntity.propertyOf("version"));
-		checkFormMessageListOfGenericForm((List<BaseEntity>)genericFormAsBaseEntity.propertyOf("formMessageList"));
-		checkFormFieldMessageListOfGenericForm((List<BaseEntity>)genericFormAsBaseEntity.propertyOf("formFieldMessageList"));
-		checkFormFieldListOfGenericForm((List<BaseEntity>)genericFormAsBaseEntity.propertyOf("formFieldList"));
-		checkFormActionListOfGenericForm((List<BaseEntity>)genericFormAsBaseEntity.propertyOf("formActionList"));
+		if( isChecked(loginHistoryAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(loginHistoryAsBaseEntity);
+		commonObjectPropertyCheck(loginHistoryAsBaseEntity,"id",this::checkIdOfLoginHistory);
+		commonObjectPropertyAssign(loginHistoryAsBaseEntity,"loginTime",this::assignLoginTimeOfLoginHistory);
+		commonObjectPropertyCheck(loginHistoryAsBaseEntity,"fromIp",this::checkFromIpOfLoginHistory);
+		commonObjectPropertyCheck(loginHistoryAsBaseEntity,"description",this::checkDescriptionOfLoginHistory);
+		commonObjectPropertyCheck(loginHistoryAsBaseEntity,"secUser",this::checkSecUserOfLoginHistory);
+		commonObjectPropertyCheck(loginHistoryAsBaseEntity,"version",this::checkVersionOfLoginHistory);
 		return this;
 
 	}
 
-	public HisChecker checkFormMessageAsObject(BaseEntity formMessageAsBaseEntity){
+	public HisObjectChecker checkAndFixGenericForm(BaseEntity genericFormAsBaseEntity){
 
-		checkIdOfFormMessage((String)formMessageAsBaseEntity.propertyOf("id"));
-		checkTitleOfFormMessage((String)formMessageAsBaseEntity.propertyOf("title"));
-		checkFormOfFormMessage((BaseEntity)formMessageAsBaseEntity.propertyOf("form"));
-		checkLevelOfFormMessage((String)formMessageAsBaseEntity.propertyOf("level"));
-		checkVersionOfFormMessage((int)formMessageAsBaseEntity.propertyOf("version"));
+		if( isChecked(genericFormAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(genericFormAsBaseEntity);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"id",this::checkIdOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"title",this::checkTitleOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"description",this::checkDescriptionOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"version",this::checkVersionOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"formMessageList",this::checkFormMessageListOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"formFieldMessageList",this::checkFormFieldMessageListOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"formFieldList",this::checkFormFieldListOfGenericForm);
+		commonObjectPropertyCheck(genericFormAsBaseEntity,"formActionList",this::checkFormActionListOfGenericForm);
 		return this;
 
 	}
 
-	public HisChecker checkFormFieldMessageAsObject(BaseEntity formFieldMessageAsBaseEntity){
+	public HisObjectChecker checkAndFixFormMessage(BaseEntity formMessageAsBaseEntity){
 
-		checkIdOfFormFieldMessage((String)formFieldMessageAsBaseEntity.propertyOf("id"));
-		checkTitleOfFormFieldMessage((String)formFieldMessageAsBaseEntity.propertyOf("title"));
-		checkParameterNameOfFormFieldMessage((String)formFieldMessageAsBaseEntity.propertyOf("parameterName"));
-		checkFormOfFormFieldMessage((BaseEntity)formFieldMessageAsBaseEntity.propertyOf("form"));
-		checkLevelOfFormFieldMessage((String)formFieldMessageAsBaseEntity.propertyOf("level"));
-		checkVersionOfFormFieldMessage((int)formFieldMessageAsBaseEntity.propertyOf("version"));
+		if( isChecked(formMessageAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(formMessageAsBaseEntity);
+		commonObjectPropertyCheck(formMessageAsBaseEntity,"id",this::checkIdOfFormMessage);
+		commonObjectPropertyCheck(formMessageAsBaseEntity,"title",this::checkTitleOfFormMessage);
+		commonObjectPropertyCheck(formMessageAsBaseEntity,"form",this::checkFormOfFormMessage);
+		commonObjectPropertyCheck(formMessageAsBaseEntity,"level",this::checkLevelOfFormMessage);
+		commonObjectPropertyCheck(formMessageAsBaseEntity,"version",this::checkVersionOfFormMessage);
 		return this;
 
 	}
 
-	public HisChecker checkFormFieldAsObject(BaseEntity formFieldAsBaseEntity){
+	public HisObjectChecker checkAndFixFormFieldMessage(BaseEntity formFieldMessageAsBaseEntity){
 
-		checkIdOfFormField((String)formFieldAsBaseEntity.propertyOf("id"));
-		checkLabelOfFormField((String)formFieldAsBaseEntity.propertyOf("label"));
-		checkLocaleKeyOfFormField((String)formFieldAsBaseEntity.propertyOf("localeKey"));
-		checkParameterNameOfFormField((String)formFieldAsBaseEntity.propertyOf("parameterName"));
-		checkTypeOfFormField((String)formFieldAsBaseEntity.propertyOf("type"));
-		checkFormOfFormField((BaseEntity)formFieldAsBaseEntity.propertyOf("form"));
-		checkPlaceholderOfFormField((String)formFieldAsBaseEntity.propertyOf("placeholder"));
-		checkDefaultValueOfFormField((String)formFieldAsBaseEntity.propertyOf("defaultValue"));
-		checkDescriptionOfFormField((String)formFieldAsBaseEntity.propertyOf("description"));
-		checkFieldGroupOfFormField((String)formFieldAsBaseEntity.propertyOf("fieldGroup"));
-		checkMinimumValueOfFormField((String)formFieldAsBaseEntity.propertyOf("minimumValue"));
-		checkMaximumValueOfFormField((String)formFieldAsBaseEntity.propertyOf("maximumValue"));
-		checkRequiredOfFormField((boolean)formFieldAsBaseEntity.propertyOf("required"));
-		checkDisabledOfFormField((boolean)formFieldAsBaseEntity.propertyOf("disabled"));
-		checkCustomRenderingOfFormField((boolean)formFieldAsBaseEntity.propertyOf("customRendering"));
-		checkCandidateValuesOfFormField((String)formFieldAsBaseEntity.propertyOf("candidateValues"));
-		checkSuggestValuesOfFormField((String)formFieldAsBaseEntity.propertyOf("suggestValues"));
-		checkVersionOfFormField((int)formFieldAsBaseEntity.propertyOf("version"));
+		if( isChecked(formFieldMessageAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(formFieldMessageAsBaseEntity);
+		commonObjectPropertyCheck(formFieldMessageAsBaseEntity,"id",this::checkIdOfFormFieldMessage);
+		commonObjectPropertyCheck(formFieldMessageAsBaseEntity,"title",this::checkTitleOfFormFieldMessage);
+		commonObjectPropertyCheck(formFieldMessageAsBaseEntity,"parameterName",this::checkParameterNameOfFormFieldMessage);
+		commonObjectPropertyCheck(formFieldMessageAsBaseEntity,"form",this::checkFormOfFormFieldMessage);
+		commonObjectPropertyCheck(formFieldMessageAsBaseEntity,"level",this::checkLevelOfFormFieldMessage);
+		commonObjectPropertyCheck(formFieldMessageAsBaseEntity,"version",this::checkVersionOfFormFieldMessage);
 		return this;
 
 	}
 
-	public HisChecker checkFormActionAsObject(BaseEntity formActionAsBaseEntity){
+	public HisObjectChecker checkAndFixFormField(BaseEntity formFieldAsBaseEntity){
 
-		checkIdOfFormAction((String)formActionAsBaseEntity.propertyOf("id"));
-		checkLabelOfFormAction((String)formActionAsBaseEntity.propertyOf("label"));
-		checkLocaleKeyOfFormAction((String)formActionAsBaseEntity.propertyOf("localeKey"));
-		checkActionKeyOfFormAction((String)formActionAsBaseEntity.propertyOf("actionKey"));
-		checkLevelOfFormAction((String)formActionAsBaseEntity.propertyOf("level"));
-		checkUrlOfFormAction((String)formActionAsBaseEntity.propertyOf("url"));
-		checkFormOfFormAction((BaseEntity)formActionAsBaseEntity.propertyOf("form"));
-		checkVersionOfFormAction((int)formActionAsBaseEntity.propertyOf("version"));
+		if( isChecked(formFieldAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(formFieldAsBaseEntity);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"id",this::checkIdOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"label",this::checkLabelOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"localeKey",this::checkLocaleKeyOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"parameterName",this::checkParameterNameOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"type",this::checkTypeOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"form",this::checkFormOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"placeholder",this::checkPlaceholderOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"defaultValue",this::checkDefaultValueOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"description",this::checkDescriptionOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"fieldGroup",this::checkFieldGroupOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"minimumValue",this::checkMinimumValueOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"maximumValue",this::checkMaximumValueOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"required",this::checkRequiredOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"disabled",this::checkDisabledOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"customRendering",this::checkCustomRenderingOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"candidateValues",this::checkCandidateValuesOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"suggestValues",this::checkSuggestValuesOfFormField);
+		commonObjectPropertyCheck(formFieldAsBaseEntity,"version",this::checkVersionOfFormField);
+		return this;
+
+	}
+
+	public HisObjectChecker checkAndFixFormAction(BaseEntity formActionAsBaseEntity){
+
+		if( isChecked(formActionAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(formActionAsBaseEntity);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"id",this::checkIdOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"label",this::checkLabelOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"localeKey",this::checkLocaleKeyOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"actionKey",this::checkActionKeyOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"level",this::checkLevelOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"url",this::checkUrlOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"form",this::checkFormOfFormAction);
+		commonObjectPropertyCheck(formActionAsBaseEntity,"version",this::checkVersionOfFormAction);
+		return this;
+
+	}
+
+	public HisObjectChecker checkAndFixCandidateContainer(BaseEntity candidateContainerAsBaseEntity){
+
+		if( isChecked(candidateContainerAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(candidateContainerAsBaseEntity);
+		commonObjectPropertyCheck(candidateContainerAsBaseEntity,"id",this::checkIdOfCandidateContainer);
+		commonObjectPropertyCheck(candidateContainerAsBaseEntity,"name",this::checkNameOfCandidateContainer);
+		commonObjectPropertyCheck(candidateContainerAsBaseEntity,"version",this::checkVersionOfCandidateContainer);
+		commonObjectPropertyCheck(candidateContainerAsBaseEntity,"candidateElementList",this::checkCandidateElementListOfCandidateContainer);
+		return this;
+
+	}
+
+	public HisObjectChecker checkAndFixCandidateElement(BaseEntity candidateElementAsBaseEntity){
+
+		if( isChecked(candidateElementAsBaseEntity) ){
+			return this;
+		}
+		markAsChecked(candidateElementAsBaseEntity);
+		commonObjectPropertyCheck(candidateElementAsBaseEntity,"id",this::checkIdOfCandidateElement);
+		commonObjectPropertyCheck(candidateElementAsBaseEntity,"name",this::checkNameOfCandidateElement);
+		commonObjectPropertyCheck(candidateElementAsBaseEntity,"type",this::checkTypeOfCandidateElement);
+		commonObjectPropertyCheck(candidateElementAsBaseEntity,"image",this::checkImageOfCandidateElement);
+		commonObjectPropertyCheck(candidateElementAsBaseEntity,"container",this::checkContainerOfCandidateElement);
+		commonObjectPropertyCheck(candidateElementAsBaseEntity,"version",this::checkVersionOfCandidateElement);
 		return this;
 
 	}
 
 
-	public HisChecker checkExpenseTypeListOfHospital(List<BaseEntity> expenseTypeList){
-		expenseTypeList.stream().map(expenseType->this.checkExpenseTypeAsObject(expenseType));
+	public HisObjectChecker checkExpenseTypeListOfHospital(List<BaseEntity> expenseTypeList){
+		AtomicInteger index = new AtomicInteger();
+		expenseTypeList.stream().forEach(expenseType->
+			commonObjectElementCheck(expenseType,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixExpenseType));
 		return this;
 	}
 
-	public HisChecker checkPeriodListOfHospital(List<BaseEntity> periodList){
-		periodList.stream().map(period->this.checkPeriodAsObject(period));
+	public HisObjectChecker checkPeriodListOfHospital(List<BaseEntity> periodList){
+		AtomicInteger index = new AtomicInteger();
+		periodList.stream().forEach(period->
+			commonObjectElementCheck(period,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixPeriod));
 		return this;
 	}
 
-	public HisChecker checkExpenseItemListOfHospital(List<BaseEntity> expenseItemList){
-		expenseItemList.stream().map(expenseItem->this.checkExpenseItemAsObject(expenseItem));
+	public HisObjectChecker checkExpenseItemListOfHospital(List<BaseEntity> expenseItemList){
+		AtomicInteger index = new AtomicInteger();
+		expenseItemList.stream().forEach(expenseItem->
+			commonObjectElementCheck(expenseItem,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixExpenseItem));
 		return this;
 	}
 
-	public HisChecker checkDoctorListOfHospital(List<BaseEntity> doctorList){
-		doctorList.stream().map(doctor->this.checkDoctorAsObject(doctor));
+	public HisObjectChecker checkDoctorListOfHospital(List<BaseEntity> doctorList){
+		AtomicInteger index = new AtomicInteger();
+		doctorList.stream().forEach(doctor->
+			commonObjectElementCheck(doctor,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctor));
 		return this;
 	}
 
-	public HisChecker checkDepartmentListOfHospital(List<BaseEntity> departmentList){
-		departmentList.stream().map(department->this.checkDepartmentAsObject(department));
+	public HisObjectChecker checkDepartmentListOfHospital(List<BaseEntity> departmentList){
+		AtomicInteger index = new AtomicInteger();
+		departmentList.stream().forEach(department->
+			commonObjectElementCheck(department,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDepartment));
 		return this;
 	}
 
-	public HisChecker checkDoctorScheduleListOfHospital(List<BaseEntity> doctorScheduleList){
-		doctorScheduleList.stream().map(doctorSchedule->this.checkDoctorScheduleAsObject(doctorSchedule));
+	public HisObjectChecker checkDoctorScheduleListOfHospital(List<BaseEntity> doctorScheduleList){
+		AtomicInteger index = new AtomicInteger();
+		doctorScheduleList.stream().forEach(doctorSchedule->
+			commonObjectElementCheck(doctorSchedule,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorSchedule));
 		return this;
 	}
 
-	public HisChecker checkExpenseItemListOfExpenseType(List<BaseEntity> expenseItemList){
-		expenseItemList.stream().map(expenseItem->this.checkExpenseItemAsObject(expenseItem));
+	public HisObjectChecker checkExpenseItemListOfExpenseType(List<BaseEntity> expenseItemList){
+		AtomicInteger index = new AtomicInteger();
+		expenseItemList.stream().forEach(expenseItem->
+			commonObjectElementCheck(expenseItem,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixExpenseItem));
 		return this;
 	}
 
-	public HisChecker checkDoctorScheduleListOfExpenseType(List<BaseEntity> doctorScheduleList){
-		doctorScheduleList.stream().map(doctorSchedule->this.checkDoctorScheduleAsObject(doctorSchedule));
+	public HisObjectChecker checkDoctorScheduleListOfExpenseType(List<BaseEntity> doctorScheduleList){
+		AtomicInteger index = new AtomicInteger();
+		doctorScheduleList.stream().forEach(doctorSchedule->
+			commonObjectElementCheck(doctorSchedule,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorSchedule));
 		return this;
 	}
 
 	public static final String HOSPITAL_OF_EXPENSE_TYPE = "expense_type.hospital";
 
 
-	public HisChecker checkHospitalOfExpenseType(BaseEntity hospitalAsBaseEntity){
+	public HisObjectChecker checkHospitalOfExpenseType(BaseEntity hospitalAsBaseEntity){
 
 		if(hospitalAsBaseEntity == null){
 			checkBaseEntityReference(hospitalAsBaseEntity,true,HOSPITAL_OF_EXPENSE_TYPE);
 			return this;
 		}
-		checkHospitalAsObject(hospitalAsBaseEntity);
+		checkAndFixHospital(hospitalAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkDoctorScheduleListOfPeriod(List<BaseEntity> doctorScheduleList){
-		doctorScheduleList.stream().map(doctorSchedule->this.checkDoctorScheduleAsObject(doctorSchedule));
+	public HisObjectChecker checkDoctorScheduleListOfPeriod(List<BaseEntity> doctorScheduleList){
+		AtomicInteger index = new AtomicInteger();
+		doctorScheduleList.stream().forEach(doctorSchedule->
+			commonObjectElementCheck(doctorSchedule,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorSchedule));
 		return this;
 	}
 
 	public static final String HOSPITAL_OF_PERIOD = "period.hospital";
 
 
-	public HisChecker checkHospitalOfPeriod(BaseEntity hospitalAsBaseEntity){
+	public HisObjectChecker checkHospitalOfPeriod(BaseEntity hospitalAsBaseEntity){
 
 		if(hospitalAsBaseEntity == null){
 			checkBaseEntityReference(hospitalAsBaseEntity,true,HOSPITAL_OF_PERIOD);
 			return this;
 		}
-		checkHospitalAsObject(hospitalAsBaseEntity);
+		checkAndFixHospital(hospitalAsBaseEntity);
 		return this;
 	}
 
@@ -384,13 +664,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String EXPENSE_TYPE_OF_EXPENSE_ITEM = "expense_item.expense_type";
 
 
-	public HisChecker checkExpenseTypeOfExpenseItem(BaseEntity expenseTypeAsBaseEntity){
+	public HisObjectChecker checkExpenseTypeOfExpenseItem(BaseEntity expenseTypeAsBaseEntity){
 
 		if(expenseTypeAsBaseEntity == null){
 			checkBaseEntityReference(expenseTypeAsBaseEntity,true,EXPENSE_TYPE_OF_EXPENSE_ITEM);
 			return this;
 		}
-		checkExpenseTypeAsObject(expenseTypeAsBaseEntity);
+		checkAndFixExpenseType(expenseTypeAsBaseEntity);
 		return this;
 	}
 
@@ -398,61 +678,69 @@ public class HisObjectChecker extends HisChecker{
 	public static final String HOSPITAL_OF_EXPENSE_ITEM = "expense_item.hospital";
 
 
-	public HisChecker checkHospitalOfExpenseItem(BaseEntity hospitalAsBaseEntity){
+	public HisObjectChecker checkHospitalOfExpenseItem(BaseEntity hospitalAsBaseEntity){
 
 		if(hospitalAsBaseEntity == null){
 			checkBaseEntityReference(hospitalAsBaseEntity,true,HOSPITAL_OF_EXPENSE_ITEM);
 			return this;
 		}
-		checkHospitalAsObject(hospitalAsBaseEntity);
+		checkAndFixHospital(hospitalAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkDoctorAssignmentListOfDoctor(List<BaseEntity> doctorAssignmentList){
-		doctorAssignmentList.stream().map(doctorAssignment->this.checkDoctorAssignmentAsObject(doctorAssignment));
+	public HisObjectChecker checkDoctorAssignmentListOfDoctor(List<BaseEntity> doctorAssignmentList){
+		AtomicInteger index = new AtomicInteger();
+		doctorAssignmentList.stream().forEach(doctorAssignment->
+			commonObjectElementCheck(doctorAssignment,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorAssignment));
 		return this;
 	}
 
-	public HisChecker checkDoctorScheduleListOfDoctor(List<BaseEntity> doctorScheduleList){
-		doctorScheduleList.stream().map(doctorSchedule->this.checkDoctorScheduleAsObject(doctorSchedule));
+	public HisObjectChecker checkDoctorScheduleListOfDoctor(List<BaseEntity> doctorScheduleList){
+		AtomicInteger index = new AtomicInteger();
+		doctorScheduleList.stream().forEach(doctorSchedule->
+			commonObjectElementCheck(doctorSchedule,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorSchedule));
 		return this;
 	}
 
 	public static final String HOSPITAL_OF_DOCTOR = "doctor.hospital";
 
 
-	public HisChecker checkHospitalOfDoctor(BaseEntity hospitalAsBaseEntity){
+	public HisObjectChecker checkHospitalOfDoctor(BaseEntity hospitalAsBaseEntity){
 
 		if(hospitalAsBaseEntity == null){
 			checkBaseEntityReference(hospitalAsBaseEntity,true,HOSPITAL_OF_DOCTOR);
 			return this;
 		}
-		checkHospitalAsObject(hospitalAsBaseEntity);
+		checkAndFixHospital(hospitalAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkDoctorAssignmentListOfDepartment(List<BaseEntity> doctorAssignmentList){
-		doctorAssignmentList.stream().map(doctorAssignment->this.checkDoctorAssignmentAsObject(doctorAssignment));
+	public HisObjectChecker checkDoctorAssignmentListOfDepartment(List<BaseEntity> doctorAssignmentList){
+		AtomicInteger index = new AtomicInteger();
+		doctorAssignmentList.stream().forEach(doctorAssignment->
+			commonObjectElementCheck(doctorAssignment,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorAssignment));
 		return this;
 	}
 
-	public HisChecker checkDoctorScheduleListOfDepartment(List<BaseEntity> doctorScheduleList){
-		doctorScheduleList.stream().map(doctorSchedule->this.checkDoctorScheduleAsObject(doctorSchedule));
+	public HisObjectChecker checkDoctorScheduleListOfDepartment(List<BaseEntity> doctorScheduleList){
+		AtomicInteger index = new AtomicInteger();
+		doctorScheduleList.stream().forEach(doctorSchedule->
+			commonObjectElementCheck(doctorSchedule,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixDoctorSchedule));
 		return this;
 	}
 
 	public static final String HOSPITAL_OF_DEPARTMENT = "department.hospital";
 
 
-	public HisChecker checkHospitalOfDepartment(BaseEntity hospitalAsBaseEntity){
+	public HisObjectChecker checkHospitalOfDepartment(BaseEntity hospitalAsBaseEntity){
 
 		if(hospitalAsBaseEntity == null){
 			checkBaseEntityReference(hospitalAsBaseEntity,true,HOSPITAL_OF_DEPARTMENT);
 			return this;
 		}
-		checkHospitalAsObject(hospitalAsBaseEntity);
+		checkAndFixHospital(hospitalAsBaseEntity);
 		return this;
 	}
 
@@ -460,13 +748,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String DOCTOR_OF_DOCTOR_ASSIGNMENT = "doctor_assignment.doctor";
 
 
-	public HisChecker checkDoctorOfDoctorAssignment(BaseEntity doctorAsBaseEntity){
+	public HisObjectChecker checkDoctorOfDoctorAssignment(BaseEntity doctorAsBaseEntity){
 
 		if(doctorAsBaseEntity == null){
 			checkBaseEntityReference(doctorAsBaseEntity,true,DOCTOR_OF_DOCTOR_ASSIGNMENT);
 			return this;
 		}
-		checkDoctorAsObject(doctorAsBaseEntity);
+		checkAndFixDoctor(doctorAsBaseEntity);
 		return this;
 	}
 
@@ -474,13 +762,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String DEPARTMENT_OF_DOCTOR_ASSIGNMENT = "doctor_assignment.department";
 
 
-	public HisChecker checkDepartmentOfDoctorAssignment(BaseEntity departmentAsBaseEntity){
+	public HisObjectChecker checkDepartmentOfDoctorAssignment(BaseEntity departmentAsBaseEntity){
 
 		if(departmentAsBaseEntity == null){
 			checkBaseEntityReference(departmentAsBaseEntity,true,DEPARTMENT_OF_DOCTOR_ASSIGNMENT);
 			return this;
 		}
-		checkDepartmentAsObject(departmentAsBaseEntity);
+		checkAndFixDepartment(departmentAsBaseEntity);
 		return this;
 	}
 
@@ -488,13 +776,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String DOCTOR_OF_DOCTOR_SCHEDULE = "doctor_schedule.doctor";
 
 
-	public HisChecker checkDoctorOfDoctorSchedule(BaseEntity doctorAsBaseEntity){
+	public HisObjectChecker checkDoctorOfDoctorSchedule(BaseEntity doctorAsBaseEntity){
 
 		if(doctorAsBaseEntity == null){
 			checkBaseEntityReference(doctorAsBaseEntity,true,DOCTOR_OF_DOCTOR_SCHEDULE);
 			return this;
 		}
-		checkDoctorAsObject(doctorAsBaseEntity);
+		checkAndFixDoctor(doctorAsBaseEntity);
 		return this;
 	}
 
@@ -502,13 +790,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String PERIOD_OF_DOCTOR_SCHEDULE = "doctor_schedule.period";
 
 
-	public HisChecker checkPeriodOfDoctorSchedule(BaseEntity periodAsBaseEntity){
+	public HisObjectChecker checkPeriodOfDoctorSchedule(BaseEntity periodAsBaseEntity){
 
 		if(periodAsBaseEntity == null){
 			checkBaseEntityReference(periodAsBaseEntity,true,PERIOD_OF_DOCTOR_SCHEDULE);
 			return this;
 		}
-		checkPeriodAsObject(periodAsBaseEntity);
+		checkAndFixPeriod(periodAsBaseEntity);
 		return this;
 	}
 
@@ -516,13 +804,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String DEPARTMENT_OF_DOCTOR_SCHEDULE = "doctor_schedule.department";
 
 
-	public HisChecker checkDepartmentOfDoctorSchedule(BaseEntity departmentAsBaseEntity){
+	public HisObjectChecker checkDepartmentOfDoctorSchedule(BaseEntity departmentAsBaseEntity){
 
 		if(departmentAsBaseEntity == null){
 			checkBaseEntityReference(departmentAsBaseEntity,true,DEPARTMENT_OF_DOCTOR_SCHEDULE);
 			return this;
 		}
-		checkDepartmentAsObject(departmentAsBaseEntity);
+		checkAndFixDepartment(departmentAsBaseEntity);
 		return this;
 	}
 
@@ -530,13 +818,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String EXPENSE_TYPE_OF_DOCTOR_SCHEDULE = "doctor_schedule.expense_type";
 
 
-	public HisChecker checkExpenseTypeOfDoctorSchedule(BaseEntity expenseTypeAsBaseEntity){
+	public HisObjectChecker checkExpenseTypeOfDoctorSchedule(BaseEntity expenseTypeAsBaseEntity){
 
 		if(expenseTypeAsBaseEntity == null){
 			checkBaseEntityReference(expenseTypeAsBaseEntity,true,EXPENSE_TYPE_OF_DOCTOR_SCHEDULE);
 			return this;
 		}
-		checkExpenseTypeAsObject(expenseTypeAsBaseEntity);
+		checkAndFixExpenseType(expenseTypeAsBaseEntity);
 		return this;
 	}
 
@@ -544,61 +832,69 @@ public class HisObjectChecker extends HisChecker{
 	public static final String HOSPITAL_OF_DOCTOR_SCHEDULE = "doctor_schedule.hospital";
 
 
-	public HisChecker checkHospitalOfDoctorSchedule(BaseEntity hospitalAsBaseEntity){
+	public HisObjectChecker checkHospitalOfDoctorSchedule(BaseEntity hospitalAsBaseEntity){
 
 		if(hospitalAsBaseEntity == null){
 			checkBaseEntityReference(hospitalAsBaseEntity,true,HOSPITAL_OF_DOCTOR_SCHEDULE);
 			return this;
 		}
-		checkHospitalAsObject(hospitalAsBaseEntity);
+		checkAndFixHospital(hospitalAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkUserWhiteListListOfUserDomain(List<BaseEntity> userWhiteListList){
-		userWhiteListList.stream().map(userWhiteList->this.checkUserWhiteListAsObject(userWhiteList));
+	public HisObjectChecker checkUserWhiteListListOfUserDomain(List<BaseEntity> userWhiteListList){
+		AtomicInteger index = new AtomicInteger();
+		userWhiteListList.stream().forEach(userWhiteList->
+			commonObjectElementCheck(userWhiteList,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixUserWhiteList));
 		return this;
 	}
 
-	public HisChecker checkSecUserListOfUserDomain(List<BaseEntity> secUserList){
-		secUserList.stream().map(secUser->this.checkSecUserAsObject(secUser));
+	public HisObjectChecker checkSecUserListOfUserDomain(List<BaseEntity> secUserList){
+		AtomicInteger index = new AtomicInteger();
+		secUserList.stream().forEach(secUser->
+			commonObjectElementCheck(secUser,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixSecUser));
 		return this;
 	}
 
 	public static final String DOMAIN_OF_USER_WHITE_LIST = "user_white_list.domain";
 
 
-	public HisChecker checkDomainOfUserWhiteList(BaseEntity domainAsBaseEntity){
+	public HisObjectChecker checkDomainOfUserWhiteList(BaseEntity domainAsBaseEntity){
 
 		if(domainAsBaseEntity == null){
 			checkBaseEntityReference(domainAsBaseEntity,true,DOMAIN_OF_USER_WHITE_LIST);
 			return this;
 		}
-		checkUserDomainAsObject(domainAsBaseEntity);
+		checkAndFixUserDomain(domainAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkUserAppListOfSecUser(List<BaseEntity> userAppList){
-		userAppList.stream().map(userApp->this.checkUserAppAsObject(userApp));
+	public HisObjectChecker checkUserAppListOfSecUser(List<BaseEntity> userAppList){
+		AtomicInteger index = new AtomicInteger();
+		userAppList.stream().forEach(userApp->
+			commonObjectElementCheck(userApp,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixUserApp));
 		return this;
 	}
 
-	public HisChecker checkLoginHistoryListOfSecUser(List<BaseEntity> loginHistoryList){
-		loginHistoryList.stream().map(loginHistory->this.checkLoginHistoryAsObject(loginHistory));
+	public HisObjectChecker checkLoginHistoryListOfSecUser(List<BaseEntity> loginHistoryList){
+		AtomicInteger index = new AtomicInteger();
+		loginHistoryList.stream().forEach(loginHistory->
+			commonObjectElementCheck(loginHistory,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixLoginHistory));
 		return this;
 	}
 
 	public static final String DOMAIN_OF_SEC_USER = "sec_user.domain";
 
 
-	public HisChecker checkDomainOfSecUser(BaseEntity domainAsBaseEntity){
+	public HisObjectChecker checkDomainOfSecUser(BaseEntity domainAsBaseEntity){
 
 		if(domainAsBaseEntity == null){
 			checkBaseEntityReference(domainAsBaseEntity,true,DOMAIN_OF_SEC_USER);
 			return this;
 		}
-		checkUserDomainAsObject(domainAsBaseEntity);
+		checkAndFixUserDomain(domainAsBaseEntity);
 		return this;
 	}
 
@@ -606,42 +902,69 @@ public class HisObjectChecker extends HisChecker{
 	public static final String BLOCKING_OF_SEC_USER = "sec_user.blocking";
 
 
-	public HisChecker checkBlockingOfSecUser(BaseEntity blockingAsBaseEntity){
+	public HisObjectChecker checkBlockingOfSecUser(BaseEntity blockingAsBaseEntity){
 
 		if(blockingAsBaseEntity == null){
 			checkBaseEntityReference(blockingAsBaseEntity,true,BLOCKING_OF_SEC_USER);
 			return this;
 		}
-		checkSecUserBlockingAsObject(blockingAsBaseEntity);
+		checkAndFixSecUserBlocking(blockingAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkSecUserListOfSecUserBlocking(List<BaseEntity> secUserList){
-		secUserList.stream().map(secUser->this.checkSecUserAsObject(secUser));
+	public HisObjectChecker checkSecUserListOfSecUserBlocking(List<BaseEntity> secUserList){
+		AtomicInteger index = new AtomicInteger();
+		secUserList.stream().forEach(secUser->
+			commonObjectElementCheck(secUser,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixSecUser));
 		return this;
 	}
 
-	public HisChecker checkListAccessListOfUserApp(List<BaseEntity> listAccessList){
-		listAccessList.stream().map(listAccess->this.checkListAccessAsObject(listAccess));
+	public HisObjectChecker checkQuickLinkListOfUserApp(List<BaseEntity> quickLinkList){
+		AtomicInteger index = new AtomicInteger();
+		quickLinkList.stream().forEach(quickLink->
+			commonObjectElementCheck(quickLink,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixQuickLink));
 		return this;
 	}
 
-	public HisChecker checkObjectAccessListOfUserApp(List<BaseEntity> objectAccessList){
-		objectAccessList.stream().map(objectAccess->this.checkObjectAccessAsObject(objectAccess));
+	public HisObjectChecker checkListAccessListOfUserApp(List<BaseEntity> listAccessList){
+		AtomicInteger index = new AtomicInteger();
+		listAccessList.stream().forEach(listAccess->
+			commonObjectElementCheck(listAccess,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixListAccess));
+		return this;
+	}
+
+	public HisObjectChecker checkObjectAccessListOfUserApp(List<BaseEntity> objectAccessList){
+		AtomicInteger index = new AtomicInteger();
+		objectAccessList.stream().forEach(objectAccess->
+			commonObjectElementCheck(objectAccess,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixObjectAccess));
 		return this;
 	}
 
 	public static final String SEC_USER_OF_USER_APP = "user_app.sec_user";
 
 
-	public HisChecker checkSecUserOfUserApp(BaseEntity secUserAsBaseEntity){
+	public HisObjectChecker checkSecUserOfUserApp(BaseEntity secUserAsBaseEntity){
 
 		if(secUserAsBaseEntity == null){
 			checkBaseEntityReference(secUserAsBaseEntity,true,SEC_USER_OF_USER_APP);
 			return this;
 		}
-		checkSecUserAsObject(secUserAsBaseEntity);
+		checkAndFixSecUser(secUserAsBaseEntity);
+		return this;
+	}
+
+
+	public static final String APP_OF_QUICK_LINK = "quick_link.app";
+
+
+	public HisObjectChecker checkAppOfQuickLink(BaseEntity appAsBaseEntity){
+
+		if(appAsBaseEntity == null){
+			checkBaseEntityReference(appAsBaseEntity,true,APP_OF_QUICK_LINK);
+			return this;
+		}
+		checkAndFixUserApp(appAsBaseEntity);
 		return this;
 	}
 
@@ -649,13 +972,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String APP_OF_LIST_ACCESS = "list_access.app";
 
 
-	public HisChecker checkAppOfListAccess(BaseEntity appAsBaseEntity){
+	public HisObjectChecker checkAppOfListAccess(BaseEntity appAsBaseEntity){
 
 		if(appAsBaseEntity == null){
 			checkBaseEntityReference(appAsBaseEntity,true,APP_OF_LIST_ACCESS);
 			return this;
 		}
-		checkUserAppAsObject(appAsBaseEntity);
+		checkAndFixUserApp(appAsBaseEntity);
 		return this;
 	}
 
@@ -663,13 +986,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String APP_OF_OBJECT_ACCESS = "object_access.app";
 
 
-	public HisChecker checkAppOfObjectAccess(BaseEntity appAsBaseEntity){
+	public HisObjectChecker checkAppOfObjectAccess(BaseEntity appAsBaseEntity){
 
 		if(appAsBaseEntity == null){
 			checkBaseEntityReference(appAsBaseEntity,true,APP_OF_OBJECT_ACCESS);
 			return this;
 		}
-		checkUserAppAsObject(appAsBaseEntity);
+		checkAndFixUserApp(appAsBaseEntity);
 		return this;
 	}
 
@@ -677,47 +1000,55 @@ public class HisObjectChecker extends HisChecker{
 	public static final String SEC_USER_OF_LOGIN_HISTORY = "login_history.sec_user";
 
 
-	public HisChecker checkSecUserOfLoginHistory(BaseEntity secUserAsBaseEntity){
+	public HisObjectChecker checkSecUserOfLoginHistory(BaseEntity secUserAsBaseEntity){
 
 		if(secUserAsBaseEntity == null){
 			checkBaseEntityReference(secUserAsBaseEntity,true,SEC_USER_OF_LOGIN_HISTORY);
 			return this;
 		}
-		checkSecUserAsObject(secUserAsBaseEntity);
+		checkAndFixSecUser(secUserAsBaseEntity);
 		return this;
 	}
 
 
-	public HisChecker checkFormMessageListOfGenericForm(List<BaseEntity> formMessageList){
-		formMessageList.stream().map(formMessage->this.checkFormMessageAsObject(formMessage));
+	public HisObjectChecker checkFormMessageListOfGenericForm(List<BaseEntity> formMessageList){
+		AtomicInteger index = new AtomicInteger();
+		formMessageList.stream().forEach(formMessage->
+			commonObjectElementCheck(formMessage,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixFormMessage));
 		return this;
 	}
 
-	public HisChecker checkFormFieldMessageListOfGenericForm(List<BaseEntity> formFieldMessageList){
-		formFieldMessageList.stream().map(formFieldMessage->this.checkFormFieldMessageAsObject(formFieldMessage));
+	public HisObjectChecker checkFormFieldMessageListOfGenericForm(List<BaseEntity> formFieldMessageList){
+		AtomicInteger index = new AtomicInteger();
+		formFieldMessageList.stream().forEach(formFieldMessage->
+			commonObjectElementCheck(formFieldMessage,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixFormFieldMessage));
 		return this;
 	}
 
-	public HisChecker checkFormFieldListOfGenericForm(List<BaseEntity> formFieldList){
-		formFieldList.stream().map(formField->this.checkFormFieldAsObject(formField));
+	public HisObjectChecker checkFormFieldListOfGenericForm(List<BaseEntity> formFieldList){
+		AtomicInteger index = new AtomicInteger();
+		formFieldList.stream().forEach(formField->
+			commonObjectElementCheck(formField,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixFormField));
 		return this;
 	}
 
-	public HisChecker checkFormActionListOfGenericForm(List<BaseEntity> formActionList){
-		formActionList.stream().map(formAction->this.checkFormActionAsObject(formAction));
+	public HisObjectChecker checkFormActionListOfGenericForm(List<BaseEntity> formActionList){
+		AtomicInteger index = new AtomicInteger();
+		formActionList.stream().forEach(formAction->
+			commonObjectElementCheck(formAction,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixFormAction));
 		return this;
 	}
 
 	public static final String FORM_OF_FORM_MESSAGE = "form_message.form";
 
 
-	public HisChecker checkFormOfFormMessage(BaseEntity formAsBaseEntity){
+	public HisObjectChecker checkFormOfFormMessage(BaseEntity formAsBaseEntity){
 
 		if(formAsBaseEntity == null){
 			checkBaseEntityReference(formAsBaseEntity,true,FORM_OF_FORM_MESSAGE);
 			return this;
 		}
-		checkGenericFormAsObject(formAsBaseEntity);
+		checkAndFixGenericForm(formAsBaseEntity);
 		return this;
 	}
 
@@ -725,13 +1056,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String FORM_OF_FORM_FIELD_MESSAGE = "form_field_message.form";
 
 
-	public HisChecker checkFormOfFormFieldMessage(BaseEntity formAsBaseEntity){
+	public HisObjectChecker checkFormOfFormFieldMessage(BaseEntity formAsBaseEntity){
 
 		if(formAsBaseEntity == null){
 			checkBaseEntityReference(formAsBaseEntity,true,FORM_OF_FORM_FIELD_MESSAGE);
 			return this;
 		}
-		checkGenericFormAsObject(formAsBaseEntity);
+		checkAndFixGenericForm(formAsBaseEntity);
 		return this;
 	}
 
@@ -739,13 +1070,13 @@ public class HisObjectChecker extends HisChecker{
 	public static final String FORM_OF_FORM_FIELD = "form_field.form";
 
 
-	public HisChecker checkFormOfFormField(BaseEntity formAsBaseEntity){
+	public HisObjectChecker checkFormOfFormField(BaseEntity formAsBaseEntity){
 
 		if(formAsBaseEntity == null){
 			checkBaseEntityReference(formAsBaseEntity,true,FORM_OF_FORM_FIELD);
 			return this;
 		}
-		checkGenericFormAsObject(formAsBaseEntity);
+		checkAndFixGenericForm(formAsBaseEntity);
 		return this;
 	}
 
@@ -753,16 +1084,135 @@ public class HisObjectChecker extends HisChecker{
 	public static final String FORM_OF_FORM_ACTION = "form_action.form";
 
 
-	public HisChecker checkFormOfFormAction(BaseEntity formAsBaseEntity){
+	public HisObjectChecker checkFormOfFormAction(BaseEntity formAsBaseEntity){
 
 		if(formAsBaseEntity == null){
 			checkBaseEntityReference(formAsBaseEntity,true,FORM_OF_FORM_ACTION);
 			return this;
 		}
-		checkGenericFormAsObject(formAsBaseEntity);
+		checkAndFixGenericForm(formAsBaseEntity);
 		return this;
 	}
 
+
+	public HisObjectChecker checkCandidateElementListOfCandidateContainer(List<BaseEntity> candidateElementList){
+		AtomicInteger index = new AtomicInteger();
+		candidateElementList.stream().forEach(candidateElement->
+			commonObjectElementCheck(candidateElement,wrapArrayIndex(index.getAndIncrement()),this::checkAndFixCandidateElement));
+		return this;
+	}
+
+	public static final String CONTAINER_OF_CANDIDATE_ELEMENT = "candidate_element.container";
+
+
+	public HisObjectChecker checkContainerOfCandidateElement(BaseEntity containerAsBaseEntity){
+
+		if(containerAsBaseEntity == null){
+			checkBaseEntityReference(containerAsBaseEntity,true,CONTAINER_OF_CANDIDATE_ELEMENT);
+			return this;
+		}
+		checkAndFixCandidateContainer(containerAsBaseEntity);
+		return this;
+	}
+
+	public HisObjectChecker assignUpdateTimeOfExpenseType(BaseEntity targetEntity){
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"updateTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignUpdateTimeOfExpenseItem(BaseEntity targetEntity){
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"updateTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignUpdateTimeOfDoctor(BaseEntity targetEntity){
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"updateTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignUpdateTimeOfDepartment(BaseEntity targetEntity){
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"updateTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignUpdateTimeOfDoctorAssignment(BaseEntity targetEntity){
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"updateTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignCreateTimeOfDoctorSchedule(BaseEntity targetEntity){
+		if(!isObjectForCreate(targetEntity)){
+			return this;
+		}
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"createTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignUpdateTimeOfDoctorSchedule(BaseEntity targetEntity){
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"updateTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignBlockingOfSecUser(BaseEntity targetEntity){
+		if(!isObjectForCreate(targetEntity)){
+			return this;
+		}
+		return this;
+	}
+	public HisObjectChecker assignCurrentStatusOfSecUser(BaseEntity targetEntity){
+		if(!isObjectForCreate(targetEntity)){
+			return this;
+		}
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"currentStatus","INIT");
+		return this;
+	}
+	public HisObjectChecker assignBlockTimeOfSecUserBlocking(BaseEntity targetEntity){
+		if(!isObjectForCreate(targetEntity)){
+			return this;
+		}
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"blockTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignCreateTimeOfQuickLink(BaseEntity targetEntity){
+		if(!isObjectForCreate(targetEntity)){
+			return this;
+		}
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"createTime",userContext.now());
+		return this;
+	}
+	public HisObjectChecker assignLoginTimeOfLoginHistory(BaseEntity targetEntity){
+		if(!isObjectForCreate(targetEntity)){
+			return this;
+		}
+		if(userContext==null){
+			return this;
+		}
+		setEntityProperty(targetEntity,"loginTime",userContext.now());
+		return this;
+	}
 
 }
 

@@ -36,6 +36,13 @@ const menuData = {menuName:"费用项目", menuFor: "expenseItem",
   		],
 }
 
+
+const settingMenuData = {menuName:"费用项目", menuFor: "expenseItem",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -65,10 +72,10 @@ const renderItemOfList=(expenseItem,targetComponent)=>{
       <DescriptionList  key={expenseItem.id} size="small" col="4">
         <Description term="ID">{expenseItem.id}</Description> 
         <Description term="名称">{expenseItem.name}</Description> 
-        <Description term="价格">{expenseItem.price}</Description> 
-        <Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
-        </Description>
-        <Description term="更新时间">{ moment(expenseItem.updateTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="价格"><div style={{"color":"red"}}>{expenseItem.price}</div></Description> 
+        <Description term="费用类型"><div>{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
+        </div></Description>
+        <Description term="更新时间"><div>{ moment(expenseItem.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>

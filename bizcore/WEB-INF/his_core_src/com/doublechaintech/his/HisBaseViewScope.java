@@ -16,6 +16,7 @@ import com.doublechaintech.his.userwhitelist.UserWhiteList;
 import com.doublechaintech.his.secuser.SecUser;
 import com.doublechaintech.his.secuserblocking.SecUserBlocking;
 import com.doublechaintech.his.userapp.UserApp;
+import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.listaccess.ListAccess;
 import com.doublechaintech.his.objectaccess.ObjectAccess;
 import com.doublechaintech.his.loginhistory.LoginHistory;
@@ -24,6 +25,8 @@ import com.doublechaintech.his.formmessage.FormMessage;
 import com.doublechaintech.his.formfieldmessage.FormFieldMessage;
 import com.doublechaintech.his.formfield.FormField;
 import com.doublechaintech.his.formaction.FormAction;
+import com.doublechaintech.his.candidatecontainer.CandidateContainer;
+import com.doublechaintech.his.candidateelement.CandidateElement;
 
 
 public class HisBaseViewScope {
@@ -58,6 +61,7 @@ public class HisBaseViewScope {
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
+		.field(Period.CODE_PROPERTY)
 		;
 	/** 用于Period的子对象的详情页时需要序列化的属性列表 */
 	public static SerializeScope getPeriodSummaryScope() {
@@ -194,6 +198,20 @@ public class HisBaseViewScope {
 		return UserAppBaseSummaryScope;
 	}
 
+	protected static SerializeScope QuickLinkBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(QuickLink.ID_PROPERTY)
+		.field(QuickLink.NAME_PROPERTY)
+		.field(QuickLink.ICON_PROPERTY)
+		.field(QuickLink.IMAGE_PATH_PROPERTY)
+		.field(QuickLink.LINK_TARGET_PROPERTY)
+		.field(QuickLink.CREATE_TIME_PROPERTY)
+		;
+	/** 用于QuickLink的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getQuickLinkSummaryScope() {
+		return QuickLinkBaseSummaryScope;
+	}
+
 	protected static SerializeScope ListAccessBaseSummaryScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ListAccess.ID_PROPERTY)
@@ -314,6 +332,28 @@ public class HisBaseViewScope {
 		return FormActionBaseSummaryScope;
 	}
 
+	protected static SerializeScope CandidateContainerBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateContainer.ID_PROPERTY)
+		.field(CandidateContainer.NAME_PROPERTY)
+		;
+	/** 用于CandidateContainer的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getCandidateContainerSummaryScope() {
+		return CandidateContainerBaseSummaryScope;
+	}
+
+	protected static SerializeScope CandidateElementBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateElement.ID_PROPERTY)
+		.field(CandidateElement.NAME_PROPERTY)
+		.field(CandidateElement.TYPE_PROPERTY)
+		.field(CandidateElement.IMAGE_PROPERTY)
+		;
+	/** 用于CandidateElement的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getCandidateElementSummaryScope() {
+		return CandidateElementBaseSummaryScope;
+	}
+
 	protected static SerializeScope HospitalBaseSecondaryListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
@@ -344,6 +384,7 @@ public class HisBaseViewScope {
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
+		.field(Period.CODE_PROPERTY)
 		;
 	/** 用于Period的父对象的列表时需要序列化的属性列表 */
 	public static SerializeScope getPeriodSecondaryListItemScope() {
@@ -480,6 +521,20 @@ public class HisBaseViewScope {
 		return UserAppBaseSecondaryListItemScope;
 	}
 
+	protected static SerializeScope QuickLinkBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(QuickLink.ID_PROPERTY)
+		.field(QuickLink.NAME_PROPERTY)
+		.field(QuickLink.ICON_PROPERTY)
+		.field(QuickLink.IMAGE_PATH_PROPERTY)
+		.field(QuickLink.LINK_TARGET_PROPERTY)
+		.field(QuickLink.CREATE_TIME_PROPERTY)
+		;
+	/** 用于QuickLink的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getQuickLinkSecondaryListItemScope() {
+		return QuickLinkBaseSecondaryListItemScope;
+	}
+
 	protected static SerializeScope ListAccessBaseSecondaryListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(ListAccess.ID_PROPERTY)
@@ -600,6 +655,28 @@ public class HisBaseViewScope {
 		return FormActionBaseSecondaryListItemScope;
 	}
 
+	protected static SerializeScope CandidateContainerBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateContainer.ID_PROPERTY)
+		.field(CandidateContainer.NAME_PROPERTY)
+		;
+	/** 用于CandidateContainer的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getCandidateContainerSecondaryListItemScope() {
+		return CandidateContainerBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope CandidateElementBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateElement.ID_PROPERTY)
+		.field(CandidateElement.NAME_PROPERTY)
+		.field(CandidateElement.TYPE_PROPERTY)
+		.field(CandidateElement.IMAGE_PROPERTY)
+		;
+	/** 用于CandidateElement的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getCandidateElementSecondaryListItemScope() {
+		return CandidateElementBaseSecondaryListItemScope;
+	}
+
 	protected static SerializeScope HospitalBaseListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
@@ -639,6 +716,7 @@ public class HisBaseViewScope {
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
+		.field(Period.CODE_PROPERTY)
 		.field(Period.HOSPITAL_PROPERTY, getHospitalSummaryScope())
 		.field(Period.DOCTOR_SCHEDULE_LIST, getDoctorScheduleSecondaryListItemScope())
 		;
@@ -795,12 +873,28 @@ public class HisBaseViewScope {
 		.field(UserApp.OBJECT_TYPE_PROPERTY)
 		.field(UserApp.OBJECT_ID_PROPERTY)
 		.field(UserApp.LOCATION_PROPERTY)
+		.field(UserApp.QUICK_LINK_LIST, getQuickLinkSecondaryListItemScope())
 		.field(UserApp.LIST_ACCESS_LIST, getListAccessSecondaryListItemScope())
 		.field(UserApp.OBJECT_ACCESS_LIST, getObjectAccessSecondaryListItemScope())
 		;
 	/** 用于UserApp对象的列表时需要序列化的属性列表 */
 	public static SerializeScope getUserAppListItemScope() {
 		return UserAppBaseListItemScope;
+	}
+
+	protected static SerializeScope QuickLinkBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(QuickLink.ID_PROPERTY)
+		.field(QuickLink.NAME_PROPERTY)
+		.field(QuickLink.ICON_PROPERTY)
+		.field(QuickLink.IMAGE_PATH_PROPERTY)
+		.field(QuickLink.LINK_TARGET_PROPERTY)
+		.field(QuickLink.CREATE_TIME_PROPERTY)
+		.field(QuickLink.APP_PROPERTY, getUserAppSummaryScope())
+		;
+	/** 用于QuickLink对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getQuickLinkListItemScope() {
+		return QuickLinkBaseListItemScope;
 	}
 
 	protected static SerializeScope ListAccessBaseListItemScope = SerializeScope.INCLUDE()
@@ -934,6 +1028,30 @@ public class HisBaseViewScope {
 		return FormActionBaseListItemScope;
 	}
 
+	protected static SerializeScope CandidateContainerBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateContainer.ID_PROPERTY)
+		.field(CandidateContainer.NAME_PROPERTY)
+		.field(CandidateContainer.CANDIDATE_ELEMENT_LIST, getCandidateElementSecondaryListItemScope())
+		;
+	/** 用于CandidateContainer对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getCandidateContainerListItemScope() {
+		return CandidateContainerBaseListItemScope;
+	}
+
+	protected static SerializeScope CandidateElementBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateElement.ID_PROPERTY)
+		.field(CandidateElement.NAME_PROPERTY)
+		.field(CandidateElement.TYPE_PROPERTY)
+		.field(CandidateElement.IMAGE_PROPERTY)
+		.field(CandidateElement.CONTAINER_PROPERTY, getCandidateContainerSummaryScope())
+		;
+	/** 用于CandidateElement对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getCandidateElementListItemScope() {
+		return CandidateElementBaseListItemScope;
+	}
+
 	protected static SerializeScope HospitalBaseDetailScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
@@ -973,6 +1091,7 @@ public class HisBaseViewScope {
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Period.ID_PROPERTY)
 		.field(Period.NAME_PROPERTY)
+		.field(Period.CODE_PROPERTY)
 		.field(Period.HOSPITAL_PROPERTY, getHospitalSummaryScope())
 		.field(Period.DOCTOR_SCHEDULE_LIST, getDoctorScheduleListItemScope())
 		;
@@ -1129,12 +1248,28 @@ public class HisBaseViewScope {
 		.field(UserApp.OBJECT_TYPE_PROPERTY)
 		.field(UserApp.OBJECT_ID_PROPERTY)
 		.field(UserApp.LOCATION_PROPERTY)
+		.field(UserApp.QUICK_LINK_LIST, getQuickLinkListItemScope())
 		.field(UserApp.LIST_ACCESS_LIST, getListAccessListItemScope())
 		.field(UserApp.OBJECT_ACCESS_LIST, getObjectAccessListItemScope())
 		;
 	/** 用于UserApp对象的详情页时需要序列化的属性列表 */
 	public static SerializeScope getUserAppDetailScope() {
 		return UserAppBaseDetailScope;
+	}
+
+	protected static SerializeScope QuickLinkBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(QuickLink.ID_PROPERTY)
+		.field(QuickLink.NAME_PROPERTY)
+		.field(QuickLink.ICON_PROPERTY)
+		.field(QuickLink.IMAGE_PATH_PROPERTY)
+		.field(QuickLink.LINK_TARGET_PROPERTY)
+		.field(QuickLink.CREATE_TIME_PROPERTY)
+		.field(QuickLink.APP_PROPERTY, getUserAppSummaryScope())
+		;
+	/** 用于QuickLink对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getQuickLinkDetailScope() {
+		return QuickLinkBaseDetailScope;
 	}
 
 	protected static SerializeScope ListAccessBaseDetailScope = SerializeScope.INCLUDE()
@@ -1266,6 +1401,30 @@ public class HisBaseViewScope {
 	/** 用于FormAction对象的详情页时需要序列化的属性列表 */
 	public static SerializeScope getFormActionDetailScope() {
 		return FormActionBaseDetailScope;
+	}
+
+	protected static SerializeScope CandidateContainerBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateContainer.ID_PROPERTY)
+		.field(CandidateContainer.NAME_PROPERTY)
+		.field(CandidateContainer.CANDIDATE_ELEMENT_LIST, getCandidateElementListItemScope())
+		;
+	/** 用于CandidateContainer对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getCandidateContainerDetailScope() {
+		return CandidateContainerBaseDetailScope;
+	}
+
+	protected static SerializeScope CandidateElementBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(CandidateElement.ID_PROPERTY)
+		.field(CandidateElement.NAME_PROPERTY)
+		.field(CandidateElement.TYPE_PROPERTY)
+		.field(CandidateElement.IMAGE_PROPERTY)
+		.field(CandidateElement.CONTAINER_PROPERTY, getCandidateContainerSummaryScope())
+		;
+	/** 用于CandidateElement对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getCandidateElementDetailScope() {
+		return CandidateElementBaseDetailScope;
 	}
 
 	

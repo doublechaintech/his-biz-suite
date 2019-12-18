@@ -47,6 +47,9 @@
 	<bean id="userAppManagerBase" class="com.doublechaintech.his.userapp.UserAppManagerImpl"/>
 	<bean id="userAppManager" class="com.doublechaintech.his.userapp.UserAppCustomManagerImpl" parent="userAppManagerBase" ></bean>
 	
+	<bean id="quickLinkManagerBase" class="com.doublechaintech.his.quicklink.QuickLinkManagerImpl"/>
+	<bean id="quickLinkManager" class="com.doublechaintech.his.quicklink.QuickLinkManagerImpl" parent="quickLinkManagerBase" ></bean>
+	
 	<bean id="listAccessManagerBase" class="com.doublechaintech.his.listaccess.ListAccessManagerImpl"/>
 	<bean id="listAccessManager" class="com.doublechaintech.his.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
 	
@@ -71,6 +74,12 @@
 	<bean id="formActionManagerBase" class="com.doublechaintech.his.formaction.FormActionManagerImpl"/>
 	<bean id="formActionManager" class="com.doublechaintech.his.formaction.FormActionManagerImpl" parent="formActionManagerBase" ></bean>
 	
+	<bean id="candidateContainerManagerBase" class="com.doublechaintech.his.candidatecontainer.CandidateContainerManagerImpl"/>
+	<bean id="candidateContainerManager" class="com.doublechaintech.his.candidatecontainer.CandidateContainerCustomManagerImpl" parent="candidateContainerManagerBase" ></bean>
+	
+	<bean id="candidateElementManagerBase" class="com.doublechaintech.his.candidateelement.CandidateElementManagerImpl"/>
+	<bean id="candidateElementManager" class="com.doublechaintech.his.candidateelement.CandidateElementManagerImpl" parent="candidateElementManagerBase" ></bean>
+	
 
 	<bean id="managerGroupBase" class="com.doublechaintech.his.ManagerGroup">
 		<property name="hospitalManager" ref="hospitalManager"/>
@@ -86,6 +95,7 @@
 		<property name="secUserManager" ref="secUserManager"/>
 		<property name="secUserBlockingManager" ref="secUserBlockingManager"/>
 		<property name="userAppManager" ref="userAppManager"/>
+		<property name="quickLinkManager" ref="quickLinkManager"/>
 		<property name="listAccessManager" ref="listAccessManager"/>
 		<property name="objectAccessManager" ref="objectAccessManager"/>
 		<property name="loginHistoryManager" ref="loginHistoryManager"/>
@@ -94,6 +104,8 @@
 		<property name="formFieldMessageManager" ref="formFieldMessageManager"/>
 		<property name="formFieldManager" ref="formFieldManager"/>
 		<property name="formActionManager" ref="formActionManager"/>
+		<property name="candidateContainerManager" ref="candidateContainerManager"/>
+		<property name="candidateElementManager" ref="candidateElementManager"/>
 	</bean>
 	<bean id="managerGroup" parent="managerGroupBase"></bean>
 	

@@ -38,6 +38,17 @@ const menuData = {menuName:"医院", menuFor: "hospital",
   		],
 }
 
+
+const settingMenuData = {menuName:"医院", menuFor: "hospital",
+  		subItems: [
+  {name: 'expenseTypeList', displayName:'费用类型', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'periodList', displayName:'期', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'expenseItemList', displayName:'费用项目', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'departmentList', displayName:'部门', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',

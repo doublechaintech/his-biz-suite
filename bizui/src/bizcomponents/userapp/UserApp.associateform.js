@@ -78,6 +78,7 @@ class UserAppAssociateForm extends Component {
     const {UserAppService} = GlobalComponents
     const userContext = null
     
+ const {QuickLinkModalTable} = GlobalComponents;
  const {ListAccessModalTable} = GlobalComponents;
  const {ObjectAccessModalTable} = GlobalComponents;
 
@@ -262,6 +263,7 @@ class UserAppAssociateForm extends Component {
 			
         </Card>
         
+	<QuickLinkModalTable data={data.quickLinkList} owner={owner} />
 	<ListAccessModalTable data={data.listAccessList} owner={owner} />
 	<ObjectAccessModalTable data={data.objectAccessList} owner={owner} />
         

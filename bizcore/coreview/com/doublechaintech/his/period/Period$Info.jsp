@@ -21,6 +21,7 @@
 	
 	<li><span>ID</span><a class="link-action-removed" href="./periodManager/view/${period.id}/"> ${period.id}</a></li>
 <li><span>${userContext.localeMap['period.name']}</span> ${period.name}</li>
+<li><span>${userContext.localeMap['period.code']}</span> ${period.code}</li>
 
 	
 	</ul>

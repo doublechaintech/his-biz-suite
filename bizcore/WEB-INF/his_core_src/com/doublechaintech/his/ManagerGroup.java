@@ -27,6 +27,8 @@ import com.doublechaintech.his.secuserblocking.SecUserBlockingManager;
 
 import com.doublechaintech.his.userapp.UserAppManager;
 
+import com.doublechaintech.his.quicklink.QuickLinkManager;
+
 import com.doublechaintech.his.listaccess.ListAccessManager;
 
 import com.doublechaintech.his.objectaccess.ObjectAccessManager;
@@ -42,6 +44,10 @@ import com.doublechaintech.his.formfieldmessage.FormFieldMessageManager;
 import com.doublechaintech.his.formfield.FormFieldManager;
 
 import com.doublechaintech.his.formaction.FormActionManager;
+
+import com.doublechaintech.his.candidatecontainer.CandidateContainerManager;
+
+import com.doublechaintech.his.candidateelement.CandidateElementManager;
 
 
 public class ManagerGroup {
@@ -72,6 +78,8 @@ public class ManagerGroup {
 
 	protected UserAppManager userAppManager;
 
+	protected QuickLinkManager quickLinkManager;
+
 	protected ListAccessManager listAccessManager;
 
 	protected ObjectAccessManager objectAccessManager;
@@ -87,6 +95,10 @@ public class ManagerGroup {
 	protected FormFieldManager formFieldManager;
 
 	protected FormActionManager formActionManager;
+
+	protected CandidateContainerManager candidateContainerManager;
+
+	protected CandidateElementManager candidateElementManager;
 
 	
 
@@ -194,6 +206,14 @@ public class ManagerGroup {
 	}
 
 
+	public QuickLinkManager getQuickLinkManager(){
+		return this.quickLinkManager;
+	}
+	public void setQuickLinkManager(QuickLinkManager manager){
+		this.quickLinkManager = manager;
+	}
+
+
 	public ListAccessManager getListAccessManager(){
 		return this.listAccessManager;
 	}
@@ -255,6 +275,22 @@ public class ManagerGroup {
 	}
 	public void setFormActionManager(FormActionManager manager){
 		this.formActionManager = manager;
+	}
+
+
+	public CandidateContainerManager getCandidateContainerManager(){
+		return this.candidateContainerManager;
+	}
+	public void setCandidateContainerManager(CandidateContainerManager manager){
+		this.candidateContainerManager = manager;
+	}
+
+
+	public CandidateElementManager getCandidateElementManager(){
+		return this.candidateElementManager;
+	}
+	public void setCandidateElementManager(CandidateElementManager manager){
+		this.candidateElementManager = manager;
 	}
 
 

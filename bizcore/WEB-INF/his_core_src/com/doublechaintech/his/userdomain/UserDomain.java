@@ -57,6 +57,16 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 	public 	UserDomain(){
 		// lazy load for all the properties
 	}
+	public 	static UserDomain withId(String id){
+		UserDomain userDomain = new UserDomain();
+		userDomain.setId(id);
+		// userDomain.setVersion(Integer.MAX_VALUE);
+		return userDomain;
+	}
+	public 	static UserDomain refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 

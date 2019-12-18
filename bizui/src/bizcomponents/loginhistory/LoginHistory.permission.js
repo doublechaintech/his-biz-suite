@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (loginHistory,targetComponent) =>{
     const userContext = null
 	return (
@@ -55,9 +59,10 @@ class LoginHistoryPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  loginHistory = this.props.loginHistory;
+    const  loginHistory = this.props.loginHistory
     const { id,displayName,  } = loginHistory
-    const cardsData = {cardsName:"登录历史",cardsFor: "loginHistory",cardsSource: loginHistory,
+    const  returnURL = `/loginHistory/${id}/dashboard`
+    const cardsData = {cardsName:"登录历史",cardsFor: "loginHistory",cardsSource: loginHistory,displayName,returnURL,
   		subItems: [
     
       	],
@@ -68,7 +73,7 @@ class LoginHistoryPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

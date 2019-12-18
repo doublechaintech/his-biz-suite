@@ -528,28 +528,30 @@ public class PeriodJDBCTemplateDAO extends HisBaseDAOImpl implements PeriodDAO{
  		return preparePeriodCreateParameters(period);
  	}
  	protected Object[] preparePeriodUpdateParameters(Period period){
- 		Object[] parameters = new Object[5];
+ 		Object[] parameters = new Object[6];
  
- 		parameters[0] = period.getName(); 	
+ 		parameters[0] = period.getName();
+ 		parameters[1] = period.getCode(); 	
  		if(period.getHospital() != null){
- 			parameters[1] = period.getHospital().getId();
+ 			parameters[2] = period.getHospital().getId();
  		}
  		
- 		parameters[2] = period.nextVersion();
- 		parameters[3] = period.getId();
- 		parameters[4] = period.getVersion();
+ 		parameters[3] = period.nextVersion();
+ 		parameters[4] = period.getId();
+ 		parameters[5] = period.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] preparePeriodCreateParameters(Period period){
-		Object[] parameters = new Object[3];
+		Object[] parameters = new Object[4];
 		String newPeriodId=getNextId();
 		period.setId(newPeriodId);
 		parameters[0] =  period.getId();
  
- 		parameters[1] = period.getName(); 	
+ 		parameters[1] = period.getName();
+ 		parameters[2] = period.getCode(); 	
  		if(period.getHospital() != null){
- 			parameters[2] = period.getHospital().getId();
+ 			parameters[3] = period.getHospital().getId();
  		
  		}
  				

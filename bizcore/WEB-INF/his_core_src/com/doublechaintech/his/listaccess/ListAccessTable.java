@@ -16,7 +16,7 @@ public class ListAccessTable{
 	
 
 	//only this package can use this, so the scope is default, not public, not private either nor protected
-	static final String TABLE_NAME="list_access_data";
+	public static final String TABLE_NAME="list_access_data";
 	static final String COLUMN_ID = "id";
 	static final String COLUMN_NAME = "name";
 	static final String COLUMN_INTERNAL_NAME = "internal_name";
@@ -28,10 +28,10 @@ public class ListAccessTable{
 	static final String COLUMN_APP = "app";
 	static final String COLUMN_VERSION = "version";
  
-	static final String []ALL_CLOUMNS = {COLUMN_ID, 
+	public static final String []ALL_CLOUMNS = {COLUMN_ID, 
 		COLUMN_NAME, COLUMN_INTERNAL_NAME, COLUMN_READ_PERMISSION, COLUMN_CREATE_PERMISSION, COLUMN_DELETE_PERMISSION, COLUMN_UPDATE_PERMISSION, COLUMN_EXECUTION_PERMISSION, COLUMN_APP, 
 		COLUMN_VERSION};
-	static final String []NORMAL_CLOUMNS = {
+	public static final String []NORMAL_CLOUMNS = {
 		COLUMN_NAME, COLUMN_INTERNAL_NAME, COLUMN_READ_PERMISSION, COLUMN_CREATE_PERMISSION, COLUMN_DELETE_PERMISSION, COLUMN_UPDATE_PERMISSION, COLUMN_EXECUTION_PERMISSION, COLUMN_APP
 		};
 	

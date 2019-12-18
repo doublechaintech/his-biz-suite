@@ -28,6 +28,7 @@
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="2" max="64" description="ID" />
 			<field name="name" type="string" checkType="StringLengthRange" min="1" max="8" description="名称" />
+			<field name="code" type="string" checkType="StringLengthRange" min="2" max="36" description="代码" />
 			<field name="hospital" type="reference" checkType="exist(hospital)" description="医院" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
@@ -158,6 +159,19 @@
 		</fields>
 	</table>
 
+	<table name="quick_link_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="2" max="64" description="ID" />
+			<field name="name" type="string" checkType="StringLengthRange" min="1" max="200" description="名称" />
+			<field name="icon" type="string" checkType="StringLengthRange" min="1" max="200" description="图标" />
+			<field name="image_path" type="string_image" checkType="Image" min="0" max="512" description="图片路径" />
+			<field name="link_target" type="string" checkType="StringLengthRange" min="1" max="200" description="链接的目标" />
+			<field name="create_time" type="date_time_create" checkType="DateTimeCreate" min="1900-01-01T00:00:00" max="createTime()" description="创建时间" />
+			<field name="app" type="reference" checkType="exist(user_app)" description="应用程序" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
+		</fields>
+	</table>
+
 	<table name="list_access_data">
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="2" max="64" description="ID" />
@@ -265,6 +279,25 @@
 			<field name="level" type="string" checkType="StringLengthRange" min="3" max="28" description="水平" />
 			<field name="url" type="string" checkType="StringLengthRange" min="11" max="168" description="url" />
 			<field name="form" type="reference" checkType="exist(generic_form)" description="形式" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
+		</fields>
+	</table>
+
+	<table name="candidate_container_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="2" max="64" description="ID" />
+			<field name="name" type="string" checkType="StringLengthRange" min="2" max="28" description="名称" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
+		</fields>
+	</table>
+
+	<table name="candidate_element_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="2" max="64" description="ID" />
+			<field name="name" type="string" checkType="StringLengthRange" min="1" max="200" description="名称" />
+			<field name="type" type="string" checkType="StringLengthRange" min="1" max="200" description="类型" />
+			<field name="image" type="string_image" checkType="Image" min="0" max="512" description="图片" />
+			<field name="container" type="reference" checkType="exist(candidate_container)" description="容器" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="版本" />
 		</fields>
 	</table>

@@ -16,7 +16,7 @@ public class UserAppTable{
 	
 
 	//only this package can use this, so the scope is default, not public, not private either nor protected
-	static final String TABLE_NAME="user_app_data";
+	public static final String TABLE_NAME="user_app_data";
 	static final String COLUMN_ID = "id";
 	static final String COLUMN_TITLE = "title";
 	static final String COLUMN_SEC_USER = "sec_user";
@@ -28,10 +28,10 @@ public class UserAppTable{
 	static final String COLUMN_LOCATION = "location";
 	static final String COLUMN_VERSION = "version";
  
-	static final String []ALL_CLOUMNS = {COLUMN_ID, 
+	public static final String []ALL_CLOUMNS = {COLUMN_ID, 
 		COLUMN_TITLE, COLUMN_SEC_USER, COLUMN_APP_ICON, COLUMN_FULL_ACCESS, COLUMN_PERMISSION, COLUMN_OBJECT_TYPE, COLUMN_OBJECT_ID, COLUMN_LOCATION, 
 		COLUMN_VERSION};
-	static final String []NORMAL_CLOUMNS = {
+	public static final String []NORMAL_CLOUMNS = {
 		COLUMN_TITLE, COLUMN_SEC_USER, COLUMN_APP_ICON, COLUMN_FULL_ACCESS, COLUMN_PERMISSION, COLUMN_OBJECT_TYPE, COLUMN_OBJECT_ID, COLUMN_LOCATION
 		};
 	

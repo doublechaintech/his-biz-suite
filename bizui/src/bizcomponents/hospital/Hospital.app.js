@@ -145,15 +145,7 @@ class HospitalBizApp extends React.PureComponent {
         )}
         )}
 
-       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
-       			<Menu.Item key="profile">
-               		<Link to={`/hospital/${this.props.hospital.id}/permission`}><Icon type="safety-certificate" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
-             	</Menu.Item>
-             	<Menu.Item key="permission">
-               		<Link to={`/hospital/${this.props.hospital.id}/profile`}><Icon type="cluster" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
-             	</Menu.Item> 
-      
-        	</SubMenu>
+       		
         
            </Menu>
     )
@@ -172,6 +164,7 @@ class HospitalBizApp extends React.PureComponent {
       data: state._hospital.expenseTypeList,
       metaInfo: state._hospital.expenseTypeListMetaInfo,
       count: state._hospital.expenseTypeCount,
+      returnURL: `/hospital/${state._hospital.id}/dashboard`,
       currentPage: state._hospital.expenseTypeCurrentPageNumber,
       searchFormParameters: state._hospital.expenseTypeSearchFormParameters,
       searchParameters: {...state._hospital.searchParameters},
@@ -221,6 +214,7 @@ class HospitalBizApp extends React.PureComponent {
       data: state._hospital.periodList,
       metaInfo: state._hospital.periodListMetaInfo,
       count: state._hospital.periodCount,
+      returnURL: `/hospital/${state._hospital.id}/dashboard`,
       currentPage: state._hospital.periodCurrentPageNumber,
       searchFormParameters: state._hospital.periodSearchFormParameters,
       searchParameters: {...state._hospital.searchParameters},
@@ -270,6 +264,7 @@ class HospitalBizApp extends React.PureComponent {
       data: state._hospital.expenseItemList,
       metaInfo: state._hospital.expenseItemListMetaInfo,
       count: state._hospital.expenseItemCount,
+      returnURL: `/hospital/${state._hospital.id}/dashboard`,
       currentPage: state._hospital.expenseItemCurrentPageNumber,
       searchFormParameters: state._hospital.expenseItemSearchFormParameters,
       searchParameters: {...state._hospital.searchParameters},
@@ -319,6 +314,7 @@ class HospitalBizApp extends React.PureComponent {
       data: state._hospital.doctorList,
       metaInfo: state._hospital.doctorListMetaInfo,
       count: state._hospital.doctorCount,
+      returnURL: `/hospital/${state._hospital.id}/dashboard`,
       currentPage: state._hospital.doctorCurrentPageNumber,
       searchFormParameters: state._hospital.doctorSearchFormParameters,
       searchParameters: {...state._hospital.searchParameters},
@@ -368,6 +364,7 @@ class HospitalBizApp extends React.PureComponent {
       data: state._hospital.departmentList,
       metaInfo: state._hospital.departmentListMetaInfo,
       count: state._hospital.departmentCount,
+      returnURL: `/hospital/${state._hospital.id}/dashboard`,
       currentPage: state._hospital.departmentCurrentPageNumber,
       searchFormParameters: state._hospital.departmentSearchFormParameters,
       searchParameters: {...state._hospital.searchParameters},
@@ -417,6 +414,7 @@ class HospitalBizApp extends React.PureComponent {
       data: state._hospital.doctorScheduleList,
       metaInfo: state._hospital.doctorScheduleListMetaInfo,
       count: state._hospital.doctorScheduleCount,
+      returnURL: `/hospital/${state._hospital.id}/dashboard`,
       currentPage: state._hospital.doctorScheduleCurrentPageNumber,
       searchFormParameters: state._hospital.doctorScheduleSearchFormParameters,
       searchParameters: {...state._hospital.searchParameters},

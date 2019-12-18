@@ -18,9 +18,21 @@ import com.doublechaintech.his.doctorschedule.DoctorSchedule;
 @JsonSerialize(using = PeriodSerializer.class)
 public class Period extends BaseEntity implements  java.io.Serializable{
 
+	public static final String MORNING = "MORNING";	// 上午
+	public static final String AFTERNOON = "AFTERNOON";	// 下午
+	public static final String NIGHT = "NIGHT";	// 夜班
+	public static List<KeyValuePair> CODE_NAME_LIST;
+	static {
+		CODE_NAME_LIST = new ArrayList<>();
+
+		CODE_NAME_LIST.add(new KeyValuePair(MORNING, "上午"));
+		CODE_NAME_LIST.add(new KeyValuePair(AFTERNOON, "下午"));
+		CODE_NAME_LIST.add(new KeyValuePair(NIGHT, "夜班"));
+	}
 	
 	public static final String ID_PROPERTY                    = "id"                ;
 	public static final String NAME_PROPERTY                  = "name"              ;
+	public static final String CODE_PROPERTY                  = "code"              ;
 	public static final String HOSPITAL_PROPERTY              = "hospital"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
@@ -47,6 +59,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 
 	protected		String              	mId                 ;
 	protected		String              	mName               ;
+	protected		String              	mCode               ;
 	protected		Hospital            	mHospital           ;
 	protected		int                 	mVersion            ;
 	
@@ -57,6 +70,16 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 	public 	Period(){
 		// lazy load for all the properties
 	}
+	public 	static Period withId(String id){
+		Period period = new Period();
+		period.setId(id);
+		// period.setVersion(Integer.MAX_VALUE);
+		return period;
+	}
+	public 	static Period refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setHospital( null );
@@ -64,9 +87,10 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	Period(String name, Hospital hospital)
+	public 	Period(String name, String code, Hospital hospital)
 	{
 		setName(name);
+		setCode(code);
 		setHospital(hospital);
 
 		this.mDoctorScheduleList = new SmartList<DoctorSchedule>();	
@@ -78,6 +102,9 @@ public class Period extends BaseEntity implements  java.io.Serializable{
      	
 		if(NAME_PROPERTY.equals(property)){
 			changeNameProperty(newValueExpr);
+		}
+		if(CODE_PROPERTY.equals(property)){
+			changeCodeProperty(newValueExpr);
 		}
 
       
@@ -99,6 +126,21 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 			
 			
 			
+	protected void changeCodeProperty(String newValueExpr){
+		String oldValue = getCode();
+		String newValue = parseString(newValueExpr);
+		if(equalsString(oldValue , newValue)){
+			return;//they can be both null, or exact the same object, this is much faster than equals function
+		}
+		//they are surely different each other
+		updateCode(newValue);
+		this.onChangeProperty(CODE_PROPERTY, oldValue, newValue);
+		return;
+  
+	}
+			
+			
+			
 
 
 	
@@ -106,6 +148,9 @@ public class Period extends BaseEntity implements  java.io.Serializable{
      	
 		if(NAME_PROPERTY.equals(property)){
 			return getName();
+		}
+		if(CODE_PROPERTY.equals(property)){
+			return getCode();
 		}
 		if(HOSPITAL_PROPERTY.equals(property)){
 			return getHospital();
@@ -154,6 +199,22 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 	}
 	public void mergeName(String name){
 		if(name != null) { setName(name);}
+	}
+	
+	
+	public void setCode(String code){
+		this.mCode = trimString(code);;
+	}
+	public String getCode(){
+		return this.mCode;
+	}
+	public Period updateCode(String code){
+		this.mCode = trimString(code);;
+		this.changed = true;
+		return this;
+	}
+	public void mergeCode(String code){
+		if(code != null) { setCode(code);}
 	}
 	
 	
@@ -332,6 +393,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 
 		appendKeyValuePair(result, ID_PROPERTY, getId());
 		appendKeyValuePair(result, NAME_PROPERTY, getName());
+		appendKeyValuePair(result, CODE_PROPERTY, getCode());
 		appendKeyValuePair(result, HOSPITAL_PROPERTY, getHospital());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 		appendKeyValuePair(result, DOCTOR_SCHEDULE_LIST, getDoctorScheduleList());
@@ -355,6 +417,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		
 			dest.setId(getId());
 			dest.setName(getName());
+			dest.setCode(getCode());
 			dest.setHospital(getHospital());
 			dest.setVersion(getVersion());
 			dest.setDoctorScheduleList(getDoctorScheduleList());
@@ -373,6 +436,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		
 			dest.mergeId(getId());
 			dest.mergeName(getName());
+			dest.mergeCode(getCode());
 			dest.mergeHospital(getHospital());
 			dest.mergeVersion(getVersion());
 			dest.mergeDoctorScheduleList(getDoctorScheduleList());
@@ -392,6 +456,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		
 			dest.mergeId(getId());
 			dest.mergeName(getName());
+			dest.mergeCode(getCode());
 			dest.mergeVersion(getVersion());
 
 		}
@@ -404,6 +469,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		stringBuilder.append("Period{");
 		stringBuilder.append("\tid='"+getId()+"';");
 		stringBuilder.append("\tname='"+getName()+"';");
+		stringBuilder.append("\tcode='"+getCode()+"';");
 		if(getHospital() != null ){
  			stringBuilder.append("\thospital='Hospital("+getHospital().getId()+")';");
  		}

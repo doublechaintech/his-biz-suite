@@ -171,7 +171,7 @@ public class PeriodManagerImpl extends CustomHisCheckerManager implements Period
  	
 
 
-	public Period createPeriod(HisUserContext userContext,String name, String hospitalId) throws Exception
+	public Period createPeriod(HisUserContext userContext,String name, String code, String hospitalId) throws Exception
 	{
 		
 		
@@ -179,6 +179,7 @@ public class PeriodManagerImpl extends CustomHisCheckerManager implements Period
 		
 
 		userContext.getChecker().checkNameOfPeriod(name);
+		userContext.getChecker().checkCodeOfPeriod(code);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(PeriodManagerException.class);
 
@@ -186,6 +187,7 @@ public class PeriodManagerImpl extends CustomHisCheckerManager implements Period
 		Period period=createNewPeriod();	
 
 		period.setName(name);
+		period.setCode(code);
 			
 		Hospital hospital = loadHospital(userContext, hospitalId,emptyOptions());
 		period.setHospital(hospital);
@@ -217,6 +219,9 @@ public class PeriodManagerImpl extends CustomHisCheckerManager implements Period
 
 		if(Period.NAME_PROPERTY.equals(property)){
 			userContext.getChecker().checkNameOfPeriod(parseString(newValueExpr));
+		}
+		if(Period.CODE_PROPERTY.equals(property)){
+			userContext.getChecker().checkCodeOfPeriod(parseString(newValueExpr));
 		}		
 
 		

@@ -62,6 +62,16 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 	public 	FormAction(){
 		// lazy load for all the properties
 	}
+	public 	static FormAction withId(String id){
+		FormAction formAction = new FormAction();
+		formAction.setId(id);
+		// formAction.setVersion(Integer.MAX_VALUE);
+		return formAction;
+	}
+	public 	static FormAction refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setForm( null );
@@ -473,9 +483,4 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 	
 
 }
-
-
-
-
-
 

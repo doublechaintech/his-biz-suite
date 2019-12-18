@@ -14,6 +14,7 @@ public class PeriodMapper extends BaseRowMapper<Period>{
 		 		
  		setId(period, rs, rowNumber); 		
  		setName(period, rs, rowNumber); 		
+ 		setCode(period, rs, rowNumber); 		
  		setHospital(period, rs, rowNumber); 		
  		setVersion(period, rs, rowNumber);
 
@@ -47,6 +48,18 @@ public class PeriodMapper extends BaseRowMapper<Period>{
 		
 		period.setName(name);
 	}
+		
+	protected void setCode(Period period, ResultSet rs, int rowNumber) throws SQLException{
+	
+		//there will be issue when the type is double/int/long
+		String code = rs.getString(PeriodTable.COLUMN_CODE);
+		if(code == null){
+			//do nothing when nothing found in database
+			return;
+		}
+		
+		period.setCode(code);
+	}
 		 		
  	protected void setHospital(Period period, ResultSet rs, int rowNumber) throws SQLException{
  		String hospitalId = rs.getString(PeriodTable.COLUMN_HOSPITAL);
@@ -56,10 +69,10 @@ public class PeriodMapper extends BaseRowMapper<Period>{
  		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Hospital lhospital = period.getHospital();
- 		if( lhospital != null ){
+ 		Hospital hospital = period.getHospital();
+ 		if( hospital != null ){
  			//if the root object 'period' already have the property, just set the id for it;
- 			lhospital.setId(hospitalId);
+ 			hospital.setId(hospitalId);
  			
  			return;
  		}

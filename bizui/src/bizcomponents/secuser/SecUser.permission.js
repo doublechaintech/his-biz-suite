@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (secUser,targetComponent) =>{
     const userContext = null
 	return (
@@ -63,9 +67,10 @@ class SecUserPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  secUser = this.props.secUser;
+    const  secUser = this.props.secUser
     const { id,displayName, userAppCount, loginHistoryCount } = secUser
-    const cardsData = {cardsName:"安全用户",cardsFor: "secUser",cardsSource: secUser,
+    const  returnURL = `/secUser/${id}/dashboard`
+    const cardsData = {cardsName:"安全用户",cardsFor: "secUser",cardsSource: secUser,displayName,returnURL,
   		subItems: [
     
       	],
@@ -76,7 +81,7 @@ class SecUserPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

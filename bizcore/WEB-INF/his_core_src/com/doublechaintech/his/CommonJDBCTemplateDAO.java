@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiFunction;
-
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.sql.DataSource;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -603,7 +603,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	protected String getNextId() {
 		synchronized(currentMax){
 			if(currentMax.get() > 0){
-				System.out.println(this.getClass().getName()+this.hashCode()+":getNextId()="+currentMax);
+				
 				return String.format(getIdFormat(),currentMax.incrementAndGet());
 			}
 			//The following logic just run when the first time loaded the id from table
@@ -665,16 +665,15 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	}
 
 	protected String getCreateSQL() {
-		// TODO Auto-generated method stub
-		//return new String[]{"name","bize_order","card_number","billing_address"};
 		StringBuilder stringBuilder=new StringBuilder();
+		
 		stringBuilder.append("insert into ");
 		stringBuilder.append(this.getTableName());
-		stringBuilder.append("(id,");
+		stringBuilder.append("(id, ");
 		stringBuilder.append(join());
-		stringBuilder.append(",version)values(?,");
+		stringBuilder.append(", version)values(?, ");
 		stringBuilder.append(getCreateParametersPlaceHolders());
-		stringBuilder.append(",1);");
+		stringBuilder.append(", 1);");
 		
 		return stringBuilder.toString();
 	}
@@ -699,7 +698,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		stringBuilder.append(this.getTableName());
 		stringBuilder.append(" set ");
 		stringBuilder.append(joinUpdate());
-		stringBuilder.append(",version = ? ");
+		stringBuilder.append(", version = ? ");
 		
 		stringBuilder.append("where id=? and version=?");
 		
@@ -725,91 +724,43 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	
 	protected String getCreateParametersPlaceHolders() {
 
-		StringBuilder stringBuilder=new StringBuilder();
+		
 		int length=getNormalColumnNames().length;
-		for(int i=0;i<length;i++ ){//version is an constant
-			if(i>0){
-				stringBuilder.append(",");
-			}
-			stringBuilder.append("?");
-		}
-		return stringBuilder.toString();
+		return repeatAndJoin("?",", ",length);
 	}
 	
 	
 	
-	protected String getUpdateParametersPlaceHolders() {
-		// TODO Auto-generated method stub
-		StringBuilder stringBuilder=new StringBuilder();
-		int length=getNormalColumnNames().length;
-		for(int i=0;i<length;i++ ){
-			if(i>0){
-				stringBuilder.append(",");
-			}
-			stringBuilder.append("?");
-		}
-		return null;
-	}
+	
 
 	protected String joinUpdateParametersPlaceHolders() {
-		// TODO Auto-generated method stub
-		StringBuilder stringBuilder=new StringBuilder();
+
 		int length=getNormalColumnNames().length;
-		for(int i=0;i<length;i++ ){
-			if(i>0){
-				stringBuilder.append(",");
-			}
-			stringBuilder.append("?");
-		}
-		return stringBuilder.toString();
+		return repeatAndJoin("?",", ",length);
 	}
 	
 	
 	
+	protected String repeatAndJoin(String value, String delimiter, int times) {
+		return IntStream.range(0, times).mapToObj(i -> value).collect(Collectors.joining(delimiter));
+	}
 	
 	protected String joinPlaceHolders(String []parameters) {
-		// TODO Auto-generated method stub
-		StringBuilder stringBuilder=new StringBuilder();
-		int length=parameters.length;
-		for(int i=0;i<length;i++ ){
-			if(i>0){
-				stringBuilder.append(",");
-			}
-			stringBuilder.append("?");
-		}
-		return stringBuilder.toString();
+		return repeatAndJoin("?",",",parameters.length);
 	}
 	
 	protected String join() {
-		// TODO Auto-generated method stub
-		StringBuilder stringBuilder=new StringBuilder();
 		String columNames[]=getNormalColumnNames();
-		int length=columNames.length;
+		return Arrays.asList(columNames).stream().collect(Collectors.joining(", "));
 		
-		for(int i=0; i<length; i++){
-			if(i>0){
-				stringBuilder.append(",");
-			}
-			stringBuilder.append(columNames[i]);
-		}
-		
-		return stringBuilder.toString();
 	}
 
+	
 	protected String joinUpdate() {
-		// TODO Auto-generated method stub
-		StringBuilder stringBuilder=new StringBuilder();
+		
 		String columNames[]=getNormalColumnNames();
-		int length=columNames.length;
+		return Arrays.asList(columNames).stream().map(columnName->columnName+" = ?").collect(Collectors.joining(", "));
 		
-		for(int i=0;i<length;i++ ){
-			if(i>0){
-				stringBuilder.append(",");
-			}
-			stringBuilder.append(columNames[i]+" = ? ");
-		}
-		
-		return stringBuilder.toString();
 	}
 	
 	protected String getDeleteAllSQL() {
@@ -1399,7 +1350,6 @@ class CountingResultMap extends HashMap<String, Integer> {
 	}
 	
 }
-
 
 
 

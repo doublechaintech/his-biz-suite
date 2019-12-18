@@ -62,6 +62,16 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 	public 	Department(){
 		// lazy load for all the properties
 	}
+	public 	static Department withId(String id){
+		Department department = new Department();
+		department.setId(id);
+		// department.setVersion(Integer.MAX_VALUE);
+		return department;
+	}
+	public 	static Department refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setHospital( null );

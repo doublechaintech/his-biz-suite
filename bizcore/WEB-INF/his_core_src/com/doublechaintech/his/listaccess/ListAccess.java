@@ -66,6 +66,16 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 	public 	ListAccess(){
 		// lazy load for all the properties
 	}
+	public 	static ListAccess withId(String id){
+		ListAccess listAccess = new ListAccess();
+		listAccess.setId(id);
+		// listAccess.setVersion(Integer.MAX_VALUE);
+		return listAccess;
+	}
+	public 	static ListAccess refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setApp( null );

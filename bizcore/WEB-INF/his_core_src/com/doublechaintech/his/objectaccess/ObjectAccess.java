@@ -74,6 +74,16 @@ public class ObjectAccess extends BaseEntity implements  java.io.Serializable{
 	public 	ObjectAccess(){
 		// lazy load for all the properties
 	}
+	public 	static ObjectAccess withId(String id){
+		ObjectAccess objectAccess = new ObjectAccess();
+		objectAccess.setId(id);
+		// objectAccess.setVersion(Integer.MAX_VALUE);
+		return objectAccess;
+	}
+	public 	static ObjectAccess refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setApp( null );

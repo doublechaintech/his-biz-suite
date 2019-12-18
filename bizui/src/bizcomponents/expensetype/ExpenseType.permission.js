@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (expenseType,targetComponent) =>{
     const userContext = null
 	return (
@@ -56,9 +60,10 @@ class ExpenseTypePermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  expenseType = this.props.expenseType;
+    const  expenseType = this.props.expenseType
     const { id,displayName, expenseItemCount, doctorScheduleCount } = expenseType
-    const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",cardsSource: expenseType,
+    const  returnURL = `/expenseType/${id}/dashboard`
+    const cardsData = {cardsName:"费用类型",cardsFor: "expenseType",cardsSource: expenseType,displayName,returnURL,
   		subItems: [
 {name: 'expenseItemList', displayName:'费用项目',type:'expenseItem',count:expenseItemCount,addFunction: true, role: 'expenseItem', data: expenseType.expenseItemList},
     
@@ -70,7 +75,7 @@ class ExpenseTypePermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

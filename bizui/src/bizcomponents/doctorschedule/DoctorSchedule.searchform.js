@@ -195,10 +195,7 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
  <Col md={8} sm={24}>
                  <Form.Item label="期">
-               {getFieldDecorator('period', {
-                 initialValue: tryinit('period'),
-                
-               })(
+               {getFieldDecorator('period', {initialValue: tryinit('period')})(
                
                <SelectObject 
                  disabled={!availableForEdit('period')}
@@ -273,10 +270,7 @@ componentDidMount() {
           </Col>
  <Col md={8} sm={24}>
                     <Form.Item label="医生">
-                  {getFieldDecorator('doctor', {
-                    initialValue: tryinit('doctor'),
-                   
-                  })(
+                  {getFieldDecorator('doctor', {initialValue: tryinit('doctor')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('doctor')}
@@ -288,10 +282,7 @@ componentDidMount() {
                 </Form.Item></Col>
  <Col md={8} sm={24}>
                     <Form.Item label="期">
-                  {getFieldDecorator('period', {
-                    initialValue: tryinit('period'),
-                   
-                  })(
+                  {getFieldDecorator('period', {initialValue: tryinit('period')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('period')}
@@ -303,10 +294,7 @@ componentDidMount() {
                 </Form.Item></Col>
  <Col md={8} sm={24}>
                     <Form.Item label="部门">
-                  {getFieldDecorator('department', {
-                    initialValue: tryinit('department'),
-                   
-                  })(
+                  {getFieldDecorator('department', {initialValue: tryinit('department')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('department')}
@@ -318,10 +306,7 @@ componentDidMount() {
                 </Form.Item></Col>
  <Col md={8} sm={24}>
                     <Form.Item label="费用类型">
-                  {getFieldDecorator('expenseType', {
-                    initialValue: tryinit('expenseType'),
-                   
-                  })(
+                  {getFieldDecorator('expenseType', {initialValue: tryinit('expenseType')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('expenseType')}
@@ -333,10 +318,7 @@ componentDidMount() {
                 </Form.Item></Col>
  <Col md={8} sm={24}>
                     <Form.Item label="医院">
-                  {getFieldDecorator('hospital', {
-                    initialValue: tryinit('hospital'),
-                   
-                  })(
+                  {getFieldDecorator('hospital', {initialValue: tryinit('hospital')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('hospital')}

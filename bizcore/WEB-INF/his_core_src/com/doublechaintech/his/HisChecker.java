@@ -140,6 +140,15 @@ public class HisChecker extends BaseChecker{
 		return this;
 	}	
 
+	public static final String  CODE_OF_PERIOD ="period.code";
+	public HisChecker checkCodeOfPeriod(String code)
+	{
+		
+	 	checkStringLengthRange(code,2, 36,CODE_OF_PERIOD ); 		
+		
+		return this;
+	}	
+
 	public static final String  HOSPITAL_OF_PERIOD ="period.hospital";
 	public HisChecker checkHospitalIdOfPeriod(String hospitalId)
 	{
@@ -748,6 +757,69 @@ public class HisChecker extends BaseChecker{
 	{
 		
 	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_USER_APP ); 		
+		
+		return this;
+	}	
+
+	public static final String  ID_OF_QUICK_LINK ="quick_link.id";
+	public HisChecker checkIdOfQuickLink(String id)
+	{
+		
+	 	checkStringLengthRange(id,2, 64,ID_OF_QUICK_LINK ); 		
+		
+		return this;
+	}	
+
+	public static final String  NAME_OF_QUICK_LINK ="quick_link.name";
+	public HisChecker checkNameOfQuickLink(String name)
+	{
+		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_QUICK_LINK ); 		
+		
+		return this;
+	}	
+
+	public static final String  ICON_OF_QUICK_LINK ="quick_link.icon";
+	public HisChecker checkIconOfQuickLink(String icon)
+	{
+		
+	 	checkStringLengthRange(icon,1, 200,ICON_OF_QUICK_LINK ); 		
+		
+		return this;
+	}	
+
+	public static final String  IMAGE_PATH_OF_QUICK_LINK ="quick_link.image_path";
+	public HisChecker checkImagePathOfQuickLink(String imagePath)
+	{
+		
+	 	checkImage(imagePath,0, 512,IMAGE_PATH_OF_QUICK_LINK ); 		
+		
+		return this;
+	}	
+
+	public static final String  LINK_TARGET_OF_QUICK_LINK ="quick_link.link_target";
+	public HisChecker checkLinkTargetOfQuickLink(String linkTarget)
+	{
+		
+	 	checkStringLengthRange(linkTarget,1, 200,LINK_TARGET_OF_QUICK_LINK ); 		
+		
+		return this;
+	}	
+
+	public static final String  APP_OF_QUICK_LINK ="quick_link.app";
+	public HisChecker checkAppIdOfQuickLink(String appId)
+	{
+		
+	 	checkIdOfQuickLink(appId ); 		
+		
+		return this;
+	}	
+
+	public static final String  VERSION_OF_QUICK_LINK ="quick_link.version";
+	public HisChecker checkVersionOfQuickLink(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_QUICK_LINK ); 		
 		
 		return this;
 	}	
@@ -1378,6 +1450,87 @@ public class HisChecker extends BaseChecker{
 	{
 		
 	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_FORM_ACTION ); 		
+		
+		return this;
+	}	
+
+	public static final String  ID_OF_CANDIDATE_CONTAINER ="candidate_container.id";
+	public HisChecker checkIdOfCandidateContainer(String id)
+	{
+		
+	 	checkStringLengthRange(id,2, 64,ID_OF_CANDIDATE_CONTAINER ); 		
+		
+		return this;
+	}	
+
+	public static final String  NAME_OF_CANDIDATE_CONTAINER ="candidate_container.name";
+	public HisChecker checkNameOfCandidateContainer(String name)
+	{
+		
+	 	checkStringLengthRange(name,2, 28,NAME_OF_CANDIDATE_CONTAINER ); 		
+		
+		return this;
+	}	
+
+	public static final String  VERSION_OF_CANDIDATE_CONTAINER ="candidate_container.version";
+	public HisChecker checkVersionOfCandidateContainer(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_CANDIDATE_CONTAINER ); 		
+		
+		return this;
+	}	
+
+	public static final String  ID_OF_CANDIDATE_ELEMENT ="candidate_element.id";
+	public HisChecker checkIdOfCandidateElement(String id)
+	{
+		
+	 	checkStringLengthRange(id,2, 64,ID_OF_CANDIDATE_ELEMENT ); 		
+		
+		return this;
+	}	
+
+	public static final String  NAME_OF_CANDIDATE_ELEMENT ="candidate_element.name";
+	public HisChecker checkNameOfCandidateElement(String name)
+	{
+		
+	 	checkStringLengthRange(name,1, 200,NAME_OF_CANDIDATE_ELEMENT ); 		
+		
+		return this;
+	}	
+
+	public static final String  TYPE_OF_CANDIDATE_ELEMENT ="candidate_element.type";
+	public HisChecker checkTypeOfCandidateElement(String type)
+	{
+		
+	 	checkStringLengthRange(type,1, 200,TYPE_OF_CANDIDATE_ELEMENT ); 		
+		
+		return this;
+	}	
+
+	public static final String  IMAGE_OF_CANDIDATE_ELEMENT ="candidate_element.image";
+	public HisChecker checkImageOfCandidateElement(String image)
+	{
+		
+	 	checkImage(image,0, 512,IMAGE_OF_CANDIDATE_ELEMENT ); 		
+		
+		return this;
+	}	
+
+	public static final String  CONTAINER_OF_CANDIDATE_ELEMENT ="candidate_element.container";
+	public HisChecker checkContainerIdOfCandidateElement(String containerId)
+	{
+		
+	 	checkIdOfCandidateElement(containerId ); 		
+		
+		return this;
+	}	
+
+	public static final String  VERSION_OF_CANDIDATE_ELEMENT ="candidate_element.version";
+	public HisChecker checkVersionOfCandidateElement(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_CANDIDATE_ELEMENT ); 		
 		
 		return this;
 	}	

@@ -134,10 +134,10 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
  		if( userAppId.isEmpty()){
  			return;
  		}
- 		UserApp luserApp = listAccess.getApp();
- 		if( luserApp != null ){
+ 		UserApp userApp = listAccess.getApp();
+ 		if( userApp != null ){
  			//if the root object 'listAccess' already have the property, just set the id for it;
- 			luserApp.setId(userAppId);
+ 			userApp.setId(userAppId);
  			
  			return;
  		}

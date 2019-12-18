@@ -36,6 +36,13 @@ const menuData = {menuName:"医生的任务", menuFor: "doctorAssignment",
   		],
 }
 
+
+const settingMenuData = {menuName:"医生的任务", menuFor: "doctorAssignment",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -63,11 +70,11 @@ const renderItemOfList=(doctorAssignment,targetComponent)=>{
       <DescriptionList  key={doctorAssignment.id} size="small" col="4">
         <Description term="ID">{doctorAssignment.id}</Description> 
         <Description term="名称">{doctorAssignment.name}</Description> 
-        <Description term="医生">{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):`${doctorAssignment.doctor.displayName}(${doctorAssignment.doctor.id})`}
-        </Description>
-        <Description term="部门">{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):`${doctorAssignment.department.displayName}(${doctorAssignment.department.id})`}
-        </Description>
-        <Description term="更新时间">{ moment(doctorAssignment.updateTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="医生"><div>{doctorAssignment.doctor==null?appLocaleName(userContext,"NotAssigned"):`${doctorAssignment.doctor.displayName}(${doctorAssignment.doctor.id})`}
+        </div></Description>
+        <Description term="部门"><div>{doctorAssignment.department==null?appLocaleName(userContext,"NotAssigned"):`${doctorAssignment.department.displayName}(${doctorAssignment.department.id})`}
+        </div></Description>
+        <Description term="更新时间"><div>{ moment(doctorAssignment.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>

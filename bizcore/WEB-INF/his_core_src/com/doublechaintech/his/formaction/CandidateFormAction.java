@@ -8,11 +8,3 @@ public class CandidateFormAction extends BaseCandidateEntity<FormAction>{
 }
 
 
-
-
-
-
-
-
-
-

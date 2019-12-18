@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (userApp,targetComponent) =>{
     const userContext = null
 	return (
@@ -58,9 +62,10 @@ class UserAppPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  userApp = this.props.userApp;
-    const { id,displayName, listAccessCount, objectAccessCount } = userApp
-    const cardsData = {cardsName:"用户应用程序",cardsFor: "userApp",cardsSource: userApp,
+    const  userApp = this.props.userApp
+    const { id,displayName, quickLinkCount, listAccessCount, objectAccessCount } = userApp
+    const  returnURL = `/userApp/${id}/dashboard`
+    const cardsData = {cardsName:"用户应用程序",cardsFor: "userApp",cardsSource: userApp,displayName,returnURL,
   		subItems: [
     
       	],
@@ -71,7 +76,7 @@ class UserAppPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

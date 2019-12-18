@@ -26,9 +26,12 @@ function RouterConfig({ history }) {
 	const {SecUserBizApp} = GlobalComponents
 	const {SecUserBlockingBizApp} = GlobalComponents
 	const {UserAppBizApp} = GlobalComponents
+	const {QuickLinkBizApp} = GlobalComponents
 	const {ListAccessBizApp} = GlobalComponents
 	const {ObjectAccessBizApp} = GlobalComponents
 	const {LoginHistoryBizApp} = GlobalComponents
+	const {CandidateContainerBizApp} = GlobalComponents
+	const {CandidateElementBizApp} = GlobalComponents
 
 
 
@@ -51,9 +54,12 @@ function RouterConfig({ history }) {
           <Route path="/secUser/" component={SecUserBizApp} />
           <Route path="/secUserBlocking/" component={SecUserBlockingBizApp} />
           <Route path="/userApp/" component={UserAppBizApp} />
+          <Route path="/quickLink/" component={QuickLinkBizApp} />
           <Route path="/listAccess/" component={ListAccessBizApp} />
           <Route path="/objectAccess/" component={ObjectAccessBizApp} />
           <Route path="/loginHistory/" component={LoginHistoryBizApp} />
+          <Route path="/candidateContainer/" component={CandidateContainerBizApp} />
+          <Route path="/candidateElement/" component={CandidateElementBizApp} />
           <Route path="/" component={Launcher} />
         </Switch>
       </Router>

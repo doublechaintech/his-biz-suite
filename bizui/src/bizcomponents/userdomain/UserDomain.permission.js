@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (userDomain,targetComponent) =>{
     const userContext = null
 	return (
@@ -53,9 +57,10 @@ class UserDomainPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  userDomain = this.props.userDomain;
+    const  userDomain = this.props.userDomain
     const { id,displayName, userWhiteListCount, secUserCount } = userDomain
-    const cardsData = {cardsName:"用户域",cardsFor: "userDomain",cardsSource: userDomain,
+    const  returnURL = `/userDomain/${id}/dashboard`
+    const cardsData = {cardsName:"用户域",cardsFor: "userDomain",cardsSource: userDomain,displayName,returnURL,
   		subItems: [
 {name: 'userWhiteListList', displayName:'用户白名单',type:'userWhiteList',count:userWhiteListCount,addFunction: true, role: 'userWhiteList', data: userDomain.userWhiteListList},
     
@@ -67,7 +72,7 @@ class UserDomainPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

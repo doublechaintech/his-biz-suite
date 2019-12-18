@@ -73,6 +73,16 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 	public 	Hospital(){
 		// lazy load for all the properties
 	}
+	public 	static Hospital withId(String id){
+		Hospital hospital = new Hospital();
+		hospital.setId(id);
+		// hospital.setVersion(Integer.MAX_VALUE);
+		return hospital;
+	}
+	public 	static Hospital refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 

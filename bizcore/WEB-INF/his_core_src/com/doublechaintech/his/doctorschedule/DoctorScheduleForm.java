@@ -289,6 +289,20 @@ public class DoctorScheduleForm extends BaseForm {
 	}
 
 
+	public DoctorScheduleForm codeFieldOfPeriod(String parameterName, String initValue){
+		FormField field =  codeFromPeriod(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public DoctorScheduleForm codeFieldOfPeriod(String initValue){
+		return codeFieldOfPeriod("code",initValue);
+	}
+	public DoctorScheduleForm codeFieldOfPeriod(){
+		return codeFieldOfPeriod("code","");
+	}
+
+
 	public DoctorScheduleForm hospitalIdFieldOfPeriod(String parameterName, String initValue){
 		FormField field =  hospitalIdFromPeriod(parameterName, initValue);
 		this.addFormField(field);	

@@ -16,7 +16,7 @@ public class FormFieldTable{
 	
 
 	//only this package can use this, so the scope is default, not public, not private either nor protected
-	static final String TABLE_NAME="form_field_data";
+	public static final String TABLE_NAME="form_field_data";
 	static final String COLUMN_ID = "id";
 	static final String COLUMN_LABEL = "label";
 	static final String COLUMN_LOCALE_KEY = "locale_key";
@@ -36,10 +36,10 @@ public class FormFieldTable{
 	static final String COLUMN_SUGGEST_VALUES = "suggest_values";
 	static final String COLUMN_VERSION = "version";
  
-	static final String []ALL_CLOUMNS = {COLUMN_ID, 
+	public static final String []ALL_CLOUMNS = {COLUMN_ID, 
 		COLUMN_LABEL, COLUMN_LOCALE_KEY, COLUMN_PARAMETER_NAME, COLUMN_TYPE, COLUMN_FORM, COLUMN_PLACEHOLDER, COLUMN_DEFAULT_VALUE, COLUMN_DESCRIPTION, COLUMN_FIELD_GROUP, COLUMN_MINIMUM_VALUE, COLUMN_MAXIMUM_VALUE, COLUMN_REQUIRED, COLUMN_DISABLED, COLUMN_CUSTOM_RENDERING, COLUMN_CANDIDATE_VALUES, COLUMN_SUGGEST_VALUES, 
 		COLUMN_VERSION};
-	static final String []NORMAL_CLOUMNS = {
+	public static final String []NORMAL_CLOUMNS = {
 		COLUMN_LABEL, COLUMN_LOCALE_KEY, COLUMN_PARAMETER_NAME, COLUMN_TYPE, COLUMN_FORM, COLUMN_PLACEHOLDER, COLUMN_DEFAULT_VALUE, COLUMN_DESCRIPTION, COLUMN_FIELD_GROUP, COLUMN_MINIMUM_VALUE, COLUMN_MAXIMUM_VALUE, COLUMN_REQUIRED, COLUMN_DISABLED, COLUMN_CUSTOM_RENDERING, COLUMN_CANDIDATE_VALUES, COLUMN_SUGGEST_VALUES
 		};
 	

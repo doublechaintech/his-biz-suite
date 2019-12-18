@@ -32,6 +32,7 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 		namingTableMap.put("SecUser", new String[]{"sec_user_data","login"});
 		namingTableMap.put("SecUserBlocking", new String[]{"sec_user_blocking_data","who"});
 		namingTableMap.put("UserApp", new String[]{"user_app_data","title"});
+		namingTableMap.put("QuickLink", new String[]{"quick_link_data","name"});
 		namingTableMap.put("ListAccess", new String[]{"list_access_data","name"});
 		namingTableMap.put("ObjectAccess", new String[]{"object_access_data","name"});
 		namingTableMap.put("LoginHistory", new String[]{"login_history_data","from_ip"});
@@ -40,6 +41,8 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 		namingTableMap.put("FormFieldMessage", new String[]{"form_field_message_data","title"});
 		namingTableMap.put("FormField", new String[]{"form_field_data","label"});
 		namingTableMap.put("FormAction", new String[]{"form_action_data","label"});
+		namingTableMap.put("CandidateContainer", new String[]{"candidate_container_data","name"});
+		namingTableMap.put("CandidateElement", new String[]{"candidate_element_data","name"});
 		
 
 		

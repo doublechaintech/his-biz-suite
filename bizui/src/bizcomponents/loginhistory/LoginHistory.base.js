@@ -36,6 +36,13 @@ const menuData = {menuName:"登录历史", menuFor: "loginHistory",
   		],
 }
 
+
+const settingMenuData = {menuName:"登录历史", menuFor: "loginHistory",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   loginTime: '登录时间',
@@ -62,11 +69,11 @@ const renderItemOfList=(loginHistory,targetComponent)=>{
 	
       <DescriptionList  key={loginHistory.id} size="small" col="4">
         <Description term="ID">{loginHistory.id}</Description> 
-        <Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="登录时间"><div>{ moment(loginHistory.loginTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
         <Description term="来自IP">{loginHistory.fromIp}</Description> 
         <Description term="描述">{loginHistory.description}</Description> 
-        <Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):`${loginHistory.secUser.displayName}(${loginHistory.secUser.id})`}
-        </Description>
+        <Description term="安全用户"><div>{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):`${loginHistory.secUser.displayName}(${loginHistory.secUser.id})`}
+        </div></Description>
 	
         
       </DescriptionList>
@@ -81,13 +88,6 @@ const renderItemOfList=(loginHistory,targetComponent)=>{
 
 const LoginHistoryBase={menuData,displayColumns,fieldLabels,renderItemOfList}
 export default LoginHistoryBase
-
-
-
-
-
-
-
 
 
 

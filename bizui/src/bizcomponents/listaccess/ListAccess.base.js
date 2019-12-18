@@ -36,6 +36,13 @@ const menuData = {menuName:"访问列表", menuFor: "listAccess",
   		],
 }
 
+
+const settingMenuData = {menuName:"访问列表", menuFor: "listAccess",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -72,8 +79,8 @@ const renderItemOfList=(listAccess,targetComponent)=>{
         <Description term="ID">{listAccess.id}</Description> 
         <Description term="名称">{listAccess.name}</Description> 
         <Description term="内部名称">{listAccess.internalName}</Description> 
-        <Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
-        </Description>
+        <Description term="应用程序"><div>{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
+        </div></Description>
 	
         
       </DescriptionList>

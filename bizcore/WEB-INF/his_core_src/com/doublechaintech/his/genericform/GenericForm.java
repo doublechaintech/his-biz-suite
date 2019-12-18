@@ -65,6 +65,16 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 	public 	GenericForm(){
 		// lazy load for all the properties
 	}
+	public 	static GenericForm withId(String id){
+		GenericForm genericForm = new GenericForm();
+		genericForm.setId(id);
+		// genericForm.setVersion(Integer.MAX_VALUE);
+		return genericForm;
+	}
+	public 	static GenericForm refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 

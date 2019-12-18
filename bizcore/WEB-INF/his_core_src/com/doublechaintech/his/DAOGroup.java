@@ -43,6 +43,9 @@ import com.doublechaintech.his.secuserblocking.SecUserBlockingTokens;
 import com.doublechaintech.his.userapp.UserApp;
 import com.doublechaintech.his.userapp.UserAppDAO;
 import com.doublechaintech.his.userapp.UserAppTokens;
+import com.doublechaintech.his.quicklink.QuickLink;
+import com.doublechaintech.his.quicklink.QuickLinkDAO;
+import com.doublechaintech.his.quicklink.QuickLinkTokens;
 import com.doublechaintech.his.listaccess.ListAccess;
 import com.doublechaintech.his.listaccess.ListAccessDAO;
 import com.doublechaintech.his.listaccess.ListAccessTokens;
@@ -67,6 +70,12 @@ import com.doublechaintech.his.formfield.FormFieldTokens;
 import com.doublechaintech.his.formaction.FormAction;
 import com.doublechaintech.his.formaction.FormActionDAO;
 import com.doublechaintech.his.formaction.FormActionTokens;
+import com.doublechaintech.his.candidatecontainer.CandidateContainer;
+import com.doublechaintech.his.candidatecontainer.CandidateContainerDAO;
+import com.doublechaintech.his.candidatecontainer.CandidateContainerTokens;
+import com.doublechaintech.his.candidateelement.CandidateElement;
+import com.doublechaintech.his.candidateelement.CandidateElementDAO;
+import com.doublechaintech.his.candidateelement.CandidateElementTokens;
 
 public class DAOGroup {
 
@@ -96,6 +105,8 @@ public class DAOGroup {
 
 	protected UserAppDAO userAppDAO;
 
+	protected QuickLinkDAO quickLinkDAO;
+
 	protected ListAccessDAO listAccessDAO;
 
 	protected ObjectAccessDAO objectAccessDAO;
@@ -111,6 +122,10 @@ public class DAOGroup {
 	protected FormFieldDAO formFieldDAO;
 
 	protected FormActionDAO formActionDAO;
+
+	protected CandidateContainerDAO candidateContainerDAO;
+
+	protected CandidateElementDAO candidateElementDAO;
 
 	
 
@@ -218,6 +233,14 @@ public class DAOGroup {
 	}
 
 
+	public QuickLinkDAO getQuickLinkDAO(){
+		return this.quickLinkDAO;
+	}
+	public void setQuickLinkDAO(QuickLinkDAO dao){
+		this.quickLinkDAO = dao;
+	}
+
+
 	public ListAccessDAO getListAccessDAO(){
 		return this.listAccessDAO;
 	}
@@ -279,6 +302,22 @@ public class DAOGroup {
 	}
 	public void setFormActionDAO(FormActionDAO dao){
 		this.formActionDAO = dao;
+	}
+
+
+	public CandidateContainerDAO getCandidateContainerDAO(){
+		return this.candidateContainerDAO;
+	}
+	public void setCandidateContainerDAO(CandidateContainerDAO dao){
+		this.candidateContainerDAO = dao;
+	}
+
+
+	public CandidateElementDAO getCandidateElementDAO(){
+		return this.candidateElementDAO;
+	}
+	public void setCandidateElementDAO(CandidateElementDAO dao){
+		this.candidateElementDAO = dao;
 	}
 
 
@@ -539,6 +578,25 @@ public class DAOGroup {
 			}
 		});
 
+		internalLoaderMap.put("QuickLink", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getQuickLinkDAO().load(id, QuickLinkTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getQuickLinkDAO().enhanceList((List<QuickLink>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getQuickLinkDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getQuickLinkDAO().present((QuickLink)data, tokens);
+			}
+		});
+
 		internalLoaderMap.put("ListAccess", new BasicLoader() {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
@@ -688,6 +746,44 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormActionDAO().present((FormAction)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("CandidateContainer", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getCandidateContainerDAO().load(id, CandidateContainerTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getCandidateContainerDAO().enhanceList((List<CandidateContainer>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getCandidateContainerDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getCandidateContainerDAO().present((CandidateContainer)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("CandidateElement", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getCandidateElementDAO().load(id, CandidateElementTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getCandidateElementDAO().enhanceList((List<CandidateElement>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getCandidateElementDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getCandidateElementDAO().present((CandidateElement)data, tokens);
 			}
 		});
 

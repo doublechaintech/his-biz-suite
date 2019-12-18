@@ -101,6 +101,7 @@
 	  <li class="active"><a data-toggle="tab" href="#summary" class="disabled"><i class="fa  fa-home"></i> ${userContext.localeMap['@summary']}</a></li>
 	 
 	<% UserApp result = (UserApp)request.getAttribute("result");  %>
+			<li><a data-toggle="tab" href="#quickLinkList" class="disabled"> ${userContext.localeMap['quick_link']}</a></li>
 			<li><a data-toggle="tab" href="#listAccessList" class="disabled"> ${userContext.localeMap['list_access']}</a></li>
 			<li><a data-toggle="tab" href="#objectAccessList" class="disabled"> ${userContext.localeMap['object_access']}</a></li>
  
@@ -152,7 +153,15 @@
 
 	
 
-		<c:if test='${not empty userContext.accessTokens["listAccessList"] or ignoreListAccessControl}'>
+		<c:if test='${not empty userContext.accessTokens["quickLinkList"] or ignoreListAccessControl}'>
+		<c:set var="quickLinkList" value="${result.quickLinkList}" scope="request"/>
+		<c:set var="quickLinkListName" value="quickLinkList" scope="request"/>
+		<div id="quickLinkList" class="tab-pane fade sublist" refer-name="app">
+			<sky:include page="com/doublechaintech/his/quicklink/QuickLink$List.jsp"
+					referName="app"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["listAccessList"] or ignoreListAccessControl}'>
 		<c:set var="listAccessList" value="${result.listAccessList}" scope="request"/>
 		<c:set var="listAccessListName" value="listAccessList" scope="request"/>
 		<div id="listAccessList" class="tab-pane fade sublist" refer-name="app">

@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (doctorAssignment,targetComponent) =>{
     const userContext = null
 	return (
@@ -54,9 +58,10 @@ class DoctorAssignmentPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  doctorAssignment = this.props.doctorAssignment;
+    const  doctorAssignment = this.props.doctorAssignment
     const { id,displayName,  } = doctorAssignment
-    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: doctorAssignment,
+    const  returnURL = `/doctorAssignment/${id}/dashboard`
+    const cardsData = {cardsName:"医生的任务",cardsFor: "doctorAssignment",cardsSource: doctorAssignment,displayName,returnURL,
   		subItems: [
     
       	],
@@ -67,7 +72,7 @@ class DoctorAssignmentPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

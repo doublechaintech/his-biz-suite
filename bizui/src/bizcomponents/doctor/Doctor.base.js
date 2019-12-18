@@ -37,6 +37,14 @@ const menuData = {menuName:"医生", menuFor: "doctor",
   		],
 }
 
+
+const settingMenuData = {menuName:"医生", menuFor: "doctor",
+  		subItems: [
+  {name: 'doctorAssignmentList', displayName:'医生的任务', icon:'sign',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -64,7 +72,7 @@ const renderItemOfList=(doctor,targetComponent)=>{
       <DescriptionList  key={doctor.id} size="small" col="4">
         <Description term="ID">{doctor.id}</Description> 
         <Description term="名称">{doctor.name}</Description> 
-        <Description term="更新时间">{ moment(doctor.updateTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="更新时间"><div>{ moment(doctor.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>

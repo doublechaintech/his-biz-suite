@@ -755,7 +755,7 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 
 
 
-	protected void checkParamsForAddingPeriod(HisUserContext userContext, String hospitalId, String name,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingPeriod(HisUserContext userContext, String hospitalId, String name, String code,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -765,17 +765,19 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 
 		
 		userContext.getChecker().checkNameOfPeriod(name);
+		
+		userContext.getChecker().checkCodeOfPeriod(code);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
 
 	
 	}
-	public  Hospital addPeriod(HisUserContext userContext, String hospitalId, String name, String [] tokensExpr) throws Exception
+	public  Hospital addPeriod(HisUserContext userContext, String hospitalId, String name, String code, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingPeriod(userContext,hospitalId,name,tokensExpr);
+		checkParamsForAddingPeriod(userContext,hospitalId,name, code,tokensExpr);
 		
-		Period period = createPeriod(userContext,name);
+		Period period = createPeriod(userContext,name, code);
 		
 		Hospital hospital = loadHospital(userContext, hospitalId, allTokens());
 		synchronized(hospital){ 
@@ -788,19 +790,20 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 			return present(userContext,hospital, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingPeriodProperties(HisUserContext userContext, String hospitalId,String id,String name,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingPeriodProperties(HisUserContext userContext, String hospitalId,String id,String name,String code,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfHospital(hospitalId);
 		userContext.getChecker().checkIdOfPeriod(id);
 		
 		userContext.getChecker().checkNameOfPeriod( name);
+		userContext.getChecker().checkCodeOfPeriod( code);
 
 		userContext.getChecker().throwExceptionIfHasErrors(HospitalManagerException.class);
 		
 	}
-	public  Hospital updatePeriodProperties(HisUserContext userContext, String hospitalId, String id,String name, String [] tokensExpr) throws Exception
+	public  Hospital updatePeriodProperties(HisUserContext userContext, String hospitalId, String id,String name,String code, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingPeriodProperties(userContext,hospitalId,id,name,tokensExpr);
+		checkParamsForUpdatingPeriodProperties(userContext,hospitalId,id,name,code,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -816,6 +819,7 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 		Period item = hospitalToUpdate.getPeriodList().first();
 		
 		item.updateName( name );
+		item.updateCode( code );
 
 		
 		//checkParamsForAddingPeriod(userContext,hospitalId,name, code, used,tokensExpr);
@@ -826,12 +830,13 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 	}
 	
 	
-	protected Period createPeriod(HisUserContext userContext, String name) throws Exception{
+	protected Period createPeriod(HisUserContext userContext, String name, String code) throws Exception{
 
 		Period period = new Period();
 		
 		
-		period.setName(name);
+		period.setName(name);		
+		period.setCode(code);
 	
 		
 		return period;
@@ -945,6 +950,10 @@ public class HospitalManagerImpl extends CustomHisCheckerManager implements Hosp
 
 		if(Period.NAME_PROPERTY.equals(property)){
 			userContext.getChecker().checkNameOfPeriod(parseString(newValueExpr));
+		}
+		
+		if(Period.CODE_PROPERTY.equals(property)){
+			userContext.getChecker().checkCodeOfPeriod(parseString(newValueExpr));
 		}
 		
 	

@@ -19,6 +19,7 @@ const testValues = {};
 /*
 const testValues = {
   name: '上午',
+  code: 'MORNING',
   hospitalId: 'H000001',
 }
 */
@@ -140,6 +141,16 @@ class PeriodAssociateForm extends Component {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
                     <Input size="large" placeholder="名称" />
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={12}>
+                <Form.Item label={fieldLabels.code} {...formItemLayout}>
+                  {getFieldDecorator('code', {
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large" placeholder="代码" disabled/>
                   )}
                 </Form.Item>
               </Col>

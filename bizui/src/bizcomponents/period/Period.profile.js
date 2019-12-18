@@ -55,8 +55,8 @@ class PeriodProfile extends Component {
     // eslint-disable-next-line max-len
     const  period = this.props.period;
     const { id,displayName, doctorScheduleCount } = period
-
-    const cardsData = {cardsName:"期",cardsFor: "period",cardsSource: period,
+    const  returnURL = `/period/${id}/dashboard`
+    const cardsData = {cardsName:"期",cardsFor: "period",cardsSource: period,displayName,returnURL,
   		subItems: [
      
       	],
@@ -70,8 +70,8 @@ class PeriodProfile extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
-        content={summaryOf(cardsData.cardsSource,this)}
+        title={internalRenderTitle(cardsData, this)}
+        content={summaryOf(cardsData.cardsSource, this)}
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}

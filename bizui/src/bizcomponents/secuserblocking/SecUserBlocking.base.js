@@ -37,6 +37,13 @@ const menuData = {menuName:"用户屏蔽", menuFor: "secUserBlocking",
   		],
 }
 
+
+const settingMenuData = {menuName:"用户屏蔽", menuFor: "secUserBlocking",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   who: '谁',
@@ -62,7 +69,7 @@ const renderItemOfList=(secUserBlocking,targetComponent)=>{
       <DescriptionList  key={secUserBlocking.id} size="small" col="4">
         <Description term="ID">{secUserBlocking.id}</Description> 
         <Description term="谁">{secUserBlocking.who}</Description> 
-        <Description term="块时间">{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="块时间"><div>{ moment(secUserBlocking.blockTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
         <Description term="评论">{secUserBlocking.comments}</Description> 
 	
         

@@ -55,8 +55,8 @@ class DoctorScheduleProfile extends Component {
     // eslint-disable-next-line max-len
     const  doctorSchedule = this.props.doctorSchedule;
     const { id,displayName,  } = doctorSchedule
-
-    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",cardsSource: doctorSchedule,
+    const  returnURL = `/doctorSchedule/${id}/dashboard`
+    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",cardsSource: doctorSchedule,displayName,returnURL,
   		subItems: [
      
       	],
@@ -70,8 +70,8 @@ class DoctorScheduleProfile extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
-        content={summaryOf(cardsData.cardsSource,this)}
+        title={internalRenderTitle(cardsData, this)}
+        content={summaryOf(cardsData.cardsSource, this)}
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}

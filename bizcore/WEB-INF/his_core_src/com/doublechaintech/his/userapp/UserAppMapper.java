@@ -62,10 +62,10 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
  		if( secUserId.isEmpty()){
  			return;
  		}
- 		SecUser lsecUser = userApp.getSecUser();
- 		if( lsecUser != null ){
+ 		SecUser secUser = userApp.getSecUser();
+ 		if( secUser != null ){
  			//if the root object 'userApp' already have the property, just set the id for it;
- 			lsecUser.setId(secUserId);
+ 			secUser.setId(secUserId);
  			
  			return;
  		}

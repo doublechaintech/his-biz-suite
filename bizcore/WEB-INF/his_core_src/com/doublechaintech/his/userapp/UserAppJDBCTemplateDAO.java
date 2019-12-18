@@ -20,10 +20,12 @@ import com.doublechaintech.his.MultipleAccessKey;
 import com.doublechaintech.his.HisUserContext;
 
 
+import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.objectaccess.ObjectAccess;
 import com.doublechaintech.his.listaccess.ListAccess;
 import com.doublechaintech.his.secuser.SecUser;
 
+import com.doublechaintech.his.quicklink.QuickLinkDAO;
 import com.doublechaintech.his.secuser.SecUserDAO;
 import com.doublechaintech.his.objectaccess.ObjectAccessDAO;
 import com.doublechaintech.his.listaccess.ListAccessDAO;
@@ -47,6 +49,25 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  	}
 
 
+			
+		
+	
+  	private  QuickLinkDAO  quickLinkDAO;
+ 	public void setQuickLinkDAO(QuickLinkDAO pQuickLinkDAO){
+ 	
+ 		if(pQuickLinkDAO == null){
+ 			throw new IllegalStateException("Do not try to set quickLinkDAO to null.");
+ 		}
+	 	this.quickLinkDAO = pQuickLinkDAO;
+ 	}
+ 	public QuickLinkDAO getQuickLinkDAO(){
+ 		if(this.quickLinkDAO == null){
+ 			throw new IllegalStateException("The quickLinkDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.quickLinkDAO;
+ 	}	
+ 	
 			
 		
 	
@@ -130,6 +151,13 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 		UserApp newUserApp = loadInternalUserApp(accessKey, options);
 		newUserApp.setVersion(0);
 		
+		
+ 		
+ 		if(isSaveQuickLinkListEnabled(options)){
+ 			for(QuickLink item: newUserApp.getQuickLinkList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
 		
  		
  		if(isSaveListAccessListEnabled(options)){
@@ -251,6 +279,20 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  
 		
 	
+	protected boolean isExtractQuickLinkListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,UserAppTokens.QUICK_LINK_LIST);
+ 	}
+ 	protected boolean isAnalyzeQuickLinkListEnabled(Map<String,Object> options){		 		
+ 		return UserAppTokens.of(options).analyzeQuickLinkListEnabled();
+ 	}
+	
+	protected boolean isSaveQuickLinkListEnabled(Map<String,Object> options){
+		return checkOptions(options, UserAppTokens.QUICK_LINK_LIST);
+		
+ 	}
+ 	
+		
+	
 	protected boolean isExtractListAccessListEnabled(Map<String,Object> options){		
  		return checkOptions(options,UserAppTokens.LIST_ACCESS_LIST);
  	}
@@ -309,6 +351,14 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  		}
  
 		
+		if(isExtractQuickLinkListEnabled(loadOptions)){
+	 		extractQuickLinkList(userApp, loadOptions);
+ 		}	
+ 		if(isAnalyzeQuickLinkListEnabled(loadOptions)){
+	 		analyzeQuickLinkList(userApp, loadOptions);
+ 		}
+ 		
+		
 		if(isExtractListAccessListEnabled(loadOptions)){
 	 		extractListAccessList(userApp, loadOptions);
  		}	
@@ -350,6 +400,56 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  	}
  		
  
+		
+	protected void enhanceQuickLinkList(SmartList<QuickLink> quickLinkList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected UserApp extractQuickLinkList(UserApp userApp, Map<String,Object> options){
+		
+		
+		if(userApp == null){
+			return null;
+		}
+		if(userApp.getId() == null){
+			return userApp;
+		}
+
+		
+		
+		SmartList<QuickLink> quickLinkList = getQuickLinkDAO().findQuickLinkByApp(userApp.getId(),options);
+		if(quickLinkList != null){
+			enhanceQuickLinkList(quickLinkList,options);
+			userApp.setQuickLinkList(quickLinkList);
+		}
+		
+		return userApp;
+	
+	}	
+	
+	protected UserApp analyzeQuickLinkList(UserApp userApp, Map<String,Object> options){
+		
+		
+		if(userApp == null){
+			return null;
+		}
+		if(userApp.getId() == null){
+			return userApp;
+		}
+
+		
+		
+		SmartList<QuickLink> quickLinkList = userApp.getQuickLinkList();
+		if(quickLinkList != null){
+			getQuickLinkDAO().analyzeQuickLinkByApp(quickLinkList, userApp.getId(), options);
+			
+		}
+		
+		return userApp;
+	
+	}	
+	
 		
 	protected void enhanceListAccessList(SmartList<ListAccess> listAccessList,Map<String,Object> options){
 		//extract multiple list from difference sources
@@ -678,6 +778,13 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  		}
  
 		
+		if(isSaveQuickLinkListEnabled(options)){
+	 		saveQuickLinkList(userApp, options);
+	 		//removeQuickLinkList(userApp, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		if(isSaveListAccessListEnabled(options)){
 	 		saveListAccessList(userApp, options);
 	 		//removeListAccessList(userApp, options);
@@ -719,6 +826,34 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  
 
 	
+	public UserApp planToRemoveQuickLinkList(UserApp userApp, String quickLinkIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(QuickLink.APP_PROPERTY, userApp.getId());
+		key.put(QuickLink.ID_PROPERTY, quickLinkIds);
+		
+		SmartList<QuickLink> externalQuickLinkList = getQuickLinkDAO().
+				findQuickLinkWithKey(key, options);
+		if(externalQuickLinkList == null){
+			return userApp;
+		}
+		if(externalQuickLinkList.isEmpty()){
+			return userApp;
+		}
+		
+		for(QuickLink quickLinkItem: externalQuickLinkList){
+
+			quickLinkItem.clearFromAll();
+		}
+		
+		
+		SmartList<QuickLink> quickLinkList = userApp.getQuickLinkList();		
+		quickLinkList.addAllToRemoveList(externalQuickLinkList);
+		return userApp;	
+	
+	}
+
+
 	public UserApp planToRemoveListAccessList(UserApp userApp, String listAccessIds[], Map<String,Object> options)throws Exception{
 	
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -776,6 +911,72 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 
 
 
+		
+	protected UserApp saveQuickLinkList(UserApp userApp, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<QuickLink> quickLinkList = userApp.getQuickLinkList();
+		if(quickLinkList == null){
+			//null list means nothing
+			return userApp;
+		}
+		SmartList<QuickLink> mergedUpdateQuickLinkList = new SmartList<QuickLink>();
+		
+		
+		mergedUpdateQuickLinkList.addAll(quickLinkList); 
+		if(quickLinkList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateQuickLinkList.addAll(quickLinkList.getToRemoveList());
+			quickLinkList.removeAll(quickLinkList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getQuickLinkDAO().saveQuickLinkList(mergedUpdateQuickLinkList,options);
+		
+		if(quickLinkList.getToRemoveList() != null){
+			quickLinkList.removeAll(quickLinkList.getToRemoveList());
+		}
+		
+		
+		return userApp;
+	
+	}
+	
+	protected UserApp removeQuickLinkList(UserApp userApp, Map<String,Object> options){
+	
+	
+		SmartList<QuickLink> quickLinkList = userApp.getQuickLinkList();
+		if(quickLinkList == null){
+			return userApp;
+		}	
+	
+		SmartList<QuickLink> toRemoveQuickLinkList = quickLinkList.getToRemoveList();
+		
+		if(toRemoveQuickLinkList == null){
+			return userApp;
+		}
+		if(toRemoveQuickLinkList.isEmpty()){
+			return userApp;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getQuickLinkDAO().removeQuickLinkList(toRemoveQuickLinkList,options);
+		
+		return userApp;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
 		
 	protected UserApp saveListAccessList(UserApp userApp, Map<String,Object> options){
 		
@@ -912,12 +1113,33 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 
 	public UserApp present(UserApp userApp,Map<String, Object> options){
 	
+		presentQuickLinkList(userApp,options);
 		presentListAccessList(userApp,options);
 		presentObjectAccessList(userApp,options);
 
 		return userApp;
 	
 	}
+		
+	//Using java8 feature to reduce the code significantly
+ 	protected UserApp presentQuickLinkList(
+			UserApp userApp,
+			Map<String, Object> options) {
+
+		SmartList<QuickLink> quickLinkList = userApp.getQuickLinkList();		
+				SmartList<QuickLink> newList= presentSubList(userApp.getId(),
+				quickLinkList,
+				options,
+				getQuickLinkDAO()::countQuickLinkByApp,
+				getQuickLinkDAO()::findQuickLinkByApp
+				);
+
+		
+		userApp.setQuickLinkList(newList);
+		
+
+		return userApp;
+	}			
 		
 	//Using java8 feature to reduce the code significantly
  	protected UserApp presentListAccessList(
@@ -961,6 +1183,12 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 		
 
 	
+    public SmartList<UserApp> requestCandidateUserAppForQuickLink(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, filterKey, pageNo, pageSize, getUserAppMapper());
+    }
+		
     public SmartList<UserApp> requestCandidateUserAppForListAccess(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
@@ -984,6 +1212,29 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 		this.enhanceListInternal(userAppList, this.getUserAppMapper());
 	}
 	
+	
+	// 需要一个加载引用我的对象的enhance方法:QuickLink的app的QuickLinkList
+	public SmartList<QuickLink> loadOurQuickLinkList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{
+		if (us == null || us.isEmpty()){
+			return new SmartList<>();
+		}
+		Set<String> ids = us.stream().map(it->it.getId()).collect(Collectors.toSet());
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(QuickLink.APP_PROPERTY, ids.toArray(new String[ids.size()]));
+		SmartList<QuickLink> loadedObjs = userContext.getDAOGroup().getQuickLinkDAO().findQuickLinkWithKey(key, options);
+		Map<String, List<QuickLink>> loadedMap = loadedObjs.stream().collect(Collectors.groupingBy(it->it.getApp().getId()));
+		us.forEach(it->{
+			String id = it.getId();
+			List<QuickLink> loadedList = loadedMap.get(id);
+			if (loadedList == null || loadedList.isEmpty()) {
+				return;
+			}
+			SmartList<QuickLink> loadedSmartList = new SmartList<>();
+			loadedSmartList.addAll(loadedList);
+			it.setQuickLinkList(loadedSmartList);
+		});
+		return loadedObjs;
+	}
 	
 	// 需要一个加载引用我的对象的enhance方法:ListAccess的app的ListAccessList
 	public SmartList<ListAccess> loadOurListAccessList(HisUserContext userContext, List<UserApp> us, Map<String,Object> options) throws Exception{

@@ -16,17 +16,17 @@ public class UserWhiteListTable{
 	
 
 	//only this package can use this, so the scope is default, not public, not private either nor protected
-	static final String TABLE_NAME="user_white_list_data";
+	public static final String TABLE_NAME="user_white_list_data";
 	static final String COLUMN_ID = "id";
 	static final String COLUMN_USER_IDENTITY = "user_identity";
 	static final String COLUMN_USER_SPECIAL_FUNCTIONS = "user_special_functions";
 	static final String COLUMN_DOMAIN = "domain";
 	static final String COLUMN_VERSION = "version";
  
-	static final String []ALL_CLOUMNS = {COLUMN_ID, 
+	public static final String []ALL_CLOUMNS = {COLUMN_ID, 
 		COLUMN_USER_IDENTITY, COLUMN_USER_SPECIAL_FUNCTIONS, COLUMN_DOMAIN, 
 		COLUMN_VERSION};
-	static final String []NORMAL_CLOUMNS = {
+	public static final String []NORMAL_CLOUMNS = {
 		COLUMN_USER_IDENTITY, COLUMN_USER_SPECIAL_FUNCTIONS, COLUMN_DOMAIN
 		};
 	

@@ -55,8 +55,8 @@ class HospitalProfile extends Component {
     // eslint-disable-next-line max-len
     const  hospital = this.props.hospital;
     const { id,displayName, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = hospital
-
-    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,
+    const  returnURL = `/hospital/${id}/dashboard`
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,displayName,returnURL,
   		subItems: [
 {name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType',  renderItem: GlobalComponents.ExpenseTypeBase.renderItemOfList},
 {name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period',  renderItem: GlobalComponents.PeriodBase.renderItemOfList},
@@ -74,8 +74,8 @@ class HospitalProfile extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
-        content={summaryOf(cardsData.cardsSource,this)}
+        title={internalRenderTitle(cardsData, this)}
+        content={summaryOf(cardsData.cardsSource, this)}
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}

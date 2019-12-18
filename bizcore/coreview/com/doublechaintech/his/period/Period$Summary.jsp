@@ -40,6 +40,10 @@
 <span class="summary-label">${userContext.localeMap['period.name']}</span>
 <span >${result.name}</span>
 </div>
+<div class="col-xs-12 col-md-3 summary-section">
+<span class="summary-label">${userContext.localeMap['period.code']}</span>
+<span >${result.code}</span>
+</div>
 
 	</div>
 	

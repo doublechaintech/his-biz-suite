@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.function.Consumer;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 import com.terapico.caf.form.ImageInfo;
 import com.terapico.utils.TextUtil;
 
+import com.doublechaintech.his.period.Period;
 
 public class HisBaseUtils {
 	protected static final Map<String, Object> emptyOptions = new HashMap<>();
@@ -217,6 +221,46 @@ public class HisBaseUtils {
 	public static String getRequestAppType(HisUserContext userContext) {
 		return userContext.getRequestHeader("x-app-type");
 	}
+	private static final NumberFormat cashFormat = new DecimalFormat("#,##0.00");
+	private static final NumberFormat exRateFormat = new DecimalFormat("#,##0.00#");
+	public static String formatCash(BigDecimal amount) {
+		return cashFormat.format(amount)+"元";
+	}
+	public static String formatExchangeRate(BigDecimal amount) {
+		return exRateFormat.format(amount);
+	}
+
+
+	public static Period getPeriod(HisUserContext userContext, String code) throws Exception {
+		String key = "enum:" + Period.INTERNAL_TYPE + ":" + code;
+		Period data = (Period) userContext.getFromContextLocalStorage(key);
+		if (data != null) {
+			return data;
+		}
+		data = userContext.getDAOGroup().getPeriodDAO().loadByCode(code, emptyOptions);
+		userContext.putIntoContextLocalStorage(key, data);
+		return data;
+	}
+
+	public static <T> T loadBaseEntityById(HisUserContext ctx, String type, String id) throws Exception {
+		return loadBaseEntityById(ctx, type, id, null);
+	}
+	public static <T> T loadBaseEntityById(HisUserContext ctx, String type, String id, Consumer<T> enhancer) throws Exception {
+		String key = type+":"+id;
+		BaseEntity cachedValue = (BaseEntity) ctx.getFromContextLocalStorage(key);
+		if (cachedValue != null){
+			if (cachedValue.getInternalType().equals(type) && cachedValue.getId().equals(id)) {
+				return (T) cachedValue;
+			}
+		}
+		T enObj = (T) ctx.getDAOGroup().loadBasicData(type, id);
+		if (enhancer != null) {
+			enhancer.accept(enObj);
+		}
+		ctx.putIntoContextLocalStorage(key, enObj);
+		return enObj;
+	}
+	
 
 }
 

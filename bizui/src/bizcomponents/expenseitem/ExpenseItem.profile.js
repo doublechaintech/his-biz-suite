@@ -55,8 +55,8 @@ class ExpenseItemProfile extends Component {
     // eslint-disable-next-line max-len
     const  expenseItem = this.props.expenseItem;
     const { id,displayName,  } = expenseItem
-
-    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",cardsSource: expenseItem,
+    const  returnURL = `/expenseItem/${id}/dashboard`
+    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",cardsSource: expenseItem,displayName,returnURL,
   		subItems: [
      
       	],
@@ -70,8 +70,8 @@ class ExpenseItemProfile extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
-        content={summaryOf(cardsData.cardsSource,this)}
+        title={internalRenderTitle(cardsData, this)}
+        content={summaryOf(cardsData.cardsSource, this)}
         wrapperClassName={styles.advancedForm}
       >
       {renderExtraHeader(cardsData.cardsSource)}

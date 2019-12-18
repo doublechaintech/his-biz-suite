@@ -72,11 +72,11 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 		GraphService graphService = ((HisUserContextImpl)userContext).getGraphService();
 		if (graphService instanceof GraphServiceImpl) {
 			((GraphServiceImpl) graphService).addNode(getSystemInternalName(), sourceEntity.getInternalType(), sourceEntity.getId());
-			List<BaseEntity> entityList = new SmartList<BaseEntity>();
-			sourceEntity.collectRefercences(sourceEntity, entityList);
-			for (BaseEntity entity : entityList) {
-				((GraphServiceImpl) graphService).addEdge(getSystemInternalName(), sourceEntity.getInternalType() + "_" + entity.getInternalType(), sourceEntity.getInternalType(), entity.getInternalType(), sourceEntity.getId(), entity.getId());
-			}
+			//List<BaseEntity> entityList = new SmartList<BaseEntity>();
+			//sourceEntity.collectRefercences(sourceEntity, entityList);
+			//for (BaseEntity entity : entityList) {
+			//	((GraphServiceImpl) graphService).addEdge(getSystemInternalName(), sourceEntity.getInternalType() + "_" + entity.getInternalType(), sourceEntity.getInternalType(), entity.getInternalType(), sourceEntity.getId(), entity.getId());
+			//}
 		}
 		
 		

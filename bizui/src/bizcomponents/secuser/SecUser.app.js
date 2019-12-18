@@ -145,15 +145,7 @@ class SecUserBizApp extends React.PureComponent {
         )}
         )}
 
-       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
-       			<Menu.Item key="profile">
-               		<Link to={`/secUser/${this.props.secUser.id}/permission`}><Icon type="safety-certificate" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
-             	</Menu.Item>
-             	<Menu.Item key="permission">
-               		<Link to={`/secUser/${this.props.secUser.id}/profile`}><Icon type="cluster" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
-             	</Menu.Item> 
-      
-        	</SubMenu>
+       		
         
            </Menu>
     )
@@ -172,6 +164,7 @@ class SecUserBizApp extends React.PureComponent {
       data: state._secUser.userAppList,
       metaInfo: state._secUser.userAppListMetaInfo,
       count: state._secUser.userAppCount,
+      returnURL: `/secUser/${state._secUser.id}/dashboard`,
       currentPage: state._secUser.userAppCurrentPageNumber,
       searchFormParameters: state._secUser.userAppSearchFormParameters,
       searchParameters: {...state._secUser.searchParameters},
@@ -221,6 +214,7 @@ class SecUserBizApp extends React.PureComponent {
       data: state._secUser.loginHistoryList,
       metaInfo: state._secUser.loginHistoryListMetaInfo,
       count: state._secUser.loginHistoryCount,
+      returnURL: `/secUser/${state._secUser.id}/dashboard`,
       currentPage: state._secUser.loginHistoryCurrentPageNumber,
       searchFormParameters: state._secUser.loginHistorySearchFormParameters,
       searchParameters: {...state._secUser.searchParameters},

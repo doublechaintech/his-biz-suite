@@ -84,10 +84,10 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
  		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Hospital lhospital = expenseType.getHospital();
- 		if( lhospital != null ){
+ 		Hospital hospital = expenseType.getHospital();
+ 		if( hospital != null ){
  			//if the root object 'expenseType' already have the property, just set the id for it;
- 			lhospital.setId(hospitalId);
+ 			hospital.setId(hospitalId);
  			
  			return;
  		}

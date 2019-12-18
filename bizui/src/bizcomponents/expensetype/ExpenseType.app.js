@@ -145,15 +145,7 @@ class ExpenseTypeBizApp extends React.PureComponent {
         )}
         )}
 
-       		<SubMenu key="sub4" title={<span><Icon type="setting" /><span>{appLocaleName(userContext,"Setting")}</span></span>} >
-       			<Menu.Item key="profile">
-               		<Link to={`/expenseType/${this.props.expenseType.id}/permission`}><Icon type="safety-certificate" /><span>{appLocaleName(userContext,"Permission")}</span></Link>
-             	</Menu.Item>
-             	<Menu.Item key="permission">
-               		<Link to={`/expenseType/${this.props.expenseType.id}/profile`}><Icon type="cluster" /><span>{appLocaleName(userContext,"Profile")}</span></Link>
-             	</Menu.Item> 
-      
-        	</SubMenu>
+       		
         
            </Menu>
     )
@@ -172,6 +164,7 @@ class ExpenseTypeBizApp extends React.PureComponent {
       data: state._expenseType.expenseItemList,
       metaInfo: state._expenseType.expenseItemListMetaInfo,
       count: state._expenseType.expenseItemCount,
+      returnURL: `/expenseType/${state._expenseType.id}/dashboard`,
       currentPage: state._expenseType.expenseItemCurrentPageNumber,
       searchFormParameters: state._expenseType.expenseItemSearchFormParameters,
       searchParameters: {...state._expenseType.searchParameters},
@@ -221,6 +214,7 @@ class ExpenseTypeBizApp extends React.PureComponent {
       data: state._expenseType.doctorScheduleList,
       metaInfo: state._expenseType.doctorScheduleListMetaInfo,
       count: state._expenseType.doctorScheduleCount,
+      returnURL: `/expenseType/${state._expenseType.id}/dashboard`,
       currentPage: state._expenseType.doctorScheduleCurrentPageNumber,
       searchFormParameters: state._expenseType.doctorScheduleSearchFormParameters,
       searchParameters: {...state._expenseType.searchParameters},

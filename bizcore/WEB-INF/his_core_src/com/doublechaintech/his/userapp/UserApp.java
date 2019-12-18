@@ -12,6 +12,7 @@ import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.objectaccess.ObjectAccess;
 import com.doublechaintech.his.listaccess.ListAccess;
 import com.doublechaintech.his.secuser.SecUser;
@@ -31,6 +32,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	public static final String LOCATION_PROPERTY              = "location"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
+	public static final String QUICK_LINK_LIST                          = "quickLinkList"     ;
 	public static final String LIST_ACCESS_LIST                         = "listAccessList"    ;
 	public static final String OBJECT_ACCESS_LIST                       = "objectAccessList"  ;
 
@@ -65,6 +67,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+	protected		SmartList<QuickLink>	mQuickLinkList      ;
 	protected		SmartList<ListAccess>	mListAccessList     ;
 	protected		SmartList<ObjectAccess>	mObjectAccessList   ;
 	
@@ -72,6 +75,16 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	public 	UserApp(){
 		// lazy load for all the properties
 	}
+	public 	static UserApp withId(String id){
+		UserApp userApp = new UserApp();
+		userApp.setId(id);
+		// userApp.setVersion(Integer.MAX_VALUE);
+		return userApp;
+	}
+	public 	static UserApp refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setSecUser( null );
@@ -90,6 +103,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		setObjectId(objectId);
 		setLocation(location);
 
+		this.mQuickLinkList = new SmartList<QuickLink>();
 		this.mListAccessList = new SmartList<ListAccess>();
 		this.mObjectAccessList = new SmartList<ObjectAccess>();	
 	}
@@ -257,6 +271,10 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		}
 		if(LOCATION_PROPERTY.equals(property)){
 			return getLocation();
+		}
+		if(QUICK_LINK_LIST.equals(property)){
+			List<BaseEntity> list = getQuickLinkList().stream().map(item->item).collect(Collectors.toList());
+			return list;
 		}
 		if(LIST_ACCESS_LIST.equals(property)){
 			List<BaseEntity> list = getListAccessList().stream().map(item->item).collect(Collectors.toList());
@@ -447,6 +465,113 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	}
 	
 	
+
+	public  SmartList<QuickLink> getQuickLinkList(){
+		if(this.mQuickLinkList == null){
+			this.mQuickLinkList = new SmartList<QuickLink>();
+			this.mQuickLinkList.setListInternalName (QUICK_LINK_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mQuickLinkList;	
+	}
+	public  void setQuickLinkList(SmartList<QuickLink> quickLinkList){
+		for( QuickLink quickLink:quickLinkList){
+			quickLink.setApp(this);
+		}
+
+		this.mQuickLinkList = quickLinkList;
+		this.mQuickLinkList.setListInternalName (QUICK_LINK_LIST );
+		
+	}
+	
+	public  void addQuickLink(QuickLink quickLink){
+		quickLink.setApp(this);
+		getQuickLinkList().add(quickLink);
+	}
+	public  void addQuickLinkList(SmartList<QuickLink> quickLinkList){
+		for( QuickLink quickLink:quickLinkList){
+			quickLink.setApp(this);
+		}
+		getQuickLinkList().addAll(quickLinkList);
+	}
+	public  void mergeQuickLinkList(SmartList<QuickLink> quickLinkList){
+		if(quickLinkList==null){
+			return;
+		}
+		if(quickLinkList.isEmpty()){
+			return;
+		}
+		addQuickLinkList( quickLinkList );
+		
+	}
+	public  QuickLink removeQuickLink(QuickLink quickLinkIndex){
+		
+		int index = getQuickLinkList().indexOf(quickLinkIndex);
+        if(index < 0){
+        	String message = "QuickLink("+quickLinkIndex.getId()+") with version='"+quickLinkIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        QuickLink quickLink = getQuickLinkList().get(index);        
+        // quickLink.clearApp(); //disconnect with App
+        quickLink.clearFromAll(); //disconnect with App
+		
+		boolean result = getQuickLinkList().planToRemove(quickLink);
+        if(!result){
+        	String message = "QuickLink("+quickLinkIndex.getId()+") with version='"+quickLinkIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return quickLink;
+        
+	
+	}
+	//断舍离
+	public  void breakWithQuickLink(QuickLink quickLink){
+		
+		if(quickLink == null){
+			return;
+		}
+		quickLink.setApp(null);
+		//getQuickLinkList().remove();
+	
+	}
+	
+	public  boolean hasQuickLink(QuickLink quickLink){
+	
+		return getQuickLinkList().contains(quickLink);
+  
+	}
+	
+	public void copyQuickLinkFrom(QuickLink quickLink) {
+
+		QuickLink quickLinkInList = findTheQuickLink(quickLink);
+		QuickLink newQuickLink = new QuickLink();
+		quickLinkInList.copyTo(newQuickLink);
+		newQuickLink.setVersion(0);//will trigger copy
+		getQuickLinkList().add(newQuickLink);
+		addItemToFlexiableObject(COPIED_CHILD, newQuickLink);
+	}
+	
+	public  QuickLink findTheQuickLink(QuickLink quickLink){
+		
+		int index =  getQuickLinkList().indexOf(quickLink);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "QuickLink("+quickLink.getId()+") with version='"+quickLink.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getQuickLinkList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpQuickLinkList(){
+		getQuickLinkList().clear();
+	}
+	
+	
+	
+
 
 	public  SmartList<ListAccess> getListAccessList(){
 		if(this.mListAccessList == null){
@@ -672,6 +797,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	public List<BaseEntity>  collectRefercencesFromLists(String internalType){
 		
 		List<BaseEntity> entityList = new ArrayList<BaseEntity>();
+		collectFromList(this, entityList, getQuickLinkList(), internalType);
 		collectFromList(this, entityList, getListAccessList(), internalType);
 		collectFromList(this, entityList, getObjectAccessList(), internalType);
 
@@ -681,6 +807,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	public  List<SmartList<?>> getAllRelatedLists() {
 		List<SmartList<?>> listOfList = new ArrayList<SmartList<?>>();
 		
+		listOfList.add( getQuickLinkList());
 		listOfList.add( getListAccessList());
 		listOfList.add( getObjectAccessList());
 			
@@ -702,6 +829,11 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, OBJECT_ID_PROPERTY, getObjectId());
 		appendKeyValuePair(result, LOCATION_PROPERTY, getLocation());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
+		appendKeyValuePair(result, QUICK_LINK_LIST, getQuickLinkList());
+		if(!getQuickLinkList().isEmpty()){
+			appendKeyValuePair(result, "quickLinkCount", getQuickLinkList().getTotalCount());
+			appendKeyValuePair(result, "quickLinkCurrentPageNumber", getQuickLinkList().getCurrentPageNumber());
+		}
 		appendKeyValuePair(result, LIST_ACCESS_LIST, getListAccessList());
 		if(!getListAccessList().isEmpty()){
 			appendKeyValuePair(result, "listAccessCount", getListAccessList().getTotalCount());
@@ -736,6 +868,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 			dest.setObjectId(getObjectId());
 			dest.setLocation(getLocation());
 			dest.setVersion(getVersion());
+			dest.setQuickLinkList(getQuickLinkList());
 			dest.setListAccessList(getListAccessList());
 			dest.setObjectAccessList(getObjectAccessList());
 
@@ -761,6 +894,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 			dest.mergeObjectId(getObjectId());
 			dest.mergeLocation(getLocation());
 			dest.mergeVersion(getVersion());
+			dest.mergeQuickLinkList(getQuickLinkList());
 			dest.mergeListAccessList(getListAccessList());
 			dest.mergeObjectAccessList(getObjectAccessList());
 

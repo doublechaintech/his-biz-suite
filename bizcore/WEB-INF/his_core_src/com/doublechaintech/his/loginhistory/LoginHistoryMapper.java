@@ -82,10 +82,10 @@ public class LoginHistoryMapper extends BaseRowMapper<LoginHistory>{
  		if( secUserId.isEmpty()){
  			return;
  		}
- 		SecUser lsecUser = loginHistory.getSecUser();
- 		if( lsecUser != null ){
+ 		SecUser secUser = loginHistory.getSecUser();
+ 		if( secUser != null ){
  			//if the root object 'loginHistory' already have the property, just set the id for it;
- 			lsecUser.setId(secUserId);
+ 			secUser.setId(secUserId);
  			
  			return;
  		}

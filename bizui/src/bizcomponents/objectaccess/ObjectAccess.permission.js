@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (objectAccess,targetComponent) =>{
     const userContext = null
 	return (
@@ -63,9 +67,10 @@ class ObjectAccessPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  objectAccess = this.props.objectAccess;
+    const  objectAccess = this.props.objectAccess
     const { id,displayName,  } = objectAccess
-    const cardsData = {cardsName:"对象访问",cardsFor: "objectAccess",cardsSource: objectAccess,
+    const  returnURL = `/objectAccess/${id}/dashboard`
+    const cardsData = {cardsName:"对象访问",cardsFor: "objectAccess",cardsSource: objectAccess,displayName,returnURL,
   		subItems: [
     
       	],
@@ -76,7 +81,7 @@ class ObjectAccessPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

@@ -19,6 +19,7 @@
 	
 	<li><span>${userContext.localeMap['period.id']}</span> ${period.id}</li>
 <li><span>${userContext.localeMap['period.name']}</span> ${period.name}</li>
+<li><span>${userContext.localeMap['period.code']}</span> ${period.code}</li>
 
 	
 	</ul>

@@ -48,6 +48,20 @@ public class PeriodForm extends BaseForm {
 	}
 
 
+	public PeriodForm codeField(String parameterName, String initValue){
+		FormField field = codeFromPeriod(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PeriodForm codeField(String initValue){
+		return codeField("code",initValue);
+	}
+	public PeriodForm codeField(){
+		return codeField("code","");
+	}
+
+
 	public PeriodForm hospitalIdField(String parameterName, String initValue){
 		FormField field = hospitalIdFromPeriod(parameterName, initValue);		
 		this.addFormField(field);

@@ -11,6 +11,9 @@ import com.terapico.caf.BlobObject;
 import com.terapico.caf.viewcomponent.ButtonViewComponent;
 import com.terapico.caf.viewcomponent.FilterTabsViewComponent;
 import com.terapico.caf.viewcomponent.PopupViewComponent;
+
+// 不包含支付相关的内容
+
 import com.terapico.utils.TextUtil;
 import com.doublechaintech.his.secuser.SecUser;
 
@@ -41,7 +44,7 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 	protected String assignmentId;
 	protected BaseHisFormProcessor inputFormData;
 	protected BaseHisFormProcessor outputFormData;
-	
+
 	public void clearFormResubmitFlag() {
 		removeFromCache(getPostMd5Key(this));
 	}
@@ -286,6 +289,7 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 		}
 		super.sendMessage(dest, fromWho, template, parameters);
 	}
+	
 	// 这个对象仅用于在开发环境中, 用cookie来模拟react-client的 JWT header. 因为开发环境使用的是普通的浏览器,不能在A
 	// href的header中设置值.
 	protected Cookie[] cookies;

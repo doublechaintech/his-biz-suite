@@ -37,6 +37,14 @@ const menuData = {menuName:"费用类型", menuFor: "expenseType",
   		],
 }
 
+
+const settingMenuData = {menuName:"费用类型", menuFor: "expenseType",
+  		subItems: [
+  {name: 'expenseItemList', displayName:'费用项目', icon:'pen',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -70,7 +78,7 @@ const renderItemOfList=(expenseType,targetComponent)=>{
         <Description term="名称">{expenseType.name}</Description> 
         <Description term="辅助识字课">{expenseType.helperChars}</Description> 
         <Description term="状态">{expenseType.status}</Description> 
-        <Description term="更新时间">{ moment(expenseType.updateTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="更新时间"><div>{ moment(expenseType.updateTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
 	
         
       </DescriptionList>

@@ -23,7 +23,11 @@ const {defaultRenderExtraHeader}= DashboardTool
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const internalRenderTitle = (cardsData,targetComponent) =>{
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
+}
 const internalSummaryOf = (hospital,targetComponent) =>{
     const userContext = null
 	return (
@@ -55,9 +59,10 @@ class HospitalPermission extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const  hospital = this.props.hospital;
+    const  hospital = this.props.hospital
     const { id,displayName, expenseTypeCount, periodCount, expenseItemCount, doctorCount, departmentCount, doctorScheduleCount } = hospital
-    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,
+    const  returnURL = `/hospital/${id}/dashboard`
+    const cardsData = {cardsName:"医院",cardsFor: "hospital",cardsSource: hospital,displayName,returnURL,
   		subItems: [
 {name: 'expenseTypeList', displayName:'费用类型',type:'expenseType',count:expenseTypeCount,addFunction: true, role: 'expenseType', data: hospital.expenseTypeList},
 {name: 'periodList', displayName:'期',type:'period',count:periodCount,addFunction: false, role: 'period', data: hospital.periodList},
@@ -72,7 +77,7 @@ class HospitalPermission extends Component {
     return (
 
       <PageHeaderLayout
-        title={`${cardsData.cardsName}: ${displayName}`}
+        title={internalRenderTitle(cardsData,this)}
         content={summaryOf(cardsData.cardsSource,this)}
         wrapperClassName={styles.advancedForm}
       >

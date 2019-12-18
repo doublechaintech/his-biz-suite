@@ -36,6 +36,13 @@ const menuData = {menuName:"对象访问", menuFor: "objectAccess",
   		],
 }
 
+
+const settingMenuData = {menuName:"对象访问", menuFor: "objectAccess",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   name: '名称',
@@ -89,8 +96,8 @@ const renderItemOfList=(objectAccess,targetComponent)=>{
         <Description term="列表7">{objectAccess.list7}</Description> 
         <Description term="列表8">{objectAccess.list8}</Description> 
         <Description term="列表9">{objectAccess.list9}</Description> 
-        <Description term="应用程序">{objectAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${objectAccess.app.displayName}(${objectAccess.app.id})`}
-        </Description>
+        <Description term="应用程序"><div>{objectAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${objectAccess.app.displayName}(${objectAccess.app.id})`}
+        </div></Description>
 	
         
       </DescriptionList>

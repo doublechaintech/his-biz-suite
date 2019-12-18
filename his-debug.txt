@@ -17,6 +17,7 @@ Version|版本
 Period|期
 Id|ID
 Name|名称
+Code|代码
 Hospital|医院
 Version|版本
 Expense Item|费用项目
@@ -105,6 +106,15 @@ Object Type|访问对象类型
 Object Id|对象ID
 Location|位置
 Version|版本
+Quick Link|快速链接
+Id|ID
+Name|名称
+Icon|图标
+Image Path|图片路径
+Link Target|链接的目标
+Create Time|创建时间
+App|应用程序
+Version|版本
 List Access|访问列表
 Id|ID
 Name|名称
@@ -184,6 +194,17 @@ Level|水平
 Url|url
 Form|形式
 Version|版本
+Candidate Container|候选人容器
+Id|ID
+Name|名称
+Version|版本
+Candidate Element|候选人元素
+Id|ID
+Name|名称
+Type|类型
+Image|图片
+Container|容器
+Version|版本
 Transfer to Another Hospital|转移到医院
 Transfer to Another Hospital|转移到医院
 Transfer to Another Expense Type|转入费用类
@@ -203,9 +224,11 @@ Transfer to Another Block|转移到阻塞
 Transfer to Another Sec User|转移给Sec用户
 Transfer to Another App|转移到应用程序
 Transfer to Another App|转移到应用程序
+Transfer to Another App|转移到应用程序
 Transfer to Another Sec User|转移给Sec用户
 Transfer to Another Form|转移到形式
 Transfer to Another Form|转移到形式
 Transfer to Another Form|转移到形式
 Transfer to Another Form|转移到形式
+Transfer to Another Container|转移到容器
 

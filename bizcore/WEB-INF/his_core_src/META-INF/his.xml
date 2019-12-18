@@ -12,9 +12,9 @@
 	
 	<!-- dbcp 2.6 https://commons.apache.org/proper/commons-dbcp/configuration.html -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-	  <property name="poolName" value="mercatus_connection_pool" />
+	  <property name="poolName" value="his_connection_pool" />
 	  <property name="dataSourceClassName" value="${app.database.dataSourceClassName}"/>
-	  <property name="maximumPoolSize" value="50" />
+	  <property name="maximumPoolSize" value="10" />
 	  <property name="maxLifetime" value="60000" />
 	  <property name="idleTimeout" value="30000" />
 	  <property name="dataSourceProperties">
@@ -144,12 +144,20 @@
 	
 	<bean id="userAppDAOBase" class="com.doublechaintech.his.userapp.UserAppJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" /><property name="secUserDAO" ref="secUserDAO" />
+		<property name="quickLinkDAO" ref="quickLinkDAO" />
+		
 		<property name="listAccessDAO" ref="listAccessDAO" />
 		
 		<property name="objectAccessDAO" ref="objectAccessDAO" />
 		
 	</bean>
 	<bean id="userAppDAO" parent="userAppDAOBase"></bean>	
+	
+	
+	<bean id="quickLinkDAOBase" class="com.doublechaintech.his.quicklink.QuickLinkJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="userAppDAO" ref="userAppDAO" />
+	</bean>
+	<bean id="quickLinkDAO" parent="quickLinkDAOBase"></bean>	
 	
 	
 	<bean id="listAccessDAOBase" class="com.doublechaintech.his.listaccess.ListAccessJDBCTemplateDAO">
@@ -207,6 +215,20 @@
 	</bean>
 	<bean id="formActionDAO" parent="formActionDAOBase"></bean>	
 	
+	
+	<bean id="candidateContainerDAOBase" class="com.doublechaintech.his.candidatecontainer.CandidateContainerJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="candidateElementDAO" ref="candidateElementDAO" />
+		
+	</bean>
+	<bean id="candidateContainerDAO" parent="candidateContainerDAOBase"></bean>	
+	
+	
+	<bean id="candidateElementDAOBase" class="com.doublechaintech.his.candidateelement.CandidateElementJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="candidateContainerDAO" ref="candidateContainerDAO" />
+	</bean>
+	<bean id="candidateElementDAO" parent="candidateElementDAOBase"></bean>	
+	
 
 
 	<bean id="DAOGroupBase" class="com.doublechaintech.his.DAOGroup">
@@ -223,6 +245,7 @@
 		<property name="secUserDAO" ref="secUserDAO"/>
 		<property name="secUserBlockingDAO" ref="secUserBlockingDAO"/>
 		<property name="userAppDAO" ref="userAppDAO"/>
+		<property name="quickLinkDAO" ref="quickLinkDAO"/>
 		<property name="listAccessDAO" ref="listAccessDAO"/>
 		<property name="objectAccessDAO" ref="objectAccessDAO"/>
 		<property name="loginHistoryDAO" ref="loginHistoryDAO"/>
@@ -231,6 +254,8 @@
 		<property name="formFieldMessageDAO" ref="formFieldMessageDAO"/>
 		<property name="formFieldDAO" ref="formFieldDAO"/>
 		<property name="formActionDAO" ref="formActionDAO"/>
+		<property name="candidateContainerDAO" ref="candidateContainerDAO"/>
+		<property name="candidateElementDAO" ref="candidateElementDAO"/>
 	</bean>
 	<bean id="DAOGroup" parent="DAOGroupBase"></bean>
 </beans>

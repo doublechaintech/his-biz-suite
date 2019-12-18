@@ -186,10 +186,10 @@ public class ObjectAccessMapper extends BaseRowMapper<ObjectAccess>{
  		if( userAppId.isEmpty()){
  			return;
  		}
- 		UserApp luserApp = objectAccess.getApp();
- 		if( luserApp != null ){
+ 		UserApp userApp = objectAccess.getApp();
+ 		if( userApp != null ){
  			//if the root object 'objectAccess' already have the property, just set the id for it;
- 			luserApp.setId(userAppId);
+ 			userApp.setId(userAppId);
  			
  			return;
  		}

@@ -58,6 +58,16 @@ public class SecUserBlocking extends BaseEntity implements  java.io.Serializable
 	public 	SecUserBlocking(){
 		// lazy load for all the properties
 	}
+	public 	static SecUserBlocking withId(String id){
+		SecUserBlocking secUserBlocking = new SecUserBlocking();
+		secUserBlocking.setId(id);
+		// secUserBlocking.setVersion(Integer.MAX_VALUE);
+		return secUserBlocking;
+	}
+	public 	static SecUserBlocking refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 

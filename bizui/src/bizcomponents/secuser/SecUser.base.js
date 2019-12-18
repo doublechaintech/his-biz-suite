@@ -38,6 +38,13 @@ const menuData = {menuName:"安全用户", menuFor: "secUser",
   		],
 }
 
+
+const settingMenuData = {menuName:"安全用户", menuFor: "secUser",
+  		subItems: [
+  
+  		],
+}
+
 const fieldLabels = {
   id: 'ID',
   login: '登录',
@@ -89,9 +96,9 @@ const renderItemOfList=(secUser,targetComponent)=>{
         <Description term="微信openid">{secUser.weixinOpenid}</Description> 
         <Description term="微信Appid">{secUser.weixinAppid}</Description> 
         <Description term="访问令牌">{secUser.accessToken}</Description> 
-        <Description term="验证码">{secUser.verificationCode}</Description> 
-        <Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
-        <Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
+        <Description term="验证码"><div style={{"color":"red"}}>{secUser.verificationCode}</div></Description> 
+        <Description term="验证码过期"><div>{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD HH:mm')}</div></Description> 
+        <Description term="最后登录时间"><div>{ moment(secUser.lastLoginTime).format('YYYY-MM-DD HH:mm')}</div></Description> 
         <Description term="当前状态">{secUser.currentStatus}</Description> 
 	
         

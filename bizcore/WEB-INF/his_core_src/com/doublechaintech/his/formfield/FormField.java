@@ -82,6 +82,16 @@ public class FormField extends BaseEntity implements  java.io.Serializable{
 	public 	FormField(){
 		// lazy load for all the properties
 	}
+	public 	static FormField withId(String id){
+		FormField formField = new FormField();
+		formField.setId(id);
+		// formField.setVersion(Integer.MAX_VALUE);
+		return formField;
+	}
+	public 	static FormField refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setForm( null );

@@ -61,6 +61,16 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 	public 	ExpenseItem(){
 		// lazy load for all the properties
 	}
+	public 	static ExpenseItem withId(String id){
+		ExpenseItem expenseItem = new ExpenseItem();
+		expenseItem.setId(id);
+		// expenseItem.setVersion(Integer.MAX_VALUE);
+		return expenseItem;
+	}
+	public 	static ExpenseItem refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setExpenseType( null );

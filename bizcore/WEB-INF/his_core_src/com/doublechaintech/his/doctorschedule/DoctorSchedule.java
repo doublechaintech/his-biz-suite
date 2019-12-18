@@ -76,6 +76,16 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 	public 	DoctorSchedule(){
 		// lazy load for all the properties
 	}
+	public 	static DoctorSchedule withId(String id){
+		DoctorSchedule doctorSchedule = new DoctorSchedule();
+		doctorSchedule.setId(id);
+		// doctorSchedule.setVersion(Integer.MAX_VALUE);
+		return doctorSchedule;
+	}
+	public 	static DoctorSchedule refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setDoctor( null );

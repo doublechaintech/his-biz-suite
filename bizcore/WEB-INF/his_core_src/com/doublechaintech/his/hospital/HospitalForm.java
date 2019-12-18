@@ -208,6 +208,20 @@ public class HospitalForm extends BaseForm {
 	}
 
 
+	public HospitalForm codeFieldForPeriod(String parameterName, String initValue){
+		FormField field =  codeFromPeriod(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public HospitalForm codeFieldForPeriod(String initValue){
+		return codeFieldForPeriod("code",initValue);
+	}
+	public HospitalForm codeFieldForPeriod(){
+		return codeFieldForPeriod("code","");
+	}
+
+
 	public HospitalForm hospitalIdFieldForPeriod(String parameterName, String initValue){
 		FormField field =  hospitalIdFromPeriod(parameterName, initValue);		
 		this.addFormField(field);

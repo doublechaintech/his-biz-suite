@@ -68,6 +68,16 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 	public 	ExpenseType(){
 		// lazy load for all the properties
 	}
+	public 	static ExpenseType withId(String id){
+		ExpenseType expenseType = new ExpenseType();
+		expenseType.setId(id);
+		// expenseType.setVersion(Integer.MAX_VALUE);
+		return expenseType;
+	}
+	public 	static ExpenseType refById(String id){
+		return withId(id);
+	}
+	
 	// disconnect from all, 中文就是一了百了，跟所有一切尘世断绝往来藏身于茫茫数据海洋
 	public 	void clearFromAll(){
 		setHospital( null );

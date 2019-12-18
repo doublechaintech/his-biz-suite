@@ -12,7 +12,7 @@ public interface PeriodManager{
 
 		
 
-	public Period createPeriod(HisUserContext userContext, String name, String hospitalId) throws Exception;	
+	public Period createPeriod(HisUserContext userContext, String name, String code, String hospitalId) throws Exception;	
 	public Period updatePeriod(HisUserContext userContext,String periodId, int periodVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Period loadPeriod(HisUserContext userContext, String periodId, String [] tokensExpr) throws Exception;
 	public Period internalSavePeriod(HisUserContext userContext, Period period) throws Exception;

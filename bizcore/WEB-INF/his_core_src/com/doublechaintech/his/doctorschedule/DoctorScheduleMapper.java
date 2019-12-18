@@ -69,10 +69,10 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
  		if( doctorId.isEmpty()){
  			return;
  		}
- 		Doctor ldoctor = doctorSchedule.getDoctor();
- 		if( ldoctor != null ){
+ 		Doctor doctor = doctorSchedule.getDoctor();
+ 		if( doctor != null ){
  			//if the root object 'doctorSchedule' already have the property, just set the id for it;
- 			ldoctor.setId(doctorId);
+ 			doctor.setId(doctorId);
  			
  			return;
  		}
@@ -99,10 +99,10 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
  		if( periodId.isEmpty()){
  			return;
  		}
- 		Period lperiod = doctorSchedule.getPeriod();
- 		if( lperiod != null ){
+ 		Period period = doctorSchedule.getPeriod();
+ 		if( period != null ){
  			//if the root object 'doctorSchedule' already have the property, just set the id for it;
- 			lperiod.setId(periodId);
+ 			period.setId(periodId);
  			
  			return;
  		}
@@ -117,10 +117,10 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
  		if( departmentId.isEmpty()){
  			return;
  		}
- 		Department ldepartment = doctorSchedule.getDepartment();
- 		if( ldepartment != null ){
+ 		Department department = doctorSchedule.getDepartment();
+ 		if( department != null ){
  			//if the root object 'doctorSchedule' already have the property, just set the id for it;
- 			ldepartment.setId(departmentId);
+ 			department.setId(departmentId);
  			
  			return;
  		}
@@ -159,10 +159,10 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
  		if( expenseTypeId.isEmpty()){
  			return;
  		}
- 		ExpenseType lexpenseType = doctorSchedule.getExpenseType();
- 		if( lexpenseType != null ){
+ 		ExpenseType expenseType = doctorSchedule.getExpenseType();
+ 		if( expenseType != null ){
  			//if the root object 'doctorSchedule' already have the property, just set the id for it;
- 			lexpenseType.setId(expenseTypeId);
+ 			expenseType.setId(expenseTypeId);
  			
  			return;
  		}
@@ -201,10 +201,10 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
  		if( hospitalId.isEmpty()){
  			return;
  		}
- 		Hospital lhospital = doctorSchedule.getHospital();
- 		if( lhospital != null ){
+ 		Hospital hospital = doctorSchedule.getHospital();
+ 		if( hospital != null ){
  			//if the root object 'doctorSchedule' already have the property, just set the id for it;
- 			lhospital.setId(hospitalId);
+ 			hospital.setId(hospitalId);
  			
  			return;
  		}

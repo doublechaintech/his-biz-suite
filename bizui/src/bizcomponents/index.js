@@ -184,6 +184,20 @@ import UserAppPermission from './userapp/UserApp.permission';
 import UserAppProfile from './userapp/UserApp.profile';
 import UserAppService from './userapp/UserApp.service';
 import UserAppUpdateForm from './userapp/UserApp.updateform';
+import QuickLinkBase from './quicklink/QuickLink.base';
+import QuickLinkBizApp from './quicklink/QuickLink.app';
+import QuickLinkModel from './quicklink/QuickLink.model';
+import QuickLinkDashboard from './quicklink/QuickLink.dashboard';
+import QuickLinkModalTable from './quicklink/QuickLink.modaltable';
+import QuickLinkSearch from './quicklink/QuickLink.search';
+import QuickLinkSearchForm from './quicklink/QuickLink.searchform';
+import QuickLinkCreateForm from './quicklink/QuickLink.createform';
+import QuickLinkAssociateForm from './quicklink/QuickLink.associateform';
+import QuickLinkTable from './quicklink/QuickLink.table';
+import QuickLinkPermission from './quicklink/QuickLink.permission';
+import QuickLinkProfile from './quicklink/QuickLink.profile';
+import QuickLinkService from './quicklink/QuickLink.service';
+import QuickLinkUpdateForm from './quicklink/QuickLink.updateform';
 import ListAccessBase from './listaccess/ListAccess.base';
 import ListAccessBizApp from './listaccess/ListAccess.app';
 import ListAccessModel from './listaccess/ListAccess.model';
@@ -226,6 +240,34 @@ import LoginHistoryPermission from './loginhistory/LoginHistory.permission';
 import LoginHistoryProfile from './loginhistory/LoginHistory.profile';
 import LoginHistoryService from './loginhistory/LoginHistory.service';
 import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
+import CandidateContainerBase from './candidatecontainer/CandidateContainer.base';
+import CandidateContainerBizApp from './candidatecontainer/CandidateContainer.app';
+import CandidateContainerModel from './candidatecontainer/CandidateContainer.model';
+import CandidateContainerDashboard from './candidatecontainer/CandidateContainer.dashboard';
+import CandidateContainerModalTable from './candidatecontainer/CandidateContainer.modaltable';
+import CandidateContainerSearch from './candidatecontainer/CandidateContainer.search';
+import CandidateContainerSearchForm from './candidatecontainer/CandidateContainer.searchform';
+import CandidateContainerCreateForm from './candidatecontainer/CandidateContainer.createform';
+import CandidateContainerAssociateForm from './candidatecontainer/CandidateContainer.associateform';
+import CandidateContainerTable from './candidatecontainer/CandidateContainer.table';
+import CandidateContainerPermission from './candidatecontainer/CandidateContainer.permission';
+import CandidateContainerProfile from './candidatecontainer/CandidateContainer.profile';
+import CandidateContainerService from './candidatecontainer/CandidateContainer.service';
+import CandidateContainerUpdateForm from './candidatecontainer/CandidateContainer.updateform';
+import CandidateElementBase from './candidateelement/CandidateElement.base';
+import CandidateElementBizApp from './candidateelement/CandidateElement.app';
+import CandidateElementModel from './candidateelement/CandidateElement.model';
+import CandidateElementDashboard from './candidateelement/CandidateElement.dashboard';
+import CandidateElementModalTable from './candidateelement/CandidateElement.modaltable';
+import CandidateElementSearch from './candidateelement/CandidateElement.search';
+import CandidateElementSearchForm from './candidateelement/CandidateElement.searchform';
+import CandidateElementCreateForm from './candidateelement/CandidateElement.createform';
+import CandidateElementAssociateForm from './candidateelement/CandidateElement.associateform';
+import CandidateElementTable from './candidateelement/CandidateElement.table';
+import CandidateElementPermission from './candidateelement/CandidateElement.permission';
+import CandidateElementProfile from './candidateelement/CandidateElement.profile';
+import CandidateElementService from './candidateelement/CandidateElement.service';
+import CandidateElementUpdateForm from './candidateelement/CandidateElement.updateform';
 
 
 const BizModels = [
@@ -242,9 +284,12 @@ const BizModels = [
 	SecUserModel,
 	SecUserBlockingModel,
 	UserAppModel,
+	QuickLinkModel,
 	ListAccessModel,
 	ObjectAccessModel,
 	LoginHistoryModel,
+	CandidateContainerModel,
+	CandidateElementModel,
 
 ]
 
@@ -275,9 +320,12 @@ menuLibrary['userWhiteList'] = UserWhiteListBase.menuData
 menuLibrary['secUser'] = SecUserBase.menuData
 menuLibrary['secUserBlocking'] = SecUserBlockingBase.menuData
 menuLibrary['userApp'] = UserAppBase.menuData
+menuLibrary['quickLink'] = QuickLinkBase.menuData
 menuLibrary['listAccess'] = ListAccessBase.menuData
 menuLibrary['objectAccess'] = ObjectAccessBase.menuData
 menuLibrary['loginHistory'] = LoginHistoryBase.menuData
+menuLibrary['candidateContainer'] = CandidateContainerBase.menuData
+menuLibrary['candidateElement'] = CandidateElementBase.menuData
 
 
 const menuDataOf=(type)=>{
@@ -311,9 +359,12 @@ const ViewMapping = {
   'com.doublechaintech.his.secuser.SecUser': {name:'secUser'},
   'com.doublechaintech.his.secuserblocking.SecUserBlocking': {name:'secUserBlocking'},
   'com.doublechaintech.his.userapp.UserApp': {name:'userApp'},
+  'com.doublechaintech.his.quicklink.QuickLink': {name:'quickLink'},
   'com.doublechaintech.his.listaccess.ListAccess': {name:'listAccess'},
   'com.doublechaintech.his.objectaccess.ObjectAccess': {name:'objectAccess'},
   'com.doublechaintech.his.loginhistory.LoginHistory': {name:'loginHistory'},
+  'com.doublechaintech.his.candidatecontainer.CandidateContainer': {name:'candidateContainer'},
+  'com.doublechaintech.his.candidateelement.CandidateElement': {name:'candidateElement'},
 
 }
 
@@ -541,6 +592,20 @@ const OOTBComponents={
     UserAppProfile,
     UserAppService,
     UserAppUpdateForm,
+    QuickLinkBase,
+    QuickLinkBizApp,
+    QuickLinkModel,
+    QuickLinkDashboard,
+    QuickLinkModalTable,
+    QuickLinkSearch,
+    QuickLinkSearchForm,
+    QuickLinkCreateForm,
+    QuickLinkAssociateForm,
+    QuickLinkTable,
+    QuickLinkPermission,
+    QuickLinkProfile,
+    QuickLinkService,
+    QuickLinkUpdateForm,
     ListAccessBase,
     ListAccessBizApp,
     ListAccessModel,
@@ -583,6 +648,34 @@ const OOTBComponents={
     LoginHistoryProfile,
     LoginHistoryService,
     LoginHistoryUpdateForm,
+    CandidateContainerBase,
+    CandidateContainerBizApp,
+    CandidateContainerModel,
+    CandidateContainerDashboard,
+    CandidateContainerModalTable,
+    CandidateContainerSearch,
+    CandidateContainerSearchForm,
+    CandidateContainerCreateForm,
+    CandidateContainerAssociateForm,
+    CandidateContainerTable,
+    CandidateContainerPermission,
+    CandidateContainerProfile,
+    CandidateContainerService,
+    CandidateContainerUpdateForm,
+    CandidateElementBase,
+    CandidateElementBizApp,
+    CandidateElementModel,
+    CandidateElementDashboard,
+    CandidateElementModalTable,
+    CandidateElementSearch,
+    CandidateElementSearchForm,
+    CandidateElementCreateForm,
+    CandidateElementAssociateForm,
+    CandidateElementTable,
+    CandidateElementPermission,
+    CandidateElementProfile,
+    CandidateElementService,
+    CandidateElementUpdateForm,
     menuDataOf,bindBizModels,unbindBizModels,calcLocationPath,calcMenuData
 };
        

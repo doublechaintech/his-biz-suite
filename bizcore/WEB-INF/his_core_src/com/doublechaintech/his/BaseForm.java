@@ -248,6 +248,19 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField codeFromPeriod(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("代码");
+		field.setLocaleKey("period.code");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写代码");
+		return field;
+	}
+
 	protected FormField hospitalIdFromPeriod(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("医院");
@@ -1106,6 +1119,97 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField idFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("quick_link.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("quick_link.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField iconFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("图标");
+		field.setLocaleKey("quick_link.icon");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写图标");
+		return field;
+	}
+
+	protected FormField imagePathFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("图片路径");
+		field.setLocaleKey("quick_link.image_path");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("image");
+		field.setRequired(true);
+		field.setPlaceholder("请填写图片路径");
+		return field;
+	}
+
+	protected FormField linkTargetFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("链接的目标");
+		field.setLocaleKey("quick_link.link_target");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写链接的目标");
+		return field;
+	}
+
+	protected FormField createTimeFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("创建时间");
+		field.setLocaleKey("quick_link.create_time");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写创建时间");
+		return field;
+	}
+
+	protected FormField appIdFromQuickLink(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("应用程序");
+		field.setLocaleKey("quick_link.app");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("UserApp");
+		field.setRequired(true);
+		field.setPlaceholder("请填写应用程序");
+		return field;
+	}
+
 	protected FormField idFromListAccess(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("ID");
@@ -1922,6 +2026,97 @@ public class BaseForm extends GenericForm{
 		field.setType("GenericForm");
 		field.setRequired(true);
 		field.setPlaceholder("请填写形式");
+		return field;
+	}
+
+	protected FormField idFromCandidateContainer(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("candidate_container.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromCandidateContainer(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("candidate_container.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField idFromCandidateElement(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("ID");
+		field.setLocaleKey("candidate_element.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写ID");
+		return field;
+	}
+
+	protected FormField nameFromCandidateElement(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("名称");
+		field.setLocaleKey("candidate_element.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写名称");
+		return field;
+	}
+
+	protected FormField typeFromCandidateElement(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("类型");
+		field.setLocaleKey("candidate_element.type");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写类型");
+		return field;
+	}
+
+	protected FormField imageFromCandidateElement(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("图片");
+		field.setLocaleKey("candidate_element.image");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("image");
+		field.setRequired(true);
+		field.setPlaceholder("请填写图片");
+		return field;
+	}
+
+	protected FormField containerIdFromCandidateElement(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("容器");
+		field.setLocaleKey("candidate_element.container");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("CandidateContainer");
+		field.setRequired(true);
+		field.setPlaceholder("请填写容器");
 		return field;
 	}
 

@@ -59,10 +59,10 @@ public class DoctorAssignmentMapper extends BaseRowMapper<DoctorAssignment>{
  		if( doctorId.isEmpty()){
  			return;
  		}
- 		Doctor ldoctor = doctorAssignment.getDoctor();
- 		if( ldoctor != null ){
+ 		Doctor doctor = doctorAssignment.getDoctor();
+ 		if( doctor != null ){
  			//if the root object 'doctorAssignment' already have the property, just set the id for it;
- 			ldoctor.setId(doctorId);
+ 			doctor.setId(doctorId);
  			
  			return;
  		}
@@ -77,10 +77,10 @@ public class DoctorAssignmentMapper extends BaseRowMapper<DoctorAssignment>{
  		if( departmentId.isEmpty()){
  			return;
  		}
- 		Department ldepartment = doctorAssignment.getDepartment();
- 		if( ldepartment != null ){
+ 		Department department = doctorAssignment.getDepartment();
+ 		if( department != null ){
  			//if the root object 'doctorAssignment' already have the property, just set the id for it;
- 			ldepartment.setId(departmentId);
+ 			department.setId(departmentId);
  			
  			return;
  		}

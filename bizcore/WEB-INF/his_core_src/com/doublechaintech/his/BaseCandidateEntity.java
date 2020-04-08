@@ -9,6 +9,7 @@ public class BaseCandidateEntity<T extends BaseEntity> extends BaseEntity {
 	protected int totalPage;
 	protected String displayFieldName;
 	protected String valueFieldName;
+	protected String groupByFieldName;
 	protected SmartList<T> candidates;
 	public String getOwnerClass() {
 		return ownerClass;
@@ -58,8 +59,23 @@ public class BaseCandidateEntity<T extends BaseEntity> extends BaseEntity {
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
-	
+	public String getGroupByFieldName() {
+		return groupByFieldName;
+	}
+	public void setGroupByFieldName(String groupByFieldName) {
+		this.groupByFieldName = groupByFieldName;
+	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

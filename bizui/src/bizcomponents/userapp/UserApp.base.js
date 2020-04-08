@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon,Divider } from 'antd'
+import { Icon,Divider, Avatar, Card, Col, Tag} from 'antd'
 
 import { Link } from 'dva/router'
 import moment from 'moment'
@@ -9,15 +9,18 @@ import BaseTool from '../../common/Base.tool'
 import GlobalComponents from '../../custcomponents'
 import DescriptionList from '../../components/DescriptionList'
 const { Description } = DescriptionList
+import styles from './UserApp.base.less'
 const {
 	defaultRenderReferenceCell,
 	defaultRenderBooleanCell,
 	defaultRenderMoneyCell,
 	defaultRenderDateTimeCell,
 	defaultRenderImageCell,
+	defaultRenderAvatarCell,
 	defaultRenderDateCell,
 	defaultRenderIdentifier,
 	defaultRenderTextCell,
+	defaultSearchLocalData,
 } = BaseTool
 
 const renderTextCell=defaultRenderTextCell
@@ -25,37 +28,39 @@ const renderIdentifier=defaultRenderIdentifier
 const renderDateCell=defaultRenderDateCell
 const renderDateTimeCell=defaultRenderDateTimeCell
 const renderImageCell=defaultRenderImageCell
+const renderAvatarCell=defaultRenderAvatarCell
 const renderMoneyCell=defaultRenderMoneyCell
 const renderBooleanCell=defaultRenderBooleanCell
 const renderReferenceCell=defaultRenderReferenceCell
 
 
-const menuData = {menuName:"用户应用程序", menuFor: "userApp",
+
+const menuData = {menuName: window.trans('user_app'), menuFor: "userApp",
   		subItems: [
-  {name: 'quickLinkList', displayName:'快速链接', icon:'link',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
-  {name: 'listAccessList', displayName:'访问列表', icon:'list',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
-  {name: 'objectAccessList', displayName:'对象访问', icon:'accessible-icon',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'quickLinkList', displayName: window.mtrans('quick_link','user_app.quick_link_list',false), type:'quickLink',icon:'link',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'listAccessList', displayName: window.mtrans('list_access','user_app.list_access_list',false), type:'listAccess',icon:'list',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
+  {name: 'objectAccessList', displayName: window.mtrans('object_access','user_app.object_access_list',false), type:'objectAccess',icon:'accessible-icon',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false, viewGroup: '__no_group'},
   
   		],
 }
 
 
-const settingMenuData = {menuName:"用户应用程序", menuFor: "userApp",
+const settingMenuData = {menuName: window.trans('user_app'), menuFor: "userApp",
   		subItems: [
   
   		],
 }
 
 const fieldLabels = {
-  id: 'ID',
-  title: '标题',
-  secUser: '安全用户',
-  appIcon: '应用程序图标',
-  fullAccess: '完全访问',
-  permission: '许可',
-  objectType: '访问对象类型',
-  objectId: '对象ID',
-  location: '位置',
+  id: window.trans('user_app.id'),
+  title: window.trans('user_app.title'),
+  secUser: window.trans('user_app.sec_user'),
+  appIcon: window.trans('user_app.app_icon'),
+  fullAccess: window.trans('user_app.full_access'),
+  permission: window.trans('user_app.permission'),
+  objectType: window.trans('user_app.object_type'),
+  objectId: window.trans('user_app.object_id'),
+  location: window.trans('user_app.location'),
 
 }
 
@@ -64,44 +69,119 @@ const displayColumns = [
   { title: fieldLabels.title, debugtype: 'string', dataIndex: 'title', width: '8',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.secUser, dataIndex: 'secUser', render: (text, record) => renderReferenceCell(text, record), sorter:true},
   { title: fieldLabels.appIcon, debugtype: 'string', dataIndex: 'appIcon', width: '13',render: (text, record)=>renderTextCell(text,record)},
-  { title: fieldLabels.fullAccess, dataIndex: 'fullAccess', render: (text, record) =>renderBooleanCell(text, record), sorter:true },
+  { title: fieldLabels.fullAccess, debugtype: 'bool', dataIndex: 'fullAccess', width: '8',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.permission, debugtype: 'string', dataIndex: 'permission', width: '8',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.objectType, debugtype: 'string', dataIndex: 'objectType', width: '31',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.objectId, debugtype: 'string', dataIndex: 'objectId', width: '14',render: (text, record)=>renderTextCell(text,record)},
   { title: fieldLabels.location, debugtype: 'string', dataIndex: 'location', width: '16',render: (text, record)=>renderTextCell(text,record)},
 
 ]
-// refernce to https://ant.design/components/list-cn/
-const renderItemOfList=(userApp,targetComponent)=>{
 
+
+const searchLocalData =(targetObject,searchTerm)=> defaultSearchLocalData(menuData,targetObject,searchTerm)
+const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+let counter = 0;
+const genColor=()=>{
+	counter++;
+	return colorList[counter%colorList.length];
+}
+const followColor=()=>{
+	return 'green';
+	// return colorList[counter%colorList.length];
+}
+const leftChars=(value, left)=>{
+	const chars = left || 4
+	if(!value){
+		return "N/A"
+	}
+	return value.substring(0,chars);
+}
+
+const renderReferenceItem=(value, targetComponent)=>{
+	const userContext = null
+	if(!value){
+		return <Tag color='red'>{appLocaleName(userContext,"NotAssigned")}</Tag>
+	}
+	if(!value.id){
+		return <Tag color='red'>{appLocaleName(userContext,"NotAssigned")}</Tag>
+	}
+	if(!value.displayName){
+		return <Tag color='red'>{appLocaleName(userContext,"NotAssigned")}</Tag>
+	}
+	
+	return <Tag color='blue' title={`${value.displayName}()`}>{leftChars(value.displayName)}</Tag>
+	
+	
+	
+	
+}
+const renderItemOfList=(userApp, targetComponent, columCount)=>{
+  
+  if(!userApp){
+  	return null
+  }
+  if(!userApp.id){
+  	return null
+  }
+  
+  
+  const displayColumnsCount = columCount || 4
   const userContext = null
   return (
-    <div key={userApp.id}>
+    <Card key={`userApp-${userApp.id}`} style={{marginTop:"10px"}}>
+		
+	<Col span={4}>
+		<Avatar size={90} style={{ backgroundColor: genColor(), verticalAlign: 'middle' }}>
+			{leftChars(userApp.displayName)}
+		</Avatar>
+	</Col>
+	<Col span={20}>
+	  
+	  
+	 
 	
-      <DescriptionList  key={userApp.id} size="small" col="4">
-        <Description term="ID">{userApp.id}</Description> 
-        <Description term="标题">{userApp.title}</Description> 
-        <Description term="安全用户"><div>{userApp.secUser==null?appLocaleName(userContext,"NotAssigned"):`${userApp.secUser.displayName}(${userApp.secUser.id})`}
-        </div></Description>
-        <Description term="应用程序图标">{userApp.appIcon}</Description> 
-        <Description term="许可">{userApp.permission}</Description> 
-        <Description term="访问对象类型">{userApp.objectType}</Description> 
-        <Description term="对象ID">{userApp.objectId}</Description> 
-        <Description term="位置">{userApp.location}</Description> 
+      <DescriptionList  key={userApp.id} size="small" col={displayColumnsCount} >
+        <Description term={fieldLabels.id} style={{wordBreak: 'break-all'}}>{userApp.id}</Description> 
+        <Description term={fieldLabels.title} style={{wordBreak: 'break-all'}}>{userApp.title}</Description> 
+        <Description term={fieldLabels.secUser}>{renderReferenceItem(userApp.secUser)}</Description>
+
+        <Description term={fieldLabels.appIcon} style={{wordBreak: 'break-all'}}>{userApp.appIcon}</Description> 
+        <Description term={fieldLabels.fullAccess} style={{wordBreak: 'break-all'}}>{userApp.fullAccess}</Description> 
+        <Description term={fieldLabels.permission} style={{wordBreak: 'break-all'}}>{userApp.permission}</Description> 
+        <Description term={fieldLabels.objectType} style={{wordBreak: 'break-all'}}>{userApp.objectType}</Description> 
+        <Description term={fieldLabels.objectId} style={{wordBreak: 'break-all'}}>{userApp.objectId}</Description> 
+        <Description term={fieldLabels.location} style={{wordBreak: 'break-all'}}>{userApp.location}</Description> 
 	
         
       </DescriptionList>
-      <Divider style={{ height: '2px' }} />
-    </div>
+     </Col>
+    </Card>
 	)
 
 }
 	
-
-
-
-const UserAppBase={menuData,displayColumns,fieldLabels,renderItemOfList}
+const packFormValuesToObject = ( formValuesToPack )=>{
+	const {title, appIcon, fullAccess, permission, objectType, objectId, location, secUserId} = formValuesToPack
+	const secUser = {id: secUserId, version: 2^31}
+	const data = {title, appIcon, fullAccess, permission, objectType, objectId, location, secUser}
+	return data
+}
+const unpackObjectToFormValues = ( objectToUnpack )=>{
+	const {title, appIcon, fullAccess, permission, objectType, objectId, location, secUser} = objectToUnpack
+	const secUserId = secUser ? secUser.id : null
+	const data = {title, appIcon, fullAccess, permission, objectType, objectId, location, secUserId}
+	return data
+}
+const stepOf=(targetComponent, title, content, position, index)=>{
+	return {
+		title,
+		content,
+		position,
+		packFunction: packFormValuesToObject,
+		unpackFunction: unpackObjectToFormValues,
+		index,
+      }
+}
+const UserAppBase={menuData,settingMenuData,displayColumns,fieldLabels,renderItemOfList, stepOf, searchLocalData}
 export default UserAppBase
-
-
 

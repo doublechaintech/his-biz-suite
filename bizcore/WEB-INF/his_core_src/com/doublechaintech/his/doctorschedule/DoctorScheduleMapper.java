@@ -40,7 +40,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setId(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(DoctorScheduleTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -52,7 +54,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setName(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(DoctorScheduleTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -82,7 +86,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setScheduleDate(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date scheduleDate = rs.getDate(DoctorScheduleTable.COLUMN_SCHEDULE_DATE);
+		
 		if(scheduleDate == null){
 			//do nothing when nothing found in database
 			return;
@@ -130,7 +136,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setAvailable(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer available = rs.getInt(DoctorScheduleTable.COLUMN_AVAILABLE);
+		
 		if(available == null){
 			//do nothing when nothing found in database
 			return;
@@ -142,7 +150,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setPrice(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		BigDecimal price = rs.getBigDecimal(DoctorScheduleTable.COLUMN_PRICE);
+		
 		if(price == null){
 			//do nothing when nothing found in database
 			return;
@@ -172,7 +182,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setCreateTime(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date createTime = rs.getTimestamp(DoctorScheduleTable.COLUMN_CREATE_TIME);
+		
 		if(createTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -184,7 +196,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setUpdateTime(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date updateTime = rs.getTimestamp(DoctorScheduleTable.COLUMN_UPDATE_TIME);
+		
 		if(updateTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -214,7 +228,9 @@ public class DoctorScheduleMapper extends BaseRowMapper<DoctorSchedule>{
 	protected void setVersion(DoctorSchedule doctorSchedule, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(DoctorScheduleTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -53,6 +54,7 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	CandidateElement(){
@@ -61,7 +63,7 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 	public 	static CandidateElement withId(String id){
 		CandidateElement candidateElement = new CandidateElement();
 		candidateElement.setId(id);
-		// candidateElement.setVersion(Integer.MAX_VALUE);
+		candidateElement.setVersion(Integer.MAX_VALUE);
 		return candidateElement;
 	}
 	public 	static CandidateElement refById(String id){
@@ -75,14 +77,6 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 		this.changed = true;
 	}
 	
-	public 	CandidateElement(String name, String type, String image, CandidateContainer container)
-	{
-		setName(name);
-		setType(type);
-		setImage(image);
-		setContainer(container);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -103,6 +97,7 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -112,12 +107,13 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeTypeProperty(String newValueExpr){
+	
 		String oldValue = getType();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -127,12 +123,13 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 		updateType(newValue);
 		this.onChangeProperty(TYPE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeImageProperty(String newValueExpr){
+	
 		String oldValue = getImage();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -142,7 +139,7 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 		updateImage(newValue);
 		this.onChangeProperty(IMAGE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -310,7 +307,9 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 		appendKeyValuePair(result, CONTAINER_PROPERTY, getContainer());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -371,7 +370,9 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getType(), getImage(), getContainer(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 
@@ -393,9 +394,4 @@ public class CandidateElement extends BaseEntity implements  java.io.Serializabl
 	
 
 }
-
-
-
-
-
 

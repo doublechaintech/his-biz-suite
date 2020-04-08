@@ -4,20 +4,22 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.HisUserContext;
 import com.doublechaintech.his.BaseEntity;
+import com.doublechaintech.his.BaseManager;
 import com.doublechaintech.his.SmartList;
 
-public interface FormFieldMessageManager{
+public interface FormFieldMessageManager extends BaseManager{
 
 		
 
-	public FormFieldMessage createFormFieldMessage(HisUserContext userContext, String title, String parameterName, String formId, String level) throws Exception;	
+	public FormFieldMessage createFormFieldMessage(HisUserContext userContext, String title,String parameterName,String formId,String level) throws Exception;
 	public FormFieldMessage updateFormFieldMessage(HisUserContext userContext,String formFieldMessageId, int formFieldMessageVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public FormFieldMessage loadFormFieldMessage(HisUserContext userContext, String formFieldMessageId, String [] tokensExpr) throws Exception;
 	public FormFieldMessage internalSaveFormFieldMessage(HisUserContext userContext, FormFieldMessage formFieldMessage) throws Exception;
 	public FormFieldMessage internalSaveFormFieldMessage(HisUserContext userContext, FormFieldMessage formFieldMessage,Map<String,Object>option) throws Exception;
-	
+
 	public FormFieldMessage transferToAnotherForm(HisUserContext userContext, String formFieldMessageId, String anotherFormId)  throws Exception;
  
 
@@ -26,9 +28,12 @@ public interface FormFieldMessageManager{
 	public void onNewInstanceCreated(HisUserContext userContext, FormFieldMessage newCreated)throws Exception;
 
 	/*======================================================DATA MAINTENANCE===========================================================*/
-	
 
 
+
+	public Object listByForm(HisUserContext userContext,String formId) throws Exception;
+	public Object listPageByForm(HisUserContext userContext,String formId, int start, int count) throws Exception;
+  
 
 }
 

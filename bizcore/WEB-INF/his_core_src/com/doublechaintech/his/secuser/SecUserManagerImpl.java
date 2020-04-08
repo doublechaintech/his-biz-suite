@@ -3,30 +3,38 @@ package com.doublechaintech.his.secuser;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
-import com.doublechaintech.his.BaseEntity;
+import com.terapico.caf.Images;
+import com.terapico.caf.Password;
+import com.terapico.utils.MapUtil;
+import com.terapico.utils.ListofUtils;
+import com.terapico.utils.TextUtil;
+import com.terapico.caf.viewpage.SerializeScope;
 
+import com.doublechaintech.his.*;
+import com.doublechaintech.his.tree.*;
+import com.doublechaintech.his.treenode.*;
+import com.doublechaintech.his.HisUserContextImpl;
+import com.doublechaintech.his.iamservice.*;
+import com.doublechaintech.his.services.IamService;
+import com.doublechaintech.his.secuser.SecUser;
+import com.doublechaintech.his.userapp.UserApp;
+import com.doublechaintech.his.BaseViewPage;
+import com.terapico.uccaf.BaseUserContext;
 
-import com.doublechaintech.his.Message;
-import com.doublechaintech.his.SmartList;
-import com.doublechaintech.his.MultipleAccessKey;
-
-import com.doublechaintech.his.HisUserContext;
-//import com.doublechaintech.his.BaseManagerImpl;
-import com.doublechaintech.his.HisCheckerManager;
-import com.doublechaintech.his.CustomHisCheckerManager;
 
 import com.doublechaintech.his.userapp.UserApp;
 import com.doublechaintech.his.userdomain.UserDomain;
-import com.doublechaintech.his.secuserblocking.SecUserBlocking;
 import com.doublechaintech.his.loginhistory.LoginHistory;
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentify;
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentify;
 
 import com.doublechaintech.his.userdomain.CandidateUserDomain;
-import com.doublechaintech.his.secuserblocking.CandidateSecUserBlocking;
 
 import com.doublechaintech.his.secuser.SecUser;
 
@@ -35,25 +43,32 @@ import com.doublechaintech.his.secuser.SecUser;
 
 
 
-public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUserManager {
-	
+public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUserManager, BusinessHandler{
+
+  
+
+
 	private static final String SERVICE_TYPE = "SecUser";
-	
+	@Override
+	public SecUserDAO daoOf(HisUserContext userContext) {
+		return secUserDaoOf(userContext);
+	}
+
 	@Override
 	public String serviceFor(){
 		return SERVICE_TYPE;
 	}
-	
-	
+
+
 	protected void throwExceptionWithMessage(String value) throws SecUserManagerException{
-	
+
 		Message message = new Message();
 		message.setBody(value);
 		throw new SecUserManagerException(message);
 
 	}
-	
-	
+
+
 
  	protected SecUser saveSecUser(HisUserContext userContext, SecUser secUser, String [] tokensExpr) throws Exception{	
  		//return getSecUserDAO().save(secUser, tokens);
@@ -71,8 +86,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
  	
  	public SecUser loadSecUser(HisUserContext userContext, String secUserId, String [] tokensExpr) throws Exception{				
  
- 		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().throwExceptionIfHasErrors( SecUserManagerException.class);
+ 		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).throwExceptionIfHasErrors( SecUserManagerException.class);
 
  			
  		Map<String,Object>tokens = parseTokens(tokensExpr);
@@ -85,8 +100,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
  	
  	 public SecUser searchSecUser(HisUserContext userContext, String secUserId, String textToSearch,String [] tokensExpr) throws Exception{				
  
- 		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().throwExceptionIfHasErrors( SecUserManagerException.class);
+ 		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).throwExceptionIfHasErrors( SecUserManagerException.class);
 
  		
  		Map<String,Object>tokens = tokens().allTokens().searchEntireObjectText("startsWith", textToSearch).initWithArray(tokensExpr);
@@ -104,10 +119,10 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		addActions(userContext,secUser,tokens);
 		
 		
-		SecUser  secUserToPresent = userContext.getDAOGroup().getSecUserDAO().present(secUser, tokens);
+		SecUser  secUserToPresent = secUserDaoOf(userContext).present(secUser, tokens);
 		
 		List<BaseEntity> entityListToNaming = secUserToPresent.collectRefercencesFromLists();
-		userContext.getDAOGroup().getSecUserDAO().alias(entityListToNaming);
+		secUserDaoOf(userContext).alias(entityListToNaming);
 		
 		return  secUserToPresent;
 		
@@ -128,35 +143,35 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		
  	}
  	protected SecUser saveSecUser(HisUserContext userContext, SecUser secUser, Map<String,Object>tokens) throws Exception{	
- 		return userContext.getDAOGroup().getSecUserDAO().save(secUser, tokens);
+ 		return secUserDaoOf(userContext).save(secUser, tokens);
  	}
  	protected SecUser loadSecUser(HisUserContext userContext, String secUserId, Map<String,Object>tokens) throws Exception{	
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().throwExceptionIfHasErrors( SecUserManagerException.class);
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).throwExceptionIfHasErrors( SecUserManagerException.class);
 
  
- 		return userContext.getDAOGroup().getSecUserDAO().load(secUserId, tokens);
+ 		return secUserDaoOf(userContext).load(secUserId, tokens);
  	}
 
 	
 	
 
 	public SecUser loadSecUserWithLogin(HisUserContext userContext, String login, Map<String,Object>tokens) throws Exception{	
- 		return userContext.getDAOGroup().getSecUserDAO().loadByLogin(login, tokens);
+ 		return secUserDaoOf(userContext).loadByLogin(login, tokens);
  	}
 
 	 
 	
 
 	public SecUser loadSecUserWithEmail(HisUserContext userContext, String email, Map<String,Object>tokens) throws Exception{	
- 		return userContext.getDAOGroup().getSecUserDAO().loadByEmail(email, tokens);
+ 		return secUserDaoOf(userContext).loadByEmail(email, tokens);
  	}
 
 	 
 	
 
 	public SecUser loadSecUserWithMobile(HisUserContext userContext, String mobile, Map<String,Object>tokens) throws Exception{	
- 		return userContext.getDAOGroup().getSecUserDAO().loadByMobile(mobile, tokens);
+ 		return secUserDaoOf(userContext).loadByMobile(mobile, tokens);
  	}
 
 	 
@@ -175,7 +190,6 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		addAction(userContext, secUser, tokens,"@copy","cloneSecUser","cloneSecUser/"+secUser.getId()+"/","main","primary");
 		
 		addAction(userContext, secUser, tokens,"sec_user.transfer_to_domain","transferToAnotherDomain","transferToAnotherDomain/"+secUser.getId()+"/","main","primary");
-		addAction(userContext, secUser, tokens,"sec_user.block","block","blockActionForm/"+secUser.getId()+"/","main","danger");
 		addAction(userContext, secUser, tokens,"sec_user.addUserApp","addUserApp","addUserApp/"+secUser.getId()+"/","userAppList","primary");
 		addAction(userContext, secUser, tokens,"sec_user.removeUserApp","removeUserApp","removeUserApp/"+secUser.getId()+"/","userAppList","primary");
 		addAction(userContext, secUser, tokens,"sec_user.updateUserApp","updateUserApp","updateUserApp/"+secUser.getId()+"/","userAppList","primary");
@@ -184,6 +198,14 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		addAction(userContext, secUser, tokens,"sec_user.removeLoginHistory","removeLoginHistory","removeLoginHistory/"+secUser.getId()+"/","loginHistoryList","primary");
 		addAction(userContext, secUser, tokens,"sec_user.updateLoginHistory","updateLoginHistory","updateLoginHistory/"+secUser.getId()+"/","loginHistoryList","primary");
 		addAction(userContext, secUser, tokens,"sec_user.copyLoginHistoryFrom","copyLoginHistoryFrom","copyLoginHistoryFrom/"+secUser.getId()+"/","loginHistoryList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.addWechatWorkappIdentify","addWechatWorkappIdentify","addWechatWorkappIdentify/"+secUser.getId()+"/","wechatWorkappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.removeWechatWorkappIdentify","removeWechatWorkappIdentify","removeWechatWorkappIdentify/"+secUser.getId()+"/","wechatWorkappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.updateWechatWorkappIdentify","updateWechatWorkappIdentify","updateWechatWorkappIdentify/"+secUser.getId()+"/","wechatWorkappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.copyWechatWorkappIdentifyFrom","copyWechatWorkappIdentifyFrom","copyWechatWorkappIdentifyFrom/"+secUser.getId()+"/","wechatWorkappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.addWechatMiniappIdentify","addWechatMiniappIdentify","addWechatMiniappIdentify/"+secUser.getId()+"/","wechatMiniappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.removeWechatMiniappIdentify","removeWechatMiniappIdentify","removeWechatMiniappIdentify/"+secUser.getId()+"/","wechatMiniappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.updateWechatMiniappIdentify","updateWechatMiniappIdentify","updateWechatMiniappIdentify/"+secUser.getId()+"/","wechatMiniappIdentifyList","primary");
+		addAction(userContext, secUser, tokens,"sec_user.copyWechatMiniappIdentifyFrom","copyWechatMiniappIdentifyFrom","copyWechatMiniappIdentifyFrom/"+secUser.getId()+"/","wechatMiniappIdentifyList","primary");
 	
 		
 		
@@ -195,26 +217,26 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
  	
  	
 
-
-	public SecUser createSecUser(HisUserContext userContext,String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId) throws Exception
+	public SecUser createSecUser(HisUserContext userContext, String login,String mobile,String email,String pwd,String weixinOpenid,String weixinAppid,String accessToken,int verificationCode,DateTime verificationCodeExpire,DateTime lastLoginTime,String domainId) throws Exception
+	//public SecUser createSecUser(HisUserContext userContext,String login, String mobile, String email, String pwd, String weixinOpenid, String weixinAppid, String accessToken, int verificationCode, DateTime verificationCodeExpire, DateTime lastLoginTime, String domainId) throws Exception
 	{
-		
-		
 
 		
 
-		userContext.getChecker().checkLoginOfSecUser(login);
-		userContext.getChecker().checkMobileOfSecUser(mobile);
-		userContext.getChecker().checkEmailOfSecUser(email);
-		userContext.getChecker().checkPwdOfSecUser(pwd);
-		userContext.getChecker().checkWeixinOpenidOfSecUser(weixinOpenid);
-		userContext.getChecker().checkWeixinAppidOfSecUser(weixinAppid);
-		userContext.getChecker().checkAccessTokenOfSecUser(accessToken);
-		userContext.getChecker().checkVerificationCodeOfSecUser(verificationCode);
-		userContext.getChecker().checkVerificationCodeExpireOfSecUser(verificationCodeExpire);
-		userContext.getChecker().checkLastLoginTimeOfSecUser(lastLoginTime);
+		
+
+		checkerOf(userContext).checkLoginOfSecUser(login);
+		checkerOf(userContext).checkMobileOfSecUser(mobile);
+		checkerOf(userContext).checkEmailOfSecUser(email);
+		checkerOf(userContext).checkPwdOfSecUser(pwd);
+		checkerOf(userContext).checkWeixinOpenidOfSecUser(weixinOpenid);
+		checkerOf(userContext).checkWeixinAppidOfSecUser(weixinAppid);
+		checkerOf(userContext).checkAccessTokenOfSecUser(accessToken);
+		checkerOf(userContext).checkVerificationCodeOfSecUser(verificationCode);
+		checkerOf(userContext).checkVerificationCodeExpireOfSecUser(verificationCodeExpire);
+		checkerOf(userContext).checkLastLoginTimeOfSecUser(lastLoginTime);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
 
 
 		SecUser secUser=createNewSecUser();	
@@ -234,87 +256,116 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		secUser.setDomain(domain);
 		
 		
-		secUser.setCurrentStatus("INIT");
 
 		secUser = saveSecUser(userContext, secUser, emptyOptions());
 		
 		onNewInstanceCreated(userContext, secUser);
 		return secUser;
 
-		
+
 	}
-	protected SecUser createNewSecUser() 
+	protected SecUser createNewSecUser()
 	{
-		
-		return new SecUser();		
+
+		return new SecUser();
 	}
-	
+
 	protected void checkParamsForUpdatingSecUser(HisUserContext userContext,String secUserId, int secUserVersion, String property, String newValueExpr,String [] tokensExpr)throws Exception
 	{
 		
 
 		
 		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().checkVersionOfSecUser( secUserVersion);
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkVersionOfSecUser( secUserVersion);
 		
 
 		if(SecUser.LOGIN_PROPERTY.equals(property)){
-			userContext.getChecker().checkLoginOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLoginOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.MOBILE_PROPERTY.equals(property)){
-			userContext.getChecker().checkMobileOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkMobileOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.EMAIL_PROPERTY.equals(property)){
-			userContext.getChecker().checkEmailOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkEmailOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.PWD_PROPERTY.equals(property)){
-			userContext.getChecker().checkPwdOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkPwdOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.WEIXIN_OPENID_PROPERTY.equals(property)){
-			userContext.getChecker().checkWeixinOpenidOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkWeixinOpenidOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.WEIXIN_APPID_PROPERTY.equals(property)){
-			userContext.getChecker().checkWeixinAppidOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkWeixinAppidOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.ACCESS_TOKEN_PROPERTY.equals(property)){
-			userContext.getChecker().checkAccessTokenOfSecUser(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkAccessTokenOfSecUser(parseString(newValueExpr));
+		
+			
 		}
 		if(SecUser.VERIFICATION_CODE_PROPERTY.equals(property)){
-			userContext.getChecker().checkVerificationCodeOfSecUser(parseInt(newValueExpr));
+		
+			checkerOf(userContext).checkVerificationCodeOfSecUser(parseInt(newValueExpr));
+		
+			
 		}
 		if(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY.equals(property)){
-			userContext.getChecker().checkVerificationCodeExpireOfSecUser(parseTimestamp(newValueExpr));
+		
+			checkerOf(userContext).checkVerificationCodeExpireOfSecUser(parseTimestamp(newValueExpr));
+		
+			
 		}
 		if(SecUser.LAST_LOGIN_TIME_PROPERTY.equals(property)){
-			userContext.getChecker().checkLastLoginTimeOfSecUser(parseTimestamp(newValueExpr));
+		
+			checkerOf(userContext).checkLastLoginTimeOfSecUser(parseTimestamp(newValueExpr));
+		
+			
 		}		
 
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
-		
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+
 	}
-	
-	
-	
+
+
+
 	public SecUser clone(HisUserContext userContext, String fromSecUserId) throws Exception{
-		
-		return userContext.getDAOGroup().getSecUserDAO().clone(fromSecUserId, this.allTokens());
+
+		return secUserDaoOf(userContext).clone(fromSecUserId, this.allTokens());
 	}
-	
-	public SecUser internalSaveSecUser(HisUserContext userContext, SecUser secUser) throws Exception 
+
+	public SecUser internalSaveSecUser(HisUserContext userContext, SecUser secUser) throws Exception
 	{
 		return internalSaveSecUser(userContext, secUser, allTokens());
 
 	}
-	public SecUser internalSaveSecUser(HisUserContext userContext, SecUser secUser, Map<String,Object> options) throws Exception 
+	public SecUser internalSaveSecUser(HisUserContext userContext, SecUser secUser, Map<String,Object> options) throws Exception
 	{
 		//checkParamsForUpdatingSecUser(userContext, secUserId, secUserVersion, property, newValueExpr, tokensExpr);
-		
-		
-		synchronized(secUser){ 
+
+
+		synchronized(secUser){
 			//will be good when the secUser loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to SecUser.
@@ -323,23 +374,23 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 			}
 			secUser = saveSecUser(userContext, secUser, options);
 			return secUser;
-			
+
 		}
 
 	}
-	
-	public SecUser updateSecUser(HisUserContext userContext,String secUserId, int secUserVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception 
+
+	public SecUser updateSecUser(HisUserContext userContext,String secUserId, int secUserVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception
 	{
 		checkParamsForUpdatingSecUser(userContext, secUserId, secUserVersion, property, newValueExpr, tokensExpr);
-		
-		
-		
+
+
+
 		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
 		if(secUser.getVersion() != secUserVersion){
 			String message = "The target version("+secUser.getVersion()+") is not equals to version("+secUserVersion+") provided";
 			throwExceptionWithMessage(message);
 		}
-		synchronized(secUser){ 
+		synchronized(secUser){
 			//will be good when the secUser loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to SecUser.
@@ -351,21 +402,21 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		}
 
 	}
-	
-	public SecUser updateSecUserProperty(HisUserContext userContext,String secUserId, int secUserVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception 
+
+	public SecUser updateSecUserProperty(HisUserContext userContext,String secUserId, int secUserVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception
 	{
 		checkParamsForUpdatingSecUser(userContext, secUserId, secUserVersion, property, newValueExpr, tokensExpr);
-		
+
 		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
 		if(secUser.getVersion() != secUserVersion){
 			String message = "The target version("+secUser.getVersion()+") is not equals to version("+secUserVersion+") provided";
 			throwExceptionWithMessage(message);
 		}
-		synchronized(secUser){ 
+		synchronized(secUser){
 			//will be good when the secUser loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to SecUser.
-			
+
 			secUser.changeProperty(property, newValueExpr);
 			
 			secUser = saveSecUser(userContext, secUser, tokens().done());
@@ -377,7 +428,7 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 	protected Map<String,Object> emptyOptions(){
 		return tokens().done();
 	}
-	
+
 	protected SecUserTokens tokens(){
 		return SecUserTokens.start();
 	}
@@ -391,6 +442,8 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		return tokens().allTokens()
 		.sortUserAppListWith("id","desc")
 		.sortLoginHistoryListWith("id","desc")
+		.sortWechatWorkappIdentifyListWith("id","desc")
+		.sortWechatMiniappIdentifyListWith("id","desc")
 		.analyzeAllLists().done();
 
 	}
@@ -398,54 +451,13 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		return SecUserTokens.mergeAll(tokens).done();
 	}
 	
-	private static final String [] STATUS_SEQUENCE={"BLOCKED"};
- 	protected String[] getNextCandidateStatus(HisUserContext userContext, String currentStatus) throws Exception{
- 	
- 		if("INIT".equals(currentStatus)){
- 			//if current status is null, just return the first status as the next status
- 			//code makes sure not throwing ArrayOutOfIndexException here.
- 			return STATUS_SEQUENCE;
- 		}
- 		/*
- 		List<String> statusList = Arrays.asList(STATUS_SEQUENCE);
- 		int index = statusList.indexOf(currentStatus);
- 		if(index < 0){
- 			throwExceptionWithMessage("The status '"+currentStatus+"' is not found from status list: "+ statusList );
- 		}
- 		if(index + 1 == statusList.size()){
- 			//this is the last status code; no next status any more
- 			return null;
- 		}
- 		
- 		//this is not the last one, just return it.
- 		*/
- 		return STATUS_SEQUENCE;
- 	
- 	}/**/
- 	protected void ensureStatus(HisUserContext userContext, SecUser secUser, String expectedNextStatus) throws Exception{
-		String currentStatus = secUser.getCurrentStatus();
-		//'null' is fine for function getNextStatus
-		String candidateStatus[] = getNextCandidateStatus(userContext, currentStatus);
-		
-		if(candidateStatus == null){
-			//no more next status
-			String message = "No next status for '"+currentStatus+"', but you want to put the status to 'HIDDEN'";
-			throwExceptionWithMessage(message);
-		}
-		int index = Arrays.asList(candidateStatus).indexOf(expectedNextStatus);
-		if(index<0){
-			String message = "The current status '"+currentStatus+"' next candidate status should be one of '"+candidateStatus+"', but you want to transit the status to '"+expectedNextStatus+"'";
-			throwExceptionWithMessage(message);
-		}
-	}
-	
 	protected void checkParamsForTransferingAnotherDomain(HisUserContext userContext, String secUserId, String anotherDomainId) throws Exception
  	{
- 		
- 		userContext.getChecker().checkIdOfSecUser(secUserId);
- 		userContext.getChecker().checkIdOfUserDomain(anotherDomainId);//check for optional reference
- 		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
- 		
+
+ 		checkerOf(userContext).checkIdOfSecUser(secUserId);
+ 		checkerOf(userContext).checkIdOfUserDomain(anotherDomainId);//check for optional reference
+ 		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
  	}
  	public SecUser transferToAnotherDomain(HisUserContext userContext, String secUserId, String anotherDomainId) throws Exception
  	{
@@ -464,10 +476,10 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		}
 
  	}
- 	
-	 	
- 	
- 	
+
+	
+
+
 	public CandidateUserDomain requestCandidateDomain(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
 
 		CandidateUserDomain result = new CandidateUserDomain();
@@ -477,197 +489,52 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		result.setPageNo(pageNo);
 		result.setValueFieldName("id");
 		result.setDisplayFieldName("name");
-		
+
 		pageNo = Math.max(1, pageNo);
 		int pageSize = 20;
 		//requestCandidateProductForSkuAsOwner
-		SmartList<UserDomain> candidateList = userContext.getDAOGroup().getUserDomainDAO().requestCandidateUserDomainForSecUser(userContext,ownerClass, id, filterKey, pageNo, pageSize);
+		SmartList<UserDomain> candidateList = userDomainDaoOf(userContext).requestCandidateUserDomainForSecUser(userContext,ownerClass, id, filterKey, pageNo, pageSize);
 		result.setCandidates(candidateList);
 		int totalCount = candidateList.getTotalCount();
 		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
 		return result;
 	}
- 	
- 	protected void checkParamsForTransferingAnotherBlocking(HisUserContext userContext, String secUserId, String anotherBlockingId) throws Exception
- 	{
- 		
- 		userContext.getChecker().checkIdOfSecUser(secUserId);
- 		userContext.getChecker().checkIdOfSecUserBlocking(anotherBlockingId);//check for optional reference
- 		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
- 		
- 	}
- 	public SecUser transferToAnotherBlocking(HisUserContext userContext, String secUserId, String anotherBlockingId) throws Exception
- 	{
- 		checkParamsForTransferingAnotherBlocking(userContext, secUserId,anotherBlockingId);
- 
-		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());	
-		synchronized(secUser){
-			//will be good when the secUser loaded from this JVM process cache.
-			//also good when there is a ram based DAO implementation
-			SecUserBlocking blocking = loadSecUserBlocking(userContext, anotherBlockingId, emptyOptions());		
-			secUser.updateBlocking(blocking);		
-			secUser = saveSecUser(userContext, secUser, emptyOptions());
-			
-			return present(userContext,secUser, allTokens());
-			
-		}
 
- 	}
- 	
-	 	
- 	
- 	
-	public CandidateSecUserBlocking requestCandidateBlocking(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
-
-		CandidateSecUserBlocking result = new CandidateSecUserBlocking();
-		result.setOwnerClass(ownerClass);
-		result.setOwnerId(id);
-		result.setFilterKey(filterKey==null?"":filterKey.trim());
-		result.setPageNo(pageNo);
-		result.setValueFieldName("id");
-		result.setDisplayFieldName("who");
-		
-		pageNo = Math.max(1, pageNo);
-		int pageSize = 20;
-		//requestCandidateProductForSkuAsOwner
-		SmartList<SecUserBlocking> candidateList = userContext.getDAOGroup().getSecUserBlockingDAO().requestCandidateSecUserBlockingForSecUser(userContext,ownerClass, id, filterKey, pageNo, pageSize);
-		result.setCandidates(candidateList);
-		int totalCount = candidateList.getTotalCount();
-		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
-		return result;
-	}
- 	
- 	
-	public static final String BLOCKED_STATUS = "BLOCKED";
- 	protected void checkParamsForBlocking(HisUserContext userContext, String secUserId, String who, String comments
-) throws Exception
- 	{
- 				userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().checkWhoOfSecUserBlocking(who);
-		userContext.getChecker().checkCommentsOfSecUserBlocking(comments);
-
+ //--------------------------------------------------------------
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
 
- 	}
- 	public SecUser block(HisUserContext userContext, String secUserId, String who, String comments
-) throws Exception
- 	{
-		checkParamsForBlocking(userContext, secUserId, who, comments);
-		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());	
-		synchronized(secUser){
-			//will be good when the secUser loaded from this JVM process cache.
-			//also good when there is a ram based DAO implementation
-			
-			checkIfEligibleForBlocking(userContext,secUser);
- 		
-
-			secUser.updateCurrentStatus(BLOCKED_STATUS);
-			//set the new status, it will be good if add constant to the bean definition
-			
-			//extract all referenced objects, load them respectively
-
-
-			SecUserBlocking blocking = createBlocking(userContext, who, comments);		
-			secUser.updateBlocking(blocking);		
-			
-			
-			secUser = saveSecUser(userContext, secUser, tokens().withBlocking().done());
-			return present(userContext,secUser, allTokens());
-			
-		}
-
- 	}
- 	
- 	
- 	
- 	
- 	public SecUserForm blockActionForm(HisUserContext userContext, String secUserId) throws Exception
- 	{
-		return new SecUserForm()
-			.withTitle("block")
-			.secUserIdField(secUserId)
-			.whoFieldOfSecUserBlocking()
-			.commentsFieldOfSecUserBlocking()
-			.blockAction();
- 	}
-	
- 	
- 	protected SecUserBlocking createBlocking(HisUserContext userContext, String who, String comments){
- 		SecUserBlocking blocking = new SecUserBlocking();
- 		//who, comments
- 		
-		blocking.setWho(who);
-		blocking.setBlockTime(userContext.now());
-		blocking.setComments(comments);
-
- 		
- 		
- 		
- 		return userContext.getDAOGroup().getSecUserBlockingDAO().save(blocking,emptyOptions());
- 	}
- 	protected void checkIfEligibleForBlocking(HisUserContext userContext, SecUser secUser) throws Exception{
- 
- 		ensureStatus(userContext,secUser, BLOCKED_STATUS);
- 		
- 		SecUserBlocking blocking = secUser.getBlocking();
- 		//check the current status equals to the status
- 		//String expectedCurrentStatus = blocking 		
- 		//if the previous is the expected status?
- 		
- 		
- 		//if already transited to this status?
- 		
- 		if( blocking != null){
-				throwExceptionWithMessage("The SecUser("+secUser.getId()+") has already been "+ BLOCKED_STATUS+".");
-		}
- 		
- 		
- 	}
-//--------------------------------------------------------------
-	
-	 	
  	protected UserDomain loadUserDomain(HisUserContext userContext, String newDomainId, Map<String,Object> options) throws Exception
  	{
-		
- 		return userContext.getDAOGroup().getUserDomainDAO().load(newDomainId, options);
+
+ 		return userDomainDaoOf(userContext).load(newDomainId, options);
  	}
  	
- 	
- 	
-	
-	 	
- 	protected SecUserBlocking loadSecUserBlocking(HisUserContext userContext, String newBlockingId, Map<String,Object> options) throws Exception
- 	{
-		
- 		return userContext.getDAOGroup().getSecUserBlockingDAO().load(newBlockingId, options);
- 	}
- 	
- 	
- 	
+
+
 	
 	//--------------------------------------------------------------
 
 	public void delete(HisUserContext userContext, String secUserId, int secUserVersion) throws Exception {
-		//deleteInternal(userContext, secUserId, secUserVersion);		
+		//deleteInternal(userContext, secUserId, secUserVersion);
 	}
 	protected void deleteInternal(HisUserContext userContext,
 			String secUserId, int secUserVersion) throws Exception{
-			
-		userContext.getDAOGroup().getSecUserDAO().delete(secUserId, secUserVersion);
+
+		secUserDaoOf(userContext).delete(secUserId, secUserVersion);
 	}
-	
+
 	public SecUser forgetByAll(HisUserContext userContext, String secUserId, int secUserVersion) throws Exception {
-		return forgetByAllInternal(userContext, secUserId, secUserVersion);		
+		return forgetByAllInternal(userContext, secUserId, secUserVersion);
 	}
 	protected SecUser forgetByAllInternal(HisUserContext userContext,
 			String secUserId, int secUserVersion) throws Exception{
-			
-		return userContext.getDAOGroup().getSecUserDAO().disconnectFromAll(secUserId, secUserVersion);
-	}
-	
 
-	
+		return secUserDaoOf(userContext).disconnectFromAll(secUserId, secUserVersion);
+	}
+
+
+
+
 	public int deleteAll(HisUserContext userContext, String secureCode) throws Exception
 	{
 		/*
@@ -678,76 +545,144 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		*/
 		return 0;
 	}
-	
-	
+
+
 	protected int deleteAllInternal(HisUserContext userContext) throws Exception{
-		return userContext.getDAOGroup().getSecUserDAO().deleteAll();
+		return secUserDaoOf(userContext).deleteAll();
 	}
 
 
 	//disconnect SecUser with object_id in UserApp
 	protected SecUser breakWithUserAppByObjectId(HisUserContext userContext, String secUserId, String objectIdId,  String [] tokensExpr)
 		 throws Exception{
-			
+
 			//TODO add check code here
-			
+
 			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
 
-			synchronized(secUser){ 
+			synchronized(secUser){
 				//Will be good when the thread loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				
-				userContext.getDAOGroup().getSecUserDAO().planToRemoveUserAppListWithObjectId(secUser, objectIdId, this.emptyOptions());
+
+				secUserDaoOf(userContext).planToRemoveUserAppListWithObjectId(secUser, objectIdId, this.emptyOptions());
 
 				secUser = saveSecUser(userContext, secUser, tokens().withUserAppList().done());
 				return secUser;
 			}
 	}
-	
-	
-	
-	
-	
+	//disconnect SecUser with corp_id in WechatWorkappIdentify
+	protected SecUser breakWithWechatWorkappIdentifyByCorpId(HisUserContext userContext, String secUserId, String corpIdId,  String [] tokensExpr)
+		 throws Exception{
+
+			//TODO add check code here
+
+			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+
+			synchronized(secUser){
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+
+				secUserDaoOf(userContext).planToRemoveWechatWorkappIdentifyListWithCorpId(secUser, corpIdId, this.emptyOptions());
+
+				secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+				return secUser;
+			}
+	}
+	//disconnect SecUser with user_id in WechatWorkappIdentify
+	protected SecUser breakWithWechatWorkappIdentifyByUserId(HisUserContext userContext, String secUserId, String userIdId,  String [] tokensExpr)
+		 throws Exception{
+
+			//TODO add check code here
+
+			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+
+			synchronized(secUser){
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+
+				secUserDaoOf(userContext).planToRemoveWechatWorkappIdentifyListWithUserId(secUser, userIdId, this.emptyOptions());
+
+				secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+				return secUser;
+			}
+	}
+	//disconnect SecUser with open_id in WechatMiniappIdentify
+	protected SecUser breakWithWechatMiniappIdentifyByOpenId(HisUserContext userContext, String secUserId, String openIdId,  String [] tokensExpr)
+		 throws Exception{
+
+			//TODO add check code here
+
+			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+
+			synchronized(secUser){
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+
+				secUserDaoOf(userContext).planToRemoveWechatMiniappIdentifyListWithOpenId(secUser, openIdId, this.emptyOptions());
+
+				secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+				return secUser;
+			}
+	}
+	//disconnect SecUser with app_id in WechatMiniappIdentify
+	protected SecUser breakWithWechatMiniappIdentifyByAppId(HisUserContext userContext, String secUserId, String appIdId,  String [] tokensExpr)
+		 throws Exception{
+
+			//TODO add check code here
+
+			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+
+			synchronized(secUser){
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+
+				secUserDaoOf(userContext).planToRemoveWechatMiniappIdentifyListWithAppId(secUser, appIdId, this.emptyOptions());
+
+				secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+				return secUser;
+			}
+	}
+
+
+
+
+
 
 	protected void checkParamsForAddingUserApp(HisUserContext userContext, String secUserId, String title, String appIcon, boolean fullAccess, String permission, String objectType, String objectId, String location,String [] tokensExpr) throws Exception{
-		
-		
+
+				checkerOf(userContext).checkIdOfSecUser(secUserId);
 
 		
+		checkerOf(userContext).checkTitleOfUserApp(title);
 		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-
+		checkerOf(userContext).checkAppIconOfUserApp(appIcon);
 		
-		userContext.getChecker().checkTitleOfUserApp(title);
+		checkerOf(userContext).checkFullAccessOfUserApp(fullAccess);
 		
-		userContext.getChecker().checkAppIconOfUserApp(appIcon);
+		checkerOf(userContext).checkPermissionOfUserApp(permission);
 		
-		userContext.getChecker().checkFullAccessOfUserApp(fullAccess);
+		checkerOf(userContext).checkObjectTypeOfUserApp(objectType);
 		
-		userContext.getChecker().checkPermissionOfUserApp(permission);
+		checkerOf(userContext).checkObjectIdOfUserApp(objectId);
 		
-		userContext.getChecker().checkObjectTypeOfUserApp(objectType);
-		
-		userContext.getChecker().checkObjectIdOfUserApp(objectId);
-		
-		userContext.getChecker().checkLocationOfUserApp(location);
+		checkerOf(userContext).checkLocationOfUserApp(location);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
 
-	
+
 	}
 	public  SecUser addUserApp(HisUserContext userContext, String secUserId, String title, String appIcon, boolean fullAccess, String permission, String objectType, String objectId, String location, String [] tokensExpr) throws Exception
-	{	
-		
+	{
+
 		checkParamsForAddingUserApp(userContext,secUserId,title, appIcon, fullAccess, permission, objectType, objectId, location,tokensExpr);
-		
+
 		UserApp userApp = createUserApp(userContext,title, appIcon, fullAccess, permission, objectType, objectId, location);
-		
-		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-		synchronized(secUser){ 
+
+		SecUser secUser = loadSecUser(userContext, secUserId, emptyOptions());
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			secUser.addUserApp( userApp );		
+			secUser.addUserApp( userApp );
 			secUser = saveSecUser(userContext, secUser, tokens().withUserAppList().done());
 			
 			userContext.getManagerGroup().getUserAppManager().onNewInstanceCreated(userContext, userApp);
@@ -755,38 +690,38 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		}
 	}
 	protected void checkParamsForUpdatingUserAppProperties(HisUserContext userContext, String secUserId,String id,String title,String appIcon,boolean fullAccess,String permission,String objectType,String objectId,String location,String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().checkIdOfUserApp(id);
-		
-		userContext.getChecker().checkTitleOfUserApp( title);
-		userContext.getChecker().checkAppIconOfUserApp( appIcon);
-		userContext.getChecker().checkFullAccessOfUserApp( fullAccess);
-		userContext.getChecker().checkPermissionOfUserApp( permission);
-		userContext.getChecker().checkObjectTypeOfUserApp( objectType);
-		userContext.getChecker().checkObjectIdOfUserApp( objectId);
-		userContext.getChecker().checkLocationOfUserApp( location);
 
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-		
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfUserApp(id);
+
+		checkerOf(userContext).checkTitleOfUserApp( title);
+		checkerOf(userContext).checkAppIconOfUserApp( appIcon);
+		checkerOf(userContext).checkFullAccessOfUserApp( fullAccess);
+		checkerOf(userContext).checkPermissionOfUserApp( permission);
+		checkerOf(userContext).checkObjectTypeOfUserApp( objectType);
+		checkerOf(userContext).checkObjectIdOfUserApp( objectId);
+		checkerOf(userContext).checkLocationOfUserApp( location);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
 	public  SecUser updateUserAppProperties(HisUserContext userContext, String secUserId, String id,String title,String appIcon,boolean fullAccess,String permission,String objectType,String objectId,String location, String [] tokensExpr) throws Exception
-	{	
+	{
 		checkParamsForUpdatingUserAppProperties(userContext,secUserId,id,title,appIcon,fullAccess,permission,objectType,objectId,location,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
 				//.withUserAppListList()
 				.searchUserAppListWith(UserApp.ID_PROPERTY, "is", id).done();
-		
+
 		SecUser secUserToUpdate = loadSecUser(userContext, secUserId, options);
-		
+
 		if(secUserToUpdate.getUserAppList().isEmpty()){
 			throw new SecUserManagerException("UserApp is NOT FOUND with id: '"+id+"'");
 		}
-		
+
 		UserApp item = secUserToUpdate.getUserAppList().first();
-		
+
 		item.updateTitle( title );
 		item.updateAppIcon( appIcon );
 		item.updateFullAccess( fullAccess );
@@ -795,15 +730,15 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		item.updateObjectId( objectId );
 		item.updateLocation( location );
 
-		
+
 		//checkParamsForAddingUserApp(userContext,secUserId,name, code, used,tokensExpr);
 		SecUser secUser = saveSecUser(userContext, secUserToUpdate, tokens().withUserAppList().done());
-		synchronized(secUser){ 
+		synchronized(secUser){
 			return present(userContext,secUser, mergedAllTokens(tokensExpr));
 		}
 	}
-	
-	
+
+
 	protected UserApp createUserApp(HisUserContext userContext, String title, String appIcon, boolean fullAccess, String permission, String objectType, String objectId, String location) throws Exception{
 
 		UserApp userApp = new UserApp();
@@ -819,170 +754,184 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 	
 		
 		return userApp;
-	
-		
+
+
 	}
-	
+
 	protected UserApp createIndexedUserApp(String id, int version){
 
 		UserApp userApp = new UserApp();
 		userApp.setId(id);
 		userApp.setVersion(version);
-		return userApp;			
-		
+		return userApp;
+
 	}
-	
-	protected void checkParamsForRemovingUserAppList(HisUserContext userContext, String secUserId, 
+
+	protected void checkParamsForRemovingUserAppList(HisUserContext userContext, String secUserId,
 			String userAppIds[],String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
+
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
 		for(String userAppIdItem: userAppIds){
-			userContext.getChecker().checkIdOfUserApp(userAppIdItem);
+			checkerOf(userContext).checkIdOfUserApp(userAppIdItem);
 		}
-		
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-		
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	public  SecUser removeUserAppList(HisUserContext userContext, String secUserId, 
+	public  SecUser removeUserAppList(HisUserContext userContext, String secUserId,
 			String userAppIds[],String [] tokensExpr) throws Exception{
-			
+
 			checkParamsForRemovingUserAppList(userContext, secUserId,  userAppIds, tokensExpr);
-			
-			
+
+
 			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-			synchronized(secUser){ 
+			synchronized(secUser){
 				//Will be good when the secUser loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				userContext.getDAOGroup().getSecUserDAO().planToRemoveUserAppList(secUser, userAppIds, allTokens());
+				secUserDaoOf(userContext).planToRemoveUserAppList(secUser, userAppIds, allTokens());
 				secUser = saveSecUser(userContext, secUser, tokens().withUserAppList().done());
 				deleteRelationListInGraph(userContext, secUser.getUserAppList());
 				return present(userContext,secUser, mergedAllTokens(tokensExpr));
 			}
 	}
-	
-	protected void checkParamsForRemovingUserApp(HisUserContext userContext, String secUserId, 
+
+	protected void checkParamsForRemovingUserApp(HisUserContext userContext, String secUserId,
 		String userAppId, int userAppVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfSecUser( secUserId);
-		userContext.getChecker().checkIdOfUserApp(userAppId);
-		userContext.getChecker().checkVersionOfUserApp(userAppVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfUserApp(userAppId);
+		checkerOf(userContext).checkVersionOfUserApp(userAppVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	public  SecUser removeUserApp(HisUserContext userContext, String secUserId, 
+	public  SecUser removeUserApp(HisUserContext userContext, String secUserId,
 		String userAppId, int userAppVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForRemovingUserApp(userContext,secUserId, userAppId, userAppVersion,tokensExpr);
-		
+
 		UserApp userApp = createIndexedUserApp(userAppId, userAppVersion);
 		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-		synchronized(secUser){ 
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			secUser.removeUserApp( userApp );		
+			secUser.removeUserApp( userApp );
 			secUser = saveSecUser(userContext, secUser, tokens().withUserAppList().done());
 			deleteRelationInGraph(userContext, userApp);
 			return present(userContext,secUser, mergedAllTokens(tokensExpr));
 		}
-		
-		
+
+
 	}
-	protected void checkParamsForCopyingUserApp(HisUserContext userContext, String secUserId, 
+	protected void checkParamsForCopyingUserApp(HisUserContext userContext, String secUserId,
 		String userAppId, int userAppVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfSecUser( secUserId);
-		userContext.getChecker().checkIdOfUserApp(userAppId);
-		userContext.getChecker().checkVersionOfUserApp(userAppVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfUserApp(userAppId);
+		checkerOf(userContext).checkVersionOfUserApp(userAppVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	public  SecUser copyUserAppFrom(HisUserContext userContext, String secUserId, 
+	public  SecUser copyUserAppFrom(HisUserContext userContext, String secUserId,
 		String userAppId, int userAppVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForCopyingUserApp(userContext,secUserId, userAppId, userAppVersion,tokensExpr);
-		
+
 		UserApp userApp = createIndexedUserApp(userAppId, userAppVersion);
 		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-		synchronized(secUser){ 
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
+
 			
-			
-			
-			secUser.copyUserAppFrom( userApp );		
+
+			secUser.copyUserAppFrom( userApp );
 			secUser = saveSecUser(userContext, secUser, tokens().withUserAppList().done());
 			
 			userContext.getManagerGroup().getUserAppManager().onNewInstanceCreated(userContext, (UserApp)secUser.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
 			return present(userContext,secUser, mergedAllTokens(tokensExpr));
 		}
-		
+
 	}
-	
+
 	protected void checkParamsForUpdatingUserApp(HisUserContext userContext, String secUserId, String userAppId, int userAppVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
 		
 
 		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().checkIdOfUserApp(userAppId);
-		userContext.getChecker().checkVersionOfUserApp(userAppVersion);
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfUserApp(userAppId);
+		checkerOf(userContext).checkVersionOfUserApp(userAppVersion);
 		
 
 		if(UserApp.TITLE_PROPERTY.equals(property)){
-			userContext.getChecker().checkTitleOfUserApp(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkTitleOfUserApp(parseString(newValueExpr));
+		
 		}
 		
 		if(UserApp.APP_ICON_PROPERTY.equals(property)){
-			userContext.getChecker().checkAppIconOfUserApp(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkAppIconOfUserApp(parseString(newValueExpr));
+		
 		}
 		
 		if(UserApp.FULL_ACCESS_PROPERTY.equals(property)){
-			userContext.getChecker().checkFullAccessOfUserApp(parseBoolean(newValueExpr));
+		
+			checkerOf(userContext).checkFullAccessOfUserApp(parseBoolean(newValueExpr));
+		
 		}
 		
 		if(UserApp.PERMISSION_PROPERTY.equals(property)){
-			userContext.getChecker().checkPermissionOfUserApp(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkPermissionOfUserApp(parseString(newValueExpr));
+		
 		}
 		
 		if(UserApp.OBJECT_TYPE_PROPERTY.equals(property)){
-			userContext.getChecker().checkObjectTypeOfUserApp(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkObjectTypeOfUserApp(parseString(newValueExpr));
+		
 		}
 		
 		if(UserApp.OBJECT_ID_PROPERTY.equals(property)){
-			userContext.getChecker().checkObjectIdOfUserApp(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkObjectIdOfUserApp(parseString(newValueExpr));
+		
 		}
 		
 		if(UserApp.LOCATION_PROPERTY.equals(property)){
-			userContext.getChecker().checkLocationOfUserApp(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLocationOfUserApp(parseString(newValueExpr));
+		
 		}
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	
+
 	public  SecUser updateUserApp(HisUserContext userContext, String secUserId, String userAppId, int userAppVersion, String property, String newValueExpr,String [] tokensExpr)
 			throws Exception{
-		
+
 		checkParamsForUpdatingUserApp(userContext, secUserId, userAppId, userAppVersion, property, newValueExpr,  tokensExpr);
-		
+
 		Map<String,Object> loadTokens = this.tokens().withUserAppList().searchUserAppListWith(UserApp.ID_PROPERTY, "eq", userAppId).done();
-		
-		
-		
+
+
+
 		SecUser secUser = loadSecUser(userContext, secUserId, loadTokens);
-		
-		synchronized(secUser){ 
+
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			//secUser.removeUserApp( userApp );	
+			//secUser.removeUserApp( userApp );
 			//make changes to AcceleraterAccount.
 			UserApp userAppIndex = createIndexedUserApp(userAppId, userAppVersion);
-		
+
 			UserApp userApp = secUser.findTheUserApp(userAppIndex);
 			if(userApp == null){
 				throw new SecUserManagerException(userApp+" is NOT FOUND" );
 			}
-			
+
 			userApp.changeProperty(property, newValueExpr);
 			
 			secUser = saveSecUser(userContext, secUser, tokens().withUserAppList().done());
@@ -993,39 +942,35 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 	/*
 
 	*/
-	
+
 
 
 
 	protected void checkParamsForAddingLoginHistory(HisUserContext userContext, String secUserId, String fromIp, String description,String [] tokensExpr) throws Exception{
-		
-		
+
+				checkerOf(userContext).checkIdOfSecUser(secUserId);
 
 		
+		checkerOf(userContext).checkFromIpOfLoginHistory(fromIp);
 		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-
-		
-		userContext.getChecker().checkFromIpOfLoginHistory(fromIp);
-		
-		userContext.getChecker().checkDescriptionOfLoginHistory(description);
+		checkerOf(userContext).checkDescriptionOfLoginHistory(description);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
 
-	
+
 	}
 	public  SecUser addLoginHistory(HisUserContext userContext, String secUserId, String fromIp, String description, String [] tokensExpr) throws Exception
-	{	
-		
+	{
+
 		checkParamsForAddingLoginHistory(userContext,secUserId,fromIp, description,tokensExpr);
-		
+
 		LoginHistory loginHistory = createLoginHistory(userContext,fromIp, description);
-		
-		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-		synchronized(secUser){ 
+
+		SecUser secUser = loadSecUser(userContext, secUserId, emptyOptions());
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			secUser.addLoginHistory( loginHistory );		
+			secUser.addLoginHistory( loginHistory );
 			secUser = saveSecUser(userContext, secUser, tokens().withLoginHistoryList().done());
 			
 			userContext.getManagerGroup().getLoginHistoryManager().onNewInstanceCreated(userContext, loginHistory);
@@ -1033,45 +978,45 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 		}
 	}
 	protected void checkParamsForUpdatingLoginHistoryProperties(HisUserContext userContext, String secUserId,String id,String fromIp,String description,String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().checkIdOfLoginHistory(id);
-		
-		userContext.getChecker().checkFromIpOfLoginHistory( fromIp);
-		userContext.getChecker().checkDescriptionOfLoginHistory( description);
 
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-		
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfLoginHistory(id);
+
+		checkerOf(userContext).checkFromIpOfLoginHistory( fromIp);
+		checkerOf(userContext).checkDescriptionOfLoginHistory( description);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
 	public  SecUser updateLoginHistoryProperties(HisUserContext userContext, String secUserId, String id,String fromIp,String description, String [] tokensExpr) throws Exception
-	{	
+	{
 		checkParamsForUpdatingLoginHistoryProperties(userContext,secUserId,id,fromIp,description,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
 				//.withLoginHistoryListList()
 				.searchLoginHistoryListWith(LoginHistory.ID_PROPERTY, "is", id).done();
-		
+
 		SecUser secUserToUpdate = loadSecUser(userContext, secUserId, options);
-		
+
 		if(secUserToUpdate.getLoginHistoryList().isEmpty()){
 			throw new SecUserManagerException("LoginHistory is NOT FOUND with id: '"+id+"'");
 		}
-		
+
 		LoginHistory item = secUserToUpdate.getLoginHistoryList().first();
-		
+
 		item.updateFromIp( fromIp );
 		item.updateDescription( description );
 
-		
+
 		//checkParamsForAddingLoginHistory(userContext,secUserId,name, code, used,tokensExpr);
 		SecUser secUser = saveSecUser(userContext, secUserToUpdate, tokens().withLoginHistoryList().done());
-		synchronized(secUser){ 
+		synchronized(secUser){
 			return present(userContext,secUser, mergedAllTokens(tokensExpr));
 		}
 	}
-	
-	
+
+
 	protected LoginHistory createLoginHistory(HisUserContext userContext, String fromIp, String description) throws Exception{
 
 		LoginHistory loginHistory = new LoginHistory();
@@ -1083,150 +1028,154 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 	
 		
 		return loginHistory;
-	
-		
+
+
 	}
-	
+
 	protected LoginHistory createIndexedLoginHistory(String id, int version){
 
 		LoginHistory loginHistory = new LoginHistory();
 		loginHistory.setId(id);
 		loginHistory.setVersion(version);
-		return loginHistory;			
-		
+		return loginHistory;
+
 	}
-	
-	protected void checkParamsForRemovingLoginHistoryList(HisUserContext userContext, String secUserId, 
+
+	protected void checkParamsForRemovingLoginHistoryList(HisUserContext userContext, String secUserId,
 			String loginHistoryIds[],String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
+
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
 		for(String loginHistoryIdItem: loginHistoryIds){
-			userContext.getChecker().checkIdOfLoginHistory(loginHistoryIdItem);
+			checkerOf(userContext).checkIdOfLoginHistory(loginHistoryIdItem);
 		}
-		
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-		
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	public  SecUser removeLoginHistoryList(HisUserContext userContext, String secUserId, 
+	public  SecUser removeLoginHistoryList(HisUserContext userContext, String secUserId,
 			String loginHistoryIds[],String [] tokensExpr) throws Exception{
-			
+
 			checkParamsForRemovingLoginHistoryList(userContext, secUserId,  loginHistoryIds, tokensExpr);
-			
-			
+
+
 			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-			synchronized(secUser){ 
+			synchronized(secUser){
 				//Will be good when the secUser loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				userContext.getDAOGroup().getSecUserDAO().planToRemoveLoginHistoryList(secUser, loginHistoryIds, allTokens());
+				secUserDaoOf(userContext).planToRemoveLoginHistoryList(secUser, loginHistoryIds, allTokens());
 				secUser = saveSecUser(userContext, secUser, tokens().withLoginHistoryList().done());
 				deleteRelationListInGraph(userContext, secUser.getLoginHistoryList());
 				return present(userContext,secUser, mergedAllTokens(tokensExpr));
 			}
 	}
-	
-	protected void checkParamsForRemovingLoginHistory(HisUserContext userContext, String secUserId, 
+
+	protected void checkParamsForRemovingLoginHistory(HisUserContext userContext, String secUserId,
 		String loginHistoryId, int loginHistoryVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfSecUser( secUserId);
-		userContext.getChecker().checkIdOfLoginHistory(loginHistoryId);
-		userContext.getChecker().checkVersionOfLoginHistory(loginHistoryVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfLoginHistory(loginHistoryId);
+		checkerOf(userContext).checkVersionOfLoginHistory(loginHistoryVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	public  SecUser removeLoginHistory(HisUserContext userContext, String secUserId, 
+	public  SecUser removeLoginHistory(HisUserContext userContext, String secUserId,
 		String loginHistoryId, int loginHistoryVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForRemovingLoginHistory(userContext,secUserId, loginHistoryId, loginHistoryVersion,tokensExpr);
-		
+
 		LoginHistory loginHistory = createIndexedLoginHistory(loginHistoryId, loginHistoryVersion);
 		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-		synchronized(secUser){ 
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			secUser.removeLoginHistory( loginHistory );		
+			secUser.removeLoginHistory( loginHistory );
 			secUser = saveSecUser(userContext, secUser, tokens().withLoginHistoryList().done());
 			deleteRelationInGraph(userContext, loginHistory);
 			return present(userContext,secUser, mergedAllTokens(tokensExpr));
 		}
-		
-		
+
+
 	}
-	protected void checkParamsForCopyingLoginHistory(HisUserContext userContext, String secUserId, 
+	protected void checkParamsForCopyingLoginHistory(HisUserContext userContext, String secUserId,
 		String loginHistoryId, int loginHistoryVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfSecUser( secUserId);
-		userContext.getChecker().checkIdOfLoginHistory(loginHistoryId);
-		userContext.getChecker().checkVersionOfLoginHistory(loginHistoryVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfLoginHistory(loginHistoryId);
+		checkerOf(userContext).checkVersionOfLoginHistory(loginHistoryVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	public  SecUser copyLoginHistoryFrom(HisUserContext userContext, String secUserId, 
+	public  SecUser copyLoginHistoryFrom(HisUserContext userContext, String secUserId,
 		String loginHistoryId, int loginHistoryVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForCopyingLoginHistory(userContext,secUserId, loginHistoryId, loginHistoryVersion,tokensExpr);
-		
+
 		LoginHistory loginHistory = createIndexedLoginHistory(loginHistoryId, loginHistoryVersion);
 		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
-		synchronized(secUser){ 
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
+
 			
-			
-			
-			secUser.copyLoginHistoryFrom( loginHistory );		
+
+			secUser.copyLoginHistoryFrom( loginHistory );
 			secUser = saveSecUser(userContext, secUser, tokens().withLoginHistoryList().done());
 			
 			userContext.getManagerGroup().getLoginHistoryManager().onNewInstanceCreated(userContext, (LoginHistory)secUser.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
 			return present(userContext,secUser, mergedAllTokens(tokensExpr));
 		}
-		
+
 	}
-	
+
 	protected void checkParamsForUpdatingLoginHistory(HisUserContext userContext, String secUserId, String loginHistoryId, int loginHistoryVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
 		
 
 		
-		userContext.getChecker().checkIdOfSecUser(secUserId);
-		userContext.getChecker().checkIdOfLoginHistory(loginHistoryId);
-		userContext.getChecker().checkVersionOfLoginHistory(loginHistoryVersion);
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfLoginHistory(loginHistoryId);
+		checkerOf(userContext).checkVersionOfLoginHistory(loginHistoryVersion);
 		
 
 		if(LoginHistory.FROM_IP_PROPERTY.equals(property)){
-			userContext.getChecker().checkFromIpOfLoginHistory(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkFromIpOfLoginHistory(parseString(newValueExpr));
+		
 		}
 		
 		if(LoginHistory.DESCRIPTION_PROPERTY.equals(property)){
-			userContext.getChecker().checkDescriptionOfLoginHistory(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkDescriptionOfLoginHistory(parseString(newValueExpr));
+		
 		}
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(SecUserManagerException.class);
-	
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
 	}
-	
+
 	public  SecUser updateLoginHistory(HisUserContext userContext, String secUserId, String loginHistoryId, int loginHistoryVersion, String property, String newValueExpr,String [] tokensExpr)
 			throws Exception{
-		
+
 		checkParamsForUpdatingLoginHistory(userContext, secUserId, loginHistoryId, loginHistoryVersion, property, newValueExpr,  tokensExpr);
-		
+
 		Map<String,Object> loadTokens = this.tokens().withLoginHistoryList().searchLoginHistoryListWith(LoginHistory.ID_PROPERTY, "eq", loginHistoryId).done();
-		
-		
-		
+
+
+
 		SecUser secUser = loadSecUser(userContext, secUserId, loadTokens);
-		
-		synchronized(secUser){ 
+
+		synchronized(secUser){
 			//Will be good when the secUser loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			//secUser.removeLoginHistory( loginHistory );	
+			//secUser.removeLoginHistory( loginHistory );
 			//make changes to AcceleraterAccount.
 			LoginHistory loginHistoryIndex = createIndexedLoginHistory(loginHistoryId, loginHistoryVersion);
-		
+
 			LoginHistory loginHistory = secUser.findTheLoginHistory(loginHistoryIndex);
 			if(loginHistory == null){
 				throw new SecUserManagerException(loginHistory+" is NOT FOUND" );
 			}
-			
+
 			loginHistory.changeProperty(property, newValueExpr);
 			
 			secUser = saveSecUser(userContext, secUser, tokens().withLoginHistoryList().done());
@@ -1237,13 +1186,940 @@ public class SecUserManagerImpl extends CustomHisCheckerManager implements SecUs
 	/*
 
 	*/
+
+
+
+
+	protected void checkParamsForAddingWechatWorkappIdentify(HisUserContext userContext, String secUserId, String corpId, String userId, DateTime lastLoginTime,String [] tokensExpr) throws Exception{
+
+				checkerOf(userContext).checkIdOfSecUser(secUserId);
+
+		
+		checkerOf(userContext).checkCorpIdOfWechatWorkappIdentify(corpId);
+		
+		checkerOf(userContext).checkUserIdOfWechatWorkappIdentify(userId);
+		
+		checkerOf(userContext).checkLastLoginTimeOfWechatWorkappIdentify(lastLoginTime);
 	
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+
+	}
+	public  SecUser addWechatWorkappIdentify(HisUserContext userContext, String secUserId, String corpId, String userId, DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	{
+
+		checkParamsForAddingWechatWorkappIdentify(userContext,secUserId,corpId, userId, lastLoginTime,tokensExpr);
+
+		WechatWorkappIdentify wechatWorkappIdentify = createWechatWorkappIdentify(userContext,corpId, userId, lastLoginTime);
+
+		SecUser secUser = loadSecUser(userContext, secUserId, emptyOptions());
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			secUser.addWechatWorkappIdentify( wechatWorkappIdentify );
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+			
+			userContext.getManagerGroup().getWechatWorkappIdentifyManager().onNewInstanceCreated(userContext, wechatWorkappIdentify);
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingWechatWorkappIdentifyProperties(HisUserContext userContext, String secUserId,String id,String corpId,String userId,DateTime lastLoginTime,String [] tokensExpr) throws Exception {
+
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfWechatWorkappIdentify(id);
+
+		checkerOf(userContext).checkCorpIdOfWechatWorkappIdentify( corpId);
+		checkerOf(userContext).checkUserIdOfWechatWorkappIdentify( userId);
+		checkerOf(userContext).checkLastLoginTimeOfWechatWorkappIdentify( lastLoginTime);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser updateWechatWorkappIdentifyProperties(HisUserContext userContext, String secUserId, String id,String corpId,String userId,DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	{
+		checkParamsForUpdatingWechatWorkappIdentifyProperties(userContext,secUserId,id,corpId,userId,lastLoginTime,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withWechatWorkappIdentifyListList()
+				.searchWechatWorkappIdentifyListWith(WechatWorkappIdentify.ID_PROPERTY, "is", id).done();
+
+		SecUser secUserToUpdate = loadSecUser(userContext, secUserId, options);
+
+		if(secUserToUpdate.getWechatWorkappIdentifyList().isEmpty()){
+			throw new SecUserManagerException("WechatWorkappIdentify is NOT FOUND with id: '"+id+"'");
+		}
+
+		WechatWorkappIdentify item = secUserToUpdate.getWechatWorkappIdentifyList().first();
+
+		item.updateCorpId( corpId );
+		item.updateUserId( userId );
+		item.updateLastLoginTime( lastLoginTime );
+
+
+		//checkParamsForAddingWechatWorkappIdentify(userContext,secUserId,name, code, used,tokensExpr);
+		SecUser secUser = saveSecUser(userContext, secUserToUpdate, tokens().withWechatWorkappIdentifyList().done());
+		synchronized(secUser){
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+	}
+
+
+	protected WechatWorkappIdentify createWechatWorkappIdentify(HisUserContext userContext, String corpId, String userId, DateTime lastLoginTime) throws Exception{
+
+		WechatWorkappIdentify wechatWorkappIdentify = new WechatWorkappIdentify();
+		
+		
+		wechatWorkappIdentify.setCorpId(corpId);		
+		wechatWorkappIdentify.setUserId(userId);		
+		wechatWorkappIdentify.setCreateTime(userContext.now());		
+		wechatWorkappIdentify.setLastLoginTime(lastLoginTime);
+	
+		
+		return wechatWorkappIdentify;
+
+
+	}
+
+	protected WechatWorkappIdentify createIndexedWechatWorkappIdentify(String id, int version){
+
+		WechatWorkappIdentify wechatWorkappIdentify = new WechatWorkappIdentify();
+		wechatWorkappIdentify.setId(id);
+		wechatWorkappIdentify.setVersion(version);
+		return wechatWorkappIdentify;
+
+	}
+
+	protected void checkParamsForRemovingWechatWorkappIdentifyList(HisUserContext userContext, String secUserId,
+			String wechatWorkappIdentifyIds[],String [] tokensExpr) throws Exception {
+
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		for(String wechatWorkappIdentifyIdItem: wechatWorkappIdentifyIds){
+			checkerOf(userContext).checkIdOfWechatWorkappIdentify(wechatWorkappIdentifyIdItem);
+		}
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser removeWechatWorkappIdentifyList(HisUserContext userContext, String secUserId,
+			String wechatWorkappIdentifyIds[],String [] tokensExpr) throws Exception{
+
+			checkParamsForRemovingWechatWorkappIdentifyList(userContext, secUserId,  wechatWorkappIdentifyIds, tokensExpr);
+
+
+			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+			synchronized(secUser){
+				//Will be good when the secUser loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				secUserDaoOf(userContext).planToRemoveWechatWorkappIdentifyList(secUser, wechatWorkappIdentifyIds, allTokens());
+				secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+				deleteRelationListInGraph(userContext, secUser.getWechatWorkappIdentifyList());
+				return present(userContext,secUser, mergedAllTokens(tokensExpr));
+			}
+	}
+
+	protected void checkParamsForRemovingWechatWorkappIdentify(HisUserContext userContext, String secUserId,
+		String wechatWorkappIdentifyId, int wechatWorkappIdentifyVersion,String [] tokensExpr) throws Exception{
+		
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfWechatWorkappIdentify(wechatWorkappIdentifyId);
+		checkerOf(userContext).checkVersionOfWechatWorkappIdentify(wechatWorkappIdentifyVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser removeWechatWorkappIdentify(HisUserContext userContext, String secUserId,
+		String wechatWorkappIdentifyId, int wechatWorkappIdentifyVersion,String [] tokensExpr) throws Exception{
+
+		checkParamsForRemovingWechatWorkappIdentify(userContext,secUserId, wechatWorkappIdentifyId, wechatWorkappIdentifyVersion,tokensExpr);
+
+		WechatWorkappIdentify wechatWorkappIdentify = createIndexedWechatWorkappIdentify(wechatWorkappIdentifyId, wechatWorkappIdentifyVersion);
+		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			secUser.removeWechatWorkappIdentify( wechatWorkappIdentify );
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+			deleteRelationInGraph(userContext, wechatWorkappIdentify);
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+
+
+	}
+	protected void checkParamsForCopyingWechatWorkappIdentify(HisUserContext userContext, String secUserId,
+		String wechatWorkappIdentifyId, int wechatWorkappIdentifyVersion,String [] tokensExpr) throws Exception{
+		
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfWechatWorkappIdentify(wechatWorkappIdentifyId);
+		checkerOf(userContext).checkVersionOfWechatWorkappIdentify(wechatWorkappIdentifyVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser copyWechatWorkappIdentifyFrom(HisUserContext userContext, String secUserId,
+		String wechatWorkappIdentifyId, int wechatWorkappIdentifyVersion,String [] tokensExpr) throws Exception{
+
+		checkParamsForCopyingWechatWorkappIdentify(userContext,secUserId, wechatWorkappIdentifyId, wechatWorkappIdentifyVersion,tokensExpr);
+
+		WechatWorkappIdentify wechatWorkappIdentify = createIndexedWechatWorkappIdentify(wechatWorkappIdentifyId, wechatWorkappIdentifyVersion);
+		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+
+			
+
+			secUser.copyWechatWorkappIdentifyFrom( wechatWorkappIdentify );
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+			
+			userContext.getManagerGroup().getWechatWorkappIdentifyManager().onNewInstanceCreated(userContext, (WechatWorkappIdentify)secUser.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+
+	}
+
+	protected void checkParamsForUpdatingWechatWorkappIdentify(HisUserContext userContext, String secUserId, String wechatWorkappIdentifyId, int wechatWorkappIdentifyVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfWechatWorkappIdentify(wechatWorkappIdentifyId);
+		checkerOf(userContext).checkVersionOfWechatWorkappIdentify(wechatWorkappIdentifyVersion);
+		
+
+		if(WechatWorkappIdentify.CORP_ID_PROPERTY.equals(property)){
+		
+			checkerOf(userContext).checkCorpIdOfWechatWorkappIdentify(parseString(newValueExpr));
+		
+		}
+		
+		if(WechatWorkappIdentify.USER_ID_PROPERTY.equals(property)){
+		
+			checkerOf(userContext).checkUserIdOfWechatWorkappIdentify(parseString(newValueExpr));
+		
+		}
+		
+		if(WechatWorkappIdentify.LAST_LOGIN_TIME_PROPERTY.equals(property)){
+		
+			checkerOf(userContext).checkLastLoginTimeOfWechatWorkappIdentify(parseTimestamp(newValueExpr));
+		
+		}
+		
+	
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+
+	public  SecUser updateWechatWorkappIdentify(HisUserContext userContext, String secUserId, String wechatWorkappIdentifyId, int wechatWorkappIdentifyVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+
+		checkParamsForUpdatingWechatWorkappIdentify(userContext, secUserId, wechatWorkappIdentifyId, wechatWorkappIdentifyVersion, property, newValueExpr,  tokensExpr);
+
+		Map<String,Object> loadTokens = this.tokens().withWechatWorkappIdentifyList().searchWechatWorkappIdentifyListWith(WechatWorkappIdentify.ID_PROPERTY, "eq", wechatWorkappIdentifyId).done();
+
+
+
+		SecUser secUser = loadSecUser(userContext, secUserId, loadTokens);
+
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//secUser.removeWechatWorkappIdentify( wechatWorkappIdentify );
+			//make changes to AcceleraterAccount.
+			WechatWorkappIdentify wechatWorkappIdentifyIndex = createIndexedWechatWorkappIdentify(wechatWorkappIdentifyId, wechatWorkappIdentifyVersion);
+
+			WechatWorkappIdentify wechatWorkappIdentify = secUser.findTheWechatWorkappIdentify(wechatWorkappIdentifyIndex);
+			if(wechatWorkappIdentify == null){
+				throw new SecUserManagerException(wechatWorkappIdentify+" is NOT FOUND" );
+			}
+
+			wechatWorkappIdentify.changeProperty(property, newValueExpr);
+			
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatWorkappIdentifyList().done());
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+
+
+
+
+	protected void checkParamsForAddingWechatMiniappIdentify(HisUserContext userContext, String secUserId, String openId, String appId, DateTime lastLoginTime,String [] tokensExpr) throws Exception{
+
+				checkerOf(userContext).checkIdOfSecUser(secUserId);
+
+		
+		checkerOf(userContext).checkOpenIdOfWechatMiniappIdentify(openId);
+		
+		checkerOf(userContext).checkAppIdOfWechatMiniappIdentify(appId);
+		
+		checkerOf(userContext).checkLastLoginTimeOfWechatMiniappIdentify(lastLoginTime);
+	
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+
+	}
+	public  SecUser addWechatMiniappIdentify(HisUserContext userContext, String secUserId, String openId, String appId, DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	{
+
+		checkParamsForAddingWechatMiniappIdentify(userContext,secUserId,openId, appId, lastLoginTime,tokensExpr);
+
+		WechatMiniappIdentify wechatMiniappIdentify = createWechatMiniappIdentify(userContext,openId, appId, lastLoginTime);
+
+		SecUser secUser = loadSecUser(userContext, secUserId, emptyOptions());
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			secUser.addWechatMiniappIdentify( wechatMiniappIdentify );
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+			
+			userContext.getManagerGroup().getWechatMiniappIdentifyManager().onNewInstanceCreated(userContext, wechatMiniappIdentify);
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingWechatMiniappIdentifyProperties(HisUserContext userContext, String secUserId,String id,String openId,String appId,DateTime lastLoginTime,String [] tokensExpr) throws Exception {
+
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfWechatMiniappIdentify(id);
+
+		checkerOf(userContext).checkOpenIdOfWechatMiniappIdentify( openId);
+		checkerOf(userContext).checkAppIdOfWechatMiniappIdentify( appId);
+		checkerOf(userContext).checkLastLoginTimeOfWechatMiniappIdentify( lastLoginTime);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser updateWechatMiniappIdentifyProperties(HisUserContext userContext, String secUserId, String id,String openId,String appId,DateTime lastLoginTime, String [] tokensExpr) throws Exception
+	{
+		checkParamsForUpdatingWechatMiniappIdentifyProperties(userContext,secUserId,id,openId,appId,lastLoginTime,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withWechatMiniappIdentifyListList()
+				.searchWechatMiniappIdentifyListWith(WechatMiniappIdentify.ID_PROPERTY, "is", id).done();
+
+		SecUser secUserToUpdate = loadSecUser(userContext, secUserId, options);
+
+		if(secUserToUpdate.getWechatMiniappIdentifyList().isEmpty()){
+			throw new SecUserManagerException("WechatMiniappIdentify is NOT FOUND with id: '"+id+"'");
+		}
+
+		WechatMiniappIdentify item = secUserToUpdate.getWechatMiniappIdentifyList().first();
+
+		item.updateOpenId( openId );
+		item.updateAppId( appId );
+		item.updateLastLoginTime( lastLoginTime );
+
+
+		//checkParamsForAddingWechatMiniappIdentify(userContext,secUserId,name, code, used,tokensExpr);
+		SecUser secUser = saveSecUser(userContext, secUserToUpdate, tokens().withWechatMiniappIdentifyList().done());
+		synchronized(secUser){
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+	}
+
+
+	protected WechatMiniappIdentify createWechatMiniappIdentify(HisUserContext userContext, String openId, String appId, DateTime lastLoginTime) throws Exception{
+
+		WechatMiniappIdentify wechatMiniappIdentify = new WechatMiniappIdentify();
+		
+		
+		wechatMiniappIdentify.setOpenId(openId);		
+		wechatMiniappIdentify.setAppId(appId);		
+		wechatMiniappIdentify.setCreateTime(userContext.now());		
+		wechatMiniappIdentify.setLastLoginTime(lastLoginTime);
+	
+		
+		return wechatMiniappIdentify;
+
+
+	}
+
+	protected WechatMiniappIdentify createIndexedWechatMiniappIdentify(String id, int version){
+
+		WechatMiniappIdentify wechatMiniappIdentify = new WechatMiniappIdentify();
+		wechatMiniappIdentify.setId(id);
+		wechatMiniappIdentify.setVersion(version);
+		return wechatMiniappIdentify;
+
+	}
+
+	protected void checkParamsForRemovingWechatMiniappIdentifyList(HisUserContext userContext, String secUserId,
+			String wechatMiniappIdentifyIds[],String [] tokensExpr) throws Exception {
+
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		for(String wechatMiniappIdentifyIdItem: wechatMiniappIdentifyIds){
+			checkerOf(userContext).checkIdOfWechatMiniappIdentify(wechatMiniappIdentifyIdItem);
+		}
+
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser removeWechatMiniappIdentifyList(HisUserContext userContext, String secUserId,
+			String wechatMiniappIdentifyIds[],String [] tokensExpr) throws Exception{
+
+			checkParamsForRemovingWechatMiniappIdentifyList(userContext, secUserId,  wechatMiniappIdentifyIds, tokensExpr);
+
+
+			SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+			synchronized(secUser){
+				//Will be good when the secUser loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				secUserDaoOf(userContext).planToRemoveWechatMiniappIdentifyList(secUser, wechatMiniappIdentifyIds, allTokens());
+				secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+				deleteRelationListInGraph(userContext, secUser.getWechatMiniappIdentifyList());
+				return present(userContext,secUser, mergedAllTokens(tokensExpr));
+			}
+	}
+
+	protected void checkParamsForRemovingWechatMiniappIdentify(HisUserContext userContext, String secUserId,
+		String wechatMiniappIdentifyId, int wechatMiniappIdentifyVersion,String [] tokensExpr) throws Exception{
+		
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfWechatMiniappIdentify(wechatMiniappIdentifyId);
+		checkerOf(userContext).checkVersionOfWechatMiniappIdentify(wechatMiniappIdentifyVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser removeWechatMiniappIdentify(HisUserContext userContext, String secUserId,
+		String wechatMiniappIdentifyId, int wechatMiniappIdentifyVersion,String [] tokensExpr) throws Exception{
+
+		checkParamsForRemovingWechatMiniappIdentify(userContext,secUserId, wechatMiniappIdentifyId, wechatMiniappIdentifyVersion,tokensExpr);
+
+		WechatMiniappIdentify wechatMiniappIdentify = createIndexedWechatMiniappIdentify(wechatMiniappIdentifyId, wechatMiniappIdentifyVersion);
+		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			secUser.removeWechatMiniappIdentify( wechatMiniappIdentify );
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+			deleteRelationInGraph(userContext, wechatMiniappIdentify);
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+
+
+	}
+	protected void checkParamsForCopyingWechatMiniappIdentify(HisUserContext userContext, String secUserId,
+		String wechatMiniappIdentifyId, int wechatMiniappIdentifyVersion,String [] tokensExpr) throws Exception{
+		
+		checkerOf(userContext).checkIdOfSecUser( secUserId);
+		checkerOf(userContext).checkIdOfWechatMiniappIdentify(wechatMiniappIdentifyId);
+		checkerOf(userContext).checkVersionOfWechatMiniappIdentify(wechatMiniappIdentifyVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+	public  SecUser copyWechatMiniappIdentifyFrom(HisUserContext userContext, String secUserId,
+		String wechatMiniappIdentifyId, int wechatMiniappIdentifyVersion,String [] tokensExpr) throws Exception{
+
+		checkParamsForCopyingWechatMiniappIdentify(userContext,secUserId, wechatMiniappIdentifyId, wechatMiniappIdentifyVersion,tokensExpr);
+
+		WechatMiniappIdentify wechatMiniappIdentify = createIndexedWechatMiniappIdentify(wechatMiniappIdentifyId, wechatMiniappIdentifyVersion);
+		SecUser secUser = loadSecUser(userContext, secUserId, allTokens());
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+
+			
+
+			secUser.copyWechatMiniappIdentifyFrom( wechatMiniappIdentify );
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+			
+			userContext.getManagerGroup().getWechatMiniappIdentifyManager().onNewInstanceCreated(userContext, (WechatMiniappIdentify)secUser.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+
+	}
+
+	protected void checkParamsForUpdatingWechatMiniappIdentify(HisUserContext userContext, String secUserId, String wechatMiniappIdentifyId, int wechatMiniappIdentifyVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		checkerOf(userContext).checkIdOfSecUser(secUserId);
+		checkerOf(userContext).checkIdOfWechatMiniappIdentify(wechatMiniappIdentifyId);
+		checkerOf(userContext).checkVersionOfWechatMiniappIdentify(wechatMiniappIdentifyVersion);
+		
+
+		if(WechatMiniappIdentify.OPEN_ID_PROPERTY.equals(property)){
+		
+			checkerOf(userContext).checkOpenIdOfWechatMiniappIdentify(parseString(newValueExpr));
+		
+		}
+		
+		if(WechatMiniappIdentify.APP_ID_PROPERTY.equals(property)){
+		
+			checkerOf(userContext).checkAppIdOfWechatMiniappIdentify(parseString(newValueExpr));
+		
+		}
+		
+		if(WechatMiniappIdentify.LAST_LOGIN_TIME_PROPERTY.equals(property)){
+		
+			checkerOf(userContext).checkLastLoginTimeOfWechatMiniappIdentify(parseTimestamp(newValueExpr));
+		
+		}
+		
+	
+		checkerOf(userContext).throwExceptionIfHasErrors(SecUserManagerException.class);
+
+	}
+
+	public  SecUser updateWechatMiniappIdentify(HisUserContext userContext, String secUserId, String wechatMiniappIdentifyId, int wechatMiniappIdentifyVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+
+		checkParamsForUpdatingWechatMiniappIdentify(userContext, secUserId, wechatMiniappIdentifyId, wechatMiniappIdentifyVersion, property, newValueExpr,  tokensExpr);
+
+		Map<String,Object> loadTokens = this.tokens().withWechatMiniappIdentifyList().searchWechatMiniappIdentifyListWith(WechatMiniappIdentify.ID_PROPERTY, "eq", wechatMiniappIdentifyId).done();
+
+
+
+		SecUser secUser = loadSecUser(userContext, secUserId, loadTokens);
+
+		synchronized(secUser){
+			//Will be good when the secUser loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//secUser.removeWechatMiniappIdentify( wechatMiniappIdentify );
+			//make changes to AcceleraterAccount.
+			WechatMiniappIdentify wechatMiniappIdentifyIndex = createIndexedWechatMiniappIdentify(wechatMiniappIdentifyId, wechatMiniappIdentifyVersion);
+
+			WechatMiniappIdentify wechatMiniappIdentify = secUser.findTheWechatMiniappIdentify(wechatMiniappIdentifyIndex);
+			if(wechatMiniappIdentify == null){
+				throw new SecUserManagerException(wechatMiniappIdentify+" is NOT FOUND" );
+			}
+
+			wechatMiniappIdentify.changeProperty(property, newValueExpr);
+			
+			secUser = saveSecUser(userContext, secUser, tokens().withWechatMiniappIdentifyList().done());
+			return present(userContext,secUser, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+
 
 
 
 	public void onNewInstanceCreated(HisUserContext userContext, SecUser newCreated) throws Exception{
 		ensureRelationInGraph(userContext, newCreated);
 		sendCreationEvent(userContext, newCreated);
+
+    
+	}
+
+  
+  
+
+	// -----------------------------------//  登录部分处理 \\-----------------------------------
+	// 手机号+短信验证码 登录
+	public Object loginByMobile(HisUserContextImpl userContext, String mobile, String verifyCode) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByMobile");
+		LoginData loginData = new LoginData();
+		loginData.setMobile(mobile);
+		loginData.setVerifyCode(verifyCode);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.MOBILE, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 账号+密码登录
+	public Object loginByPassword(HisUserContextImpl userContext, String loginId, Password password) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(), "loginByPassword");
+		LoginData loginData = new LoginData();
+		loginData.setLoginId(loginId);
+		loginData.setPassword(password.getClearTextPassword());
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.PASSWORD, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 微信小程序登录
+	public Object loginByWechatMiniProgram(HisUserContextImpl userContext, String code) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByWechatMiniProgram");
+		LoginData loginData = new LoginData();
+		loginData.setCode(code);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.WECHAT_MINIPROGRAM, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 企业微信小程序登录
+	public Object loginByWechatWorkMiniProgram(HisUserContextImpl userContext, String code) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByWechatWorkMiniProgram");
+		LoginData loginData = new LoginData();
+		loginData.setCode(code);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.WECHAT_WORK_MINIPROGRAM, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 调用登录处理
+	protected Object processLoginRequest(HisUserContextImpl userContext, LoginContext loginContext) throws Exception {
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		LoginResult loginResult = iamService.doLogin(userContext, loginContext, this);
+		// 根据登录结果
+		if (!loginResult.isAuthenticated()) {
+			throw new Exception(loginResult.getMessage());
+		}
+		if (loginResult.isSuccess()) {
+			return onLoginSuccess(userContext, loginResult);
+		}
+		if (loginResult.isNewUser()) {
+			throw new Exception("请联系你的上级,先为你创建账号,然后再来登录.");
+		}
+		return new LoginForm();
+	}
+
+	@Override
+	public Object checkAccess(BaseUserContext baseUserContext, String methodName, Object[] parameters)
+			throws IllegalAccessException {
+		HisUserContextImpl userContext = (HisUserContextImpl)baseUserContext;
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		Map<String, Object> loginInfo = iamService.getCachedLoginInfo(userContext);
+
+		SecUser secUser = iamService.tryToLoadSecUser(userContext, loginInfo);
+		UserApp userApp = iamService.tryToLoadUserApp(userContext, loginInfo);
+		if (userApp != null) {
+			userApp.setSecUser(secUser);
+		}
+		if (secUser == null) {
+			iamService.onCheckAccessWhenAnonymousFound(userContext, loginInfo);
+		}
+		afterSecUserAppLoadedWhenCheckAccess(userContext, loginInfo, secUser, userApp);
+		if (!isMethodNeedLogin(userContext, methodName, parameters)) {
+			return accessOK();
+		}
+
+		return super.checkAccess(baseUserContext, methodName, parameters);
+	}
+
+	// 判断哪些接口需要登录后才能执行. 默认除了loginBy开头的,其他都要登录
+	protected boolean isMethodNeedLogin(HisUserContextImpl userContext, String methodName, Object[] parameters) {
+		if (methodName.startsWith("loginBy")) {
+			return false;
+		}
+		if (methodName.startsWith("logout")) {
+			return false;
+		}
+		return true;
+	}
+
+	// 在checkAccess中加载了secUser和userApp后会调用此方法,用于定制化的用户数据加载. 默认什么也不做
+	protected void afterSecUserAppLoadedWhenCheckAccess(HisUserContextImpl userContext, Map<String, Object> loginInfo,
+			SecUser secUser, UserApp userApp) throws IllegalAccessException{
+	}
+
+
+
+	protected Object onLoginSuccess(HisUserContext userContext, LoginResult loginResult) throws Exception {
+		// by default, return the view of this object
+		UserApp userApp = loginResult.getLoginContext().getLoginTarget().getUserApp();
+		return this.view(userContext, userApp.getObjectId());
+	}
+
+	public void onAuthenticationFailed(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// by default, failed is failed, nothing can do
+	}
+	// when user authenticated success, but no sec_user related, this maybe a new user login from 3-rd party service.
+	public void onAuthenticateNewUserLogged(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// Generally speaking, when authenticated user logined, we will create a new account for him/her.
+		// you need do it like :
+		// First, you should create new data such as:
+		//   SecUser newSecUser = this.createSecUser(userContext, ...
+		// Next, create a sec-user in your business way:
+		//   SecUser secUser = secUserManagerOf(userContext).createSecUser(userContext, login, mobile ...
+		// And set it into loginContext:
+		//   loginContext.getLoginTarget().setSecUser(secUser);
+		// Next, create an user-app to connect secUser and newSecUser
+		//   UserApp uerApp = userAppManagerOf(userContext).createUserApp(userContext, secUser.getId(), ...
+		// Also, set it into loginContext:
+		//   loginContext.getLoginTarget().setUserApp(userApp);
+		// Since many of detailed info were depending business requirement, So,
+		throw new Exception("请重载函数onAuthenticateNewUserLogged()以处理新用户登录");
+	}
+	public void onAuthenticateUserLogged(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// by default, find the correct user-app
+		SecUser secUser = loginResult.getLoginContext().getLoginTarget().getSecUser();
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserApp.SEC_USER_PROPERTY, secUser.getId());
+		key.put(UserApp.OBJECT_TYPE_PROPERTY, SecUser.INTERNAL_TYPE);
+		SmartList<UserApp> userApps = userContext.getDAOGroup().getUserAppDAO().findUserAppWithKey(key, EO);
+		if (userApps == null || userApps.isEmpty()) {
+			throw new Exception("您的账号未关联销售人员,请联系客服处理账号异常.");
+		}
+		UserApp userApp = userApps.first();
+		userApp.setSecUser(secUser);
+		loginResult.getLoginContext().getLoginTarget().setUserApp(userApp);
+	}
+	// -----------------------------------\\  登录部分处理 //-----------------------------------
+
+
+	// -----------------------------------// list-of-view 处理 \\-----------------------------------
+    protected void enhanceForListOfView(HisUserContext userContext,SmartList<SecUser> list) throws Exception {
+    	if (list == null || list.isEmpty()){
+    		return;
+    	}
+		List<UserDomain> domainList = HisBaseUtils.collectReferencedObjectWithType(userContext, list, UserDomain.class);
+		userContext.getDAOGroup().enhanceList(domainList, UserDomain.class);
+
+
+    }
+	
+	public Object listByDomain(HisUserContext userContext,String domainId) throws Exception {
+		return listPageByDomain(userContext, domainId, 0, 20);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Object listPageByDomain(HisUserContext userContext,String domainId, int start, int count) throws Exception {
+		SmartList<SecUser> list = secUserDaoOf(userContext).findSecUserByDomain(domainId, start, count, new HashMap<>());
+		enhanceForListOfView(userContext, list);
+		HisCommonListOfViewPage page = new HisCommonListOfViewPage();
+		page.setClassOfList(SecUser.class);
+		page.setContainerObject(UserDomain.withId(domainId));
+		page.setRequestBeanName(this.getBeanName());
+		page.setDataList((SmartList)list);
+		page.setPageTitle("安全用户列表");
+		page.setRequestName("listByDomain");
+		page.setRequestOffset(start);
+		page.setRequestLimit(count);
+		page.setDisplayMode("auto");
+		page.setLinkToUrl(TextUtil.encodeUrl(String.format("%s/listByDomain/%s/",  getBeanName(), domainId)));
+
+		page.assemblerContent(userContext, "listByDomain");
+		return page.doRender(userContext);
+	}
+  
+  // -----------------------------------\\ list-of-view 处理 //-----------------------------------v
+  
+ 	/**
+	 * miniprogram调用返回固定的detail class
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+ 	public Object wxappview(HisUserContext userContext, String secUserId) throws Exception{
+	  SerializeScope vscope = HisViewScope.getInstance().getSecUserDetailScope().clone();
+		SecUser merchantObj = (SecUser) this.view(userContext, secUserId);
+    String merchantObjId = secUserId;
+    String linkToUrl =	"secUserManager/wxappview/" + merchantObjId + "/";
+    String pageTitle = "安全用户"+"详情";
+		Map result = new HashMap();
+		List propList = new ArrayList();
+		List sections = new ArrayList();
+ 
+		propList.add(
+				MapUtil.put("id", "1-id")
+				    .put("fieldName", "id")
+				    .put("label", "序号")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("id", merchantObj.getId());
+
+		propList.add(
+				MapUtil.put("id", "2-login")
+				    .put("fieldName", "login")
+				    .put("label", "登录")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("login", merchantObj.getLogin());
+
+		propList.add(
+				MapUtil.put("id", "3-mobile")
+				    .put("fieldName", "mobile")
+				    .put("label", "手机号码")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("mobile", merchantObj.getMobile());
+
+		propList.add(
+				MapUtil.put("id", "4-email")
+				    .put("fieldName", "email")
+				    .put("label", "电子邮件")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("email", merchantObj.getEmail());
+
+		propList.add(
+				MapUtil.put("id", "5-pwd")
+				    .put("fieldName", "pwd")
+				    .put("label", "密码")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("pwd", merchantObj.getPwd());
+
+		propList.add(
+				MapUtil.put("id", "6-weixinOpenid")
+				    .put("fieldName", "weixinOpenid")
+				    .put("label", "微信openid")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("weixinOpenid", merchantObj.getWeixinOpenid());
+
+		propList.add(
+				MapUtil.put("id", "7-weixinAppid")
+				    .put("fieldName", "weixinAppid")
+				    .put("label", "微信Appid")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("weixinAppid", merchantObj.getWeixinAppid());
+
+		propList.add(
+				MapUtil.put("id", "8-accessToken")
+				    .put("fieldName", "accessToken")
+				    .put("label", "访问令牌")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("accessToken", merchantObj.getAccessToken());
+
+		propList.add(
+				MapUtil.put("id", "9-verificationCode")
+				    .put("fieldName", "verificationCode")
+				    .put("label", "验证码")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("verificationCode", merchantObj.getVerificationCode());
+
+		propList.add(
+				MapUtil.put("id", "10-verificationCodeExpire")
+				    .put("fieldName", "verificationCodeExpire")
+				    .put("label", "验证码过期")
+				    .put("type", "date")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("verificationCodeExpire", merchantObj.getVerificationCodeExpire());
+
+		propList.add(
+				MapUtil.put("id", "11-lastLoginTime")
+				    .put("fieldName", "lastLoginTime")
+				    .put("label", "最后登录时间")
+				    .put("type", "date")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("lastLoginTime", merchantObj.getLastLoginTime());
+
+		propList.add(
+				MapUtil.put("id", "12-domain")
+				    .put("fieldName", "domain")
+				    .put("label", "域")
+				    .put("type", "object")
+				    .put("displayField", "name")
+				    .put("linkToUrl", "userDomainManager/wxappview/:id/")
+				    .into_map()
+		);
+		result.put("domain", merchantObj.getDomain());
+
+		//处理 sectionList
+
+		//处理Section：userAppListSection
+		Map userAppListSection = ListofUtils.buildSection(
+		    "userAppListSection",
+		    "用户应用程序列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "userAppManager/listBySecUser/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(userAppListSection);
+
+		result.put("userAppListSection", ListofUtils.toShortList(merchantObj.getUserAppList(), "userApp"));
+		vscope.field("userAppListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( UserApp.class.getName(), null));
+
+		//处理Section：loginHistoryListSection
+		Map loginHistoryListSection = ListofUtils.buildSection(
+		    "loginHistoryListSection",
+		    "登录历史列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "loginHistoryManager/listBySecUser/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(loginHistoryListSection);
+
+		result.put("loginHistoryListSection", ListofUtils.toShortList(merchantObj.getLoginHistoryList(), "loginHistory"));
+		vscope.field("loginHistoryListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( LoginHistory.class.getName(), null));
+
+		//处理Section：wechatWorkappIdentifyListSection
+		Map wechatWorkappIdentifyListSection = ListofUtils.buildSection(
+		    "wechatWorkappIdentifyListSection",
+		    "微信工作程序识别列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "wechatWorkappIdentifyManager/listBySecUser/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(wechatWorkappIdentifyListSection);
+
+		result.put("wechatWorkappIdentifyListSection", ListofUtils.toShortList(merchantObj.getWechatWorkappIdentifyList(), "wechatWorkappIdentify"));
+		vscope.field("wechatWorkappIdentifyListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( WechatWorkappIdentify.class.getName(), null));
+
+		//处理Section：wechatMiniappIdentifyListSection
+		Map wechatMiniappIdentifyListSection = ListofUtils.buildSection(
+		    "wechatMiniappIdentifyListSection",
+		    "微信迷你应用识别列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "wechatMiniappIdentifyManager/listBySecUser/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(wechatMiniappIdentifyListSection);
+
+		result.put("wechatMiniappIdentifyListSection", ListofUtils.toShortList(merchantObj.getWechatMiniappIdentifyList(), "wechatMiniappIdentify"));
+		vscope.field("wechatMiniappIdentifyListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( WechatMiniappIdentify.class.getName(), null));
+
+		result.put("propList", propList);
+		result.put("sectionList", sections);
+		result.put("pageTitle", pageTitle);
+		result.put("linkToUrl", linkToUrl);
+
+		vscope.field("propList", SerializeScope.EXCLUDE())
+				.field("sectionList", SerializeScope.EXCLUDE())
+				.field("pageTitle", SerializeScope.EXCLUDE())
+				.field("linkToUrl", SerializeScope.EXCLUDE());
+		userContext.forceResponseXClassHeader("com.terapico.appview.DetailPage");
+		return BaseViewPage.serialize(result, vscope);
 	}
 
 }

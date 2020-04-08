@@ -3,6 +3,8 @@ package com.doublechaintech.his.expenseitem;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -15,9 +17,9 @@ import com.doublechaintech.his.expensetype.ExpenseTypeDAO;
 import com.doublechaintech.his.hospital.HospitalDAO;
 
 
-public interface ExpenseItemDAO{
+public interface ExpenseItemDAO extends BaseDAO{
 
-	
+	public SmartList<ExpenseItem> loadAll();
 	public ExpenseItem load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<ExpenseItem> expenseItemList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -47,6 +49,8 @@ public interface ExpenseItemDAO{
 	
 	
 	public SmartList<ExpenseItem> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateExpenseItem executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<ExpenseItem> findExpenseItemByExpenseType(String expenseTypeId, Map<String,Object> options);
  	public int countExpenseItemByExpenseType(String expenseTypeId, Map<String,Object> options);

@@ -33,7 +33,7 @@ public class CollectionUtils {
 		}
 		return true;
 	}
-	
+
 	public static <T> Set<T> toSet(T... objs) {
 		if (objs == null || objs.length == 0) {
 			return null;
@@ -41,6 +41,17 @@ public class CollectionUtils {
 		HashSet<T> set = new HashSet<T>();
 		set.addAll(Arrays.asList(objs));
 		return set;
+	}
+
+	@SafeVarargs
+    @SuppressWarnings("varargs")
+	public static <T> List<T> toList(T... objs) {
+		if (objs == null || objs.length == 0) {
+			return new ArrayList<>();
+		}
+		List<T> list = new ArrayList<>();
+		list.addAll(Arrays.asList(objs));
+		return list;
 	}
 
 	public static <T> void addItem(ArrayList<T> list, int idx, T value) {
@@ -69,14 +80,14 @@ public class CollectionUtils {
 		});
 	}
 
-	public static void shortList(List<? extends Object> list, int maxLength) {
+	public static List<? extends Object>  shortList(List<? extends Object> list, int maxLength) {
 		if (list == null || list.size() <= maxLength || maxLength <= 1) {
-			return;
+			return list;
 		}
 		while(list.size() > maxLength) {
 			list.remove(list.size() - 1);
 		}
-		
+		return list;
 	}
 
 	public static <T extends Object> String getKeyOfMaxValue(Map<String, T> cntMap, Comparator<T> comparator) {
@@ -100,10 +111,10 @@ public class CollectionUtils {
 				maxKey = key;
 			}
 		}
-		
+
 		return maxKey;
 	}
-	
+
 	public static <T extends Number> String getKeyOfFirstNotEmpty(Map<String, T> cntMap, List<String> keyList) {
 		if (cntMap == null || cntMap.isEmpty()) {
 			return null;
@@ -118,7 +129,7 @@ public class CollectionUtils {
 				return key;
 			}
 		}
-		return null;
+		return keyList.get(0);
 	}
 
 	public static Map<String, ButtonViewComponent> toMap(List<ButtonViewComponent> actions) {

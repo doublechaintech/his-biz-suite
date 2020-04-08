@@ -130,6 +130,18 @@ public class BaseRelation{
 		String [] doctorScheduleRelatedObjectNames = {"doctor:Doctor","period:Period","department:Department","expense_type:ExpenseType","hospital:Hospital"};
 		addRelationIndex("DoctorSchedule",doctorScheduleRelatedObjectNames);
 
+		String [] pageRelatedObjectNames = {"page_type:PageType","mobile_app:MobileApp"};
+		addRelationIndex("Page",pageRelatedObjectNames);
+
+		String [] pageTypeRelatedObjectNames = {"mobile_app:MobileApp"};
+		addRelationIndex("PageType",pageTypeRelatedObjectNames);
+
+		String [] slideRelatedObjectNames = {"page:Page"};
+		addRelationIndex("Slide",slideRelatedObjectNames);
+
+		String [] uiActionRelatedObjectNames = {"page:Page"};
+		addRelationIndex("UiAction",uiActionRelatedObjectNames);
+
 		String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		addRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);
 
@@ -166,6 +178,12 @@ public class BaseRelation{
 		String [] candidateElementRelatedObjectNames = {"container:CandidateContainer"};
 		addRelationIndex("CandidateElement",candidateElementRelatedObjectNames);
 
+		String [] wechatWorkappIdentifyRelatedObjectNames = {"sec_user:SecUser"};
+		addRelationIndex("WechatWorkappIdentify",wechatWorkappIdentifyRelatedObjectNames);
+
+		String [] wechatMiniappIdentifyRelatedObjectNames = {"sec_user:SecUser"};
+		addRelationIndex("WechatMiniappIdentify",wechatMiniappIdentifyRelatedObjectNames);
+
 	
 	
 	}
@@ -199,6 +217,11 @@ public class BaseRelation{
 		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"department");
 		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"expenseType");
 		addGenericRelation("DoctorSchedule"                        ,TRUST_CHAIN_READ,"hospital");
+		addGenericRelation("Page"                                  ,TRUST_CHAIN_READ,"pageType");
+		addGenericRelation("Page"                                  ,TRUST_CHAIN_READ,"mobileApp");
+		addGenericRelation("PageType"                              ,TRUST_CHAIN_READ,"mobileApp");
+		addGenericRelation("Slide"                                 ,TRUST_CHAIN_READ,"page");
+		addGenericRelation("UiAction"                              ,TRUST_CHAIN_READ,"page");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("UserApp"                               ,TRUST_CHAIN_READ,"secUser");
@@ -211,6 +234,8 @@ public class BaseRelation{
 		addGenericRelation("FormField"                             ,TRUST_CHAIN_READ,"form");
 		addGenericRelation("FormAction"                            ,TRUST_CHAIN_READ,"form");
 		addGenericRelation("CandidateElement"                      ,TRUST_CHAIN_READ,"container");
+		addGenericRelation("WechatWorkappIdentify"                 ,TRUST_CHAIN_READ,"secUser");
+		addGenericRelation("WechatMiniappIdentify"                 ,TRUST_CHAIN_READ,"secUser");
 	
 	}
 

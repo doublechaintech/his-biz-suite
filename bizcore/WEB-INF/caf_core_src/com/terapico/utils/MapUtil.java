@@ -3,6 +3,7 @@ package com.terapico.utils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +11,23 @@ public class MapUtil {
 	public static class MapBuilder {
 		private Map<String, Object> mapInstance= null;
 		public MapBuilder put(String key, Object value) {
+			ensuerMapInstance();
+			mapInstance.put(key, value);
+			return this;
+		}
+		public MapBuilder putIf(Object obj, String key, Supplier s) {
+			return putIf(obj!=null, key, s);
+		}
+		public MapBuilder putIf(String key, Object value) {
+			return putIf(value!=null, key, value);
+		}
+		public MapBuilder putIf(boolean shouldPut, String key, Supplier s) {
+			return putIf(shouldPut, key, shouldPut?s.get():null);
+		}
+		public MapBuilder putIf(boolean shouldPut, String key, Object value) {
+			if (!shouldPut) {
+				return this;
+			}
 			ensuerMapInstance();
 			mapInstance.put(key, value);
 			return this;
@@ -114,6 +132,18 @@ public class MapUtil {
 
 	public static MapBuilder put(String key, Object value) {
 		return new MapBuilder().put(key, value);
+	}
+	public static MapBuilder putIf(boolean shouldPut, String key, Object value) {
+		return new MapBuilder().putIf(shouldPut, key, value);
+	}
+	public static MapBuilder putIf(boolean shouldPut, String key, Supplier s) {
+		return new MapBuilder().putIf(shouldPut, key, s);
+	}
+	public static MapBuilder putIf(String key, Object value) {
+		return new MapBuilder().putIf(key, value);
+	}
+	public static MapBuilder putIf(Object obj, String key, Supplier s) {
+		return new MapBuilder().putIf(obj, key, s);
 	}
 	public static <T> Map<String, T> with(String key, T value) {
 		Map<String, T> map = new HashMap<>();

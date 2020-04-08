@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-indent */
 import FontAwesome from 'react-fontawesome';
 import PermissionSettingService from '../permission/PermissionSetting.service';
-import {
+import {List,
   Row,
   Col,
   Icon,
@@ -12,7 +12,7 @@ import {
   Select,
   Form,
   AutoComplete,
-  Modal,Divider,Collapse
+  Modal,Divider,Collapse,Tabs,
 } from 'antd';
 import styles from './Dashboard.tool.less';
 import ImagePreview from '../components/ImagePreview';
@@ -22,6 +22,7 @@ import { Link, Route, Redirect } from 'dva/router';
 import ReactEcharts from 'echarts-for-react';
 import moment from 'moment';
 import appLocaleName from './Locale.tool';
+
 import {
   ChartCard,
   MiniArea,
@@ -44,12 +45,29 @@ const { Option } = Select;
 
 const topColResponsiveProps = {
   xs: 8,
-  sm: 6,
+  sm: 8,
   md: 6,
   lg: 6,
   xl: 6,
   style: { marginBottom: 24, marginTop: 24 },
 };
+
+const calcLayoutForChartCard=(count)=>{
+
+  if(count===1){
+    return {...topColResponsiveProps, xs: 24,sm: 24,md: 24,lg: 24,xl:24 }
+  }
+  if(count===2){
+    return {...topColResponsiveProps, xs: 12,sm: 12,md: 12,lg: 12,xl:12 }
+  }
+  if(count===3){
+    return {...topColResponsiveProps, xs: 8,sm: 8,md: 8,lg: 8,xl:8 }
+  }
+  
+  return topColResponsiveProps
+  
+
+}
 
 const wholeLineColProps = {
   xs: 24,
@@ -57,9 +75,19 @@ const wholeLineColProps = {
   md: 24,
   lg: 24,
   xl: 24,
-  style: {  marginBottom: 24, marginTop: 24},
+  style: {  marginBottom: 24},
 };
 
+
+
+const quckFunctionProps = {
+  xs: 24,
+  sm: 24,
+  md: 12,
+  lg: 6,
+  xl: 6,
+  
+};
 
 const renderForNumbers = aggregatedData => {
   if (!aggregatedData) {
@@ -71,7 +99,7 @@ const renderForNumbers = aggregatedData => {
   if (!data.dataArray) {
     return null;
   }
-  if (data.dataArray.length == 0) {
+  if (data.dataArray.length === 0) {
     return null;
   }
   // <MiniArea color="#975FE4" data={visitData} />
@@ -107,7 +135,7 @@ const renderForNumbers = aggregatedData => {
         const visitData = [];
         let itemTotal = 0;
         const weekData = { lastWeek: 0, thisWeek: 0, lastWeekCount: 7, change: 0 };
-
+        const chartCardLayout = topColResponsiveProps
         data.dataArray
           .filter(dateItem => dateItem.date !== '未分配')
           .filter(dateItem => dateItem[item] > 0)
@@ -127,14 +155,14 @@ const renderForNumbers = aggregatedData => {
             // console.log("week of the year for ", dateItem.date, " week number",weeknumber)
             itemTotal += dateItem[item];
           });
-
-        if (itemTotal < 5) {
+        
+        if (itemTotal < 2) {
           return null;
         }
-
+        /*
         if (visitData.length < 10) {
           return null;
-        }
+        }*/
         let ChartComp = MiniArea;
 
         if (visitData.length < 10) {
@@ -144,8 +172,27 @@ const renderForNumbers = aggregatedData => {
         console.log('index: ', colorIndex, colors[colorIndex % colors.length]);
 
         const chartColor = colors[colorIndex % colors.length];
+
+        const trend=(target)=>{
+
+          return target.lastWeek> target.thisWeek?"down":"up";
+
+        }
+        const change=(target)=>{
+          if(target.thisWeek===0){
+            return `${numeral(0).format('0.00')}%`
+          }
+          if(target.lastWeek===0){
+            return "NA"
+          }
+          const percent=(target.thisWeek-target.lastWeek)/target.lastWeek*100
+          return `${numeral(Math.abs(percent)).format('0.00')}%`
+        }
+        
+
+
         return (
-          <Col key={item} {...topColResponsiveProps}>
+          <Col key={item} {...chartCardLayout}>
             <ChartCard
               bordered={false}
               title={item}
@@ -157,11 +204,11 @@ const renderForNumbers = aggregatedData => {
               total={numeral(itemTotal).format('0,0')}
               footer={
                 <div>
-                  <Trend flag="down" style={{ marginRight: 16 }}>
-                    周对比({numeral(weekData.lastWeek).format('0,0')}/{numeral(
+                  <Trend flag={trend(weekData)} style={{ marginRight: 16 }}>
+                    上周: {numeral(weekData.lastWeek).format('0,0')}/本周: {numeral(
                       weekData.thisWeek
-                    ).format('0,0')})
-                    <span className={styles.trendText}>100%</span>
+                    ).format('0,0')}
+                    <span className={styles.trendText}>环比{change(weekData)}</span>
                   </Trend>
                 </div>
               }
@@ -180,7 +227,7 @@ const renderForTimeLine = aggregatedData => {
   if (!aggregatedData) {
     return null;
   }
-  //scan all property ends with stats info
+  // scan all property ends with stats info
   console.log('aggregatedData', aggregatedData);
 
   const data = aggregatedData;
@@ -357,7 +404,7 @@ const defaultImageListOf = (mainObject, imageList) => {
     <Card title="图片列表" className={styles.card}>
       <Row type="flex" justify="start" align="bottom">
         {filteredList.map((item, index) => (
-          <Col span={4} key={index}>
+          <Col span={6} key={index}>
             <ImagePreview
               imageTitle={item.title}
               imageStyle={{width:400}}
@@ -542,8 +589,46 @@ const defaultBuildTransferModal = (mainObject, targetComponent) => {
   );
 };
 
+
+const renderFunctions = (mainObject) => {
+  const actionList = mainObject.actionList.filter(item=>item.actionGroup==='changerequesttype')
+  // const actionList = platform.actionList
+
+
+  if(!actionList){
+    return null
+  }
+  if(actionList.length === 0){
+    return null
+  }
+
+  return (
+
+    <List
+    grid={{ gutter: 16, xs: 4, sm: 4, md: 4, lg: 6, xl: 6, xxl: 6 }}
+    dataSource={actionList}
+    renderItem={item => (
+      <List.Item>
+        <Card className={styles.crCard}><Link to={item.actionPath}>
+        
+        <Icon type={item.actionIcon} style={{ fontSize: 50, color: 'orange' }}/>
+        
+       </Link><br/><br/>{item.actionName}</Card>
+      </List.Item>
+    )}
+  />
+
+
+
+   
+  )
+};
+
 const defaultRenderExtraHeader = mainObject => {
   
+  return (<div>{renderFunctions(mainObject)}  <br/>  </div>)
+
+
 };
 
 
@@ -555,10 +640,12 @@ const defaultRenderAnalytics= mainObject => {
   if (data.dataArray.length === 0) {
     return null;
   }
+  // {renderForTimeLine(data)}
   return (
     <div>
+      
       {renderForNumbers(data)}
-      {renderForTimeLine(data)}
+      
     </div>
   );
 };
@@ -581,8 +668,7 @@ const legalListForDisplay=(targetObject, listItem)=>{
   return true
 
 }
-
-const defaultRenderSubjectList = cardsData => {
+const defaultRenderSubjectList2 = cardsData => {
   
   // listItem.renderItem(item)
   const targetObject = cardsData.cardsSource
@@ -607,6 +693,85 @@ const defaultRenderSubjectList = cardsData => {
           </Col>
          
         ))}
+    </Row>
+    
+  );
+};
+
+
+const defaultRenderSubjectList = cardsData => {
+  
+  // listItem.renderItem(item)
+  const targetObject = cardsData.cardsSource
+  const { TabPane } = Tabs;
+  function callback(key) {
+    console.log(key);
+  }
+  return (
+    <Row gutter={16}>
+      <Tabs  onChange={callback}>
+      {cardsData.subItems
+        
+        .filter(listItem=>legalListForDisplay(targetObject,listItem))
+        .map(listItem => (
+          <TabPane tab={listItem.displayName} key={listItem.displayName}>
+          <Col key={listItem.displayName} span={24} {...wholeLineColProps}>
+            
+             
+            {
+             
+              targetObject[listItem.name].map(item=>(listItem.renderItem(item,null,6,listItem.name)))
+            }
+           
+    
+          </Col>
+          </TabPane>
+        ))}
+        </Tabs>
+    </Row>
+    
+  );
+};
+
+
+const defaultRenderSubjectList4 = cardsData => {
+  
+  // listItem.renderItem(item)
+  const targetObject = cardsData.cardsSource
+  const { TabPane } = Tabs;
+  function callback(key) {
+    console.log(key);
+  }
+  if(!cardsData || !cardsData.subItems){
+    return null
+  }
+  const listWithDataLength = cardsData.subItems.filter(item=>item.count>0).length;
+  if(listWithDataLength>10){
+    return null
+  }
+
+  return (
+    <Row gutter={16}>
+      
+      {cardsData.subItems
+        
+        .filter(listItem=>legalListForDisplay(targetObject,listItem))
+        .map(listItem => (
+          
+          <Col key={listItem.displayName} {...wholeLineColProps}>
+            
+             <Card title={listItem.displayName} style={{ marginBottom: 24 }} >
+
+            {
+             
+              targetObject[listItem.name].map(item=>(listItem.renderItem(item)))
+            }
+           
+             </Card>
+          </Col>
+          
+        ))}
+       
     </Row>
     
   );
@@ -651,18 +816,18 @@ const defaultSubListsOf = cardsData => {
 };
 
 
-const defaultQuickFunctions = cardsData => {
+const defaultQuickFunctions2 = cardsData => {
   
   const { id, actionList } = cardsData.cardsSource;
   return (
     <Row gutter={16}>
       {
-        actionList.filter(item => item.actionGroup==="custom")
+       actionList&&actionList.filter(item => item.actionGroup==="custom")
         .map(item=>(
 
           
-          <Col span={6} key={`${item.actionPath}`}>
-          <Card span={6} style={{fontSize:"20px"}}>
+          <Col {...quckFunctionProps}  key={`${item.actionPath}`}>
+          <Card style={{fontSize:"20px"}}>
           <a href={`${PREFIX}${item.managerBeanName}/${item.actionPath}`} target="_blank">
           <Icon type={item.actionIcon} /> {item.actionName}
           </a>
@@ -672,11 +837,11 @@ const defaultQuickFunctions = cardsData => {
 
 
       }
-      {cardsData.subItems
+      {cardsData&&cardsData.subItems&&cardsData.subItems
         
         .filter(item => hasItemReadPermission(item))
         .map(item => (
-          <Col key={item.displayName} span={6}><Card span={6} style={{fontSize:"20px"}}>
+          <Col key={item.displayName} {...quckFunctionProps} ><Card span={6} style={{fontSize:"20px"}}>
            <Row gutter={16}>
            {hasItemCreatePermission(item) && (
           <Col span={3}>
@@ -691,7 +856,7 @@ const defaultQuickFunctions = cardsData => {
 
          <Tooltip title={`进入${item.displayName}列表`} placement="bottom">  
          <Link  to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
-         {item.displayName} </Link><span style={{fontSize:"10px"}}> 共{item.count}条</span>
+         {item.displayName} 111</Link><span style={{fontSize:"10px"}}> 共{item.count}条</span>
          </Tooltip>
          
          </Col>
@@ -707,6 +872,158 @@ const defaultQuickFunctions = cardsData => {
     
   );
 };
+
+const groupMenuOf=(cardsData)=>{
+  const groupedItems = []
+  cardsData.subItems.filter(item => hasItemReadPermission(item)).map(item =>{
+          const {viewGroup} = item
+          let result = groupedItems.find(viewGroupItem=>(viewGroupItem.viewGroup===viewGroup))
+  
+      if(!result){
+        // group not found
+        result = {viewGroup, subItems: []}
+        groupedItems.push(result)
+      }
+      const {subItems} = result
+      subItems.push(item)
+
+    })
+    return groupedItems
+
+}
+
+const keepShort=(value, length)=>{
+
+  if(value.length<=length){
+    return value
+  }
+  return `${value.substring(0,length-1)}..`
+
+}
+const showNumber=(item)=>{
+
+  if(!item.count){
+    return ""
+  }
+  return `(${item.count})`
+
+
+}
+const functionItem=(cardsData,item)=>{
+  const { id } = cardsData.cardsSource;
+
+  console.log("item.displayName",item.displayName);
+
+  return (<Col key={item.displayName} span={4} className={styles.functionItem}>
+  
+  
+
+      <Tooltip title={`进入${item.displayName}列表${showNumber(item)}`} placement="bottom">  
+      <Link  to={`/${cardsData.cardsFor}/${id}/list/${item.name}/${item.displayName}列表`}>
+      {keepShort(item.displayName,9)}</Link>
+      </Tooltip>
+      
+
+      
+ 
+
+</Col>)
+
+
+}
+
+
+const viewGroupName=(name)=>{
+  if(!name){
+    return <div>
+      常用功能
+    </div>
+  }
+  if(name ==="" || name === "__no_group"){
+    return <div>
+    常用功能
+  </div>
+  }
+  return name;
+
+
+
+}
+
+const CustomFunction=(cardsData)=>{
+
+  const { actionList } = cardsData.cardsSource;
+  if(!actionList || actionList.length ===0 || actionList.filter(item => item.actionGroup==="custom").length === 0){
+    return null
+  }
+  return (<Row key="__custom" gutter={16} className={styles.functionRow} >
+    <Card span={6} style={{fontSize:"14px"}}>
+        <Col span={3} className={styles.functionItem}>
+        
+        特别功能
+       
+       
+        </Col>
+
+        <Col span={21} >
+
+    {
+      actionList.filter(item => item.actionGroup==="custom")
+      .map(item=>(
+
+        
+        <Col span={4} key={`${item.actionPath}`} style={{marginTop:"5px",marginBotton:"5px"}}>
+        
+        <a href={`${PREFIX}${item.managerBeanName}/${item.actionPath}`} target="_blank">
+        {item.actionName}
+        </a>
+       
+        </Col>
+      ))
+
+
+    }</Col>
+     </Card>
+     </Row> )
+
+
+}
+
+const defaultQuickFunctions = cardsData => {
+  
+  
+  return (
+    <div style={{marginBottom:'24px',marginLeft: '8px',marginRight:'8px'}}>
+    {CustomFunction(cardsData)}
+    {
+      groupMenuOf(cardsData).map(groupItem=>(
+
+        <Row key={groupItem.viewGroup} gutter={16} className={styles.functionRow} >
+
+          <Card span={6} style={{fontSize:"14px"}}>
+
+           <Col span={3} style={{textColor:"grey",marginTop:"5px",marginBotton:"5px"}}>
+          
+          {viewGroupName(groupItem.viewGroup)}
+         
+         
+          </Col>
+          <Col span={21} >
+            {groupItem.subItems.map(item=>(
+              functionItem(cardsData,item)
+            ))}
+         </Col>
+
+        </Card>
+         </Row>)
+      )
+
+    }
+    </div>
+    
+  );
+};
+
 
 
 const defaultHideCloseTrans = targetComponent => {
@@ -778,5 +1095,7 @@ const DashboardTool = {
 };
 
 export default DashboardTool;
+
+
 
 

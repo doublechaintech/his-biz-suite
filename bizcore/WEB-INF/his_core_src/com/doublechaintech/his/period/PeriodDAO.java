@@ -3,6 +3,8 @@ package com.doublechaintech.his.period;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -15,9 +17,9 @@ import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
 import com.doublechaintech.his.hospital.HospitalDAO;
 
 
-public interface PeriodDAO{
+public interface PeriodDAO extends BaseDAO{
 
-	
+	public SmartList<Period> loadAll();
 	public Period load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<Period> periodList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -27,9 +29,15 @@ public interface PeriodDAO{
 	
 	
 	
+	public Period loadByCode(String code,Map<String,Object> options) throws Exception;
+	
+	
 	public Period present(Period period,Map<String,Object> options) throws Exception;
 	public Period clone(String id, Map<String,Object> options) throws Exception;
 	
+	
+	
+	public Period cloneByCode(String code,Map<String,Object> options) throws Exception;
 	
 	
 	public Period save(Period period,Map<String,Object> options);
@@ -70,6 +78,8 @@ public interface PeriodDAO{
 	
 	
 	public SmartList<Period> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidatePeriod executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<Period> findPeriodByHospital(String hospitalId, Map<String,Object> options);
  	public int countPeriodByHospital(String hospitalId, Map<String,Object> options);

@@ -7,10 +7,10 @@ import GlobalComponents from '../../custcomponents'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout'
 import styles from './UserDomain.search.less'
 import ListViewTool from '../../common/ListView.tool'
+import UserDomainBase from './UserDomain.base'
 import PermissionSettingService from '../../permission/PermissionSetting.service'
 import appLocaleName from '../../common/Locale.tool'
-
-import FontAwesome from 'react-fontawesome';
+const {fieldLabels} = UserDomainBase
 import { Link, Route, Redirect} from 'dva/router'
 
 const  {  hasCreatePermission,hasExecutionPermission,hasDeletePermission,hasUpdatePermission,hasReadPermission } = PermissionSettingService
@@ -51,11 +51,7 @@ const showListActionBar = (targetComponent)=>{
  
     {hasDeletePermission(metaInfo)&&<Button onClick={(event)=>handleDeletionModalVisible(event,targetComponent)} type="danger" icon="delete" disabled={disable}>{appLocaleName(userContext,"BatchDelete")}</Button>}
 
-
- 	
-    
-               
-	</div> )
+</div> )
 
 
 }
@@ -107,7 +103,7 @@ class UserDomainSearch extends PureComponent {
     const renderTitle=()=>{
       const {returnURL} = this.props
       
-      const linkComp=returnURL?<Link to={returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+      const linkComp=returnURL?<Link to={returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
       return (<div>{linkComp}{`${displayName}:${this.props.name}${appLocaleName(userContext,"List")}`}</div>);
     }
   

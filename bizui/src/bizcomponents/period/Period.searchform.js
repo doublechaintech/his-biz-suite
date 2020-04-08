@@ -8,10 +8,11 @@ import styles from './Period.search.less'
 import GlobalComponents from '../../custcomponents'
 import SelectObject from '../../components/SelectObject'
 import appLocaleName from '../../common/Locale.tool'
+import PeriodBase from './Period.base'
 const FormItem = Form.Item
 const { Option } = Select
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',')
-
+const {fieldLabels} = PeriodBase
 const pushIfNotNull=(holder,value)=>{
   if(value==null){
     return
@@ -192,17 +193,17 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
        <Col md={8} sm={24}>
-         <FormItem label="ID">
+         <FormItem label={fieldLabels.id}>
            {getFieldDecorator('id')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
 
        <Col md={8} sm={24}>
-         <FormItem label="名称">
+         <FormItem label={fieldLabels.name}>
            {getFieldDecorator('name')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
@@ -247,37 +248,37 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
           <Col md={8} sm={24}>
-            <FormItem label="ID">
+            <FormItem label={fieldLabels.id}>
               {getFieldDecorator('id')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="名称">
+            <FormItem label={fieldLabels.name}>
               {getFieldDecorator('name')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="代码">
+            <FormItem label={fieldLabels.code}>
               {getFieldDecorator('code')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="医院">
+                    <Form.Item label={fieldLabels.hospital}>
                   {getFieldDecorator('hospital', {initialValue: tryinit('hospital')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('hospital')}
                     targetType={"hospital"} 
-                    requestFunction={PeriodService.requestCandidateHospital}/>
-                  
+                    requestFunction={PeriodService.requestCandidateHospital} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
@@ -293,7 +294,7 @@ componentDidMount() {
       </Form>
     )
   }
-
+	
   render() {
   	const expandForm = overrideValue([this.state.expandForm],false)
     return expandForm ? this.renderAdvancedForm() : this.renderSimpleForm()

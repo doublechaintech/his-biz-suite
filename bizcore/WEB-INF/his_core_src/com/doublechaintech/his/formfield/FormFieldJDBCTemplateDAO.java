@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -52,6 +56,11 @@ public class FormFieldJDBCTemplateDAO extends HisBaseDAOImpl implements FormFiel
 		return loadInternalFormField(accessKey, options);
 	}
 	*/
+	
+	public SmartList<FormField> loadAll() {
+	    return this.loadAll(getFormFieldMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -430,25 +439,55 @@ public class FormFieldJDBCTemplateDAO extends HisBaseDAOImpl implements FormFiel
  	protected Object[] prepareFormFieldUpdateParameters(FormField formField){
  		Object[] parameters = new Object[19];
  
+ 		
  		parameters[0] = formField.getLabel();
+ 		
+ 		
  		parameters[1] = formField.getLocaleKey();
+ 		
+ 		
  		parameters[2] = formField.getParameterName();
- 		parameters[3] = formField.getType(); 	
+ 		
+ 		
+ 		parameters[3] = formField.getType();
+ 		 	
  		if(formField.getForm() != null){
  			parameters[4] = formField.getForm().getId();
  		}
  
+ 		
  		parameters[5] = formField.getPlaceholder();
+ 		
+ 		
  		parameters[6] = formField.getDefaultValue();
+ 		
+ 		
  		parameters[7] = formField.getDescription();
+ 		
+ 		
  		parameters[8] = formField.getFieldGroup();
+ 		
+ 		
  		parameters[9] = formField.getMinimumValue();
+ 		
+ 		
  		parameters[10] = formField.getMaximumValue();
+ 		
+ 		
  		parameters[11] = formField.getRequired();
+ 		
+ 		
  		parameters[12] = formField.getDisabled();
+ 		
+ 		
  		parameters[13] = formField.getCustomRendering();
+ 		
+ 		
  		parameters[14] = formField.getCandidateValues();
- 		parameters[15] = formField.getSuggestValues();		
+ 		
+ 		
+ 		parameters[15] = formField.getSuggestValues();
+ 				
  		parameters[16] = formField.nextVersion();
  		parameters[17] = formField.getId();
  		parameters[18] = formField.getVersion();
@@ -461,26 +500,56 @@ public class FormFieldJDBCTemplateDAO extends HisBaseDAOImpl implements FormFiel
 		formField.setId(newFormFieldId);
 		parameters[0] =  formField.getId();
  
+ 		
  		parameters[1] = formField.getLabel();
+ 		
+ 		
  		parameters[2] = formField.getLocaleKey();
+ 		
+ 		
  		parameters[3] = formField.getParameterName();
- 		parameters[4] = formField.getType(); 	
+ 		
+ 		
+ 		parameters[4] = formField.getType();
+ 		 	
  		if(formField.getForm() != null){
  			parameters[5] = formField.getForm().getId();
  		
  		}
  		
+ 		
  		parameters[6] = formField.getPlaceholder();
+ 		
+ 		
  		parameters[7] = formField.getDefaultValue();
+ 		
+ 		
  		parameters[8] = formField.getDescription();
+ 		
+ 		
  		parameters[9] = formField.getFieldGroup();
+ 		
+ 		
  		parameters[10] = formField.getMinimumValue();
+ 		
+ 		
  		parameters[11] = formField.getMaximumValue();
+ 		
+ 		
  		parameters[12] = formField.getRequired();
+ 		
+ 		
  		parameters[13] = formField.getDisabled();
+ 		
+ 		
  		parameters[14] = formField.getCustomRendering();
+ 		
+ 		
  		parameters[15] = formField.getCandidateValues();
- 		parameters[16] = formField.getSuggestValues();		
+ 		
+ 		
+ 		parameters[16] = formField.getSuggestValues();
+ 				
  				
  		return parameters;
  	}
@@ -577,6 +646,34 @@ public class FormFieldJDBCTemplateDAO extends HisBaseDAOImpl implements FormFiel
 	@Override
 	public SmartList<FormField> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getFormFieldMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateFormField executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateFormField result = new CandidateFormField();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

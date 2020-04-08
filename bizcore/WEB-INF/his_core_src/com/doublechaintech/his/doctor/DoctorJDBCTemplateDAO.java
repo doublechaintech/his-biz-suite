@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -94,6 +98,11 @@ public class DoctorJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorDAO{
 		return loadInternalDoctor(accessKey, options);
 	}
 	*/
+	
+	public SmartList<Doctor> loadAll() {
+	    return this.loadAll(getDoctorMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -646,13 +655,19 @@ public class DoctorJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorDAO{
  	protected Object[] prepareDoctorUpdateParameters(Doctor doctor){
  		Object[] parameters = new Object[7];
  
+ 		
  		parameters[0] = doctor.getName();
- 		parameters[1] = doctor.getShotImage(); 	
+ 		
+ 		
+ 		parameters[1] = doctor.getShotImage();
+ 		 	
  		if(doctor.getHospital() != null){
  			parameters[2] = doctor.getHospital().getId();
  		}
  
- 		parameters[3] = doctor.getUpdateTime();		
+ 		
+ 		parameters[3] = doctor.getUpdateTime();
+ 				
  		parameters[4] = doctor.nextVersion();
  		parameters[5] = doctor.getId();
  		parameters[6] = doctor.getVersion();
@@ -665,14 +680,20 @@ public class DoctorJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorDAO{
 		doctor.setId(newDoctorId);
 		parameters[0] =  doctor.getId();
  
+ 		
  		parameters[1] = doctor.getName();
- 		parameters[2] = doctor.getShotImage(); 	
+ 		
+ 		
+ 		parameters[2] = doctor.getShotImage();
+ 		 	
  		if(doctor.getHospital() != null){
  			parameters[3] = doctor.getHospital().getId();
  		
  		}
  		
- 		parameters[4] = doctor.getUpdateTime();		
+ 		
+ 		parameters[4] = doctor.getUpdateTime();
+ 				
  				
  		return parameters;
  	}
@@ -1192,13 +1213,13 @@ public class DoctorJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorDAO{
     public SmartList<Doctor> requestCandidateDoctorForDoctorAssignment(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(DoctorTable.COLUMN_NAME, filterKey, pageNo, pageSize, getDoctorMapper());
+		return findAllCandidateByFilter(DoctorTable.COLUMN_NAME, DoctorTable.COLUMN_HOSPITAL, filterKey, pageNo, pageSize, getDoctorMapper());
     }
 		
     public SmartList<Doctor> requestCandidateDoctorForDoctorSchedule(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(DoctorTable.COLUMN_NAME, filterKey, pageNo, pageSize, getDoctorMapper());
+		return findAllCandidateByFilter(DoctorTable.COLUMN_NAME, DoctorTable.COLUMN_HOSPITAL, filterKey, pageNo, pageSize, getDoctorMapper());
     }
 		
 
@@ -1291,6 +1312,34 @@ public class DoctorJDBCTemplateDAO extends HisBaseDAOImpl implements DoctorDAO{
 	@Override
 	public SmartList<Doctor> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDoctorMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateDoctor executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateDoctor result = new CandidateDoctor();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

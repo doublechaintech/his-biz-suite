@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -62,6 +66,11 @@ public class CandidateContainerJDBCTemplateDAO extends HisBaseDAOImpl implements
 		return loadInternalCandidateContainer(accessKey, options);
 	}
 	*/
+	
+	public SmartList<CandidateContainer> loadAll() {
+	    return this.loadAll(getCandidateContainerMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -447,7 +456,9 @@ public class CandidateContainerJDBCTemplateDAO extends HisBaseDAOImpl implements
  	protected Object[] prepareCandidateContainerUpdateParameters(CandidateContainer candidateContainer){
  		Object[] parameters = new Object[4];
  
- 		parameters[0] = candidateContainer.getName();		
+ 		
+ 		parameters[0] = candidateContainer.getName();
+ 				
  		parameters[1] = candidateContainer.nextVersion();
  		parameters[2] = candidateContainer.getId();
  		parameters[3] = candidateContainer.getVersion();
@@ -460,7 +471,9 @@ public class CandidateContainerJDBCTemplateDAO extends HisBaseDAOImpl implements
 		candidateContainer.setId(newCandidateContainerId);
 		parameters[0] =  candidateContainer.getId();
  
- 		parameters[1] = candidateContainer.getName();		
+ 		
+ 		parameters[1] = candidateContainer.getName();
+ 				
  				
  		return parameters;
  	}
@@ -617,7 +630,7 @@ public class CandidateContainerJDBCTemplateDAO extends HisBaseDAOImpl implements
     public SmartList<CandidateContainer> requestCandidateCandidateContainerForCandidateElement(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(CandidateContainerTable.COLUMN_NAME, filterKey, pageNo, pageSize, getCandidateContainerMapper());
+		return findAllCandidateByFilter(CandidateContainerTable.COLUMN_NAME, null, filterKey, pageNo, pageSize, getCandidateContainerMapper());
     }
 		
 
@@ -687,6 +700,34 @@ public class CandidateContainerJDBCTemplateDAO extends HisBaseDAOImpl implements
 	@Override
 	public SmartList<CandidateContainer> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getCandidateContainerMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateCandidateContainer executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateCandidateContainer result = new CandidateCandidateContainer();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

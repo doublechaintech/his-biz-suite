@@ -144,9 +144,13 @@ public class DepartmentTokens extends CommonTokens{
 	}
 	private int doctorAssignmentListSearchCounter = 0;
 	public DepartmentTokens searchDoctorAssignmentListWith(String field, String verb, String value){		
+		
+		withDoctorAssignmentList();
 		addSearchMoreOptions(DOCTOR_ASSIGNMENT_LIST,doctorAssignmentListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public DepartmentTokens searchAllTextOfDoctorAssignmentList(String verb, String value){	
 		String field = "id|name";
@@ -210,9 +214,13 @@ public class DepartmentTokens extends CommonTokens{
 	}
 	private int doctorScheduleListSearchCounter = 0;
 	public DepartmentTokens searchDoctorScheduleListWith(String field, String verb, String value){		
+		
+		withDoctorScheduleList();
 		addSearchMoreOptions(DOCTOR_SCHEDULE_LIST,doctorScheduleListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public DepartmentTokens searchAllTextOfDoctorScheduleList(String verb, String value){	
 		String field = "id|name";

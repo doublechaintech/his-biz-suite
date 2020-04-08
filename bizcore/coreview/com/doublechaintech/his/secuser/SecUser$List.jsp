@@ -131,12 +131,6 @@
 <c:if test="${param.referName ne 'domain'}">
 	<th>${userContext.localeMap['sec_user.domain']}</th>
 </c:if>
-<c:if test="${param.referName ne 'blocking'}">
-	<th>${userContext.localeMap['sec_user.blocking']}</th>
-</c:if>
-<c:if test="${param.referName ne 'currentStatus'}">
-	<th>${userContext.localeMap['sec_user.current_status']}</th>
-</c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
 		<tbody>
@@ -172,27 +166,7 @@
 		</div>
 	</td>
 </c:if>
-<c:if test="${param.referName ne 'blocking'}">
-	<td class="select_candidate_td"
-			data-candidate-method="./secUserManager/requestCandidateBlocking/${ownerBeanName}/${item.id}/"
-			data-switch-method="./secUserManager/transferToAnotherBlocking/${item.id}/"
-			data-link-template="./secUserBlockingManager/view/${'$'}{ID}/">
-		<span class="display_span">
-			<c:if test="${not empty  item.blocking}">
-			<a href='./secUserBlockingManager/view/${item.blocking.id}/'>${item.blocking.displayName}</a>
-			</c:if>
-			<c:if test="${empty  item.blocking}">
-			<a href='#'></a>
-			</c:if>
-			<button class="btn btn-link candidate-action">...</button>
-		</span>
-		<div class="candidate_span" style="display:none;">
-			<input type="text" data-provide="typeahead" class="input-sm form-control candidate-filter-input" autocomplete="off" />
-		</div>
-	</td>
-</c:if>
-<c:if test="${param.referName ne 'currentStatus'}">	<td contenteditable='true' class='edit-value'  propertyToChange='currentStatus' storedCellValue='${item.currentStatus}' prefix='${ownerBeanName}Manager/updateSecUser/${result.id}/${item.id}/'>${item.currentStatus}</td>
-</c:if>
+
 				<td>
 
 				<a href='#${ownerBeanName}Manager/removeSecUser/${result.id}/${item.id}/' class='delete-action btn btn-danger btn-xs'><i class="fa fa-trash-o fa-lg"></i> ${userContext.localeMap['@delete']}</a>

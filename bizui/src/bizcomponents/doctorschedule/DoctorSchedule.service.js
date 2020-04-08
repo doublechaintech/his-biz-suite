@@ -1,5 +1,5 @@
-import { get,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
+import { get,put,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
 const view = (targetObjectId) => {
   return get({
@@ -26,7 +26,6 @@ const requestCandidateDoctor = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherDoctor = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorScheduleManager/transferToAnotherDoctor/id/anotherDoctorId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -42,7 +41,6 @@ const requestCandidatePeriod = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherPeriod = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorScheduleManager/transferToAnotherPeriod/id/anotherPeriodId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -58,7 +56,6 @@ const requestCandidateDepartment = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherDepartment = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorScheduleManager/transferToAnotherDepartment/id/anotherDepartmentId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -74,7 +71,6 @@ const requestCandidateExpenseType = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherExpenseType = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorScheduleManager/transferToAnotherExpenseType/id/anotherExpenseTypeId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -90,7 +86,6 @@ const requestCandidateHospital = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherHospital = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorScheduleManager/transferToAnotherHospital/id/anotherHospitalId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -100,6 +95,33 @@ const transferToAnotherHospital = (id, parameters) => {
 
 
 
+
+
+// Filter this out when no functions
+
+const  listFunctions = () => {
+  return get({
+    url: `${PREFIX}doctorScheduleService/listFunctions/`,
+  })
+}
+
+
+const  saveRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}doctorScheduleService/save/`,
+    data,
+  })
+}
+
+
+const  processRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}doctorScheduleService/process/`,
+    data,
+  })
+}
 
 const DoctorScheduleService = { view,
   load,
@@ -112,6 +134,6 @@ const DoctorScheduleService = { view,
   transferToAnotherPeriod,
   transferToAnotherDepartment,
   transferToAnotherExpenseType,
-  transferToAnotherHospital }
+  transferToAnotherHospital, listFunctions, saveRequest, processRequest}
 export default DoctorScheduleService
 

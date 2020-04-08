@@ -10,9 +10,10 @@ import {
   message,
   Spin,
   Breadcrumb,
-  AutoComplete,
+  AutoComplete,Row, Col,
   Input,Button
 } from 'antd'
+import TopMenu from '../../launcher/TopMenu'
 import DocumentTitle from 'react-document-title'
 import { connect } from 'dva'
 import { Link, Route, Redirect, Switch } from 'dva/router'
@@ -48,6 +49,34 @@ const filteredNoGroupMenuItems = defaultFilteredNoGroupMenuItems
 const filteredMenuItemsGroup = defaultFilteredMenuItemsGroup
 const renderMenuItem=defaultRenderMenuItem
 
+const userBarResponsiveStyle = {
+  xs: 8,
+  sm: 8,
+  md: 8,
+  lg: 6,
+  xl: 6,
+  
+};
+
+
+const searchBarResponsiveStyle = {
+  xs: 8,
+  sm: 8,
+  md: 8,
+  lg: 12,
+  xl: 12,
+  
+};
+
+
+const naviBarResponsiveStyle = {
+  xs: 8,
+  sm: 8,
+  md: 8,
+  lg: 6,
+  xl: 6,
+  
+};
 
 
 const query = {
@@ -75,10 +104,12 @@ const query = {
 
 
 class DepartmentBizApp extends React.PureComponent {
-  constructor(props) {
+constructor(props) {
     super(props)
      this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(props),
+      showSearch: false,
+      searchKeyword:''
     }
   }
 
@@ -110,35 +141,34 @@ class DepartmentBizApp extends React.PureComponent {
     return keys
   }
   
-  getNavMenuItems = (targetObject) => {
+ getNavMenuItems = (targetObject, style, customTheme) => {
   
 
     const menuData = sessionObject('menuData')
     const targetApp = sessionObject('targetApp')
+    const mode =style || "inline"
+    const theme = customTheme || "light" 
 	const {objectId}=targetApp;
   	const userContext = null
     return (
-      
-		  <Menu
-             theme="dark"
-             mode="inline"
-            
-             
-             onOpenChange={this.handleOpenChange}
-            
-             defaultOpenKeys={['firstOne']}
-             style={{ margin: '16px 0', width: '100%' }}
-           >
+	  <Menu
+        theme="dark"
+        mode="inline"
+        
+        onOpenChange={this.handleOpenChange}
+        defaultOpenKeys={['firstOne']}
+        
+       >
            
 
              <Menu.Item key="dashboard">
-               <Link to={`/department/${this.props.department.id}/dashboard`}><Icon type="dashboard" /><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
+               <Link to={`/department/${this.props.department.id}/dashboard`}><Icon type="dashboard" style={{marginRight:"20px"}}/><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
              </Menu.Item>
            
         {filteredNoGroupMenuItems(targetObject,this).map((item)=>(renderMenuItem(item)))}  
         {filteredMenuItemsGroup(targetObject,this).map((groupedMenuItem,index)=>{
           return(
-    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
+    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" style={{marginRight:"20px"}} /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
       {groupedMenuItem.subItems.map((item)=>(renderMenuItem(item)))}  
     </SubMenu>
 
@@ -159,7 +189,7 @@ class DepartmentBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "医生的任务",
+      name: window.mtrans('doctor_assignment','department.doctor_assignment_list',false),
       role: "doctorAssignment",
       data: state._department.doctorAssignmentList,
       metaInfo: state._department.doctorAssignmentListMetaInfo,
@@ -177,6 +207,7 @@ class DepartmentBizApp extends React.PureComponent {
       listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
     }))(DoctorAssignmentSearch)
   }
+  
   getDoctorAssignmentCreateForm = () => {
    	const {DoctorAssignmentCreateForm} = GlobalComponents;
    	const userContext = null
@@ -186,6 +217,7 @@ class DepartmentBizApp extends React.PureComponent {
       data: state._department.doctorAssignmentList,
       metaInfo: state._department.doctorAssignmentListMetaInfo,
       count: state._department.doctorAssignmentCount,
+      returnURL: `/department/${state._department.id}/list`,
       currentPage: state._department.doctorAssignmentCurrentPageNumber,
       searchFormParameters: state._department.doctorAssignmentSearchFormParameters,
       loading: state._department.loading,
@@ -209,7 +241,7 @@ class DepartmentBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "医生安排",
+      name: window.mtrans('doctor_schedule','department.doctor_schedule_list',false),
       role: "doctorSchedule",
       data: state._department.doctorScheduleList,
       metaInfo: state._department.doctorScheduleListMetaInfo,
@@ -227,6 +259,7 @@ class DepartmentBizApp extends React.PureComponent {
       listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
     }))(DoctorScheduleSearch)
   }
+  
   getDoctorScheduleCreateForm = () => {
    	const {DoctorScheduleCreateForm} = GlobalComponents;
    	const userContext = null
@@ -236,6 +269,7 @@ class DepartmentBizApp extends React.PureComponent {
       data: state._department.doctorScheduleList,
       metaInfo: state._department.doctorScheduleListMetaInfo,
       count: state._department.doctorScheduleCount,
+      returnURL: `/department/${state._department.id}/list`,
       currentPage: state._department.doctorScheduleCurrentPageNumber,
       searchFormParameters: state._department.doctorScheduleSearchFormParameters,
       loading: state._department.loading,
@@ -256,6 +290,16 @@ class DepartmentBizApp extends React.PureComponent {
 
 
   
+
+ 
+
+  getPageTitle = () => {
+    // const { location } = this.props
+    // const { pathname } = location
+    const title = '医生排班系统'
+    return title
+  }
+ 
   buildRouters = () =>{
   	const {DepartmentDashboard} = GlobalComponents
   	const {DepartmentPermission} = GlobalComponents
@@ -277,12 +321,12 @@ class DepartmentBizApp extends React.PureComponent {
   	{path:"/department/:id/list/doctorScheduleCreateForm", component: this.getDoctorScheduleCreateForm()},
   	{path:"/department/:id/list/doctorScheduleUpdateForm", component: this.getDoctorScheduleUpdateForm()},
      	
-  	
+ 	 
   	]
   	
   	const {extraRoutesFunc} = this.props;
-	const extraRoutes = extraRoutesFunc?extraRoutesFunc():[]
-    const finalRoutes = routers.concat(extraRoutes)
+  	const extraRoutes = extraRoutesFunc?extraRoutesFunc():[]
+  	const finalRoutes = routers.concat(extraRoutes)
     
   	return (<Switch>
              {finalRoutes.map((item)=>(<Route key={item.path} path={item.path} component={item.component} />))}    
@@ -291,13 +335,6 @@ class DepartmentBizApp extends React.PureComponent {
   
   }
  
-
-  getPageTitle = () => {
-    // const { location } = this.props
-    // const { pathname } = location
-    const title = '医生排班系统'
-    return title
-  }
  
   handleOpenChange = (openKeys) => {
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1)
@@ -312,6 +349,16 @@ class DepartmentBizApp extends React.PureComponent {
        payload: !collapsed,
      })
    }
+   
+   toggleSwitchText=()=>{
+    const { collapsed } = this.props
+    if(collapsed){
+      return "打开菜单"
+    }
+    return "关闭菜单"
+
+   }
+   
     logout = () => {
    
     console.log("log out called")
@@ -340,50 +387,154 @@ class DepartmentBizApp extends React.PureComponent {
      const menuProps = collapsed ? {} : {
        openKeys: this.state.openKeys,
      }
+     const renderBreadcrumbMenuItem=(breadcrumbMenuItem)=>{
+
+      return (
+      <Menu.Item key={breadcrumbMenuItem.link}>
+      <Link key={breadcrumbMenuItem.link} to={`${breadcrumbMenuItem.link}`} className={styles.breadcrumbLink}>
+        <Icon type="heart" style={{marginRight:"10px",color:"red"}} />
+        {renderBreadcrumbText(breadcrumbMenuItem.name)}
+      </Link></Menu.Item>)
+
+     }
+     const breadcrumbMenu=()=>{
+      const currentBreadcrumb =targetApp?sessionObject(targetApp.id):[];
+      return ( <Menu mode="vertical"> 
+      {currentBreadcrumb.map(item => renderBreadcrumbMenuItem(item))}
+      </Menu>)
+  
+
+     }
+     const breadcrumbBar=()=>{
+      const currentBreadcrumb =targetApp?sessionObject(targetApp.id):[];
+      return ( <div mode="vertical"> 
+      {currentBreadcrumb.map(item => renderBreadcrumbBarItem(item))}
+      </div>)
+  
+
+     }
+
+
+	const jumpToBreadcrumbLink=(breadcrumbMenuItem)=>{
+      const { dispatch} = this.props
+      const {name,link} = breadcrumbMenuItem
+      dispatch({ type: 'breadcrumb/jumpToLink', payload: {name, link }} )
+	
+     }  
+
+	 const removeBreadcrumbLink=(breadcrumbMenuItem)=>{
+      const { dispatch} = this.props
+      const {link} = breadcrumbMenuItem
+      dispatch({ type: 'breadcrumb/removeLink', payload: { link }} )
+	
+     }
+
+     const renderBreadcrumbBarItem=(breadcrumbMenuItem)=>{
+
+      return (
+     <Tag 
+      	key={breadcrumbMenuItem.link} color={breadcrumbMenuItem.selected?"#108ee9":"grey"} 
+      	style={{marginRight:"1px",marginBottom:"1px"}} closable onClose={()=>removeBreadcrumbLink(breadcrumbMenuItem)} >
+        <span onClick={()=>jumpToBreadcrumbLink(breadcrumbMenuItem)}>
+        	{renderBreadcrumbText(breadcrumbMenuItem.name)}
+        </span>
+      </Tag>)
+
+     }
+     
+     
+     
+     const { Search } = Input;
+     const showSearchResult=()=>{
+
+        this.setState({showSearch:true})
+
+     }
+     const searchChange=(evt)=>{
+
+      this.setState({searchKeyword :evt.target.value})
+
+    }
+    const hideSearchResult=()=>{
+
+      this.setState({showSearch:false})
+
+    }
+
+    const {searchLocalData}=GlobalComponents.DepartmentBase
+	
+    
+     
+     
      const layout = (
      <Layout>
-        <Header>
+ <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
           
-          <div className={styles.left}>
-          <img
-            src="./favicon.png"
-            alt="logo"
-            onClick={this.toggle}
-            className={styles.logo}
-          /><Link key={"__home"} to={"/home"} className={styles.breadcrumbLink}><Icon type="home" />&nbsp;{appLocaleName(userContext,"Home")}</Link>
-          {currentBreadcrumb.map((item)=>{
-            return (<Link  key={item.link} to={`${item.link}`} className={styles.breadcrumbLink}><Icon type="caret-right" />{renderBreadcrumbText(item.name)}</Link>)
-
-          })}
-         </div>
-          <div className={styles.right}  >
-          <Button type="primary"  icon="logout" onClick={()=>this.logout()}>
-          {appLocaleName(userContext,"Exit")}</Button>
-          </div>
+        <Row type="flex" justify="start" align="bottom">
+        
+        <Col {...naviBarResponsiveStyle} >
+             <a  className={styles.menuLink} onClick={()=>this.toggle()}>
+                <Icon type="unordered-list" style={{fontSize:"20px", marginRight:"10px"}}/> 
+                {this.toggleSwitchText()}
+              </a>          
+            
+        </Col>
+        <Col  className={styles.searchBox} {...searchBarResponsiveStyle}  > 
           
+          <Search size="default" placeholder="请输入搜索条件, 查找功能，数据和词汇解释，关闭请点击搜索结果空白处" 
+            enterButton onFocus={()=>showSearchResult()} onChange={(evt)=>searchChange(evt)}
+           	
+            style={{ marginLeft:"10px",marginTop:"7px",width:"100%"}} />  
+            
+            
+          </Col>
+          <Col  {...userBarResponsiveStyle}  > 
+            <Dropdown overlay= { <TopMenu {...this.props} />} className={styles.right}>
+                <a  className={styles.menuLink}>
+                  <Icon type="user" style={{fontSize:"20px",marginRight:"10px"}}/> 账户
+                </a>
+            </Dropdown>
+            
+           </Col>  
+         
+         </Row>
         </Header>
+       <Layout style={{  marginTop: 44 }}>
+        
+       
        <Layout>
-         <Sider
-           trigger={null}
-           collapsible
-           collapsed={collapsed}
-           breakpoint="md"
-           onCollapse={()=>this.onCollapse(collapsed)}
-           collapsedWidth={56}
-           className={styles.sider}
-         >
+      
+      {this.state.showSearch&&(
 
-		 {this.getNavMenuItems(this.props.department)}
-		 
-         </Sider>
+        <div style={{backgroundColor:'black'}}  onClick={()=>hideSearchResult()}  >{searchLocalData(this.props.department,this.state.searchKeyword)}</div>
+
+      )}
+       </Layout>
+        
+         
          <Layout>
+       <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          breakpoint="md"
+          onCollapse={() => this.onCollapse(collapsed)}
+          collapsedWidth={40}
+          className={styles.sider}
+        >
+         
+         {this.getNavMenuItems(this.props.department,"inline","dark")}
+       
+        </Sider>
+        
+         <Layout>
+         <Layout><Row type="flex" justify="start" align="bottom">{breadcrumbBar()} </Row></Layout>
+        
            <Content style={{ margin: '24px 24px 0', height: '100%' }}>
            
            {this.buildRouters()}
- 
-             
-             
            </Content>
+          </Layout>
           </Layout>
         </Layout>
       </Layout>

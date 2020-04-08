@@ -7,10 +7,10 @@ import GlobalComponents from '../../custcomponents'
 import PageHeaderLayout from '../../layouts/PageHeaderLayout'
 import styles from './Period.search.less'
 import ListViewTool from '../../common/ListView.tool'
+import PeriodBase from './Period.base'
 import PermissionSettingService from '../../permission/PermissionSetting.service'
 import appLocaleName from '../../common/Locale.tool'
-
-import FontAwesome from 'react-fontawesome';
+const {fieldLabels} = PeriodBase
 import { Link, Route, Redirect} from 'dva/router'
 
 const  {  hasCreatePermission,hasExecutionPermission,hasDeletePermission,hasUpdatePermission,hasReadPermission } = PermissionSettingService
@@ -45,11 +45,7 @@ const showListActionBar = (targetComponent)=>{
 
  
 
-
- 	
-    
-               
-	</div> )
+</div> )
 
 
 }
@@ -106,7 +102,7 @@ class PeriodSearch extends PureComponent {
     const renderTitle=()=>{
       const {returnURL} = this.props
       
-      const linkComp=returnURL?<Link to={returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+      const linkComp=returnURL?<Link to={returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
       return (<div>{linkComp}{`${displayName}:${this.props.name}${appLocaleName(userContext,"List")}`}</div>);
     }
   

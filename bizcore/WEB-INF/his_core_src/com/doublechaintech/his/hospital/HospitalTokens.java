@@ -136,9 +136,13 @@ public class HospitalTokens extends CommonTokens{
 	}
 	private int expenseTypeListSearchCounter = 0;
 	public HospitalTokens searchExpenseTypeListWith(String field, String verb, String value){		
+		
+		withExpenseTypeList();
 		addSearchMoreOptions(EXPENSE_TYPE_LIST,expenseTypeListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public HospitalTokens searchAllTextOfExpenseTypeList(String verb, String value){	
 		String field = "id|name|helperChars|status|description";
@@ -202,9 +206,13 @@ public class HospitalTokens extends CommonTokens{
 	}
 	private int periodListSearchCounter = 0;
 	public HospitalTokens searchPeriodListWith(String field, String verb, String value){		
+		
+		withPeriodList();
 		addSearchMoreOptions(PERIOD_LIST,periodListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public HospitalTokens searchAllTextOfPeriodList(String verb, String value){	
 		String field = "id|name|code";
@@ -268,9 +276,13 @@ public class HospitalTokens extends CommonTokens{
 	}
 	private int expenseItemListSearchCounter = 0;
 	public HospitalTokens searchExpenseItemListWith(String field, String verb, String value){		
+		
+		withExpenseItemList();
 		addSearchMoreOptions(EXPENSE_ITEM_LIST,expenseItemListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public HospitalTokens searchAllTextOfExpenseItemList(String verb, String value){	
 		String field = "id|name";
@@ -334,9 +346,13 @@ public class HospitalTokens extends CommonTokens{
 	}
 	private int doctorListSearchCounter = 0;
 	public HospitalTokens searchDoctorListWith(String field, String verb, String value){		
+		
+		withDoctorList();
 		addSearchMoreOptions(DOCTOR_LIST,doctorListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public HospitalTokens searchAllTextOfDoctorList(String verb, String value){	
 		String field = "id|name";
@@ -400,9 +416,13 @@ public class HospitalTokens extends CommonTokens{
 	}
 	private int departmentListSearchCounter = 0;
 	public HospitalTokens searchDepartmentListWith(String field, String verb, String value){		
+		
+		withDepartmentList();
 		addSearchMoreOptions(DEPARTMENT_LIST,departmentListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public HospitalTokens searchAllTextOfDepartmentList(String verb, String value){	
 		String field = "id|name";
@@ -466,9 +486,13 @@ public class HospitalTokens extends CommonTokens{
 	}
 	private int doctorScheduleListSearchCounter = 0;
 	public HospitalTokens searchDoctorScheduleListWith(String field, String verb, String value){		
+		
+		withDoctorScheduleList();
 		addSearchMoreOptions(DOCTOR_SCHEDULE_LIST,doctorScheduleListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public HospitalTokens searchAllTextOfDoctorScheduleList(String verb, String value){	
 		String field = "id|name";

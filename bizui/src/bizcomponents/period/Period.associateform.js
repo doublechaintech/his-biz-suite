@@ -140,7 +140,7 @@ class PeriodAssociateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="名称" />
+                    <Input size="large"  placeHolder={fieldLabels.name} />
                   )}
                 </Form.Item>
               </Col>
@@ -150,7 +150,7 @@ class PeriodAssociateForm extends Component {
                   {getFieldDecorator('code', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="代码" disabled/>
+                    <Input size="large"  placeHolder={fieldLabels.code} disabled/>
                   )}
                 </Form.Item>
               </Col>

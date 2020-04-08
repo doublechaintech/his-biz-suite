@@ -41,7 +41,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setId(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(FormFieldTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -53,7 +55,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setLabel(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String label = rs.getString(FormFieldTable.COLUMN_LABEL);
+		
 		if(label == null){
 			//do nothing when nothing found in database
 			return;
@@ -65,7 +69,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setLocaleKey(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String localeKey = rs.getString(FormFieldTable.COLUMN_LOCALE_KEY);
+		
 		if(localeKey == null){
 			//do nothing when nothing found in database
 			return;
@@ -77,7 +83,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setParameterName(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String parameterName = rs.getString(FormFieldTable.COLUMN_PARAMETER_NAME);
+		
 		if(parameterName == null){
 			//do nothing when nothing found in database
 			return;
@@ -89,7 +97,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setType(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String type = rs.getString(FormFieldTable.COLUMN_TYPE);
+		
 		if(type == null){
 			//do nothing when nothing found in database
 			return;
@@ -119,7 +129,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setPlaceholder(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String placeholder = rs.getString(FormFieldTable.COLUMN_PLACEHOLDER);
+		
 		if(placeholder == null){
 			//do nothing when nothing found in database
 			return;
@@ -131,7 +143,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setDefaultValue(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String defaultValue = rs.getString(FormFieldTable.COLUMN_DEFAULT_VALUE);
+		
 		if(defaultValue == null){
 			//do nothing when nothing found in database
 			return;
@@ -143,7 +157,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setDescription(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String description = rs.getString(FormFieldTable.COLUMN_DESCRIPTION);
+		
 		if(description == null){
 			//do nothing when nothing found in database
 			return;
@@ -155,7 +171,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setFieldGroup(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String fieldGroup = rs.getString(FormFieldTable.COLUMN_FIELD_GROUP);
+		
 		if(fieldGroup == null){
 			//do nothing when nothing found in database
 			return;
@@ -167,7 +185,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setMinimumValue(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String minimumValue = rs.getString(FormFieldTable.COLUMN_MINIMUM_VALUE);
+		
 		if(minimumValue == null){
 			//do nothing when nothing found in database
 			return;
@@ -179,7 +199,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setMaximumValue(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String maximumValue = rs.getString(FormFieldTable.COLUMN_MAXIMUM_VALUE);
+		
 		if(maximumValue == null){
 			//do nothing when nothing found in database
 			return;
@@ -191,7 +213,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setRequired(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean required = rs.getBoolean(FormFieldTable.COLUMN_REQUIRED);
+		
 		if(required == null){
 			//do nothing when nothing found in database
 			return;
@@ -203,7 +227,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setDisabled(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean disabled = rs.getBoolean(FormFieldTable.COLUMN_DISABLED);
+		
 		if(disabled == null){
 			//do nothing when nothing found in database
 			return;
@@ -215,7 +241,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setCustomRendering(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean customRendering = rs.getBoolean(FormFieldTable.COLUMN_CUSTOM_RENDERING);
+		
 		if(customRendering == null){
 			//do nothing when nothing found in database
 			return;
@@ -227,7 +255,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setCandidateValues(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String candidateValues = rs.getString(FormFieldTable.COLUMN_CANDIDATE_VALUES);
+		
 		if(candidateValues == null){
 			//do nothing when nothing found in database
 			return;
@@ -239,7 +269,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setSuggestValues(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String suggestValues = rs.getString(FormFieldTable.COLUMN_SUGGEST_VALUES);
+		
 		if(suggestValues == null){
 			//do nothing when nothing found in database
 			return;
@@ -251,7 +283,9 @@ public class FormFieldMapper extends BaseRowMapper<FormField>{
 	protected void setVersion(FormField formField, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(FormFieldTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

@@ -14,12 +14,15 @@ import org.apache.http.util.TextUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
+import com.terapico.caf.Image;
 import com.terapico.caf.form.ImageInfo;
 import com.terapico.utils.CollectionUtils;
 import com.terapico.utils.DateTimeUtil;
 import com.terapico.utils.DebugUtil;
 import com.terapico.utils.MapUtil;
 import com.terapico.utils.RequestUtil;
+import com.terapico.utils.TextUtil;
 
 public class BaseFormProcessor {
 	
@@ -180,6 +183,16 @@ public class BaseFormProcessor {
 		}
 		return mappingResult;
 	}
+	protected Map<String, Object> mapCafImagesFieldIntoUiForm(boolean hidden, String paramName, Images defaultValue) {
+		return mapCafImagesFieldIntoUiForm(paramName, defaultValue);
+	}
+	protected Map<String, Object> mapCafImagesFieldIntoUiForm(String paramName, Images defaultValue) {
+		Map<String, Object> mappingResult = new HashMap<>();
+		mappingResult.put("name", paramName);
+		mappingResult.put("type", "images");
+		mappingResult.put("value", defaultValue);
+		return mappingResult;
+	}
 	protected Map<String, Object> mapImagesListIntoUiForm(boolean hidden, String paramName, List<ImageInfo> defaultValue) {
 		return mapImagesListIntoUiForm(paramName, defaultValue);
 	}
@@ -306,7 +319,32 @@ public class BaseFormProcessor {
 		}
 		return images;
 	}
-	
+	protected Images pickCafImagesParams(String paramName) throws Exception {
+		List<Map<String, Object>> list = (List<Map<String, Object>>) this.params.get(paramName);
+		if(list == null || list.isEmpty()) {
+			return null;
+		}
+		
+		Images images = new Images();
+		for(int i=0;i<list.size();i++) {
+			Map<String, Object> item = list.get(i);
+			String imageUrl = (String) item.get("imageUrl");
+			String id = null;
+			if (TextUtil.isBlank((String) item.get("id"))) {
+				id = i + "";
+			}else {
+				id = (String) item.get("id");
+			}
+			String title = (String) item.get("title");
+			Image img = new Image();
+			img.setId(id);
+			img.setImageUrl(imageUrl);
+			img.setTitle(title);
+			
+			images.add(img);
+		}
+		return images;
+	}
 	protected Integer pickIntegerParams(String paramName) {
 		return pickIntegerParams(paramName, null);
 	}
@@ -327,7 +365,7 @@ public class BaseFormProcessor {
 		}
 		if (value instanceof String) {
 			String strVal = (String) value;
-			String[] strVals = strVal.trim().split("\\s*,\\s*");
+			Object[] strVals = strVal.trim().split("\\s*,\\s*");
 			return CollectionUtils.toList(strVals);
 		}
 		List<Object> rst = new ArrayList<>();
@@ -417,6 +455,21 @@ public class BaseFormProcessor {
 		}
 		return true;
 	}
+	protected boolean verifyCafImagesInput(Images images, boolean canbeNull, Integer minLength, Integer maxLength) {
+		if (images == null && canbeNull) {
+			return true;
+		}
+		if (images.size() == 0 && canbeNull) {
+			return true;
+		}
+		if (maxLength != null && images.size() > maxLength) {
+			return false;
+		}
+		if (minLength != null && images.size() < minLength) {
+			return false;
+		}
+		return true;
+	}
 	public void verifyInputs() throws Exception{
 		throw new Exception(this.getClass().getSimpleName()+"没有实现自己的verifyInputs()方法");
 	}
@@ -492,6 +545,11 @@ public class BaseFormProcessor {
 		result.add(imageInfo);
 		return result;
 	}
+	
+	protected Images wrapperImagesDataMember(Images images) {
+		return images;
+	}
+	
 	protected String wrapperStringDataMember(BaseEntity data) {
 		if (data == null) {
 			return null;

@@ -10,9 +10,10 @@ import {
   message,
   Spin,
   Breadcrumb,
-  AutoComplete,
+  AutoComplete,Row, Col,
   Input,Button
 } from 'antd'
+import TopMenu from '../../launcher/TopMenu'
 import DocumentTitle from 'react-document-title'
 import { connect } from 'dva'
 import { Link, Route, Redirect, Switch } from 'dva/router'
@@ -48,6 +49,34 @@ const filteredNoGroupMenuItems = defaultFilteredNoGroupMenuItems
 const filteredMenuItemsGroup = defaultFilteredMenuItemsGroup
 const renderMenuItem=defaultRenderMenuItem
 
+const userBarResponsiveStyle = {
+  xs: 8,
+  sm: 8,
+  md: 8,
+  lg: 6,
+  xl: 6,
+  
+};
+
+
+const searchBarResponsiveStyle = {
+  xs: 8,
+  sm: 8,
+  md: 8,
+  lg: 12,
+  xl: 12,
+  
+};
+
+
+const naviBarResponsiveStyle = {
+  xs: 8,
+  sm: 8,
+  md: 8,
+  lg: 6,
+  xl: 6,
+  
+};
 
 
 const query = {
@@ -75,10 +104,12 @@ const query = {
 
 
 class SecUserBizApp extends React.PureComponent {
-  constructor(props) {
+constructor(props) {
     super(props)
      this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(props),
+      showSearch: false,
+      searchKeyword:''
     }
   }
 
@@ -110,35 +141,34 @@ class SecUserBizApp extends React.PureComponent {
     return keys
   }
   
-  getNavMenuItems = (targetObject) => {
+ getNavMenuItems = (targetObject, style, customTheme) => {
   
 
     const menuData = sessionObject('menuData')
     const targetApp = sessionObject('targetApp')
+    const mode =style || "inline"
+    const theme = customTheme || "light" 
 	const {objectId}=targetApp;
   	const userContext = null
     return (
-      
-		  <Menu
-             theme="dark"
-             mode="inline"
-            
-             
-             onOpenChange={this.handleOpenChange}
-            
-             defaultOpenKeys={['firstOne']}
-             style={{ margin: '16px 0', width: '100%' }}
-           >
+	  <Menu
+        theme="dark"
+        mode="inline"
+        
+        onOpenChange={this.handleOpenChange}
+        defaultOpenKeys={['firstOne']}
+        
+       >
            
 
              <Menu.Item key="dashboard">
-               <Link to={`/secUser/${this.props.secUser.id}/dashboard`}><Icon type="dashboard" /><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
+               <Link to={`/secUser/${this.props.secUser.id}/dashboard`}><Icon type="dashboard" style={{marginRight:"20px"}}/><span>{appLocaleName(userContext,"Dashboard")}</span></Link>
              </Menu.Item>
            
         {filteredNoGroupMenuItems(targetObject,this).map((item)=>(renderMenuItem(item)))}  
         {filteredMenuItemsGroup(targetObject,this).map((groupedMenuItem,index)=>{
           return(
-    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
+    <SubMenu key={`vg${index}`} title={<span><Icon type="folder" style={{marginRight:"20px"}} /><span>{`${groupedMenuItem.viewGroup}`}</span></span>} >
       {groupedMenuItem.subItems.map((item)=>(renderMenuItem(item)))}  
     </SubMenu>
 
@@ -159,7 +189,7 @@ class SecUserBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "用户应用程序",
+      name: window.mtrans('user_app','sec_user.user_app_list',false),
       role: "userApp",
       data: state._secUser.userAppList,
       metaInfo: state._secUser.userAppListMetaInfo,
@@ -177,6 +207,7 @@ class SecUserBizApp extends React.PureComponent {
       listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
     }))(UserAppSearch)
   }
+  
   getUserAppCreateForm = () => {
    	const {UserAppCreateForm} = GlobalComponents;
    	const userContext = null
@@ -186,6 +217,7 @@ class SecUserBizApp extends React.PureComponent {
       data: state._secUser.userAppList,
       metaInfo: state._secUser.userAppListMetaInfo,
       count: state._secUser.userAppCount,
+      returnURL: `/secUser/${state._secUser.id}/list`,
       currentPage: state._secUser.userAppCurrentPageNumber,
       searchFormParameters: state._secUser.userAppSearchFormParameters,
       loading: state._secUser.loading,
@@ -209,7 +241,7 @@ class SecUserBizApp extends React.PureComponent {
     const userContext = null
     return connect(state => ({
       rule: state.rule,
-      name: "登录历史",
+      name: window.mtrans('login_history','sec_user.login_history_list',false),
       role: "loginHistory",
       data: state._secUser.loginHistoryList,
       metaInfo: state._secUser.loginHistoryListMetaInfo,
@@ -227,6 +259,7 @@ class SecUserBizApp extends React.PureComponent {
       listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
     }))(LoginHistorySearch)
   }
+  
   getLoginHistoryCreateForm = () => {
    	const {LoginHistoryCreateForm} = GlobalComponents;
    	const userContext = null
@@ -236,6 +269,7 @@ class SecUserBizApp extends React.PureComponent {
       data: state._secUser.loginHistoryList,
       metaInfo: state._secUser.loginHistoryListMetaInfo,
       count: state._secUser.loginHistoryCount,
+      returnURL: `/secUser/${state._secUser.id}/list`,
       currentPage: state._secUser.loginHistoryCurrentPageNumber,
       searchFormParameters: state._secUser.loginHistorySearchFormParameters,
       loading: state._secUser.loading,
@@ -254,8 +288,122 @@ class SecUserBizApp extends React.PureComponent {
     }))(LoginHistoryUpdateForm)
   }
 
+  getWechatWorkappIdentifySearch = () => {
+    const {WechatWorkappIdentifySearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: window.mtrans('wechat_workapp_identify','sec_user.wechat_workapp_identify_list',false),
+      role: "wechatWorkappIdentify",
+      data: state._secUser.wechatWorkappIdentifyList,
+      metaInfo: state._secUser.wechatWorkappIdentifyListMetaInfo,
+      count: state._secUser.wechatWorkappIdentifyCount,
+      returnURL: `/secUser/${state._secUser.id}/dashboard`,
+      currentPage: state._secUser.wechatWorkappIdentifyCurrentPageNumber,
+      searchFormParameters: state._secUser.wechatWorkappIdentifySearchFormParameters,
+      searchParameters: {...state._secUser.searchParameters},
+      expandForm: state._secUser.expandForm,
+      loading: state._secUser.loading,
+      partialList: state._secUser.partialList,
+      owner: { type: '_secUser', id: state._secUser.id, 
+      referenceName: 'secUser', 
+      listName: 'wechatWorkappIdentifyList', ref:state._secUser, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(WechatWorkappIdentifySearch)
+  }
+  
+  getWechatWorkappIdentifyCreateForm = () => {
+   	const {WechatWorkappIdentifyCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "wechatWorkappIdentify",
+      data: state._secUser.wechatWorkappIdentifyList,
+      metaInfo: state._secUser.wechatWorkappIdentifyListMetaInfo,
+      count: state._secUser.wechatWorkappIdentifyCount,
+      returnURL: `/secUser/${state._secUser.id}/list`,
+      currentPage: state._secUser.wechatWorkappIdentifyCurrentPageNumber,
+      searchFormParameters: state._secUser.wechatWorkappIdentifySearchFormParameters,
+      loading: state._secUser.loading,
+      owner: { type: '_secUser', id: state._secUser.id, referenceName: 'secUser', listName: 'wechatWorkappIdentifyList', ref:state._secUser, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(WechatWorkappIdentifyCreateForm)
+  }
+  
+  getWechatWorkappIdentifyUpdateForm = () => {
+    const userContext = null
+  	const {WechatWorkappIdentifyUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._secUser.selectedRows,
+      role: "wechatWorkappIdentify",
+      currentUpdateIndex: state._secUser.currentUpdateIndex,
+      owner: { type: '_secUser', id: state._secUser.id, listName: 'wechatWorkappIdentifyList', ref:state._secUser, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(WechatWorkappIdentifyUpdateForm)
+  }
+
+  getWechatMiniappIdentifySearch = () => {
+    const {WechatMiniappIdentifySearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: window.mtrans('wechat_miniapp_identify','sec_user.wechat_miniapp_identify_list',false),
+      role: "wechatMiniappIdentify",
+      data: state._secUser.wechatMiniappIdentifyList,
+      metaInfo: state._secUser.wechatMiniappIdentifyListMetaInfo,
+      count: state._secUser.wechatMiniappIdentifyCount,
+      returnURL: `/secUser/${state._secUser.id}/dashboard`,
+      currentPage: state._secUser.wechatMiniappIdentifyCurrentPageNumber,
+      searchFormParameters: state._secUser.wechatMiniappIdentifySearchFormParameters,
+      searchParameters: {...state._secUser.searchParameters},
+      expandForm: state._secUser.expandForm,
+      loading: state._secUser.loading,
+      partialList: state._secUser.partialList,
+      owner: { type: '_secUser', id: state._secUser.id, 
+      referenceName: 'secUser', 
+      listName: 'wechatMiniappIdentifyList', ref:state._secUser, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(WechatMiniappIdentifySearch)
+  }
+  
+  getWechatMiniappIdentifyCreateForm = () => {
+   	const {WechatMiniappIdentifyCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "wechatMiniappIdentify",
+      data: state._secUser.wechatMiniappIdentifyList,
+      metaInfo: state._secUser.wechatMiniappIdentifyListMetaInfo,
+      count: state._secUser.wechatMiniappIdentifyCount,
+      returnURL: `/secUser/${state._secUser.id}/list`,
+      currentPage: state._secUser.wechatMiniappIdentifyCurrentPageNumber,
+      searchFormParameters: state._secUser.wechatMiniappIdentifySearchFormParameters,
+      loading: state._secUser.loading,
+      owner: { type: '_secUser', id: state._secUser.id, referenceName: 'secUser', listName: 'wechatMiniappIdentifyList', ref:state._secUser, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(WechatMiniappIdentifyCreateForm)
+  }
+  
+  getWechatMiniappIdentifyUpdateForm = () => {
+    const userContext = null
+  	const {WechatMiniappIdentifyUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._secUser.selectedRows,
+      role: "wechatMiniappIdentify",
+      currentUpdateIndex: state._secUser.currentUpdateIndex,
+      owner: { type: '_secUser', id: state._secUser.id, listName: 'wechatMiniappIdentifyList', ref:state._secUser, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(WechatMiniappIdentifyUpdateForm)
+  }
+
 
   
+
+ 
+
+  getPageTitle = () => {
+    // const { location } = this.props
+    // const { pathname } = location
+    const title = '医生排班系统'
+    return title
+  }
+ 
   buildRouters = () =>{
   	const {SecUserDashboard} = GlobalComponents
   	const {SecUserPermission} = GlobalComponents
@@ -276,13 +424,21 @@ class SecUserBizApp extends React.PureComponent {
   	{path:"/secUser/:id/list/loginHistoryList", component: this.getLoginHistorySearch()},
   	{path:"/secUser/:id/list/loginHistoryCreateForm", component: this.getLoginHistoryCreateForm()},
   	{path:"/secUser/:id/list/loginHistoryUpdateForm", component: this.getLoginHistoryUpdateForm()},
+   	
+  	{path:"/secUser/:id/list/wechatWorkappIdentifyList", component: this.getWechatWorkappIdentifySearch()},
+  	{path:"/secUser/:id/list/wechatWorkappIdentifyCreateForm", component: this.getWechatWorkappIdentifyCreateForm()},
+  	{path:"/secUser/:id/list/wechatWorkappIdentifyUpdateForm", component: this.getWechatWorkappIdentifyUpdateForm()},
+   	
+  	{path:"/secUser/:id/list/wechatMiniappIdentifyList", component: this.getWechatMiniappIdentifySearch()},
+  	{path:"/secUser/:id/list/wechatMiniappIdentifyCreateForm", component: this.getWechatMiniappIdentifyCreateForm()},
+  	{path:"/secUser/:id/list/wechatMiniappIdentifyUpdateForm", component: this.getWechatMiniappIdentifyUpdateForm()},
      	
-  	
+ 	 
   	]
   	
   	const {extraRoutesFunc} = this.props;
-	const extraRoutes = extraRoutesFunc?extraRoutesFunc():[]
-    const finalRoutes = routers.concat(extraRoutes)
+  	const extraRoutes = extraRoutesFunc?extraRoutesFunc():[]
+  	const finalRoutes = routers.concat(extraRoutes)
     
   	return (<Switch>
              {finalRoutes.map((item)=>(<Route key={item.path} path={item.path} component={item.component} />))}    
@@ -291,13 +447,6 @@ class SecUserBizApp extends React.PureComponent {
   
   }
  
-
-  getPageTitle = () => {
-    // const { location } = this.props
-    // const { pathname } = location
-    const title = '医生排班系统'
-    return title
-  }
  
   handleOpenChange = (openKeys) => {
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1)
@@ -312,6 +461,16 @@ class SecUserBizApp extends React.PureComponent {
        payload: !collapsed,
      })
    }
+   
+   toggleSwitchText=()=>{
+    const { collapsed } = this.props
+    if(collapsed){
+      return "打开菜单"
+    }
+    return "关闭菜单"
+
+   }
+   
     logout = () => {
    
     console.log("log out called")
@@ -340,50 +499,154 @@ class SecUserBizApp extends React.PureComponent {
      const menuProps = collapsed ? {} : {
        openKeys: this.state.openKeys,
      }
+     const renderBreadcrumbMenuItem=(breadcrumbMenuItem)=>{
+
+      return (
+      <Menu.Item key={breadcrumbMenuItem.link}>
+      <Link key={breadcrumbMenuItem.link} to={`${breadcrumbMenuItem.link}`} className={styles.breadcrumbLink}>
+        <Icon type="heart" style={{marginRight:"10px",color:"red"}} />
+        {renderBreadcrumbText(breadcrumbMenuItem.name)}
+      </Link></Menu.Item>)
+
+     }
+     const breadcrumbMenu=()=>{
+      const currentBreadcrumb =targetApp?sessionObject(targetApp.id):[];
+      return ( <Menu mode="vertical"> 
+      {currentBreadcrumb.map(item => renderBreadcrumbMenuItem(item))}
+      </Menu>)
+  
+
+     }
+     const breadcrumbBar=()=>{
+      const currentBreadcrumb =targetApp?sessionObject(targetApp.id):[];
+      return ( <div mode="vertical"> 
+      {currentBreadcrumb.map(item => renderBreadcrumbBarItem(item))}
+      </div>)
+  
+
+     }
+
+
+	const jumpToBreadcrumbLink=(breadcrumbMenuItem)=>{
+      const { dispatch} = this.props
+      const {name,link} = breadcrumbMenuItem
+      dispatch({ type: 'breadcrumb/jumpToLink', payload: {name, link }} )
+	
+     }  
+
+	 const removeBreadcrumbLink=(breadcrumbMenuItem)=>{
+      const { dispatch} = this.props
+      const {link} = breadcrumbMenuItem
+      dispatch({ type: 'breadcrumb/removeLink', payload: { link }} )
+	
+     }
+
+     const renderBreadcrumbBarItem=(breadcrumbMenuItem)=>{
+
+      return (
+     <Tag 
+      	key={breadcrumbMenuItem.link} color={breadcrumbMenuItem.selected?"#108ee9":"grey"} 
+      	style={{marginRight:"1px",marginBottom:"1px"}} closable onClose={()=>removeBreadcrumbLink(breadcrumbMenuItem)} >
+        <span onClick={()=>jumpToBreadcrumbLink(breadcrumbMenuItem)}>
+        	{renderBreadcrumbText(breadcrumbMenuItem.name)}
+        </span>
+      </Tag>)
+
+     }
+     
+     
+     
+     const { Search } = Input;
+     const showSearchResult=()=>{
+
+        this.setState({showSearch:true})
+
+     }
+     const searchChange=(evt)=>{
+
+      this.setState({searchKeyword :evt.target.value})
+
+    }
+    const hideSearchResult=()=>{
+
+      this.setState({showSearch:false})
+
+    }
+
+    const {searchLocalData}=GlobalComponents.SecUserBase
+	
+    
+     
+     
      const layout = (
      <Layout>
-        <Header>
+ <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
           
-          <div className={styles.left}>
-          <img
-            src="./favicon.png"
-            alt="logo"
-            onClick={this.toggle}
-            className={styles.logo}
-          /><Link key={"__home"} to={"/home"} className={styles.breadcrumbLink}><Icon type="home" />&nbsp;{appLocaleName(userContext,"Home")}</Link>
-          {currentBreadcrumb.map((item)=>{
-            return (<Link  key={item.link} to={`${item.link}`} className={styles.breadcrumbLink}><Icon type="caret-right" />{renderBreadcrumbText(item.name)}</Link>)
-
-          })}
-         </div>
-          <div className={styles.right}  >
-          <Button type="primary"  icon="logout" onClick={()=>this.logout()}>
-          {appLocaleName(userContext,"Exit")}</Button>
-          </div>
+        <Row type="flex" justify="start" align="bottom">
+        
+        <Col {...naviBarResponsiveStyle} >
+             <a  className={styles.menuLink} onClick={()=>this.toggle()}>
+                <Icon type="unordered-list" style={{fontSize:"20px", marginRight:"10px"}}/> 
+                {this.toggleSwitchText()}
+              </a>          
+            
+        </Col>
+        <Col  className={styles.searchBox} {...searchBarResponsiveStyle}  > 
           
+          <Search size="default" placeholder="请输入搜索条件, 查找功能，数据和词汇解释，关闭请点击搜索结果空白处" 
+            enterButton onFocus={()=>showSearchResult()} onChange={(evt)=>searchChange(evt)}
+           	
+            style={{ marginLeft:"10px",marginTop:"7px",width:"100%"}} />  
+            
+            
+          </Col>
+          <Col  {...userBarResponsiveStyle}  > 
+            <Dropdown overlay= { <TopMenu {...this.props} />} className={styles.right}>
+                <a  className={styles.menuLink}>
+                  <Icon type="user" style={{fontSize:"20px",marginRight:"10px"}}/> 账户
+                </a>
+            </Dropdown>
+            
+           </Col>  
+         
+         </Row>
         </Header>
+       <Layout style={{  marginTop: 44 }}>
+        
+       
        <Layout>
-         <Sider
-           trigger={null}
-           collapsible
-           collapsed={collapsed}
-           breakpoint="md"
-           onCollapse={()=>this.onCollapse(collapsed)}
-           collapsedWidth={56}
-           className={styles.sider}
-         >
+      
+      {this.state.showSearch&&(
 
-		 {this.getNavMenuItems(this.props.secUser)}
-		 
-         </Sider>
+        <div style={{backgroundColor:'black'}}  onClick={()=>hideSearchResult()}  >{searchLocalData(this.props.secUser,this.state.searchKeyword)}</div>
+
+      )}
+       </Layout>
+        
+         
          <Layout>
+       <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          breakpoint="md"
+          onCollapse={() => this.onCollapse(collapsed)}
+          collapsedWidth={40}
+          className={styles.sider}
+        >
+         
+         {this.getNavMenuItems(this.props.secUser,"inline","dark")}
+       
+        </Sider>
+        
+         <Layout>
+         <Layout><Row type="flex" justify="start" align="bottom">{breadcrumbBar()} </Row></Layout>
+        
            <Content style={{ margin: '24px 24px 0', height: '100%' }}>
            
            {this.buildRouters()}
- 
-             
-             
            </Content>
+          </Layout>
           </Layout>
         </Layout>
       </Layout>

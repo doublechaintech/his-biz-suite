@@ -4,20 +4,22 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.HisUserContext;
 import com.doublechaintech.his.BaseEntity;
+import com.doublechaintech.his.BaseManager;
 import com.doublechaintech.his.SmartList;
 
-public interface LoginHistoryManager{
+public interface LoginHistoryManager extends BaseManager{
 
 		
 
-	public LoginHistory createLoginHistory(HisUserContext userContext, String fromIp, String description, String secUserId) throws Exception;	
+	public LoginHistory createLoginHistory(HisUserContext userContext, String fromIp,String description,String secUserId) throws Exception;
 	public LoginHistory updateLoginHistory(HisUserContext userContext,String loginHistoryId, int loginHistoryVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public LoginHistory loadLoginHistory(HisUserContext userContext, String loginHistoryId, String [] tokensExpr) throws Exception;
 	public LoginHistory internalSaveLoginHistory(HisUserContext userContext, LoginHistory loginHistory) throws Exception;
 	public LoginHistory internalSaveLoginHistory(HisUserContext userContext, LoginHistory loginHistory,Map<String,Object>option) throws Exception;
-	
+
 	public LoginHistory transferToAnotherSecUser(HisUserContext userContext, String loginHistoryId, String anotherSecUserId)  throws Exception;
  
 
@@ -26,9 +28,12 @@ public interface LoginHistoryManager{
 	public void onNewInstanceCreated(HisUserContext userContext, LoginHistory newCreated)throws Exception;
 
 	/*======================================================DATA MAINTENANCE===========================================================*/
-	
 
 
+
+	public Object listBySecUser(HisUserContext userContext,String secUserId) throws Exception;
+	public Object listPageBySecUser(HisUserContext userContext,String secUserId, int start, int count) throws Exception;
+  
 
 }
 

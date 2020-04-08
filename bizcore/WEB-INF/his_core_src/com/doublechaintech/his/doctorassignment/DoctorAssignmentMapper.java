@@ -30,7 +30,9 @@ public class DoctorAssignmentMapper extends BaseRowMapper<DoctorAssignment>{
 	protected void setId(DoctorAssignment doctorAssignment, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(DoctorAssignmentTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -42,7 +44,9 @@ public class DoctorAssignmentMapper extends BaseRowMapper<DoctorAssignment>{
 	protected void setName(DoctorAssignment doctorAssignment, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(DoctorAssignmentTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -90,7 +94,9 @@ public class DoctorAssignmentMapper extends BaseRowMapper<DoctorAssignment>{
 	protected void setUpdateTime(DoctorAssignment doctorAssignment, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date updateTime = rs.getTimestamp(DoctorAssignmentTable.COLUMN_UPDATE_TIME);
+		
 		if(updateTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -102,7 +108,9 @@ public class DoctorAssignmentMapper extends BaseRowMapper<DoctorAssignment>{
 	protected void setVersion(DoctorAssignment doctorAssignment, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(DoctorAssignmentTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

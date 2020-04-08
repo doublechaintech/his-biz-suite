@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -57,6 +58,7 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	FormAction(){
@@ -65,7 +67,7 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 	public 	static FormAction withId(String id){
 		FormAction formAction = new FormAction();
 		formAction.setId(id);
-		// formAction.setVersion(Integer.MAX_VALUE);
+		formAction.setVersion(Integer.MAX_VALUE);
 		return formAction;
 	}
 	public 	static FormAction refById(String id){
@@ -79,16 +81,6 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	FormAction(String label, String localeKey, String actionKey, String level, String url, GenericForm form)
-	{
-		setLabel(label);
-		setLocaleKey(localeKey);
-		setActionKey(actionKey);
-		setLevel(level);
-		setUrl(url);
-		setForm(form);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -115,6 +107,7 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeLabelProperty(String newValueExpr){
+	
 		String oldValue = getLabel();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -124,12 +117,13 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		updateLabel(newValue);
 		this.onChangeProperty(LABEL_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeLocaleKeyProperty(String newValueExpr){
+	
 		String oldValue = getLocaleKey();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -139,12 +133,13 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		updateLocaleKey(newValue);
 		this.onChangeProperty(LOCALE_KEY_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeActionKeyProperty(String newValueExpr){
+	
 		String oldValue = getActionKey();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -154,12 +149,13 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		updateActionKey(newValue);
 		this.onChangeProperty(ACTION_KEY_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeLevelProperty(String newValueExpr){
+	
 		String oldValue = getLevel();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -169,12 +165,13 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		updateLevel(newValue);
 		this.onChangeProperty(LEVEL_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUrlProperty(String newValueExpr){
+	
 		String oldValue = getUrl();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -184,7 +181,7 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		updateUrl(newValue);
 		this.onChangeProperty(URL_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -392,7 +389,9 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, FORM_PROPERTY, getForm());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -459,7 +458,9 @@ public class FormAction extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getLabel(), getLocaleKey(), getActionKey(), getLevel(), getUrl(), getForm(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

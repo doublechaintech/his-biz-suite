@@ -4,20 +4,22 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.HisUserContext;
 import com.doublechaintech.his.BaseEntity;
+import com.doublechaintech.his.BaseManager;
 import com.doublechaintech.his.SmartList;
 
-public interface DoctorManager{
+public interface DoctorManager extends BaseManager{
 
 		
 
-	public Doctor createDoctor(HisUserContext userContext, String name, String shotImage, String hospitalId) throws Exception;	
+	public Doctor createDoctor(HisUserContext userContext, String name,String shotImage,String hospitalId) throws Exception;
 	public Doctor updateDoctor(HisUserContext userContext,String doctorId, int doctorVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Doctor loadDoctor(HisUserContext userContext, String doctorId, String [] tokensExpr) throws Exception;
 	public Doctor internalSaveDoctor(HisUserContext userContext, Doctor doctor) throws Exception;
 	public Doctor internalSaveDoctor(HisUserContext userContext, Doctor doctor,Map<String,Object>option) throws Exception;
-	
+
 	public Doctor transferToAnotherHospital(HisUserContext userContext, String doctorId, String anotherHospitalId)  throws Exception;
  
 
@@ -26,10 +28,10 @@ public interface DoctorManager{
 	public void onNewInstanceCreated(HisUserContext userContext, Doctor newCreated)throws Exception;
 
 	/*======================================================DATA MAINTENANCE===========================================================*/
-	
+
 
 	//public  DoctorAssignmentManager getDoctorAssignmentManager(HisUserContext userContext, String doctorId, String name, String departmentId ,String [] tokensExpr)  throws Exception;
-	
+
 	public  Doctor addDoctorAssignment(HisUserContext userContext, String doctorId, String name, String departmentId , String [] tokensExpr)  throws Exception;
 	public  Doctor removeDoctorAssignment(HisUserContext userContext, String doctorId, String doctorAssignmentId, int doctorAssignmentVersion,String [] tokensExpr)  throws Exception;
 	public  Doctor updateDoctorAssignment(HisUserContext userContext, String doctorId, String doctorAssignmentId, int doctorAssignmentVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
@@ -39,7 +41,7 @@ public interface DoctorManager{
 	*/
 
 	//public  DoctorScheduleManager getDoctorScheduleManager(HisUserContext userContext, String doctorId, String name, Date scheduleDate, String periodId, String departmentId, int available, BigDecimal price, String expenseTypeId, String hospitalId ,String [] tokensExpr)  throws Exception;
-	
+
 	public  Doctor addDoctorSchedule(HisUserContext userContext, String doctorId, String name, Date scheduleDate, String periodId, String departmentId, int available, BigDecimal price, String expenseTypeId, String hospitalId , String [] tokensExpr)  throws Exception;
 	public  Doctor removeDoctorSchedule(HisUserContext userContext, String doctorId, String doctorScheduleId, int doctorScheduleVersion,String [] tokensExpr)  throws Exception;
 	public  Doctor updateDoctorSchedule(HisUserContext userContext, String doctorId, String doctorScheduleId, int doctorScheduleVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
@@ -49,6 +51,9 @@ public interface DoctorManager{
 	*/
 
 
+	public Object listByHospital(HisUserContext userContext,String hospitalId) throws Exception;
+	public Object listPageByHospital(HisUserContext userContext,String hospitalId, int start, int count) throws Exception;
+  
 
 }
 

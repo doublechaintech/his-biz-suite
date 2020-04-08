@@ -31,7 +31,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setId(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(ExpenseTypeTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -43,7 +45,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setName(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(ExpenseTypeTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -55,7 +59,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setHelperChars(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String helperChars = rs.getString(ExpenseTypeTable.COLUMN_HELPER_CHARS);
+		
 		if(helperChars == null){
 			//do nothing when nothing found in database
 			return;
@@ -67,7 +73,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setStatus(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String status = rs.getString(ExpenseTypeTable.COLUMN_STATUS);
+		
 		if(status == null){
 			//do nothing when nothing found in database
 			return;
@@ -97,7 +105,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setDescription(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String description = rs.getString(ExpenseTypeTable.COLUMN_DESCRIPTION);
+		
 		if(description == null){
 			//do nothing when nothing found in database
 			return;
@@ -109,7 +119,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setUpdateTime(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date updateTime = rs.getTimestamp(ExpenseTypeTable.COLUMN_UPDATE_TIME);
+		
 		if(updateTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -121,7 +133,9 @@ public class ExpenseTypeMapper extends BaseRowMapper<ExpenseType>{
 	protected void setVersion(ExpenseType expenseType, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(ExpenseTypeTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

@@ -131,9 +131,13 @@ public class CandidateContainerTokens extends CommonTokens{
 	}
 	private int candidateElementListSearchCounter = 0;
 	public CandidateContainerTokens searchCandidateElementListWith(String field, String verb, String value){		
+		
+		withCandidateElementList();
 		addSearchMoreOptions(CANDIDATE_ELEMENT_LIST,candidateElementListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public CandidateContainerTokens searchAllTextOfCandidateElementList(String verb, String value){	
 		String field = "id|name|type";

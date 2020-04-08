@@ -238,17 +238,22 @@ class SecUserUpdateForm extends Component {
 	const selectedRow = this.getSelectedRow()
 
 	const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
-
+	
+	const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"Update")}安全用户: {(currentUpdateIndex+1)}/{selectedRows.length}</div>)
+    }
+	
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
+        title={internalRenderTitle()}
         content={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
         wrapperClassName={styles.advancedForm}
       >
@@ -257,145 +262,153 @@ class SecUserUpdateForm extends Component {
             <Row gutter={16}>
             
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="ID" disabled/>
+                    <Input size="large"  placeHolder={fieldLabels.id} disabled/>
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.login} {...formItemLayout}>
                   {getFieldDecorator('login', {
                     initialValue: selectedRow.login,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="登录" />
+                    <Input size="large"  placeHolder={fieldLabels.login} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.mobile} {...formItemLayout}>
                   {getFieldDecorator('mobile', {
                     initialValue: selectedRow.mobile,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="手机号码" />
+                    <Input size="large"  placeHolder={fieldLabels.mobile} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.email} {...formItemLayout}>
                   {getFieldDecorator('email', {
                     initialValue: selectedRow.email,
-                    rules: [{ required: false, message: appLocaleName(userContext,"PleaseInput") }],
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="电子邮件" />
+                    <Input size="large"  placeHolder={fieldLabels.email} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.pwd} {...formItemLayout}>
                   {getFieldDecorator('pwd', {
                     initialValue: selectedRow.pwd,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="密码" />
+                    <Input size="large"  placeHolder={fieldLabels.pwd} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.weixinOpenid} {...formItemLayout}>
                   {getFieldDecorator('weixinOpenid', {
                     initialValue: selectedRow.weixinOpenid,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="微信openid" />
+                    <Input size="large"  placeHolder={fieldLabels.weixinOpenid} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.weixinAppid} {...formItemLayout}>
                   {getFieldDecorator('weixinAppid', {
                     initialValue: selectedRow.weixinAppid,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="微信Appid" />
+                    <Input size="large"  placeHolder={fieldLabels.weixinAppid} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.accessToken} {...formItemLayout}>
                   {getFieldDecorator('accessToken', {
                     initialValue: selectedRow.accessToken,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="访问令牌" />
+                    <Input size="large"  placeHolder={fieldLabels.accessToken} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.verificationCode} {...formItemLayout}>
                   {getFieldDecorator('verificationCode', {
                     initialValue: selectedRow.verificationCode,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="验证码" />
+                    <Input size="large"  placeHolder={fieldLabels.verificationCode} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.verificationCodeExpire} {...formItemLayout}>
                   {getFieldDecorator('verificationCodeExpire', {
                     initialValue: selectedRow.verificationCodeExpire,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="验证码过期" />
+                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5}  placeHolder={fieldLabels.verificationCodeExpire} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.lastLoginTime} {...formItemLayout}>
                   {getFieldDecorator('lastLoginTime', {
                     initialValue: selectedRow.lastLoginTime,
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                    rules: [{ required: false, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="最后登录时间" />
+                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5}  placeHolder={fieldLabels.lastLoginTime} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-            </Row>
-          </Form>  
-        </Card>
+            
        
         
         
         
+
+
+			</Row>
+          </Form>
+        </Card>
+
+
+
+
+
 
 
         <FooterToolbar>

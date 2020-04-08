@@ -8,10 +8,11 @@ import styles from './ObjectAccess.search.less'
 import GlobalComponents from '../../custcomponents'
 import SelectObject from '../../components/SelectObject'
 import appLocaleName from '../../common/Locale.tool'
+import ObjectAccessBase from './ObjectAccess.base'
 const FormItem = Form.Item
 const { Option } = Select
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',')
-
+const {fieldLabels} = ObjectAccessBase
 const pushIfNotNull=(holder,value)=>{
   if(value==null){
     return
@@ -201,17 +202,17 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
        <Col md={8} sm={24}>
-         <FormItem label="ID">
+         <FormItem label={fieldLabels.id}>
            {getFieldDecorator('id')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
 
        <Col md={8} sm={24}>
-         <FormItem label="名称">
+         <FormItem label={fieldLabels.name}>
            {getFieldDecorator('name')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
@@ -256,109 +257,109 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
           <Col md={8} sm={24}>
-            <FormItem label="ID">
+            <FormItem label={fieldLabels.id}>
               {getFieldDecorator('id')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="名称">
+            <FormItem label={fieldLabels.name}>
               {getFieldDecorator('name')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="访问对象类型">
+            <FormItem label={fieldLabels.objectType}>
               {getFieldDecorator('objectType')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表1">
+            <FormItem label={fieldLabels.list1}>
               {getFieldDecorator('list1')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表2">
+            <FormItem label={fieldLabels.list2}>
               {getFieldDecorator('list2')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表3">
+            <FormItem label={fieldLabels.list3}>
               {getFieldDecorator('list3')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表4">
+            <FormItem label={fieldLabels.list4}>
               {getFieldDecorator('list4')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表5">
+            <FormItem label={fieldLabels.list5}>
               {getFieldDecorator('list5')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表6">
+            <FormItem label={fieldLabels.list6}>
               {getFieldDecorator('list6')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表7">
+            <FormItem label={fieldLabels.list7}>
               {getFieldDecorator('list7')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表8">
+            <FormItem label={fieldLabels.list8}>
               {getFieldDecorator('list8')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="列表9">
+            <FormItem label={fieldLabels.list9}>
               {getFieldDecorator('list9')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="应用程序">
+                    <Form.Item label={fieldLabels.app}>
                   {getFieldDecorator('app', {initialValue: tryinit('app')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('app')}
                     targetType={"app"} 
-                    requestFunction={ObjectAccessService.requestCandidateApp}/>
-                  
+                    requestFunction={ObjectAccessService.requestCandidateApp} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
@@ -374,7 +375,7 @@ componentDidMount() {
       </Form>
     )
   }
-
+	
   render() {
   	const expandForm = overrideValue([this.state.expandForm],false)
     return expandForm ? this.renderAdvancedForm() : this.renderSimpleForm()

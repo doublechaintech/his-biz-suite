@@ -3,15 +3,20 @@ package com.doublechaintech.his;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
+import javax.servlet.http.Cookie;
 import com.skynet.infrastructure.ESClient;
 import com.terapico.uccaf.BaseUserContext;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
+
+import com.doublechaintech.his.tree.TreeServiceImpl;
+
 public interface UserContext extends BaseUserContext{
 	public DateTime now();
 	public String currentUserName();
 	public void log(String message);
 	public String reportExecution();
-	public void putToCache(String key, Object value, int timeToLiveInSeconds);	
+	public void putToCache(String key, Object value, int timeToLiveInSeconds);
 	public void cacheUser(Object value);
 	public Object userOf(Class<?> clazz);
 	public <T> T getCachedObject(String key,Class<T> clazz);
@@ -27,7 +32,7 @@ public interface UserContext extends BaseUserContext{
 	public String getUserAgent();
 	public String getPublicMediaServicePrefix();
 	public void setPublicMediaServicePrefix(String publicMediaServicePrefix);
-	
+
 	public void sendMessage(String dest, String fromWho, String template, Map<String,String>parameters) throws Exception;
 	public void setEsClient(ESClient esClient);
 	public ESClient getEsClient();
@@ -42,6 +47,10 @@ public interface UserContext extends BaseUserContext{
 	public void setResponseHeader(String name, String value);
 	public String getResponseHeadder(String name);
 	public void forceResponseXClassHeader(String clazzName);
+	public Cookie[] getRequestCookies();
+	public <T> List<T> getCachedObjectsWithOneType(List<String> keys, Class<T> clazz);
+	public TreeServiceImpl getTreeService();
+
 }
 
 

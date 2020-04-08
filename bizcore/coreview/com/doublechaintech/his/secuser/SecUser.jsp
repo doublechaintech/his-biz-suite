@@ -103,6 +103,8 @@
 	<% SecUser result = (SecUser)request.getAttribute("result");  %>
 			<li><a data-toggle="tab" href="#userAppList" class="disabled"> ${userContext.localeMap['user_app']}</a></li>
 			<li><a data-toggle="tab" href="#loginHistoryList" class="disabled"> ${userContext.localeMap['login_history']}</a></li>
+			<li><a data-toggle="tab" href="#wechatWorkappIdentifyList" class="disabled"> ${userContext.localeMap['wechat_workapp_identify']}</a></li>
+			<li><a data-toggle="tab" href="#wechatMiniappIdentifyList" class="disabled"> ${userContext.localeMap['wechat_miniapp_identify']}</a></li>
  
 	</ul>
 	</div>
@@ -142,12 +144,7 @@
 
 
 
-	<div class="row">
-<c:set var="secUserBlocking" value="${ result.blocking}" scope="request" />
-<sky:include page="com/doublechaintech/his/secuserblocking/SecUserBlocking$Action.jsp" />
-
-</div>
-
+	
 
 
 
@@ -170,6 +167,22 @@
 		<c:set var="loginHistoryListName" value="loginHistoryList" scope="request"/>
 		<div id="loginHistoryList" class="tab-pane fade sublist" refer-name="sec_user">
 			<sky:include page="com/doublechaintech/his/loginhistory/LoginHistory$List.jsp"
+					referName="secUser"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["wechatWorkappIdentifyList"] or ignoreListAccessControl}'>
+		<c:set var="wechatWorkappIdentifyList" value="${result.wechatWorkappIdentifyList}" scope="request"/>
+		<c:set var="wechatWorkappIdentifyListName" value="wechatWorkappIdentifyList" scope="request"/>
+		<div id="wechatWorkappIdentifyList" class="tab-pane fade sublist" refer-name="sec_user">
+			<sky:include page="com/doublechaintech/his/wechatworkappidentify/WechatWorkappIdentify$List.jsp"
+					referName="secUser"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["wechatMiniappIdentifyList"] or ignoreListAccessControl}'>
+		<c:set var="wechatMiniappIdentifyList" value="${result.wechatMiniappIdentifyList}" scope="request"/>
+		<c:set var="wechatMiniappIdentifyListName" value="wechatMiniappIdentifyList" scope="request"/>
+		<div id="wechatMiniappIdentifyList" class="tab-pane fade sublist" refer-name="sec_user">
+			<sky:include page="com/doublechaintech/his/wechatminiappidentify/WechatMiniappIdentify$List.jsp"
 					referName="secUser"/>
 		</div>
 	</c:if>

@@ -236,17 +236,22 @@ class ObjectAccessUpdateForm extends Component {
 	const selectedRow = this.getSelectedRow()
 
 	const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
-
+	
+	const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"Update")}对象访问: {(currentUpdateIndex+1)}/{selectedRows.length}</div>)
+    }
+	
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
+        title={internalRenderTitle()}
         content={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
         wrapperClassName={styles.advancedForm}
       >
@@ -255,157 +260,165 @@ class ObjectAccessUpdateForm extends Component {
             <Row gutter={16}>
             
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="ID" disabled/>
+                    <Input size="large"  placeHolder={fieldLabels.id} disabled/>
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="名称" />
+                    <Input size="large"  placeHolder={fieldLabels.name} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.objectType} {...formItemLayout}>
                   {getFieldDecorator('objectType', {
                     initialValue: selectedRow.objectType,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="访问对象类型" />
+                    <Input size="large"  placeHolder={fieldLabels.objectType} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list1} {...formItemLayout}>
                   {getFieldDecorator('list1', {
                     initialValue: selectedRow.list1,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表1" />
+                    <Input size="large"  placeHolder={fieldLabels.list1} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list2} {...formItemLayout}>
                   {getFieldDecorator('list2', {
                     initialValue: selectedRow.list2,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表2" />
+                    <Input size="large"  placeHolder={fieldLabels.list2} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list3} {...formItemLayout}>
                   {getFieldDecorator('list3', {
                     initialValue: selectedRow.list3,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表3" />
+                    <Input size="large"  placeHolder={fieldLabels.list3} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list4} {...formItemLayout}>
                   {getFieldDecorator('list4', {
                     initialValue: selectedRow.list4,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表4" />
+                    <Input size="large"  placeHolder={fieldLabels.list4} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list5} {...formItemLayout}>
                   {getFieldDecorator('list5', {
                     initialValue: selectedRow.list5,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表5" />
+                    <Input size="large"  placeHolder={fieldLabels.list5} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list6} {...formItemLayout}>
                   {getFieldDecorator('list6', {
                     initialValue: selectedRow.list6,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表6" />
+                    <Input size="large"  placeHolder={fieldLabels.list6} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list7} {...formItemLayout}>
                   {getFieldDecorator('list7', {
                     initialValue: selectedRow.list7,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表7" />
+                    <Input size="large"  placeHolder={fieldLabels.list7} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list8} {...formItemLayout}>
                   {getFieldDecorator('list8', {
                     initialValue: selectedRow.list8,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表8" />
+                    <Input size="large"  placeHolder={fieldLabels.list8} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.list9} {...formItemLayout}>
                   {getFieldDecorator('list9', {
                     initialValue: selectedRow.list9,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="列表9" />
+                    <Input size="large"  placeHolder={fieldLabels.list9} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-            </Row>
-          </Form>  
-        </Card>
+            
        
         
         
         
+
+
+			</Row>
+          </Form>
+        </Card>
+
+
+
+
+
 
 
         <FooterToolbar>

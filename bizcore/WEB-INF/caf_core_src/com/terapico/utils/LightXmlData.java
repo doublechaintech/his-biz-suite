@@ -4,25 +4,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -207,6 +200,9 @@ public class LightXmlData {
 		}
 
 		public LightXmlData fromXmlString(String xmlStr) throws Exception {
+			if (xmlStr == null || xmlStr.isEmpty()) {
+				return new LightXmlData();
+			}
 			stack.clear();
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -347,7 +343,7 @@ public class LightXmlData {
 	protected List<LightXmlData> children;
 	protected String tagName;
 	protected Object value;
-	protected Map<String, Object> attributes;
+	protected LinkedHashMap<String, Object> attributes;
 	protected boolean wrapperCdata = false;
 
 	public XmlMetaData getMeta() {
@@ -361,7 +357,7 @@ public class LightXmlData {
 
 	private void ensureAttributes() {
 		if (attributes == null) {
-			attributes = new HashMap<>();
+			attributes = new LinkedHashMap<>();
 		}
 	}
 
@@ -404,11 +400,11 @@ public class LightXmlData {
 		this.value = value;
 	}
 
-	public Map<String, Object> getAttributes() {
+	public LinkedHashMap<String, Object> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(Map<String, Object> attributes) {
+	public void setAttributes(LinkedHashMap<String, Object> attributes) {
 		this.attributes = attributes;
 	}
 
@@ -425,17 +421,20 @@ public class LightXmlData {
 	}
 
 	public String toXML(boolean pretty) throws UnsupportedEncodingException {
+		return toXML(pretty, false);
+	}
+	public String toXML(boolean pretty, boolean newLineForAttribute) throws UnsupportedEncodingException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		PrintStream pOut = new PrintStream(out);
 		if (this.getMeta() != null) {
 			printMetaData(pOut);
 		}
-		printNodeData(pOut, this, 0, pretty);
+		printNodeData(pOut, this, 0, pretty, newLineForAttribute);
 		pOut.close();
 		return out.toString("utf-8");
 	}
 
-	private void printNodeData(PrintStream out, LightXmlData node, int level, boolean pretty) {
+	private void printNodeData(PrintStream out, LightXmlData node, int level, boolean pretty, boolean newLineForAttribute) {
 		if (pretty) {
 			for (int i = 0; i < level; i++) {
 				out.print("  ");
@@ -446,6 +445,14 @@ public class LightXmlData {
 		} else {
 			out.printf("<%s", node.getTagName());
 			node.getAttributes().forEach((key, value) -> {
+				if (newLineForAttribute) {
+					out.println();
+					if (pretty) {
+						for (int i = 0; i < level+2; i++) {
+							out.print("  ");
+						}
+					}
+				}
 				out.printf(" %s=\"%s\"", key, convertNodeValueToString(value));
 			});
 			out.print(">");
@@ -457,9 +464,10 @@ public class LightXmlData {
 		}
 		out.println();
 		for (LightXmlData child : node.getChildren()) {
-			printNodeData(out, child, level + 1, pretty);
+			printNodeData(out, child, level + 1, pretty, newLineForAttribute);
 		}
 		if (pretty) {
+			out.println();
 			for (int i = 0; i < level; i++) {
 				out.print("  ");
 			}

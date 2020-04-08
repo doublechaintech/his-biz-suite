@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -52,6 +56,11 @@ public class CandidateElementJDBCTemplateDAO extends HisBaseDAOImpl implements C
 		return loadInternalCandidateElement(accessKey, options);
 	}
 	*/
+	
+	public SmartList<CandidateElement> loadAll() {
+	    return this.loadAll(getCandidateElementMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -430,9 +439,15 @@ public class CandidateElementJDBCTemplateDAO extends HisBaseDAOImpl implements C
  	protected Object[] prepareCandidateElementUpdateParameters(CandidateElement candidateElement){
  		Object[] parameters = new Object[7];
  
+ 		
  		parameters[0] = candidateElement.getName();
+ 		
+ 		
  		parameters[1] = candidateElement.getType();
- 		parameters[2] = candidateElement.getImage(); 	
+ 		
+ 		
+ 		parameters[2] = candidateElement.getImage();
+ 		 	
  		if(candidateElement.getContainer() != null){
  			parameters[3] = candidateElement.getContainer().getId();
  		}
@@ -449,9 +464,15 @@ public class CandidateElementJDBCTemplateDAO extends HisBaseDAOImpl implements C
 		candidateElement.setId(newCandidateElementId);
 		parameters[0] =  candidateElement.getId();
  
+ 		
  		parameters[1] = candidateElement.getName();
+ 		
+ 		
  		parameters[2] = candidateElement.getType();
- 		parameters[3] = candidateElement.getImage(); 	
+ 		
+ 		
+ 		parameters[3] = candidateElement.getImage();
+ 		 	
  		if(candidateElement.getContainer() != null){
  			parameters[4] = candidateElement.getContainer().getId();
  		
@@ -554,18 +575,37 @@ public class CandidateElementJDBCTemplateDAO extends HisBaseDAOImpl implements C
 	public SmartList<CandidateElement> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getCandidateElementMapper());
 	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateCandidateElement executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateCandidateElement result = new CandidateCandidateElement();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
+	}
 	
 	
 
 }
-
-
-
-
-
-
-
-
-
 
 

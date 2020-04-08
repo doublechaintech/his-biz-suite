@@ -4,7 +4,7 @@ public class Footprint {
 	protected String beanName;
 	protected String methodName;
 	protected Object[] parameters;
-	
+
 	public String getBeanName() {
 		return beanName;
 	}
@@ -29,9 +29,16 @@ public class Footprint {
 		System.arraycopy(parameters, 0, this.parameters, 0, parameters.length);
 		this.parameters[0]=null;
 	}
-	
-	
+
+
 }
+
+
+
+
+
+
+
 
 
 

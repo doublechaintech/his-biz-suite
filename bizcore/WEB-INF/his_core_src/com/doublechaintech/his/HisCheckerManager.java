@@ -1,5 +1,7 @@
 package com.doublechaintech.his;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
+import com.terapico.caf.baseelement.CandidateQuery;
 import com.terapico.uccaf.BaseUserContext;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -8,11 +10,35 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
 
 public class HisCheckerManager extends BaseManagerImpl {
+	public SmartList<BaseEntity> requestCandidateValuesForSearch(HisUserContext ctx, String ownerMemberName,
+			String ownerId, String resultMemberName, String resutlClassName, String targetClassName, String filterKey, int pageNo) {
+		return ((BaseDAO)daoOf(ctx)).requestCandidateValuesForSearch(ownerMemberName, ownerId, resultMemberName,
+				resutlClassName, targetClassName, filterKey, pageNo);
+	}
+	
+	protected Object daoOf(HisUserContext ctx) {
+		throw new UnsupportedOperationException("You must implement it in your specific Manager implementation");
+	}
+	
+	
+	public Object queryCandidates(HisUserContext userContext, CandidateQuery query) throws Exception {
+		return new CandidatesUtil().queryCandidates(userContext, query);
+	}
+	
+	public Object queryCandidatesForAssign(HisUserContext userContext, CandidateQuery query) throws Exception {
+		return new CandidatesUtil().queryCandidatesForAssign(userContext, query);
+	}
+
+	public Object queryCandidatesForSearch(HisUserContext userContext, CandidateQuery query) throws Exception {
+		return new CandidatesUtil().queryCandidatesForSearch(userContext, query);
+	}
+	
 	protected HisObjectChecker checkerOf(HisUserContext ctx) {
 		return ctx.getChecker();
 	}
@@ -133,6 +159,42 @@ public class HisCheckerManager extends BaseManagerImpl {
 	public com.doublechaintech.his.doctorschedule.DoctorScheduleDAO doctorScheduleDaoOf(HisUserContext userContext){
 		return userContext.getDAOGroup().getDoctorScheduleDAO();
 	}
+	public com.doublechaintech.his.mobileapp.MobileAppManager mobileAppManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getMobileAppManager();
+	}
+	public com.doublechaintech.his.mobileapp.MobileAppDAO mobileAppDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getMobileAppDAO();
+	}
+	public com.doublechaintech.his.page.PageManager pageManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getPageManager();
+	}
+	public com.doublechaintech.his.page.PageDAO pageDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getPageDAO();
+	}
+	public com.doublechaintech.his.pagetype.PageTypeManager pageTypeManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getPageTypeManager();
+	}
+	public com.doublechaintech.his.pagetype.PageTypeDAO pageTypeDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getPageTypeDAO();
+	}
+	public com.doublechaintech.his.slide.SlideManager slideManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getSlideManager();
+	}
+	public com.doublechaintech.his.slide.SlideDAO slideDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getSlideDAO();
+	}
+	public com.doublechaintech.his.uiaction.UiActionManager uiActionManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getUiActionManager();
+	}
+	public com.doublechaintech.his.uiaction.UiActionDAO uiActionDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getUiActionDAO();
+	}
+	public com.doublechaintech.his.section.SectionManager sectionManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getSectionManager();
+	}
+	public com.doublechaintech.his.section.SectionDAO sectionDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getSectionDAO();
+	}
 	public com.doublechaintech.his.userdomain.UserDomainManager userDomainManagerOf(HisUserContext userContext){
 		return userContext.getManagerGroup().getUserDomainManager();
 	}
@@ -150,12 +212,6 @@ public class HisCheckerManager extends BaseManagerImpl {
 	}
 	public com.doublechaintech.his.secuser.SecUserDAO secUserDaoOf(HisUserContext userContext){
 		return userContext.getDAOGroup().getSecUserDAO();
-	}
-	public com.doublechaintech.his.secuserblocking.SecUserBlockingManager secUserBlockingManagerOf(HisUserContext userContext){
-		return userContext.getManagerGroup().getSecUserBlockingManager();
-	}
-	public com.doublechaintech.his.secuserblocking.SecUserBlockingDAO secUserBlockingDaoOf(HisUserContext userContext){
-		return userContext.getDAOGroup().getSecUserBlockingDAO();
 	}
 	public com.doublechaintech.his.userapp.UserAppManager userAppManagerOf(HisUserContext userContext){
 		return userContext.getManagerGroup().getUserAppManager();
@@ -229,6 +285,24 @@ public class HisCheckerManager extends BaseManagerImpl {
 	public com.doublechaintech.his.candidateelement.CandidateElementDAO candidateElementDaoOf(HisUserContext userContext){
 		return userContext.getDAOGroup().getCandidateElementDAO();
 	}
+	public com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentifyManager wechatWorkappIdentifyManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getWechatWorkappIdentifyManager();
+	}
+	public com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentifyDAO wechatWorkappIdentifyDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getWechatWorkappIdentifyDAO();
+	}
+	public com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentifyManager wechatMiniappIdentifyManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getWechatMiniappIdentifyManager();
+	}
+	public com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentifyDAO wechatMiniappIdentifyDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getWechatMiniappIdentifyDAO();
+	}
+	public com.doublechaintech.his.treenode.TreeNodeManager treeNodeManagerOf(HisUserContext userContext){
+		return userContext.getManagerGroup().getTreeNodeManager();
+	}
+	public com.doublechaintech.his.treenode.TreeNodeDAO treeNodeDaoOf(HisUserContext userContext){
+		return userContext.getDAOGroup().getTreeNodeDAO();
+	}
 	
 	
 	
@@ -276,6 +350,16 @@ public class HisCheckerManager extends BaseManagerImpl {
 	}
     
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -104,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -117,8 +116,8 @@ const internalSummaryOf = (candidateContainer,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{candidateContainer.id}</Description> 
-<Description term="名称">{candidateContainer.name}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{candidateContainer.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{candidateContainer.name}</Description> 
 	
         {buildTransferModal(candidateContainer,targetComponent)}
       </DescriptionList>
@@ -156,10 +155,10 @@ class CandidateContainerDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"候选人容器",cardsFor: "candidateContainer",
+    const cardsData = {cardsName:window.trans('candidate_container'),cardsFor: "candidateContainer",
     	cardsSource: this.props.candidateContainer,returnURL,displayName,
   		subItems: [
-{name: 'candidateElementList', displayName:'候选人元素',type:'candidateElement',count:candidateElementCount,addFunction: true, role: 'candidateElement', metaInfo: candidateElementListMetaInfo, renderItem: GlobalComponents.CandidateElementBase.renderItemOfList},
+{name: 'candidateElementList', displayName: window.mtrans('candidate_element','candidate_container.candidate_element_list',false) ,viewGroup:'__no_group', type:'candidateElement',count:candidateElementCount,addFunction: true, role: 'candidateElement', metaInfo: candidateElementListMetaInfo, renderItem: GlobalComponents.CandidateElementBase.renderItemOfList},
     
       	],
    		subSettingItems: [
@@ -189,8 +188,9 @@ class CandidateContainerDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

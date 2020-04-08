@@ -17,8 +17,3 @@ public class CandidateElementSerializer extends HisObjectPlainCustomSerializer<C
 }
 
 
-
-
-
-
-

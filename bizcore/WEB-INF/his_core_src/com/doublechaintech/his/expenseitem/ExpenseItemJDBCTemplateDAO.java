@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -63,6 +67,11 @@ public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
 		return loadInternalExpenseItem(accessKey, options);
 	}
 	*/
+	
+	public SmartList<ExpenseItem> loadAll() {
+	    return this.loadAll(getExpenseItemMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -545,8 +554,12 @@ public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
  	protected Object[] prepareExpenseItemUpdateParameters(ExpenseItem expenseItem){
  		Object[] parameters = new Object[8];
  
+ 		
  		parameters[0] = expenseItem.getName();
- 		parameters[1] = expenseItem.getPrice(); 	
+ 		
+ 		
+ 		parameters[1] = expenseItem.getPrice();
+ 		 	
  		if(expenseItem.getExpenseType() != null){
  			parameters[2] = expenseItem.getExpenseType().getId();
  		}
@@ -555,7 +568,9 @@ public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
  			parameters[3] = expenseItem.getHospital().getId();
  		}
  
- 		parameters[4] = expenseItem.getUpdateTime();		
+ 		
+ 		parameters[4] = expenseItem.getUpdateTime();
+ 				
  		parameters[5] = expenseItem.nextVersion();
  		parameters[6] = expenseItem.getId();
  		parameters[7] = expenseItem.getVersion();
@@ -568,8 +583,12 @@ public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
 		expenseItem.setId(newExpenseItemId);
 		parameters[0] =  expenseItem.getId();
  
+ 		
  		parameters[1] = expenseItem.getName();
- 		parameters[2] = expenseItem.getPrice(); 	
+ 		
+ 		
+ 		parameters[2] = expenseItem.getPrice();
+ 		 	
  		if(expenseItem.getExpenseType() != null){
  			parameters[3] = expenseItem.getExpenseType().getId();
  		
@@ -580,7 +599,9 @@ public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
  		
  		}
  		
- 		parameters[5] = expenseItem.getUpdateTime();		
+ 		
+ 		parameters[5] = expenseItem.getUpdateTime();
+ 				
  				
  		return parameters;
  	}
@@ -698,6 +719,34 @@ public class ExpenseItemJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
 	@Override
 	public SmartList<ExpenseItem> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getExpenseItemMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateExpenseItem executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateExpenseItem result = new CandidateExpenseItem();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

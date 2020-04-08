@@ -3,6 +3,8 @@ package com.doublechaintech.his.formfield;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -13,9 +15,9 @@ import com.doublechaintech.his.genericform.GenericForm;
 import com.doublechaintech.his.genericform.GenericFormDAO;
 
 
-public interface FormFieldDAO{
+public interface FormFieldDAO extends BaseDAO{
 
-	
+	public SmartList<FormField> loadAll();
 	public FormField load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<FormField> formFieldList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -45,6 +47,8 @@ public interface FormFieldDAO{
 	
 	
 	public SmartList<FormField> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateFormField executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<FormField> findFormFieldByForm(String genericFormId, Map<String,Object> options);
  	public int countFormFieldByForm(String genericFormId, Map<String,Object> options);

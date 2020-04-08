@@ -11,10 +11,15 @@ import com.doublechaintech.his.doctor.Doctor;
 import com.doublechaintech.his.department.Department;
 import com.doublechaintech.his.doctorassignment.DoctorAssignment;
 import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+import com.doublechaintech.his.mobileapp.MobileApp;
+import com.doublechaintech.his.page.Page;
+import com.doublechaintech.his.pagetype.PageType;
+import com.doublechaintech.his.slide.Slide;
+import com.doublechaintech.his.uiaction.UiAction;
+import com.doublechaintech.his.section.Section;
 import com.doublechaintech.his.userdomain.UserDomain;
 import com.doublechaintech.his.userwhitelist.UserWhiteList;
 import com.doublechaintech.his.secuser.SecUser;
-import com.doublechaintech.his.secuserblocking.SecUserBlocking;
 import com.doublechaintech.his.userapp.UserApp;
 import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.listaccess.ListAccess;
@@ -27,6 +32,9 @@ import com.doublechaintech.his.formfield.FormField;
 import com.doublechaintech.his.formaction.FormAction;
 import com.doublechaintech.his.candidatecontainer.CandidateContainer;
 import com.doublechaintech.his.candidateelement.CandidateElement;
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentify;
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentify;
+import com.doublechaintech.his.treenode.TreeNode;
 
 
 public class HisBaseViewScope {
@@ -129,6 +137,84 @@ public class HisBaseViewScope {
 		return DoctorScheduleBaseSummaryScope;
 	}
 
+	protected static SerializeScope MobileAppBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(MobileApp.ID_PROPERTY)
+		.field(MobileApp.NAME_PROPERTY)
+		;
+	/** 用于MobileApp的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getMobileAppSummaryScope() {
+		return MobileAppBaseSummaryScope;
+	}
+
+	protected static SerializeScope PageBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Page.ID_PROPERTY)
+		.field(Page.PAGE_TITLE_PROPERTY)
+		.field(Page.LINK_TO_URL_PROPERTY)
+		;
+	/** 用于Page的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getPageSummaryScope() {
+		return PageBaseSummaryScope;
+	}
+
+	protected static SerializeScope PageTypeBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(PageType.ID_PROPERTY)
+		.field(PageType.NAME_PROPERTY)
+		.field(PageType.CODE_PROPERTY)
+		.field(PageType.FOOTER_TAB_PROPERTY)
+		;
+	/** 用于PageType的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getPageTypeSummaryScope() {
+		return PageTypeBaseSummaryScope;
+	}
+
+	protected static SerializeScope SlideBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Slide.ID_PROPERTY)
+		.field(Slide.DISPLAY_ORDER_PROPERTY)
+		.field(Slide.NAME_PROPERTY)
+		.field(Slide.IMAGE_URL_PROPERTY)
+		.field(Slide.VIDEO_URL_PROPERTY)
+		.field(Slide.LINK_TO_URL_PROPERTY)
+		;
+	/** 用于Slide的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getSlideSummaryScope() {
+		return SlideBaseSummaryScope;
+	}
+
+	protected static SerializeScope UiActionBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(UiAction.ID_PROPERTY)
+		.field(UiAction.CODE_PROPERTY)
+		.field(UiAction.ICON_PROPERTY)
+		.field(UiAction.TITLE_PROPERTY)
+		.field(UiAction.BRIEF_PROPERTY)
+		.field(UiAction.IMAGE_URL_PROPERTY)
+		.field(UiAction.LINK_TO_URL_PROPERTY)
+		.field(UiAction.EXTRA_DATA_PROPERTY)
+		;
+	/** 用于UiAction的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getUiActionSummaryScope() {
+		return UiActionBaseSummaryScope;
+	}
+
+	protected static SerializeScope SectionBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Section.ID_PROPERTY)
+		.field(Section.TITLE_PROPERTY)
+		.field(Section.BRIEF_PROPERTY)
+		.field(Section.ICON_PROPERTY)
+		.field(Section.VIEW_GROUP_PROPERTY)
+		.field(Section.LINK_TO_URL_PROPERTY)
+		.field(Section.PAGE_PROPERTY)
+		;
+	/** 用于Section的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getSectionSummaryScope() {
+		return SectionBaseSummaryScope;
+	}
+
 	protected static SerializeScope UserDomainBaseSummaryScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
@@ -163,23 +249,10 @@ public class HisBaseViewScope {
 		.field(SecUser.VERIFICATION_CODE_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
-		.field(SecUser.CURRENT_STATUS_PROPERTY)
 		;
 	/** 用于SecUser的子对象的详情页时需要序列化的属性列表 */
 	public static SerializeScope getSecUserSummaryScope() {
 		return SecUserBaseSummaryScope;
-	}
-
-	protected static SerializeScope SecUserBlockingBaseSummaryScope = SerializeScope.INCLUDE()
-		.field(HisBaseConstants.X_LINK_TO_URL)
-		.field(SecUserBlocking.ID_PROPERTY)
-		.field(SecUserBlocking.WHO_PROPERTY)
-		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
-		.field(SecUserBlocking.COMMENTS_PROPERTY)
-		;
-	/** 用于SecUserBlocking的子对象的详情页时需要序列化的属性列表 */
-	public static SerializeScope getSecUserBlockingSummaryScope() {
-		return SecUserBlockingBaseSummaryScope;
 	}
 
 	protected static SerializeScope UserAppBaseSummaryScope = SerializeScope.INCLUDE()
@@ -354,6 +427,45 @@ public class HisBaseViewScope {
 		return CandidateElementBaseSummaryScope;
 	}
 
+	protected static SerializeScope WechatWorkappIdentifyBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatWorkappIdentify.ID_PROPERTY)
+		.field(WechatWorkappIdentify.CORP_ID_PROPERTY)
+		.field(WechatWorkappIdentify.USER_ID_PROPERTY)
+		.field(WechatWorkappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatWorkappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatWorkappIdentify的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getWechatWorkappIdentifySummaryScope() {
+		return WechatWorkappIdentifyBaseSummaryScope;
+	}
+
+	protected static SerializeScope WechatMiniappIdentifyBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatMiniappIdentify.ID_PROPERTY)
+		.field(WechatMiniappIdentify.OPEN_ID_PROPERTY)
+		.field(WechatMiniappIdentify.APP_ID_PROPERTY)
+		.field(WechatMiniappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatMiniappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatMiniappIdentify的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getWechatMiniappIdentifySummaryScope() {
+		return WechatMiniappIdentifyBaseSummaryScope;
+	}
+
+	protected static SerializeScope TreeNodeBaseSummaryScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(TreeNode.ID_PROPERTY)
+		.field(TreeNode.NODE_ID_PROPERTY)
+		.field(TreeNode.NODE_TYPE_PROPERTY)
+		.field(TreeNode.LEFT_VALUE_PROPERTY)
+		.field(TreeNode.RIGHT_VALUE_PROPERTY)
+		;
+	/** 用于TreeNode的子对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getTreeNodeSummaryScope() {
+		return TreeNodeBaseSummaryScope;
+	}
+
 	protected static SerializeScope HospitalBaseSecondaryListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
@@ -452,6 +564,84 @@ public class HisBaseViewScope {
 		return DoctorScheduleBaseSecondaryListItemScope;
 	}
 
+	protected static SerializeScope MobileAppBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(MobileApp.ID_PROPERTY)
+		.field(MobileApp.NAME_PROPERTY)
+		;
+	/** 用于MobileApp的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getMobileAppSecondaryListItemScope() {
+		return MobileAppBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope PageBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Page.ID_PROPERTY)
+		.field(Page.PAGE_TITLE_PROPERTY)
+		.field(Page.LINK_TO_URL_PROPERTY)
+		;
+	/** 用于Page的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getPageSecondaryListItemScope() {
+		return PageBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope PageTypeBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(PageType.ID_PROPERTY)
+		.field(PageType.NAME_PROPERTY)
+		.field(PageType.CODE_PROPERTY)
+		.field(PageType.FOOTER_TAB_PROPERTY)
+		;
+	/** 用于PageType的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getPageTypeSecondaryListItemScope() {
+		return PageTypeBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope SlideBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Slide.ID_PROPERTY)
+		.field(Slide.DISPLAY_ORDER_PROPERTY)
+		.field(Slide.NAME_PROPERTY)
+		.field(Slide.IMAGE_URL_PROPERTY)
+		.field(Slide.VIDEO_URL_PROPERTY)
+		.field(Slide.LINK_TO_URL_PROPERTY)
+		;
+	/** 用于Slide的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getSlideSecondaryListItemScope() {
+		return SlideBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope UiActionBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(UiAction.ID_PROPERTY)
+		.field(UiAction.CODE_PROPERTY)
+		.field(UiAction.ICON_PROPERTY)
+		.field(UiAction.TITLE_PROPERTY)
+		.field(UiAction.BRIEF_PROPERTY)
+		.field(UiAction.IMAGE_URL_PROPERTY)
+		.field(UiAction.LINK_TO_URL_PROPERTY)
+		.field(UiAction.EXTRA_DATA_PROPERTY)
+		;
+	/** 用于UiAction的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getUiActionSecondaryListItemScope() {
+		return UiActionBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope SectionBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Section.ID_PROPERTY)
+		.field(Section.TITLE_PROPERTY)
+		.field(Section.BRIEF_PROPERTY)
+		.field(Section.ICON_PROPERTY)
+		.field(Section.VIEW_GROUP_PROPERTY)
+		.field(Section.LINK_TO_URL_PROPERTY)
+		.field(Section.PAGE_PROPERTY)
+		;
+	/** 用于Section的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getSectionSecondaryListItemScope() {
+		return SectionBaseSecondaryListItemScope;
+	}
+
 	protected static SerializeScope UserDomainBaseSecondaryListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
@@ -486,23 +676,10 @@ public class HisBaseViewScope {
 		.field(SecUser.VERIFICATION_CODE_PROPERTY)
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
-		.field(SecUser.CURRENT_STATUS_PROPERTY)
 		;
 	/** 用于SecUser的父对象的列表时需要序列化的属性列表 */
 	public static SerializeScope getSecUserSecondaryListItemScope() {
 		return SecUserBaseSecondaryListItemScope;
-	}
-
-	protected static SerializeScope SecUserBlockingBaseSecondaryListItemScope = SerializeScope.INCLUDE()
-		.field(HisBaseConstants.X_LINK_TO_URL)
-		.field(SecUserBlocking.ID_PROPERTY)
-		.field(SecUserBlocking.WHO_PROPERTY)
-		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
-		.field(SecUserBlocking.COMMENTS_PROPERTY)
-		;
-	/** 用于SecUserBlocking的父对象的列表时需要序列化的属性列表 */
-	public static SerializeScope getSecUserBlockingSecondaryListItemScope() {
-		return SecUserBlockingBaseSecondaryListItemScope;
 	}
 
 	protected static SerializeScope UserAppBaseSecondaryListItemScope = SerializeScope.INCLUDE()
@@ -677,6 +854,45 @@ public class HisBaseViewScope {
 		return CandidateElementBaseSecondaryListItemScope;
 	}
 
+	protected static SerializeScope WechatWorkappIdentifyBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatWorkappIdentify.ID_PROPERTY)
+		.field(WechatWorkappIdentify.CORP_ID_PROPERTY)
+		.field(WechatWorkappIdentify.USER_ID_PROPERTY)
+		.field(WechatWorkappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatWorkappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatWorkappIdentify的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getWechatWorkappIdentifySecondaryListItemScope() {
+		return WechatWorkappIdentifyBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope WechatMiniappIdentifyBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatMiniappIdentify.ID_PROPERTY)
+		.field(WechatMiniappIdentify.OPEN_ID_PROPERTY)
+		.field(WechatMiniappIdentify.APP_ID_PROPERTY)
+		.field(WechatMiniappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatMiniappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatMiniappIdentify的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getWechatMiniappIdentifySecondaryListItemScope() {
+		return WechatMiniappIdentifyBaseSecondaryListItemScope;
+	}
+
+	protected static SerializeScope TreeNodeBaseSecondaryListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(TreeNode.ID_PROPERTY)
+		.field(TreeNode.NODE_ID_PROPERTY)
+		.field(TreeNode.NODE_TYPE_PROPERTY)
+		.field(TreeNode.LEFT_VALUE_PROPERTY)
+		.field(TreeNode.RIGHT_VALUE_PROPERTY)
+		;
+	/** 用于TreeNode的父对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getTreeNodeSecondaryListItemScope() {
+		return TreeNodeBaseSecondaryListItemScope;
+	}
+
 	protected static SerializeScope HospitalBaseListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
@@ -801,6 +1017,94 @@ public class HisBaseViewScope {
 		return DoctorScheduleBaseListItemScope;
 	}
 
+	protected static SerializeScope MobileAppBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(MobileApp.ID_PROPERTY)
+		.field(MobileApp.NAME_PROPERTY)
+		.field(MobileApp.PAGE_LIST, getPageSecondaryListItemScope())
+		.field(MobileApp.PAGE_TYPE_LIST, getPageTypeSecondaryListItemScope())
+		;
+	/** 用于MobileApp对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getMobileAppListItemScope() {
+		return MobileAppBaseListItemScope;
+	}
+
+	protected static SerializeScope PageBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Page.ID_PROPERTY)
+		.field(Page.PAGE_TITLE_PROPERTY)
+		.field(Page.LINK_TO_URL_PROPERTY)
+		.field(Page.PAGE_TYPE_PROPERTY, getPageTypeSummaryScope())
+		.field(Page.MOBILE_APP_PROPERTY, getMobileAppSummaryScope())
+		.field(Page.SLIDE_LIST, getSlideSecondaryListItemScope())
+		.field(Page.UI_ACTION_LIST, getUiActionSecondaryListItemScope())
+		;
+	/** 用于Page对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getPageListItemScope() {
+		return PageBaseListItemScope;
+	}
+
+	protected static SerializeScope PageTypeBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(PageType.ID_PROPERTY)
+		.field(PageType.NAME_PROPERTY)
+		.field(PageType.CODE_PROPERTY)
+		.field(PageType.MOBILE_APP_PROPERTY, getMobileAppSummaryScope())
+		.field(PageType.FOOTER_TAB_PROPERTY)
+		.field(PageType.PAGE_LIST, getPageSecondaryListItemScope())
+		;
+	/** 用于PageType对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getPageTypeListItemScope() {
+		return PageTypeBaseListItemScope;
+	}
+
+	protected static SerializeScope SlideBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Slide.ID_PROPERTY)
+		.field(Slide.DISPLAY_ORDER_PROPERTY)
+		.field(Slide.NAME_PROPERTY)
+		.field(Slide.IMAGE_URL_PROPERTY)
+		.field(Slide.VIDEO_URL_PROPERTY)
+		.field(Slide.LINK_TO_URL_PROPERTY)
+		.field(Slide.PAGE_PROPERTY, getPageSummaryScope())
+		;
+	/** 用于Slide对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getSlideListItemScope() {
+		return SlideBaseListItemScope;
+	}
+
+	protected static SerializeScope UiActionBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(UiAction.ID_PROPERTY)
+		.field(UiAction.CODE_PROPERTY)
+		.field(UiAction.ICON_PROPERTY)
+		.field(UiAction.TITLE_PROPERTY)
+		.field(UiAction.BRIEF_PROPERTY)
+		.field(UiAction.IMAGE_URL_PROPERTY)
+		.field(UiAction.LINK_TO_URL_PROPERTY)
+		.field(UiAction.EXTRA_DATA_PROPERTY)
+		.field(UiAction.PAGE_PROPERTY, getPageSummaryScope())
+		;
+	/** 用于UiAction对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getUiActionListItemScope() {
+		return UiActionBaseListItemScope;
+	}
+
+	protected static SerializeScope SectionBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Section.ID_PROPERTY)
+		.field(Section.TITLE_PROPERTY)
+		.field(Section.BRIEF_PROPERTY)
+		.field(Section.ICON_PROPERTY)
+		.field(Section.VIEW_GROUP_PROPERTY)
+		.field(Section.LINK_TO_URL_PROPERTY)
+		.field(Section.PAGE_PROPERTY)
+		;
+	/** 用于Section对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getSectionListItemScope() {
+		return SectionBaseListItemScope;
+	}
+
 	protected static SerializeScope UserDomainBaseListItemScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
@@ -839,27 +1143,14 @@ public class HisBaseViewScope {
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
 		.field(SecUser.DOMAIN_PROPERTY, getUserDomainSummaryScope())
-		.field(SecUser.BLOCKING_PROPERTY, getSecUserBlockingSummaryScope())
-		.field(SecUser.CURRENT_STATUS_PROPERTY)
 		.field(SecUser.USER_APP_LIST, getUserAppSecondaryListItemScope())
 		.field(SecUser.LOGIN_HISTORY_LIST, getLoginHistorySecondaryListItemScope())
+		.field(SecUser.WECHAT_WORKAPP_IDENTIFY_LIST, getWechatWorkappIdentifySecondaryListItemScope())
+		.field(SecUser.WECHAT_MINIAPP_IDENTIFY_LIST, getWechatMiniappIdentifySecondaryListItemScope())
 		;
 	/** 用于SecUser对象的列表时需要序列化的属性列表 */
 	public static SerializeScope getSecUserListItemScope() {
 		return SecUserBaseListItemScope;
-	}
-
-	protected static SerializeScope SecUserBlockingBaseListItemScope = SerializeScope.INCLUDE()
-		.field(HisBaseConstants.X_LINK_TO_URL)
-		.field(SecUserBlocking.ID_PROPERTY)
-		.field(SecUserBlocking.WHO_PROPERTY)
-		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
-		.field(SecUserBlocking.COMMENTS_PROPERTY)
-		.field(SecUserBlocking.SEC_USER_LIST, getSecUserSecondaryListItemScope())
-		;
-	/** 用于SecUserBlocking对象的列表时需要序列化的属性列表 */
-	public static SerializeScope getSecUserBlockingListItemScope() {
-		return SecUserBlockingBaseListItemScope;
 	}
 
 	protected static SerializeScope UserAppBaseListItemScope = SerializeScope.INCLUDE()
@@ -1052,6 +1343,47 @@ public class HisBaseViewScope {
 		return CandidateElementBaseListItemScope;
 	}
 
+	protected static SerializeScope WechatWorkappIdentifyBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatWorkappIdentify.ID_PROPERTY)
+		.field(WechatWorkappIdentify.CORP_ID_PROPERTY)
+		.field(WechatWorkappIdentify.USER_ID_PROPERTY)
+		.field(WechatWorkappIdentify.SEC_USER_PROPERTY, getSecUserSummaryScope())
+		.field(WechatWorkappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatWorkappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatWorkappIdentify对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getWechatWorkappIdentifyListItemScope() {
+		return WechatWorkappIdentifyBaseListItemScope;
+	}
+
+	protected static SerializeScope WechatMiniappIdentifyBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatMiniappIdentify.ID_PROPERTY)
+		.field(WechatMiniappIdentify.OPEN_ID_PROPERTY)
+		.field(WechatMiniappIdentify.APP_ID_PROPERTY)
+		.field(WechatMiniappIdentify.SEC_USER_PROPERTY, getSecUserSummaryScope())
+		.field(WechatMiniappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatMiniappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatMiniappIdentify对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getWechatMiniappIdentifyListItemScope() {
+		return WechatMiniappIdentifyBaseListItemScope;
+	}
+
+	protected static SerializeScope TreeNodeBaseListItemScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(TreeNode.ID_PROPERTY)
+		.field(TreeNode.NODE_ID_PROPERTY)
+		.field(TreeNode.NODE_TYPE_PROPERTY)
+		.field(TreeNode.LEFT_VALUE_PROPERTY)
+		.field(TreeNode.RIGHT_VALUE_PROPERTY)
+		;
+	/** 用于TreeNode对象的列表时需要序列化的属性列表 */
+	public static SerializeScope getTreeNodeListItemScope() {
+		return TreeNodeBaseListItemScope;
+	}
+
 	protected static SerializeScope HospitalBaseDetailScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(Hospital.ID_PROPERTY)
@@ -1176,6 +1508,94 @@ public class HisBaseViewScope {
 		return DoctorScheduleBaseDetailScope;
 	}
 
+	protected static SerializeScope MobileAppBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(MobileApp.ID_PROPERTY)
+		.field(MobileApp.NAME_PROPERTY)
+		.field(MobileApp.PAGE_LIST, getPageListItemScope())
+		.field(MobileApp.PAGE_TYPE_LIST, getPageTypeListItemScope())
+		;
+	/** 用于MobileApp对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getMobileAppDetailScope() {
+		return MobileAppBaseDetailScope;
+	}
+
+	protected static SerializeScope PageBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Page.ID_PROPERTY)
+		.field(Page.PAGE_TITLE_PROPERTY)
+		.field(Page.LINK_TO_URL_PROPERTY)
+		.field(Page.PAGE_TYPE_PROPERTY, getPageTypeSummaryScope())
+		.field(Page.MOBILE_APP_PROPERTY, getMobileAppSummaryScope())
+		.field(Page.SLIDE_LIST, getSlideListItemScope())
+		.field(Page.UI_ACTION_LIST, getUiActionListItemScope())
+		;
+	/** 用于Page对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getPageDetailScope() {
+		return PageBaseDetailScope;
+	}
+
+	protected static SerializeScope PageTypeBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(PageType.ID_PROPERTY)
+		.field(PageType.NAME_PROPERTY)
+		.field(PageType.CODE_PROPERTY)
+		.field(PageType.MOBILE_APP_PROPERTY, getMobileAppSummaryScope())
+		.field(PageType.FOOTER_TAB_PROPERTY)
+		.field(PageType.PAGE_LIST, getPageListItemScope())
+		;
+	/** 用于PageType对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getPageTypeDetailScope() {
+		return PageTypeBaseDetailScope;
+	}
+
+	protected static SerializeScope SlideBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Slide.ID_PROPERTY)
+		.field(Slide.DISPLAY_ORDER_PROPERTY)
+		.field(Slide.NAME_PROPERTY)
+		.field(Slide.IMAGE_URL_PROPERTY)
+		.field(Slide.VIDEO_URL_PROPERTY)
+		.field(Slide.LINK_TO_URL_PROPERTY)
+		.field(Slide.PAGE_PROPERTY, getPageSummaryScope())
+		;
+	/** 用于Slide对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getSlideDetailScope() {
+		return SlideBaseDetailScope;
+	}
+
+	protected static SerializeScope UiActionBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(UiAction.ID_PROPERTY)
+		.field(UiAction.CODE_PROPERTY)
+		.field(UiAction.ICON_PROPERTY)
+		.field(UiAction.TITLE_PROPERTY)
+		.field(UiAction.BRIEF_PROPERTY)
+		.field(UiAction.IMAGE_URL_PROPERTY)
+		.field(UiAction.LINK_TO_URL_PROPERTY)
+		.field(UiAction.EXTRA_DATA_PROPERTY)
+		.field(UiAction.PAGE_PROPERTY, getPageSummaryScope())
+		;
+	/** 用于UiAction对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getUiActionDetailScope() {
+		return UiActionBaseDetailScope;
+	}
+
+	protected static SerializeScope SectionBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(Section.ID_PROPERTY)
+		.field(Section.TITLE_PROPERTY)
+		.field(Section.BRIEF_PROPERTY)
+		.field(Section.ICON_PROPERTY)
+		.field(Section.VIEW_GROUP_PROPERTY)
+		.field(Section.LINK_TO_URL_PROPERTY)
+		.field(Section.PAGE_PROPERTY)
+		;
+	/** 用于Section对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getSectionDetailScope() {
+		return SectionBaseDetailScope;
+	}
+
 	protected static SerializeScope UserDomainBaseDetailScope = SerializeScope.INCLUDE()
 		.field(HisBaseConstants.X_LINK_TO_URL)
 		.field(UserDomain.ID_PROPERTY)
@@ -1214,27 +1634,14 @@ public class HisBaseViewScope {
 		.field(SecUser.VERIFICATION_CODE_EXPIRE_PROPERTY)
 		.field(SecUser.LAST_LOGIN_TIME_PROPERTY)
 		.field(SecUser.DOMAIN_PROPERTY, getUserDomainSummaryScope())
-		.field(SecUser.BLOCKING_PROPERTY, getSecUserBlockingSummaryScope())
-		.field(SecUser.CURRENT_STATUS_PROPERTY)
 		.field(SecUser.USER_APP_LIST, getUserAppListItemScope())
 		.field(SecUser.LOGIN_HISTORY_LIST, getLoginHistoryListItemScope())
+		.field(SecUser.WECHAT_WORKAPP_IDENTIFY_LIST, getWechatWorkappIdentifyListItemScope())
+		.field(SecUser.WECHAT_MINIAPP_IDENTIFY_LIST, getWechatMiniappIdentifyListItemScope())
 		;
 	/** 用于SecUser对象的详情页时需要序列化的属性列表 */
 	public static SerializeScope getSecUserDetailScope() {
 		return SecUserBaseDetailScope;
-	}
-
-	protected static SerializeScope SecUserBlockingBaseDetailScope = SerializeScope.INCLUDE()
-		.field(HisBaseConstants.X_LINK_TO_URL)
-		.field(SecUserBlocking.ID_PROPERTY)
-		.field(SecUserBlocking.WHO_PROPERTY)
-		.field(SecUserBlocking.BLOCK_TIME_PROPERTY)
-		.field(SecUserBlocking.COMMENTS_PROPERTY)
-		.field(SecUserBlocking.SEC_USER_LIST, getSecUserListItemScope())
-		;
-	/** 用于SecUserBlocking对象的详情页时需要序列化的属性列表 */
-	public static SerializeScope getSecUserBlockingDetailScope() {
-		return SecUserBlockingBaseDetailScope;
 	}
 
 	protected static SerializeScope UserAppBaseDetailScope = SerializeScope.INCLUDE()
@@ -1427,9 +1834,60 @@ public class HisBaseViewScope {
 		return CandidateElementBaseDetailScope;
 	}
 
+	protected static SerializeScope WechatWorkappIdentifyBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatWorkappIdentify.ID_PROPERTY)
+		.field(WechatWorkappIdentify.CORP_ID_PROPERTY)
+		.field(WechatWorkappIdentify.USER_ID_PROPERTY)
+		.field(WechatWorkappIdentify.SEC_USER_PROPERTY, getSecUserSummaryScope())
+		.field(WechatWorkappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatWorkappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatWorkappIdentify对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getWechatWorkappIdentifyDetailScope() {
+		return WechatWorkappIdentifyBaseDetailScope;
+	}
+
+	protected static SerializeScope WechatMiniappIdentifyBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(WechatMiniappIdentify.ID_PROPERTY)
+		.field(WechatMiniappIdentify.OPEN_ID_PROPERTY)
+		.field(WechatMiniappIdentify.APP_ID_PROPERTY)
+		.field(WechatMiniappIdentify.SEC_USER_PROPERTY, getSecUserSummaryScope())
+		.field(WechatMiniappIdentify.CREATE_TIME_PROPERTY)
+		.field(WechatMiniappIdentify.LAST_LOGIN_TIME_PROPERTY)
+		;
+	/** 用于WechatMiniappIdentify对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getWechatMiniappIdentifyDetailScope() {
+		return WechatMiniappIdentifyBaseDetailScope;
+	}
+
+	protected static SerializeScope TreeNodeBaseDetailScope = SerializeScope.INCLUDE()
+		.field(HisBaseConstants.X_LINK_TO_URL)
+		.field(TreeNode.ID_PROPERTY)
+		.field(TreeNode.NODE_ID_PROPERTY)
+		.field(TreeNode.NODE_TYPE_PROPERTY)
+		.field(TreeNode.LEFT_VALUE_PROPERTY)
+		.field(TreeNode.RIGHT_VALUE_PROPERTY)
+		;
+	/** 用于TreeNode对象的详情页时需要序列化的属性列表 */
+	public static SerializeScope getTreeNodeDetailScope() {
+		return TreeNodeBaseDetailScope;
+	}
+
 	
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

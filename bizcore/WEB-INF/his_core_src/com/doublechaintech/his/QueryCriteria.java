@@ -12,26 +12,27 @@ import java.util.List;
 import java.util.Map;
 
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 
 
 
 /*
  * 支持多个字段或的操作，比如
- * 
+ *
  * name|title|content    contains 'super'
- * 会被解析成 where name contains ? or title contains ? 
+ * 会被解析成 where name contains ? or title contains ?
  * */
 class QueryElement extends BaseEntity{
 	protected  Object[] wrapToArray(Object value){
-		
+
 		return new Object[]{value};
-		
+
 	}
-	
+
 	protected String mapToInternalColumn(String field){
 		char [] fieldArray = field.toCharArray();
 		StringBuilder internalFieldBuffer = new StringBuilder();
-		
+
 		for(char ch:fieldArray){
 			if(Character.isUpperCase(ch)){
 				internalFieldBuffer.append('_');
@@ -44,34 +45,34 @@ class QueryElement extends BaseEntity{
 		return internalFieldBuffer.toString();
 	}
 	protected void setToDayBegin(final Calendar cal){
-		
+
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
+
 	}
 	protected void setToDayEnd(final Calendar cal){
-		
+
 		cal.set(Calendar.HOUR_OF_DAY, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
 		cal.set(Calendar.MILLISECOND, 999);
-		
+
 	}
 	protected Date localYearBegin(){
 		Calendar cal = Calendar.getInstance();
 		//cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-		cal.set(Calendar.DAY_OF_YEAR, 1);    
+		cal.set(Calendar.DAY_OF_YEAR, 1);
 		setToDayBegin(cal);
 
 		return cal.getTime();
 	}
-	
+
 	protected Date localMonthBegin(){
 		Calendar cal = Calendar.getInstance();
 		//cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-		//cal.set(Calendar.MONTH, cal.get(Calendar.MONTH));    
+		//cal.set(Calendar.MONTH, cal.get(Calendar.MONTH));
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		setToDayBegin(cal);
 		return cal.getTime();
@@ -79,7 +80,7 @@ class QueryElement extends BaseEntity{
 	protected Date localWeekBegin(){
 		Calendar cal = Calendar.getInstance();
 		//cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-		//cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR));    
+		//cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR));
 		cal.set(Calendar.DAY_OF_WEEK, 1);
 		setToDayBegin(cal);
 		return cal.getTime();
@@ -87,11 +88,11 @@ class QueryElement extends BaseEntity{
 	protected Date localDayBegin(){
 		Calendar cal = Calendar.getInstance();
 		//cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
-		//cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR));    
+		//cal.set(Calendar.WEEK_OF_YEAR, cal.get(Calendar.WEEK_OF_YEAR));
 		setToDayBegin(cal);
 		return cal.getTime();
 	}
-	
+
 	protected Date localYearEnd(){
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 1+cal.get(Calendar.YEAR));
@@ -109,7 +110,7 @@ class QueryElement extends BaseEntity{
 		cal.add(Calendar.MILLISECOND, -1);
 		return cal.getTime();
 	}
-	
+
 	protected Date localWeekEnd(){
 		Calendar cal = Calendar.getInstance();
 		//cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
@@ -117,63 +118,63 @@ class QueryElement extends BaseEntity{
 		cal.setFirstDayOfWeek(Calendar.MONDAY);
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		setToDayEnd(cal);
-		
+
 		return cal.getTime();
 	}
-	
+
 	protected Date localDayEnd(){
 		Calendar cal = Calendar.getInstance();
 		//cal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
 		//cal.set(Calendar.MONTH,1+cal.get(Calendar.MONTH));
-		
+
 		setToDayEnd(cal);
-		
+
 		return cal.getTime();
 	}
-	
+
 	protected Object[] today(){
 		Date start = this.localDayBegin();
 		Date end = this.localDayEnd();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] thisWeek(){
 		Date start = this.localWeekBegin();
 		Date end = this.localWeekEnd();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] thisMonth(){
 		Date start = this.localMonthBegin();
 		Date end = this.localMonthEnd();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] thisQuater(){
 		Date start = new Date();
 		Date end = new Date();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] lastQuater(){
 		Date start = new Date();
 		Date end = new Date();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] thisYear(){
 		Date start = this.localYearBegin();
 		Date end = this.localYearEnd();
-		
+
 		return new Object[]{start, end};
 	}
 	protected void checkFieldName(String field) {
-		
+
 		if(field.length()>50){
 			String message = "The field name: "+ field +" length("+field.length()+") is more 50!";
 			throw new IllegalArgumentException(message);
 		}
-		
+
 		char [] fieldCharArray = field.toCharArray();
 		for(char ch: fieldCharArray){
 			if(isValidFieldChar(ch)){
@@ -182,53 +183,53 @@ class QueryElement extends BaseEntity{
 			String message = "Found invalid char <"+ch+"> from the field name: "+ field;
 			throw new IllegalArgumentException(message);
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 }
 class PowerFilter extends Filter{
-	
-	
+
+
 	protected boolean isSingleSearch(){
-		
+
 		int index = this.getSearchField().indexOf('|');
 		return index<0;
 
 	}
-	
+
 	protected void checkFieldName(String field){
 		if(isSingleSearch()){
 			super.checkFieldName(field);
 			return;
 		}
 		String fields [] = getFields();
-		for(String fieldName: fields){			
+		for(String fieldName: fields){
 			super.checkFieldName(fieldName);
 		}
-		
+
 	}
-	
-	
+
+
 	protected String [] getFields(){
-		
+
 		 return getSearchField().split("\\|");
 	}
-	
+
 	public String getWhereClause(){
-		
+
 		if(isSingleSearch()){
 			return super.getWhereClause();
 		}
 		//handle multiple search
-		
+
 		String fields [] = getFields();
-		
+
 		StringBuilder whereSQL=new StringBuilder();
-		
+
 		whereSQL.append('(');
-		
+
 		int index = 0;
 		for(String field: fields){
 
@@ -239,14 +240,14 @@ class PowerFilter extends Filter{
 			index++;
 		}
 		whereSQL.append(')');
-		
-		
+
+
 		return whereSQL.toString();
 	}
-	
-	
+
+
 	public Object[] getWhereParameters(){
-		
+
 		if(isSingleSearch()){
 			return super.getWhereParameters();
 		}
@@ -255,32 +256,32 @@ class PowerFilter extends Filter{
 		Object [] singleResult =  wrapParameters(this.getSearchVerb(),this.getSearchValue());
 		int singleLength = singleResult.length;
 		Object result[] = new  Object [count*singleLength];
-		
-		for(int i=0;i<count;i++){			
+
+		for(int i=0;i<count;i++){
 			System.arraycopy(singleResult, 0, result, i*singleLength, singleLength);
-			
+
 		}
-		
+
 		return result;
 	}
-	
+
 }
 
 class Filter extends QueryElement{
-	
+
 	private String searchField;
 	private String searchVerb;
 	private String searchValue;
 	public String getSearchField() {
 		return searchField;
 	}
-	
-	
+
+
 
 	public void setSearchField(String searchField) {
-		
-		
-		
+
+
+
 		this.searchField = searchField;
 	}
 	public String getSearchVerb() {
@@ -288,7 +289,7 @@ class Filter extends QueryElement{
 	}
 	public void setSearchVerb(String searchVerb) {
 		verifyVerb(searchVerb);
-		
+
 		this.searchVerb = searchVerb;
 	}
 	public String getSearchValue() {
@@ -297,14 +298,14 @@ class Filter extends QueryElement{
 	public void setSearchValue(String searchValue) {
 		this.searchValue = searchValue;
 	}
-	
+
 	static Map<String, String>statementMap;
 	protected void initStatementMap(){
 		if(statementMap != null){
 			return;
 		}
 		statementMap=new HashMap<String, String>();
-		
+
 		statementMap.put("between", "between ? and ?");
 		statementMap.put("startsWith", "like ?");
 		statementMap.put("endsWith", "like ?");
@@ -313,18 +314,22 @@ class Filter extends QueryElement{
 		statementMap.put("is", "= ?");
 		statementMap.put("not", "<> ?");
 		statementMap.put("eq", "= ?");
+		statementMap.put("gt", "> ?");
+		statementMap.put("gte", ">= ?");
+		statementMap.put("lt", "< ?");
+		statementMap.put("lte", "<= ?");
 		statementMap.put(VERB_ONEOF, CALC_STATEMENT);
-		
-		
-		
+
+
+
 	}
-	
+
 	private static final String CALC_STATEMENT="__calc__";
 	private static final String VERB_ONEOF="oneof";
 	private static final String NONE_OF="noneof";
-	
-	
-	
+
+
+
 	protected void verifyVerb(String verb){
 		initStatementMap();
 		String statement = statementMap.get(verb);
@@ -332,22 +337,22 @@ class Filter extends QueryElement{
 			throw new IllegalStateException("The verb '"+verb+"' is not supported for now!");
 		}
 	}
-	
+
 	protected String includeStatementOfArray(Object [] array){
-		
+
 		String SQL = " in ("+repeatExpr("?",",",array.length)+")";
-		
+
 		return SQL;
 	}
 	protected String excludeStatementOfArray(Object [] array){
-		
+
 		String SQL = " not in ("+repeatExpr("?",",",array.length)+")";
-		
+
 		return SQL;
 	}
-	
+
 	protected String overrideStatement(String statement){
-		
+
 		if(statement.equals(VERB_ONEOF)){
 			Object [] parameters = this.wrapParameters(VERB_ONEOF, this.searchValue);
 			return includeStatementOfArray(parameters);
@@ -356,61 +361,61 @@ class Filter extends QueryElement{
 			Object [] parameters = this.wrapParameters(NONE_OF, this.searchValue);
 			return excludeStatementOfArray(parameters);
 		}
-		
+
 		throw new IllegalArgumentException("Override for verb: '"+statement+"' is not supported for now");
-		
-		
+
+
 	}
 	protected String getVerbSQL(){
-		
+
 		verifyVerb(searchVerb);
 		String statement = statementMap.get(searchVerb);
 		//override with calc
-		
+
 		if(CALC_STATEMENT.equals(statement)){
-			
+
 			return overrideStatement(searchVerb);
-			
+
 		}
-		
-		
+
+
 		//already checked
 		return statement;
-		
+
 	}
 
 	/*
 	protected Object[] lastMonth(String value){
 		Date start = new Date();
 		Date end = new Date();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] lastWeek(String value){
 		Date start = new Date();
 		Date end = new Date();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] yesterday(String value){
 		Date start = new Date();
 		Date end = new Date();
-		
+
 		return new Object[]{start, end};
 	}
 	protected Object[] tomorrow(String value){
 		Date start = new Date();
 		Date end = new Date();
-		
+
 		return new Object[]{start, end};
 	}
 	*/
 	protected Object[] wrapParameters(String verb, String value){
-		
-		
+
+
 		//Map<String, Object[]> parametersMap = new HashMap<String, Object[]>();
-		
-		
+
+
 		if("startsWith".equals(verb) ){
 			return wrapToArray(join(value,"%"));
 		}
@@ -435,7 +440,7 @@ class Filter extends QueryElement{
 				return this.today();
 			}
 			String [] values = value.split("~");
-			
+
 			return values;
 		}
 		if(VERB_ONEOF.equals(verb) ){
@@ -464,22 +469,22 @@ class Filter extends QueryElement{
 		//eq or something other
 		return wrapToArray(value);
 	}
-	
+
 	protected Object[] pastDate() {
 		// TODO Auto-generated method stub
 		Date start = this.timeStart();
 		Date end = this.timeNow();
-		
+
 		return new Object[]{start, end};
-		
+
 	}
 	protected Object[] past() {
 		// TODO Auto-generated method stub
 		Date start = this.timeStart();
 		Date end = this.timeNow();
-		
+
 		return new Object[]{start, end};
-		
+
 	}
 
 	private Date dateStart() {
@@ -490,7 +495,7 @@ class Filter extends QueryElement{
 		// TODO Auto-generated method stub
 		return new Date();
 	}
-	
+
 	private DateTime timeStart() {
 		// TODO Auto-generated method stub
 		return new DateTime(0);
@@ -508,29 +513,29 @@ class Filter extends QueryElement{
 		return join(mapToInternalColumn(searchField) ," ", getVerbSQL());
 	}
 	public Object[] getWhereParameters(){
-		
+
 		if(this.getSearchVerb()==null){
 			return new Object[]{};
 		}
 		if(this.getSearchVerb().equals("")){
 			return new Object[]{};
 		}
-		
+
 		if(this.getSearchValue()==null){
 			return new Object[]{};
 		}
 		if(this.getSearchValue().equals("")){
 			return new Object[]{};
 		}
-		
+
 		return wrapParameters(this.getSearchVerb(),this.getSearchValue());
 	}
 
-	
+
 }
 
 class Sorter extends QueryElement{
-	
+
 	private String sortField;
 	private String sortDescOrAsc;
 	public String getSortField() {
@@ -553,7 +558,7 @@ class Sorter extends QueryElement{
 	protected String mapToInternalColumn(String field){
 		char [] fieldArray = field.toCharArray();
 		StringBuilder internalFieldBuffer = new StringBuilder();
-		
+
 		for(char ch:fieldArray){
 			if(Character.isUpperCase(ch)){
 				internalFieldBuffer.append('_');
@@ -565,7 +570,7 @@ class Sorter extends QueryElement{
 		}
 		return internalFieldBuffer.toString();
 	}
-	
+
 }
 class CommonInfo {
 	private String name;
@@ -590,13 +595,13 @@ class CommonInfo {
 		this.localeKey = localeKey;
 	}
 
-	
+
 }
 class SearchField extends CommonInfo{
-	
+
 }
 class SortType extends CommonInfo{
-	
+
 }
 public class QueryCriteria extends BaseEntity {
 
@@ -613,12 +618,12 @@ customList.searchResultOrder=desc/asc
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
+
 	private List<Filter>moreFilters;
 	private List<Sorter>moreSorters;
-	
-	
-	
+
+
+
 	public List<Sorter> getMoreSorters() {
 		if(moreSorters == null){
 			moreSorters = new ArrayList<Sorter>();
@@ -648,54 +653,54 @@ customList.searchResultOrder=desc/asc
 	}
 
 	public static QueryCriteria createCriteriaFromOptions(String listName, Map<String, Object >options){
-		
+
 		QueryCriteria criteria = new QueryCriteria();
-		
+
 		Filter filter = criteria.createFilter(
-				getOptionsValue(listName,"searchField",options), 
-				getOptionsValue(listName,"searchVerb",options), 
+				getOptionsValue(listName,"searchField",options),
+				getOptionsValue(listName,"searchVerb",options),
 				getOptionsValue(listName,"searchValue",options));
-		
+
 		if(filter!=null){
 			criteria.addFilter(filter);//没办法，兼容老的标准
 		}
-		
+
 		for(int i=0;i<20;i++){
-			
+
 			filter = criteria.createFilter(
-					getOptionsValue(listName,"searchField"+"."+i,options), 
-					getOptionsValue(listName,"searchVerb"+"."+i,options), 
+					getOptionsValue(listName,"searchField"+"."+i,options),
+					getOptionsValue(listName,"searchVerb"+"."+i,options),
 					getOptionsValue(listName,"searchValue"+"."+i,options));
 			if(filter == null){
 				//no break from 0, there are some old code use new code, it stars from 1
 				break;
 			}
 			criteria.addFilter(filter);
-			
+
 		}
-		
+
 		Sorter sorter = criteria.createSorter(
-				getOptionsValue(listName,"orderBy",options), 
+				getOptionsValue(listName,"orderBy",options),
 				getOptionsValue(listName,"descOrAsc",options));
 
 		if(sorter!=null){
 			criteria.addSorter(sorter);//没办法，兼容老的标准
 		}
-		
+
 		for(int i=0;i<20;i++){
-			
+
 			sorter = criteria.createSorter(
-					getOptionsValue(listName,"orderBy"+"."+i,options), 
+					getOptionsValue(listName,"orderBy"+"."+i,options),
 					getOptionsValue(listName,"descOrAsc"+"."+i,options));
 			if(sorter == null){
 				//no break from 0, there are some old code use new code, it stars from 1
 				break;
 			}
 			criteria.addSorter(sorter);
-			
+
 		}
-		
-		
+
+
 		return criteria;
 	}
 	protected QueryCriteria addSorter(Sorter sorter) {
@@ -713,17 +718,17 @@ customList.searchResultOrder=desc/asc
 		}
 		return obj.toString();
 	}
-	
+
 	public static QueryCriteria createCriteria(String field, String verb, String value, String orderBy, String descOrAsc){
-		
+
 		QueryCriteria criteria = new QueryCriteria();
-		
+
 		criteria.addFilter(criteria.createFilter(field, verb, value) );
 		criteria.addSorter(criteria.createSorter(orderBy, descOrAsc) );
-		
+
 		return criteria;
 	}
-	
+
 	public boolean hasStatement(){
 		if(!this.getMoreFilters().isEmpty()){
 			return true;
@@ -732,7 +737,7 @@ customList.searchResultOrder=desc/asc
 		if(!this.getMoreSorters().isEmpty()){
 			return true;
 		}
-		
+
 		return false;
 	}
 	public String getSQL(){
@@ -743,7 +748,7 @@ customList.searchResultOrder=desc/asc
 		}
 		return sorterSQL;
 	}
-	
+
 	protected String getFilterSQL() {
 		// TODO Auto-generated method stub
 
@@ -751,9 +756,9 @@ customList.searchResultOrder=desc/asc
 			return null;
 		}
 		//there are more sorters;
-		
+
 		StringBuilder stringBuilder = new StringBuilder(100);
-		
+
 		int counter = 0;
 		for(Filter filter: getMoreFilters()){
 			if(counter>0){
@@ -769,7 +774,7 @@ customList.searchResultOrder=desc/asc
 		if(this.getMoreSorters().isEmpty()){
 			return "";
 		}
-		
+
 		StringBuilder stringBuilder = new StringBuilder(100);
 		stringBuilder.append("order by ");
 		int counter = 0;
@@ -784,31 +789,31 @@ customList.searchResultOrder=desc/asc
 	}
 
 	public Object [] getParameters(){
-		
+
 		if(this.getMoreFilters().isEmpty()){
-			
+
 			return new Object[]{};
 		}
-		
+
 		List<Object>parameters = new ArrayList<Object>();
-		
+
 		for(Filter filter: getMoreFilters()){
 			//stringBuilder.append(filter.getWhereClause());
 			parameters.addAll(Arrays.asList(filter.getWhereParameters()));
 		}
-		
+
 		return parameters.toArray();
 		//uncertain parameters
-		
-		
-		
-		
+
+
+
+
 	}
-	
+
 	private String showParameters(){
 		StringBuilder internalPresentBuffer = new StringBuilder();
 		internalPresentBuffer.append('[');
-		
+
 		for(Filter filter:this.getMoreFilters()){
 			String parameters = this.joinWithDelimitter(", ", filter.getWhereParameters());
 			internalPresentBuffer.append(parameters);
@@ -817,10 +822,10 @@ customList.searchResultOrder=desc/asc
 		internalPresentBuffer.append(']');
 		return internalPresentBuffer.toString();
 	}
-	
-	
-	
-	
+
+
+
+
 	protected Filter createFilter(String field, String verb, String value){
 		if(isEmptyOrNull(field)){
 			return null;
@@ -831,18 +836,18 @@ customList.searchResultOrder=desc/asc
 		if(isEmptyOrNull(value)){
 			//return null;
 		}
-		
-		
-		
+
+
+
 		Filter filter = creteNewFilter();
 		filter.setSearchField(field);
 		filter.setSearchVerb(verb);
 		filter.setSearchValue(value);
 		return filter;
-		
+
 	}
 	protected boolean isValidFieldChar(char fieldChar){
-		
+
 		//Character.isAlphabetic(codePoint);
 		if(fieldChar>='0' && fieldChar <='9'){
 			return true;
@@ -859,11 +864,11 @@ customList.searchResultOrder=desc/asc
 		if(fieldChar == '|'){
 			return true;
 		}
-		
+
 		return false;
-		
-		
-		
+
+
+
 	}
 
 
@@ -873,9 +878,9 @@ customList.searchResultOrder=desc/asc
 		field.setName("id");
 		field.setLocaleKey("@id");
 		field.setPresentName("序号");
-		
+
 		fields.add(field);
-		
+
 		return fields;
 	}
 	protected final List<SortType> getCandidateSortTypes(){
@@ -884,7 +889,7 @@ customList.searchResultOrder=desc/asc
 		sortType.setName("asc");
 		sortType.setLocaleKey("@asc");
 		sortType.setPresentName("正序");
-		
+
 		fields.add(sortType);
 		sortType = new SortType();
 		sortType.setName("desc");
@@ -893,7 +898,7 @@ customList.searchResultOrder=desc/asc
 		fields.add(sortType);
 		return fields;
 	}
-	
+
 	protected boolean isEmptyOrNull(String value){
 		if(value == null){
 			return true;
@@ -914,58 +919,68 @@ customList.searchResultOrder=desc/asc
 		sorter.setSortField(sortField);
 		sorter.setSortDescOrAsc(descOrAsc);
 		return sorter;
-		
+
 	}
-	
+
 	protected Sorter creteNewSorter(){
 		return  new Sorter();
 	}
 	protected Filter creteNewFilter(){
 		return  new PowerFilter();
 	}
-	
+
 	public static void main(String []args){
 		Filter f = new     Filter();
-		
+
 		System.out.println( f.localWeekEnd());
 		System.out.println( f.localMonthEnd());
 		System.out.println( f.localYearEnd());
 		System.out.println( f.localDayEnd());
-		
+
 		System.out.println( f.localWeekBegin());
 		System.out.println( f.localMonthBegin());
 		System.out.println( f.localYearBegin());
 		System.out.println( f.localDayBegin());
-		
+
 		QueryCriteria qc = QueryCriteria.createCriteria("name", "startsWith", "philip", "age", "asc");
-		
+
 		System.out.println( qc.getSQL()+" "+ qc.showParameters());
-		
+
 		qc = QueryCriteria.createCriteria("name", "is", "philip", "age", "asc");
-		
+
 		System.out.println( qc.getSQL()+" "+ qc.showParameters());
-		
+
 		qc = QueryCriteria.createCriteria("name|desc", "contains", "philip", "age", "asc");
-		
+
 		System.out.println( qc.getSQL()+" "+ qc.showParameters());
-		
+
 		qc = QueryCriteria.createCriteria("nameColumn", "range", "philip~zebra", "ageColumn", "asc");
-		
+
 		System.out.println( qc.getSQL() +" "+ qc.showParameters());
-		
+
 		qc = QueryCriteria.createCriteria("nameColumn|titleColumn", "range", "philip~zebra", "ageColumn", "asc");
-		
+
 		System.out.println( qc.getSQL() +" "+ qc.showParameters());
-		
-		
+
+
 	}
-	
-	
+
+
 }
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 

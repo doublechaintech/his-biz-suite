@@ -143,9 +143,13 @@ public class PeriodTokens extends CommonTokens{
 	}
 	private int doctorScheduleListSearchCounter = 0;
 	public PeriodTokens searchDoctorScheduleListWith(String field, String verb, String value){		
+		
+		withDoctorScheduleList();
 		addSearchMoreOptions(DOCTOR_SCHEDULE_LIST,doctorScheduleListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public PeriodTokens searchAllTextOfDoctorScheduleList(String verb, String value){	
 		String field = "id|name";

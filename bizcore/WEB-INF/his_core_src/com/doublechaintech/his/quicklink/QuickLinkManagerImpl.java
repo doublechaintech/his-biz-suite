@@ -3,22 +3,30 @@ package com.doublechaintech.his.quicklink;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
-import com.doublechaintech.his.BaseEntity;
+import com.terapico.caf.Images;
+import com.terapico.caf.Password;
+import com.terapico.utils.MapUtil;
+import com.terapico.utils.ListofUtils;
+import com.terapico.utils.TextUtil;
+import com.terapico.caf.viewpage.SerializeScope;
 
+import com.doublechaintech.his.*;
+import com.doublechaintech.his.tree.*;
+import com.doublechaintech.his.treenode.*;
+import com.doublechaintech.his.HisUserContextImpl;
+import com.doublechaintech.his.iamservice.*;
+import com.doublechaintech.his.services.IamService;
+import com.doublechaintech.his.secuser.SecUser;
+import com.doublechaintech.his.userapp.UserApp;
+import com.doublechaintech.his.BaseViewPage;
+import com.terapico.uccaf.BaseUserContext;
 
-import com.doublechaintech.his.Message;
-import com.doublechaintech.his.SmartList;
-import com.doublechaintech.his.MultipleAccessKey;
-
-import com.doublechaintech.his.HisUserContext;
-//import com.doublechaintech.his.BaseManagerImpl;
-import com.doublechaintech.his.HisCheckerManager;
-import com.doublechaintech.his.CustomHisCheckerManager;
 
 import com.doublechaintech.his.userapp.UserApp;
 
@@ -30,25 +38,32 @@ import com.doublechaintech.his.userapp.CandidateUserApp;
 
 
 
-public class QuickLinkManagerImpl extends CustomHisCheckerManager implements QuickLinkManager {
-	
+public class QuickLinkManagerImpl extends CustomHisCheckerManager implements QuickLinkManager, BusinessHandler{
+
+  
+
+
 	private static final String SERVICE_TYPE = "QuickLink";
-	
+	@Override
+	public QuickLinkDAO daoOf(HisUserContext userContext) {
+		return quickLinkDaoOf(userContext);
+	}
+
 	@Override
 	public String serviceFor(){
 		return SERVICE_TYPE;
 	}
-	
-	
+
+
 	protected void throwExceptionWithMessage(String value) throws QuickLinkManagerException{
-	
+
 		Message message = new Message();
 		message.setBody(value);
 		throw new QuickLinkManagerException(message);
 
 	}
-	
-	
+
+
 
  	protected QuickLink saveQuickLink(HisUserContext userContext, QuickLink quickLink, String [] tokensExpr) throws Exception{	
  		//return getQuickLinkDAO().save(quickLink, tokens);
@@ -66,8 +81,8 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
  	
  	public QuickLink loadQuickLink(HisUserContext userContext, String quickLinkId, String [] tokensExpr) throws Exception{				
  
- 		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
-		userContext.getChecker().throwExceptionIfHasErrors( QuickLinkManagerException.class);
+ 		checkerOf(userContext).checkIdOfQuickLink(quickLinkId);
+		checkerOf(userContext).throwExceptionIfHasErrors( QuickLinkManagerException.class);
 
  			
  		Map<String,Object>tokens = parseTokens(tokensExpr);
@@ -80,8 +95,8 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
  	
  	 public QuickLink searchQuickLink(HisUserContext userContext, String quickLinkId, String textToSearch,String [] tokensExpr) throws Exception{				
  
- 		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
-		userContext.getChecker().throwExceptionIfHasErrors( QuickLinkManagerException.class);
+ 		checkerOf(userContext).checkIdOfQuickLink(quickLinkId);
+		checkerOf(userContext).throwExceptionIfHasErrors( QuickLinkManagerException.class);
 
  		
  		Map<String,Object>tokens = tokens().allTokens().searchEntireObjectText("startsWith", textToSearch).initWithArray(tokensExpr);
@@ -99,10 +114,10 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		addActions(userContext,quickLink,tokens);
 		
 		
-		QuickLink  quickLinkToPresent = userContext.getDAOGroup().getQuickLinkDAO().present(quickLink, tokens);
+		QuickLink  quickLinkToPresent = quickLinkDaoOf(userContext).present(quickLink, tokens);
 		
 		List<BaseEntity> entityListToNaming = quickLinkToPresent.collectRefercencesFromLists();
-		userContext.getDAOGroup().getQuickLinkDAO().alias(entityListToNaming);
+		quickLinkDaoOf(userContext).alias(entityListToNaming);
 		
 		return  quickLinkToPresent;
 		
@@ -123,14 +138,14 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		
  	}
  	protected QuickLink saveQuickLink(HisUserContext userContext, QuickLink quickLink, Map<String,Object>tokens) throws Exception{	
- 		return userContext.getDAOGroup().getQuickLinkDAO().save(quickLink, tokens);
+ 		return quickLinkDaoOf(userContext).save(quickLink, tokens);
  	}
  	protected QuickLink loadQuickLink(HisUserContext userContext, String quickLinkId, Map<String,Object>tokens) throws Exception{	
-		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
-		userContext.getChecker().throwExceptionIfHasErrors( QuickLinkManagerException.class);
+		checkerOf(userContext).checkIdOfQuickLink(quickLinkId);
+		checkerOf(userContext).throwExceptionIfHasErrors( QuickLinkManagerException.class);
 
  
- 		return userContext.getDAOGroup().getQuickLinkDAO().load(quickLinkId, tokens);
+ 		return quickLinkDaoOf(userContext).load(quickLinkId, tokens);
  	}
 
 	
@@ -160,20 +175,20 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
  	
  	
 
-
-	public QuickLink createQuickLink(HisUserContext userContext,String name, String icon, String imagePath, String linkTarget, String appId) throws Exception
+	public QuickLink createQuickLink(HisUserContext userContext, String name,String icon,String imagePath,String linkTarget,String appId) throws Exception
+	//public QuickLink createQuickLink(HisUserContext userContext,String name, String icon, String imagePath, String linkTarget, String appId) throws Exception
 	{
-		
-		
 
 		
 
-		userContext.getChecker().checkNameOfQuickLink(name);
-		userContext.getChecker().checkIconOfQuickLink(icon);
-		userContext.getChecker().checkImagePathOfQuickLink(imagePath);
-		userContext.getChecker().checkLinkTargetOfQuickLink(linkTarget);
+		
+
+		checkerOf(userContext).checkNameOfQuickLink(name);
+		checkerOf(userContext).checkIconOfQuickLink(icon);
+		checkerOf(userContext).checkImagePathOfQuickLink(imagePath);
+		checkerOf(userContext).checkLinkTargetOfQuickLink(linkTarget);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(QuickLinkManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(QuickLinkManagerException.class);
 
 
 		QuickLink quickLink=createNewQuickLink();	
@@ -194,62 +209,74 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		onNewInstanceCreated(userContext, quickLink);
 		return quickLink;
 
-		
+
 	}
-	protected QuickLink createNewQuickLink() 
+	protected QuickLink createNewQuickLink()
 	{
-		
-		return new QuickLink();		
+
+		return new QuickLink();
 	}
-	
+
 	protected void checkParamsForUpdatingQuickLink(HisUserContext userContext,String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr)throws Exception
 	{
 		
 
 		
 		
-		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
-		userContext.getChecker().checkVersionOfQuickLink( quickLinkVersion);
+		checkerOf(userContext).checkIdOfQuickLink(quickLinkId);
+		checkerOf(userContext).checkVersionOfQuickLink( quickLinkVersion);
 		
 
 		if(QuickLink.NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkNameOfQuickLink(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkNameOfQuickLink(parseString(newValueExpr));
+		
+			
 		}
 		if(QuickLink.ICON_PROPERTY.equals(property)){
-			userContext.getChecker().checkIconOfQuickLink(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkIconOfQuickLink(parseString(newValueExpr));
+		
+			
 		}
 		if(QuickLink.IMAGE_PATH_PROPERTY.equals(property)){
-			userContext.getChecker().checkImagePathOfQuickLink(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkImagePathOfQuickLink(parseString(newValueExpr));
+		
+			
 		}
 		if(QuickLink.LINK_TARGET_PROPERTY.equals(property)){
-			userContext.getChecker().checkLinkTargetOfQuickLink(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLinkTargetOfQuickLink(parseString(newValueExpr));
+		
+			
 		}		
 
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(QuickLinkManagerException.class);
-	
-		
+		checkerOf(userContext).throwExceptionIfHasErrors(QuickLinkManagerException.class);
+
+
 	}
-	
-	
-	
+
+
+
 	public QuickLink clone(HisUserContext userContext, String fromQuickLinkId) throws Exception{
-		
-		return userContext.getDAOGroup().getQuickLinkDAO().clone(fromQuickLinkId, this.allTokens());
+
+		return quickLinkDaoOf(userContext).clone(fromQuickLinkId, this.allTokens());
 	}
-	
-	public QuickLink internalSaveQuickLink(HisUserContext userContext, QuickLink quickLink) throws Exception 
+
+	public QuickLink internalSaveQuickLink(HisUserContext userContext, QuickLink quickLink) throws Exception
 	{
 		return internalSaveQuickLink(userContext, quickLink, allTokens());
 
 	}
-	public QuickLink internalSaveQuickLink(HisUserContext userContext, QuickLink quickLink, Map<String,Object> options) throws Exception 
+	public QuickLink internalSaveQuickLink(HisUserContext userContext, QuickLink quickLink, Map<String,Object> options) throws Exception
 	{
 		//checkParamsForUpdatingQuickLink(userContext, quickLinkId, quickLinkVersion, property, newValueExpr, tokensExpr);
-		
-		
-		synchronized(quickLink){ 
+
+
+		synchronized(quickLink){
 			//will be good when the quickLink loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to QuickLink.
@@ -258,23 +285,23 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 			}
 			quickLink = saveQuickLink(userContext, quickLink, options);
 			return quickLink;
-			
+
 		}
 
 	}
-	
-	public QuickLink updateQuickLink(HisUserContext userContext,String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception 
+
+	public QuickLink updateQuickLink(HisUserContext userContext,String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception
 	{
 		checkParamsForUpdatingQuickLink(userContext, quickLinkId, quickLinkVersion, property, newValueExpr, tokensExpr);
-		
-		
-		
+
+
+
 		QuickLink quickLink = loadQuickLink(userContext, quickLinkId, allTokens());
 		if(quickLink.getVersion() != quickLinkVersion){
 			String message = "The target version("+quickLink.getVersion()+") is not equals to version("+quickLinkVersion+") provided";
 			throwExceptionWithMessage(message);
 		}
-		synchronized(quickLink){ 
+		synchronized(quickLink){
 			//will be good when the quickLink loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to QuickLink.
@@ -286,21 +313,21 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		}
 
 	}
-	
-	public QuickLink updateQuickLinkProperty(HisUserContext userContext,String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception 
+
+	public QuickLink updateQuickLinkProperty(HisUserContext userContext,String quickLinkId, int quickLinkVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception
 	{
 		checkParamsForUpdatingQuickLink(userContext, quickLinkId, quickLinkVersion, property, newValueExpr, tokensExpr);
-		
+
 		QuickLink quickLink = loadQuickLink(userContext, quickLinkId, allTokens());
 		if(quickLink.getVersion() != quickLinkVersion){
 			String message = "The target version("+quickLink.getVersion()+") is not equals to version("+quickLinkVersion+") provided";
 			throwExceptionWithMessage(message);
 		}
-		synchronized(quickLink){ 
+		synchronized(quickLink){
 			//will be good when the quickLink loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to QuickLink.
-			
+
 			quickLink.changeProperty(property, newValueExpr);
 			
 			quickLink = saveQuickLink(userContext, quickLink, tokens().done());
@@ -312,7 +339,7 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 	protected Map<String,Object> emptyOptions(){
 		return tokens().done();
 	}
-	
+
 	protected QuickLinkTokens tokens(){
 		return QuickLinkTokens.start();
 	}
@@ -333,11 +360,11 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 	
 	protected void checkParamsForTransferingAnotherApp(HisUserContext userContext, String quickLinkId, String anotherAppId) throws Exception
  	{
- 		
- 		userContext.getChecker().checkIdOfQuickLink(quickLinkId);
- 		userContext.getChecker().checkIdOfUserApp(anotherAppId);//check for optional reference
- 		userContext.getChecker().throwExceptionIfHasErrors(QuickLinkManagerException.class);
- 		
+
+ 		checkerOf(userContext).checkIdOfQuickLink(quickLinkId);
+ 		checkerOf(userContext).checkIdOfUserApp(anotherAppId);//check for optional reference
+ 		checkerOf(userContext).throwExceptionIfHasErrors(QuickLinkManagerException.class);
+
  	}
  	public QuickLink transferToAnotherApp(HisUserContext userContext, String quickLinkId, String anotherAppId) throws Exception
  	{
@@ -356,10 +383,10 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		}
 
  	}
- 	
-	 	
- 	
- 	
+
+	
+
+
 	public CandidateUserApp requestCandidateApp(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
 
 		CandidateUserApp result = new CandidateUserApp();
@@ -369,51 +396,52 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		result.setPageNo(pageNo);
 		result.setValueFieldName("id");
 		result.setDisplayFieldName("title");
-		
+
 		pageNo = Math.max(1, pageNo);
 		int pageSize = 20;
 		//requestCandidateProductForSkuAsOwner
-		SmartList<UserApp> candidateList = userContext.getDAOGroup().getUserAppDAO().requestCandidateUserAppForQuickLink(userContext,ownerClass, id, filterKey, pageNo, pageSize);
+		SmartList<UserApp> candidateList = userAppDaoOf(userContext).requestCandidateUserAppForQuickLink(userContext,ownerClass, id, filterKey, pageNo, pageSize);
 		result.setCandidates(candidateList);
 		int totalCount = candidateList.getTotalCount();
 		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
 		return result;
 	}
- 	
+
  //--------------------------------------------------------------
 	
-	 	
+
  	protected UserApp loadUserApp(HisUserContext userContext, String newAppId, Map<String,Object> options) throws Exception
  	{
-		
- 		return userContext.getDAOGroup().getUserAppDAO().load(newAppId, options);
+
+ 		return userAppDaoOf(userContext).load(newAppId, options);
  	}
  	
- 	
- 	
+
+
 	
 	//--------------------------------------------------------------
 
 	public void delete(HisUserContext userContext, String quickLinkId, int quickLinkVersion) throws Exception {
-		//deleteInternal(userContext, quickLinkId, quickLinkVersion);		
+		//deleteInternal(userContext, quickLinkId, quickLinkVersion);
 	}
 	protected void deleteInternal(HisUserContext userContext,
 			String quickLinkId, int quickLinkVersion) throws Exception{
-			
-		userContext.getDAOGroup().getQuickLinkDAO().delete(quickLinkId, quickLinkVersion);
+
+		quickLinkDaoOf(userContext).delete(quickLinkId, quickLinkVersion);
 	}
-	
+
 	public QuickLink forgetByAll(HisUserContext userContext, String quickLinkId, int quickLinkVersion) throws Exception {
-		return forgetByAllInternal(userContext, quickLinkId, quickLinkVersion);		
+		return forgetByAllInternal(userContext, quickLinkId, quickLinkVersion);
 	}
 	protected QuickLink forgetByAllInternal(HisUserContext userContext,
 			String quickLinkId, int quickLinkVersion) throws Exception{
-			
-		return userContext.getDAOGroup().getQuickLinkDAO().disconnectFromAll(quickLinkId, quickLinkVersion);
-	}
-	
 
-	
+		return quickLinkDaoOf(userContext).disconnectFromAll(quickLinkId, quickLinkVersion);
+	}
+
+
+
+
 	public int deleteAll(HisUserContext userContext, String secureCode) throws Exception
 	{
 		/*
@@ -424,22 +452,320 @@ public class QuickLinkManagerImpl extends CustomHisCheckerManager implements Qui
 		*/
 		return 0;
 	}
-	
-	
+
+
 	protected int deleteAllInternal(HisUserContext userContext) throws Exception{
-		return userContext.getDAOGroup().getQuickLinkDAO().deleteAll();
+		return quickLinkDaoOf(userContext).deleteAll();
 	}
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 
 	public void onNewInstanceCreated(HisUserContext userContext, QuickLink newCreated) throws Exception{
 		ensureRelationInGraph(userContext, newCreated);
 		sendCreationEvent(userContext, newCreated);
+
+    
+	}
+
+  
+  
+
+	// -----------------------------------//  登录部分处理 \\-----------------------------------
+	// 手机号+短信验证码 登录
+	public Object loginByMobile(HisUserContextImpl userContext, String mobile, String verifyCode) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByMobile");
+		LoginData loginData = new LoginData();
+		loginData.setMobile(mobile);
+		loginData.setVerifyCode(verifyCode);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.MOBILE, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 账号+密码登录
+	public Object loginByPassword(HisUserContextImpl userContext, String loginId, Password password) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(), "loginByPassword");
+		LoginData loginData = new LoginData();
+		loginData.setLoginId(loginId);
+		loginData.setPassword(password.getClearTextPassword());
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.PASSWORD, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 微信小程序登录
+	public Object loginByWechatMiniProgram(HisUserContextImpl userContext, String code) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByWechatMiniProgram");
+		LoginData loginData = new LoginData();
+		loginData.setCode(code);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.WECHAT_MINIPROGRAM, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 企业微信小程序登录
+	public Object loginByWechatWorkMiniProgram(HisUserContextImpl userContext, String code) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByWechatWorkMiniProgram");
+		LoginData loginData = new LoginData();
+		loginData.setCode(code);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.WECHAT_WORK_MINIPROGRAM, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 调用登录处理
+	protected Object processLoginRequest(HisUserContextImpl userContext, LoginContext loginContext) throws Exception {
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		LoginResult loginResult = iamService.doLogin(userContext, loginContext, this);
+		// 根据登录结果
+		if (!loginResult.isAuthenticated()) {
+			throw new Exception(loginResult.getMessage());
+		}
+		if (loginResult.isSuccess()) {
+			return onLoginSuccess(userContext, loginResult);
+		}
+		if (loginResult.isNewUser()) {
+			throw new Exception("请联系你的上级,先为你创建账号,然后再来登录.");
+		}
+		return new LoginForm();
+	}
+
+	@Override
+	public Object checkAccess(BaseUserContext baseUserContext, String methodName, Object[] parameters)
+			throws IllegalAccessException {
+		HisUserContextImpl userContext = (HisUserContextImpl)baseUserContext;
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		Map<String, Object> loginInfo = iamService.getCachedLoginInfo(userContext);
+
+		SecUser secUser = iamService.tryToLoadSecUser(userContext, loginInfo);
+		UserApp userApp = iamService.tryToLoadUserApp(userContext, loginInfo);
+		if (userApp != null) {
+			userApp.setSecUser(secUser);
+		}
+		if (secUser == null) {
+			iamService.onCheckAccessWhenAnonymousFound(userContext, loginInfo);
+		}
+		afterSecUserAppLoadedWhenCheckAccess(userContext, loginInfo, secUser, userApp);
+		if (!isMethodNeedLogin(userContext, methodName, parameters)) {
+			return accessOK();
+		}
+
+		return super.checkAccess(baseUserContext, methodName, parameters);
+	}
+
+	// 判断哪些接口需要登录后才能执行. 默认除了loginBy开头的,其他都要登录
+	protected boolean isMethodNeedLogin(HisUserContextImpl userContext, String methodName, Object[] parameters) {
+		if (methodName.startsWith("loginBy")) {
+			return false;
+		}
+		if (methodName.startsWith("logout")) {
+			return false;
+		}
+		return true;
+	}
+
+	// 在checkAccess中加载了secUser和userApp后会调用此方法,用于定制化的用户数据加载. 默认什么也不做
+	protected void afterSecUserAppLoadedWhenCheckAccess(HisUserContextImpl userContext, Map<String, Object> loginInfo,
+			SecUser secUser, UserApp userApp) throws IllegalAccessException{
+	}
+
+
+
+	protected Object onLoginSuccess(HisUserContext userContext, LoginResult loginResult) throws Exception {
+		// by default, return the view of this object
+		UserApp userApp = loginResult.getLoginContext().getLoginTarget().getUserApp();
+		return this.view(userContext, userApp.getObjectId());
+	}
+
+	public void onAuthenticationFailed(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// by default, failed is failed, nothing can do
+	}
+	// when user authenticated success, but no sec_user related, this maybe a new user login from 3-rd party service.
+	public void onAuthenticateNewUserLogged(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// Generally speaking, when authenticated user logined, we will create a new account for him/her.
+		// you need do it like :
+		// First, you should create new data such as:
+		//   QuickLink newQuickLink = this.createQuickLink(userContext, ...
+		// Next, create a sec-user in your business way:
+		//   SecUser secUser = secUserManagerOf(userContext).createSecUser(userContext, login, mobile ...
+		// And set it into loginContext:
+		//   loginContext.getLoginTarget().setSecUser(secUser);
+		// Next, create an user-app to connect secUser and newQuickLink
+		//   UserApp uerApp = userAppManagerOf(userContext).createUserApp(userContext, secUser.getId(), ...
+		// Also, set it into loginContext:
+		//   loginContext.getLoginTarget().setUserApp(userApp);
+		// Since many of detailed info were depending business requirement, So,
+		throw new Exception("请重载函数onAuthenticateNewUserLogged()以处理新用户登录");
+	}
+	public void onAuthenticateUserLogged(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// by default, find the correct user-app
+		SecUser secUser = loginResult.getLoginContext().getLoginTarget().getSecUser();
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserApp.SEC_USER_PROPERTY, secUser.getId());
+		key.put(UserApp.OBJECT_TYPE_PROPERTY, QuickLink.INTERNAL_TYPE);
+		SmartList<UserApp> userApps = userContext.getDAOGroup().getUserAppDAO().findUserAppWithKey(key, EO);
+		if (userApps == null || userApps.isEmpty()) {
+			throw new Exception("您的账号未关联销售人员,请联系客服处理账号异常.");
+		}
+		UserApp userApp = userApps.first();
+		userApp.setSecUser(secUser);
+		loginResult.getLoginContext().getLoginTarget().setUserApp(userApp);
+	}
+	// -----------------------------------\\  登录部分处理 //-----------------------------------
+
+
+	// -----------------------------------// list-of-view 处理 \\-----------------------------------
+    protected void enhanceForListOfView(HisUserContext userContext,SmartList<QuickLink> list) throws Exception {
+    	if (list == null || list.isEmpty()){
+    		return;
+    	}
+		List<UserApp> appList = HisBaseUtils.collectReferencedObjectWithType(userContext, list, UserApp.class);
+		userContext.getDAOGroup().enhanceList(appList, UserApp.class);
+
+
+    }
+	
+	public Object listByApp(HisUserContext userContext,String appId) throws Exception {
+		return listPageByApp(userContext, appId, 0, 20);
+	}
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Object listPageByApp(HisUserContext userContext,String appId, int start, int count) throws Exception {
+		SmartList<QuickLink> list = quickLinkDaoOf(userContext).findQuickLinkByApp(appId, start, count, new HashMap<>());
+		enhanceForListOfView(userContext, list);
+		HisCommonListOfViewPage page = new HisCommonListOfViewPage();
+		page.setClassOfList(QuickLink.class);
+		page.setContainerObject(UserApp.withId(appId));
+		page.setRequestBeanName(this.getBeanName());
+		page.setDataList((SmartList)list);
+		page.setPageTitle("快速链接列表");
+		page.setRequestName("listByApp");
+		page.setRequestOffset(start);
+		page.setRequestLimit(count);
+		page.setDisplayMode("auto");
+		page.setLinkToUrl(TextUtil.encodeUrl(String.format("%s/listByApp/%s/",  getBeanName(), appId)));
+
+		page.assemblerContent(userContext, "listByApp");
+		return page.doRender(userContext);
+	}
+  
+  // -----------------------------------\\ list-of-view 处理 //-----------------------------------v
+  
+ 	/**
+	 * miniprogram调用返回固定的detail class
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+ 	public Object wxappview(HisUserContext userContext, String quickLinkId) throws Exception{
+	  SerializeScope vscope = HisViewScope.getInstance().getQuickLinkDetailScope().clone();
+		QuickLink merchantObj = (QuickLink) this.view(userContext, quickLinkId);
+    String merchantObjId = quickLinkId;
+    String linkToUrl =	"quickLinkManager/wxappview/" + merchantObjId + "/";
+    String pageTitle = "快速链接"+"详情";
+		Map result = new HashMap();
+		List propList = new ArrayList();
+		List sections = new ArrayList();
+ 
+		propList.add(
+				MapUtil.put("id", "1-id")
+				    .put("fieldName", "id")
+				    .put("label", "序号")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("id", merchantObj.getId());
+
+		propList.add(
+				MapUtil.put("id", "2-name")
+				    .put("fieldName", "name")
+				    .put("label", "名称")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("name", merchantObj.getName());
+
+		propList.add(
+				MapUtil.put("id", "3-icon")
+				    .put("fieldName", "icon")
+				    .put("label", "图标")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("icon", merchantObj.getIcon());
+
+		propList.add(
+				MapUtil.put("id", "4-imagePath")
+				    .put("fieldName", "imagePath")
+				    .put("label", "图片路径")
+				    .put("type", "image")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("imagePath", merchantObj.getImagePath());
+
+		propList.add(
+				MapUtil.put("id", "5-linkTarget")
+				    .put("fieldName", "linkTarget")
+				    .put("label", "链接的目标")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("linkTarget", merchantObj.getLinkTarget());
+
+		propList.add(
+				MapUtil.put("id", "6-createTime")
+				    .put("fieldName", "createTime")
+				    .put("label", "创建时间")
+				    .put("type", "date")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("createTime", merchantObj.getCreateTime());
+
+		propList.add(
+				MapUtil.put("id", "7-app")
+				    .put("fieldName", "app")
+				    .put("label", "应用程序")
+				    .put("type", "object")
+				    .put("displayField", "title")
+				    .put("linkToUrl", "userAppManager/wxappview/:id/")
+				    .into_map()
+		);
+		result.put("app", merchantObj.getApp());
+
+		//处理 sectionList
+
+		result.put("propList", propList);
+		result.put("sectionList", sections);
+		result.put("pageTitle", pageTitle);
+		result.put("linkToUrl", linkToUrl);
+
+		vscope.field("propList", SerializeScope.EXCLUDE())
+				.field("sectionList", SerializeScope.EXCLUDE())
+				.field("pageTitle", SerializeScope.EXCLUDE())
+				.field("linkToUrl", SerializeScope.EXCLUDE());
+		userContext.forceResponseXClassHeader("com.terapico.appview.DetailPage");
+		return BaseViewPage.serialize(result, vscope);
 	}
 
 }

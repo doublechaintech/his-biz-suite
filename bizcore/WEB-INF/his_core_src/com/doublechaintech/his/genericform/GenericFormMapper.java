@@ -26,7 +26,9 @@ public class GenericFormMapper extends BaseRowMapper<GenericForm>{
 	protected void setId(GenericForm genericForm, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(GenericFormTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -38,7 +40,9 @@ public class GenericFormMapper extends BaseRowMapper<GenericForm>{
 	protected void setTitle(GenericForm genericForm, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String title = rs.getString(GenericFormTable.COLUMN_TITLE);
+		
 		if(title == null){
 			//do nothing when nothing found in database
 			return;
@@ -50,7 +54,9 @@ public class GenericFormMapper extends BaseRowMapper<GenericForm>{
 	protected void setDescription(GenericForm genericForm, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String description = rs.getString(GenericFormTable.COLUMN_DESCRIPTION);
+		
 		if(description == null){
 			//do nothing when nothing found in database
 			return;
@@ -62,7 +68,9 @@ public class GenericFormMapper extends BaseRowMapper<GenericForm>{
 	protected void setVersion(GenericForm genericForm, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(GenericFormTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

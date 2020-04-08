@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import org.springframework.jdbc.core.RowMapper;
 
 public abstract class BaseRowMapper<T> implements RowMapper<T> {
@@ -20,6 +21,9 @@ public abstract class BaseRowMapper<T> implements RowMapper<T> {
 		DateTime dateTime = new DateTime();
 		dateTime.setTime(date.getTime());
 		return dateTime;
+	}
+	protected Images convertToImages(String dataInDb) {
+		return Images.fromString(dataInDb);
 	}
 	protected abstract T internalMapRow(ResultSet rs, int rowNumber) throws SQLException;
 	
@@ -67,6 +71,16 @@ public abstract class BaseRowMapper<T> implements RowMapper<T> {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -70,6 +71,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	protected		SmartList<QuickLink>	mQuickLinkList      ;
 	protected		SmartList<ListAccess>	mListAccessList     ;
 	protected		SmartList<ObjectAccess>	mObjectAccessList   ;
+
 	
 		
 	public 	UserApp(){
@@ -78,7 +80,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 	public 	static UserApp withId(String id){
 		UserApp userApp = new UserApp();
 		userApp.setId(id);
-		// userApp.setVersion(Integer.MAX_VALUE);
+		userApp.setVersion(Integer.MAX_VALUE);
 		return userApp;
 	}
 	public 	static UserApp refById(String id){
@@ -92,21 +94,6 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	UserApp(String title, SecUser secUser, String appIcon, boolean fullAccess, String permission, String objectType, String objectId, String location)
-	{
-		setTitle(title);
-		setSecUser(secUser);
-		setAppIcon(appIcon);
-		setFullAccess(fullAccess);
-		setPermission(permission);
-		setObjectType(objectType);
-		setObjectId(objectId);
-		setLocation(location);
-
-		this.mQuickLinkList = new SmartList<QuickLink>();
-		this.mListAccessList = new SmartList<ListAccess>();
-		this.mObjectAccessList = new SmartList<ObjectAccess>();	
-	}
 	
 	//Support for changing the property
 	
@@ -139,6 +126,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeTitleProperty(String newValueExpr){
+	
 		String oldValue = getTitle();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -148,12 +136,13 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updateTitle(newValue);
 		this.onChangeProperty(TITLE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeAppIconProperty(String newValueExpr){
+	
 		String oldValue = getAppIcon();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -163,12 +152,13 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updateAppIcon(newValue);
 		this.onChangeProperty(APP_ICON_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeFullAccessProperty(String newValueExpr){
+	
 		boolean oldValue = getFullAccess();
 		boolean newValue = parseBoolean(newValueExpr);
 		if(equalsBoolean(oldValue , newValue)){
@@ -178,12 +168,13 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updateFullAccess(newValue);
 		this.onChangeProperty(FULL_ACCESS_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changePermissionProperty(String newValueExpr){
+	
 		String oldValue = getPermission();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -193,12 +184,13 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updatePermission(newValue);
 		this.onChangeProperty(PERMISSION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeObjectTypeProperty(String newValueExpr){
+	
 		String oldValue = getObjectType();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -208,12 +200,13 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updateObjectType(newValue);
 		this.onChangeProperty(OBJECT_TYPE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeObjectIdProperty(String newValueExpr){
+	
 		String oldValue = getObjectId();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -223,12 +216,13 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updateObjectId(newValue);
 		this.onChangeProperty(OBJECT_ID_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeLocationProperty(String newValueExpr){
+	
 		String oldValue = getLocation();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -238,7 +232,7 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		updateLocation(newValue);
 		this.onChangeProperty(LOCATION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -845,7 +839,9 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "objectAccessCurrentPageNumber", getObjectAccessList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -924,7 +920,9 @@ public class UserApp extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getTitle(), getSecUser(), getAppIcon(), getFullAccess(), getPermission(), getObjectType(), getObjectId(), getLocation(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

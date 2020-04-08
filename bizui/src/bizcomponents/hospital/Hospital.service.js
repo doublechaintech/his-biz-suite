@@ -1,5 +1,5 @@
-import { get,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
+import { get,put,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
 const view = (targetObjectId) => {
   return get({
@@ -153,6 +153,33 @@ const removeDoctorScheduleList = (targetObjectId, parameters) => {
 }
 
 
+
+// Filter this out when no functions
+
+const  listFunctions = () => {
+  return get({
+    url: `${PREFIX}hospitalService/listFunctions/`,
+  })
+}
+
+
+const  saveRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}hospitalService/save/`,
+    data,
+  })
+}
+
+
+const  processRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}hospitalService/process/`,
+    data,
+  })
+}
+
 const HospitalService = { view,
   load,
   addExpenseType,
@@ -172,6 +199,6 @@ const HospitalService = { view,
   removeExpenseItemList,
   removeDoctorList,
   removeDepartmentList,
-  removeDoctorScheduleList }
+  removeDoctorScheduleList, listFunctions, saveRequest, processRequest}
 export default HospitalService
 

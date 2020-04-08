@@ -25,7 +25,9 @@ public class UserDomainMapper extends BaseRowMapper<UserDomain>{
 	protected void setId(UserDomain userDomain, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(UserDomainTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -37,7 +39,9 @@ public class UserDomainMapper extends BaseRowMapper<UserDomain>{
 	protected void setName(UserDomain userDomain, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(UserDomainTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -49,7 +53,9 @@ public class UserDomainMapper extends BaseRowMapper<UserDomain>{
 	protected void setVersion(UserDomain userDomain, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(UserDomainTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

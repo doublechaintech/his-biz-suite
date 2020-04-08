@@ -7,8 +7,6 @@ import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -36,9 +34,11 @@ public class ServletResultRenderer {
 			throw new IllegalArgumentException("The return object is not a blob");
 		}
 		BlobObject blob = (BlobObject) actualResult;
-
+		response.addHeader("X-Env-Type", result.getEnvType());
+		response.addHeader("X-Env-Name", result.getEnvName());
 		response.setCharacterEncoding(null);
 		response.setContentType(blob.getMimeType());
+		blob.getHeaders().forEach((k, v) -> response.setHeader(k, v));
 		response.getOutputStream().write(blob.getData());
 
 	}
@@ -176,15 +176,16 @@ public class ServletResultRenderer {
 	private ObjectMapper objectMapper = null;
 
 	protected ObjectMapper getObjectMapper() {
-		if (objectMapper == null) {
-			objectMapper = new ObjectMapper();
-			return objectMapper;
-			// DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			// objectMapper.setDateFormat(df);
-		}
-
-		return objectMapper.copy();
-
+		//// objectMapper = null;
+		// if(objectMapper == null){
+		// objectMapper = new ObjectMapper();
+		// return objectMapper;
+		// //DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		// //objectMapper.setDateFormat(df);
+		// }
+		//
+		// return objectMapper.copy();
+		return new ObjectMapper();
 	}
 
 	protected void fillOrigin(InvocationResult result, HttpServletRequest request, HttpServletResponse response) {
@@ -195,17 +196,19 @@ public class ServletResultRenderer {
 		response.addHeader("Access-Control-Allow-Origin", origin);
 		response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 		// Access-Control-Expose-Headers
-		response.addHeader("Access-Control-Expose-Headers", "Set-Cookie");
+		response.addHeader("Access-Control-Expose-Headers", "Set-Cookie, X-Redirect, X-Env-Type, X-Env-Name");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
 
 	}
+
 	protected String renderLogResult(Object value) {
-		if(ReflectionTool.isPrimaryType(value.getClass())) {
+		if (ReflectionTool.isPrimaryType(value.getClass())) {
 			return value.toString();
 		}
 		return "<Object>";
-		
+
 	}
+
 	protected void renderJson(InvocationResult result, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -218,13 +221,14 @@ public class ServletResultRenderer {
 			renderClass = result.getResponseHeader().get("X-Class");
 		}
 		response.addHeader("X-Class", renderClass);
-		response.addHeader("Access-Control-Expose-Headers", "X-Class");
+		response.addHeader("X-Env-Type", result.getEnvType());
+		response.addHeader("X-Env-Name", result.getEnvName());
+		response.addHeader("Access-Control-Expose-Headers", "X-Class, X-Redirect, X-Env-Type, X-Env-Name");
 		// Access-Control-Expose-Headers
-		
-		log("Render JSON result with class: " + renderClass+"("+renderLogResult(result.getActualResult())+")");
-		//BeanCreationException
-		
-		
+
+		log("Render JSON result with class: " + renderClass + "(" + renderLogResult(result.getActualResult()) + ")");
+		// BeanCreationException
+
 		// Access-Control-Allow-Origin
 		fillOrigin(result, request, response);
 		// Access-Control-Allow-Credentials: true
@@ -238,9 +242,6 @@ public class ServletResultRenderer {
 			}
 		}
 
-		
-		
-		
 		// Gson gson = new Gson();
 		ObjectMapper mapper = getObjectMapper();
 		// Type t=new TypeToken<weather.WeatherResponse>().getType();
@@ -249,20 +250,19 @@ public class ServletResultRenderer {
 		/*
 		 * Order
 		 * order=(Order)OrdreJsonTool.prepareForJson((Order)result.getActualResult());
-		 * 
+		 *
 		 */
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		mapper.setSerializationInclusion(Include.NON_NULL);
-		
-		if(result.getActualResult() instanceof BeanCreationException) {
-			Message message =  constructionBeanCreateMessage();
+
+		if (result.getActualResult() instanceof BeanCreationException) {
+			Message message = constructionBeanCreateMessage();
 			String json = mapper.writeValueAsString(message);
 			response.setContentLength(json.getBytes(StandardCharsets.UTF_8).length);
 			response.getWriter().print(json);
 			return;
 		}
-		
-		
+
 		String json = mapper.writeValueAsString(result.getActualResult());
 		log("Render JSON result with size: " + json.length());
 		// log("Render JSON result: "+ json);
@@ -272,12 +272,13 @@ public class ServletResultRenderer {
 		return;
 
 	}
+
 	protected Message constructionBeanCreateMessage() {
-		Message message =  new Message();
+		Message message = new Message();
 		message.setLevel("fatal");
 		message.setSourcePosition("spring configuration xml files");
 		message.setBody("Bean Creation Error, please check it from server side");
-		
+
 		return message;
 	}
 
@@ -295,6 +296,8 @@ public class ServletResultRenderer {
 		if (result.getResponseHeader() != null && result.getResponseHeader().containsKey("X-Class")) {
 			renderClass = result.getResponseHeader().get("X-Class");
 		}
+		response.addHeader("X-Env-Type", result.getEnvType());
+		response.addHeader("X-Env-Name", result.getEnvName());
 		response.addHeader("X-Class", renderClass);
 		// 其他header
 		if (result.getResponseHeader() != null) {
@@ -318,6 +321,8 @@ public class ServletResultRenderer {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/javascript");
 		response.addHeader("Cache-Control", "no-cache, must-revalidate");
+		response.addHeader("X-Env-Type", result.getEnvType());
+		response.addHeader("X-Env-Name", result.getEnvName());
 		// 其他header
 		if (result.getResponseHeader() != null) {
 			for (String hName : result.getResponseHeader().keySet()) {

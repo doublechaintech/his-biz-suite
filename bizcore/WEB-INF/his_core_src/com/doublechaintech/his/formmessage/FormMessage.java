@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -51,6 +52,7 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	FormMessage(){
@@ -59,7 +61,7 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 	public 	static FormMessage withId(String id){
 		FormMessage formMessage = new FormMessage();
 		formMessage.setId(id);
-		// formMessage.setVersion(Integer.MAX_VALUE);
+		formMessage.setVersion(Integer.MAX_VALUE);
 		return formMessage;
 	}
 	public 	static FormMessage refById(String id){
@@ -73,13 +75,6 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	FormMessage(String title, GenericForm form, String level)
-	{
-		setTitle(title);
-		setForm(form);
-		setLevel(level);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -97,6 +92,7 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeTitleProperty(String newValueExpr){
+	
 		String oldValue = getTitle();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -106,12 +102,13 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 		updateTitle(newValue);
 		this.onChangeProperty(TITLE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeLevelProperty(String newValueExpr){
+	
 		String oldValue = getLevel();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -121,7 +118,7 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 		updateLevel(newValue);
 		this.onChangeProperty(LEVEL_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -269,7 +266,9 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, LEVEL_PROPERTY, getLevel());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -327,7 +326,9 @@ public class FormMessage extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getTitle(), getForm(), getLevel(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

@@ -45,7 +45,8 @@ public class CarouselViewComponent extends BaseViewComponent {
 
 	public void addItem(String image, String url, String tips) {
 		if (image == null) {
-			throw new IllegalArgumentException("image must have value.");
+			return; //
+			// throw new IllegalArgumentException("image must have value.");
 		}
 		List<Object> list = ensureContent();
 		Map<String, Object> item = MapUtil.newMap($("link", url), $("image", image));

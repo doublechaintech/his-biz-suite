@@ -13,4 +13,7 @@ public interface BaseUserContext {
 	public boolean isProductEnvironment();
 	public String getEnvironmentName();
 	public Map<String, String> getResponseHeaders();
+	public Object getFromContextLocalStorage(String key);
+	public void putIntoContextLocalStorage(String key, Object value);
+	public void log(String message);
 }

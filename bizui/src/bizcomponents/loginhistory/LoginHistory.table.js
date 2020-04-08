@@ -1,7 +1,7 @@
 
 import React, { PureComponent } from 'react'
 import moment from 'moment'
-import { Table, Alert, Badge} from 'antd'
+import { Table, Alert, Badge, } from 'antd'
 import { Link } from 'dva/router'
 import styles from './LoginHistory.table.less'
 import ImagePreview from '../../components/ImagePreview'
@@ -15,15 +15,6 @@ const  {  hasCreatePermission,hasExecutionPermission,hasDeletePermission,hasUpda
 class LoginHistoryTable extends PureComponent {
   state = {
     selectedRowKeys: [],
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // clean state
-    if (nextProps.selectedRows.length === 0) {
-      this.setState({
-        selectedRowKeys: [],
-      })
-    }
   }
 
   handleRowSelectChange = (selectedRowKeys, selectedRows) => {
@@ -50,7 +41,7 @@ class LoginHistoryTable extends PureComponent {
     }
     console.log("searchParameters",searchParameters)
     
-    const remainColumns = displayColumns.filter((item,index)=> item.dataIndex!==referenceName&&index<7&&item.dataIndex!=='content')
+    const remainColumns = displayColumns.filter((item,index)=> item.dataIndex!==referenceName&&index<10&&item.dataIndex!=='content')
     
     if(!searchParameters){
       return remainColumns
@@ -100,6 +91,7 @@ class LoginHistoryTable extends PureComponent {
           
           { hasReadPermission(metaInfo)&&<Link to={`/loginHistory/${record.id}/dashboard`}>{appLocaleName(userContext,"View")}</Link>}
 
+
           {
             record.actionList&&record.actionList.map((item)=>(<a key={item.actionId} onClick={()=>this.executeAction(item,text, record)}><span className={styles.splitLine} />{item.actionName}</a>))
 
@@ -108,9 +100,12 @@ class LoginHistoryTable extends PureComponent {
       ),
     }
    
-    enhancedColumns.push(
-      operationColumn
-    )
+    if( hasReadPermission(metaInfo) || hasUpdatePermission(metaInfo)){
+        enhancedColumns.push(
+      		operationColumn
+    	)
+    }
+
     
     return enhancedColumns
 
@@ -166,7 +161,7 @@ class LoginHistoryTable extends PureComponent {
 	const calcDisplayColumns = this.props.calcDisplayColumns||this.calcDisplayColumns
 	const userContext = null
     const paginationProps = {
-      pageSize: 20,
+      pageSize: 10,
       total: count,
       current,
       
@@ -195,12 +190,12 @@ class LoginHistoryTable extends PureComponent {
               </span>
             )}
             type="info"
-            showIcon
+            
           />
         </div>
         <Table
           loading={false}
-          size="default"
+          size="small"
           rowKey={record => record.id}
            
           dataSource={data}

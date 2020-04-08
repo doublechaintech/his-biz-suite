@@ -29,7 +29,9 @@ public class CandidateElementMapper extends BaseRowMapper<CandidateElement>{
 	protected void setId(CandidateElement candidateElement, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(CandidateElementTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -41,7 +43,9 @@ public class CandidateElementMapper extends BaseRowMapper<CandidateElement>{
 	protected void setName(CandidateElement candidateElement, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(CandidateElementTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -53,7 +57,9 @@ public class CandidateElementMapper extends BaseRowMapper<CandidateElement>{
 	protected void setType(CandidateElement candidateElement, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String type = rs.getString(CandidateElementTable.COLUMN_TYPE);
+		
 		if(type == null){
 			//do nothing when nothing found in database
 			return;
@@ -65,7 +71,9 @@ public class CandidateElementMapper extends BaseRowMapper<CandidateElement>{
 	protected void setImage(CandidateElement candidateElement, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String image = rs.getString(CandidateElementTable.COLUMN_IMAGE);
+		
 		if(image == null){
 			//do nothing when nothing found in database
 			return;
@@ -95,7 +103,9 @@ public class CandidateElementMapper extends BaseRowMapper<CandidateElement>{
 	protected void setVersion(CandidateElement candidateElement, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(CandidateElementTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;
@@ -114,10 +124,5 @@ public class CandidateElementMapper extends BaseRowMapper<CandidateElement>{
  	}
  	
 }
-
-
-
-
-
 
 

@@ -49,7 +49,7 @@ public class RequestUtil {
         if (value == null) {
             return defaultValue;
         }
-        return String.valueOf(value);
+        return String.valueOf(value).trim();
     }
 
     public static Date getDateInput(Map<String, Object> requestParameters, String fieldName, Date defaultValue) {
@@ -89,6 +89,9 @@ public class RequestUtil {
         } catch (Exception e) {
             if (defaultValue == null) {
                 return null;
+            }
+            if (defaultValue instanceof BigDecimal) {
+            	return (BigDecimal) defaultValue;
             }
             return new BigDecimal(defaultValue.toString());
         }

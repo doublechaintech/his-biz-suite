@@ -8,10 +8,11 @@ import styles from './DoctorSchedule.search.less'
 import GlobalComponents from '../../custcomponents'
 import SelectObject from '../../components/SelectObject'
 import appLocaleName from '../../common/Locale.tool'
+import DoctorScheduleBase from './DoctorSchedule.base'
 const FormItem = Form.Item
 const { Option } = Select
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',')
-
+const {fieldLabels} = DoctorScheduleBase
 const pushIfNotNull=(holder,value)=>{
   if(value==null){
     return
@@ -194,22 +195,22 @@ componentDidMount() {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
  <Col md={8} sm={24}>
-                 <Form.Item label="期">
+                 <Form.Item label={fieldLabels.period}>
                {getFieldDecorator('period', {initialValue: tryinit('period')})(
                
                <SelectObject 
                  disabled={!availableForEdit('period')}
                  targetType={"period"} 
-                 requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
-               
-              
+                 requestFunction={DoctorScheduleService.requestCandidatePeriod} useForSearch />
+               	 
+       
                )}
              </Form.Item></Col>
 
        <Col md={8} sm={24}>
-         <FormItem label="ID">
+         <FormItem label={fieldLabels.id}>
            {getFieldDecorator('id')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
@@ -254,77 +255,77 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
           <Col md={8} sm={24}>
-            <FormItem label="ID">
+            <FormItem label={fieldLabels.id}>
               {getFieldDecorator('id')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="名称">
+            <FormItem label={fieldLabels.name}>
               {getFieldDecorator('name')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="医生">
+                    <Form.Item label={fieldLabels.doctor}>
                   {getFieldDecorator('doctor', {initialValue: tryinit('doctor')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('doctor')}
                     targetType={"doctor"} 
-                    requestFunction={DoctorScheduleService.requestCandidateDoctor}/>
-                  
+                    requestFunction={DoctorScheduleService.requestCandidateDoctor} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="期">
+                    <Form.Item label={fieldLabels.period}>
                   {getFieldDecorator('period', {initialValue: tryinit('period')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('period')}
                     targetType={"period"} 
-                    requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
-                  
+                    requestFunction={DoctorScheduleService.requestCandidatePeriod} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="部门">
+                    <Form.Item label={fieldLabels.department}>
                   {getFieldDecorator('department', {initialValue: tryinit('department')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('department')}
                     targetType={"department"} 
-                    requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
-                  
+                    requestFunction={DoctorScheduleService.requestCandidateDepartment} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="费用类型">
+                    <Form.Item label={fieldLabels.expenseType}>
                   {getFieldDecorator('expenseType', {initialValue: tryinit('expenseType')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('expenseType')}
                     targetType={"expenseType"} 
-                    requestFunction={DoctorScheduleService.requestCandidateExpenseType}/>
-                  
+                    requestFunction={DoctorScheduleService.requestCandidateExpenseType} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="医院">
+                    <Form.Item label={fieldLabels.hospital}>
                   {getFieldDecorator('hospital', {initialValue: tryinit('hospital')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('hospital')}
                     targetType={"hospital"} 
-                    requestFunction={DoctorScheduleService.requestCandidateHospital}/>
-                  
+                    requestFunction={DoctorScheduleService.requestCandidateHospital} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
@@ -340,7 +341,7 @@ componentDidMount() {
       </Form>
     )
   }
-
+	
   render() {
   	const expandForm = overrideValue([this.state.expandForm],false)
     return expandForm ? this.renderAdvancedForm() : this.renderSimpleForm()

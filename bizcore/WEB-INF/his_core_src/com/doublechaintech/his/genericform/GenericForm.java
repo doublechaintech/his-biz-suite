@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -60,6 +61,7 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 	protected		SmartList<FormFieldMessage>	mFormFieldMessageList;
 	protected		SmartList<FormField>	mFormFieldList      ;
 	protected		SmartList<FormAction>	mFormActionList     ;
+
 	
 		
 	public 	GenericForm(){
@@ -68,7 +70,7 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 	public 	static GenericForm withId(String id){
 		GenericForm genericForm = new GenericForm();
 		genericForm.setId(id);
-		// genericForm.setVersion(Integer.MAX_VALUE);
+		genericForm.setVersion(Integer.MAX_VALUE);
 		return genericForm;
 	}
 	public 	static GenericForm refById(String id){
@@ -81,16 +83,6 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	GenericForm(String title, String description)
-	{
-		setTitle(title);
-		setDescription(description);
-
-		this.mFormMessageList = new SmartList<FormMessage>();
-		this.mFormFieldMessageList = new SmartList<FormFieldMessage>();
-		this.mFormFieldList = new SmartList<FormField>();
-		this.mFormActionList = new SmartList<FormAction>();	
-	}
 	
 	//Support for changing the property
 	
@@ -108,6 +100,7 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeTitleProperty(String newValueExpr){
+	
 		String oldValue = getTitle();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -117,12 +110,13 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 		updateTitle(newValue);
 		this.onChangeProperty(TITLE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeDescriptionProperty(String newValueExpr){
+	
 		String oldValue = getDescription();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -132,7 +126,7 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 		updateDescription(newValue);
 		this.onChangeProperty(DESCRIPTION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -726,7 +720,9 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "formActionCurrentPageNumber", getFormActionList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -790,7 +786,9 @@ public class GenericForm extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getTitle(), getDescription(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

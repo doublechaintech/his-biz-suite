@@ -5,7 +5,7 @@ public interface HisUserContext extends UserContext{
 	String getLocaleKey(String subject);
 	void setChecker(HisObjectChecker checker);
 	HisObjectChecker getChecker();
-	
+
 	void saveAccessInfo(String beanName, String methodName, Object[] parameters);
 	void addFootprint(FootprintProducer helper) throws Exception;
 	Object getPreviousViewPage() throws Exception;

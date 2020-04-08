@@ -28,7 +28,9 @@ public class FormMessageMapper extends BaseRowMapper<FormMessage>{
 	protected void setId(FormMessage formMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(FormMessageTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -40,7 +42,9 @@ public class FormMessageMapper extends BaseRowMapper<FormMessage>{
 	protected void setTitle(FormMessage formMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String title = rs.getString(FormMessageTable.COLUMN_TITLE);
+		
 		if(title == null){
 			//do nothing when nothing found in database
 			return;
@@ -70,7 +74,9 @@ public class FormMessageMapper extends BaseRowMapper<FormMessage>{
 	protected void setLevel(FormMessage formMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String level = rs.getString(FormMessageTable.COLUMN_LEVEL);
+		
 		if(level == null){
 			//do nothing when nothing found in database
 			return;
@@ -82,7 +88,9 @@ public class FormMessageMapper extends BaseRowMapper<FormMessage>{
 	protected void setVersion(FormMessage formMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(FormMessageTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

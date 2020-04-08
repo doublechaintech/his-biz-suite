@@ -21,6 +21,8 @@ public class SerializeScope {
 	protected int nodeType;
 	protected String fieldName;
 	protected String aliasName;
+	protected String prefix;
+	protected String postfix;
 	protected String forceWhenEmpty;
 	protected boolean noListMeta = false;
 	protected boolean revers = false;
@@ -28,6 +30,18 @@ public class SerializeScope {
 	protected boolean putInDataContainer = false;
 	protected boolean moveUp = false;
 	
+	public String getPrefix() {
+		return prefix;
+	}
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+	public String getPostfix() {
+		return postfix;
+	}
+	public void setPostfix(String postfix) {
+		this.postfix = postfix;
+	}
 	public boolean isMoveUp() {
 		return moveUp;
 	}
@@ -143,6 +157,20 @@ public class SerializeScope {
 		curNode.setAliasName(alias);
 		return this;
 	}
+	public SerializeScope with_prefix(String prefix) {
+		if (curNode == null) {
+			throw new RuntimeException("method 'with_prefix(String)' must be invoked only after method 'field(xxx)'");
+		}
+		curNode.setPrefix(prefix);
+		return this;
+	}
+	public SerializeScope with_postfix(String postfix) {
+		if (curNode == null) {
+			throw new RuntimeException("method 'with_postfix(String)' must be invoked only after method 'field(xxx)'");
+		}
+		curNode.setPostfix(postfix);
+		return this;
+	}
 	public SerializeScope not_empty() {
 		if (curNode == null) {
 			throw new RuntimeException("method 'not_zero()' must be invoked only after method 'field(xxx)'");
@@ -216,6 +244,9 @@ public class SerializeScope {
 	public SerializeScope clone() {
 		SerializeScope newScope = new SerializeScope();
 		newScope.setAliasName(this.getAliasName());
+		newScope.setPrefix(this.getPrefix());
+		newScope.setPostfix(this.getPostfix());
+		newScope.setMoveUp(this.isMoveUp());
 		newScope.setForceWhenEmpty(this.getForceWhenEmpty());
 		newScope.setNoListMeta(this.noListMeta);
 		newScope.setPutInDataContainer(this.putInDataContainer);
@@ -298,6 +329,32 @@ public class SerializeScope {
 		return this;
 	}
 	
-	
+	public static SerializeScope me() {
+		return SerializeScope.INCLUDE()
+				.field("title")
+				.field("popup")
+				.field("toast", SerializeScope.EXCLUDE())
+				.field("refreshAction")
+				.field("actions", SerializeScope.EXCLUDE())
+				.field("actionList")
+				.field("id")
+				.field("name")
+				.field("brief")
+				.field("imageUrl")
+				.field("boxNavigatorList", SerializeScope.INCLUDE()
+						.field("code")
+						.field("imageUrl")
+						.field("title")
+						.field("linkToUrl")
+					  ).noListMeta()
+				.field("lineItemNavigatorList", SerializeScope.INCLUDE()
+						.field("code")
+						.field("imageUrl")
+						.field("title")
+						.field("linkToUrl")
+						.field("brief")
+					  ).noListMeta()
+				;
+	}
 	
 }

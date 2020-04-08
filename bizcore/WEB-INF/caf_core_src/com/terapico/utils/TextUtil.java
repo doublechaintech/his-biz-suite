@@ -1,10 +1,14 @@
 package com.terapico.utils;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class TextUtil {
     public static boolean isBlank(String str) {
@@ -26,7 +30,7 @@ public class TextUtil {
         return bookIsbn.replaceAll("[^\\d]", "");
     }
 
-    public static String join(List<String> inputArray, String seperator) {
+    public static String join(Collection<String> inputArray, String seperator) {
         if (CollectionUtils.isEmpty(inputArray)) {
             return "";
         }
@@ -244,6 +248,9 @@ public class TextUtil {
     }
 
     public static String formatNumber(Number number, String format) {
+    	if (number == null) {
+    		number = new Integer(0);
+    	}
         return new DecimalFormat(format).format(number.doubleValue());
     }
 
@@ -372,10 +379,64 @@ public class TextUtil {
 		return str;
 	}
 
+	private static final Pattern ptnChnMobile = Pattern.compile("1[3-9]\\d{9}");
+	public static String formatChinaMobile(String mobile) {
+		String num = TextUtil.onlyNumber(mobile);
+		if (num.startsWith("86") || num.startsWith("086") || num.startsWith("0086")) {
+			int pos = num.indexOf("86");
+			num = num.substring(pos+2);
+		}
+		Matcher m = ptnChnMobile.matcher(num);
+		if (m.matches()) {
+			return num;
+		}
+		return null;
+	}
+	
 	public static String nullIfBlank(String input) {
 		if (isBlank(input)) {
 			return null;
 		}
 		return input.trim();
 	}
+
+	public static String firstNotBlank(String ...strings ) {
+		if (strings == null || strings.length == 0) {
+			return null;
+		}
+		for(String str : strings) {
+			if(!isBlank(str)) {
+				return str;
+			}
+		}
+		return null;
+	}
+
+	public static List<String> findAllMatched(String source, Pattern pattern) {
+		Matcher matcher = pattern.matcher(source);
+		List<String> list = new ArrayList<>();
+		while (matcher.find()) {
+			list.add(matcher.group());
+		}
+		return list;
+
+	}
+	
+	public static String toCamelCase(String input) {
+		// 以空格或者下划线分隔,首字母大写,其他全部小写
+		// 已经是camel case了,就不处理
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+		if (input.matches("^[A-Za-z][^ _]*$")) {
+			return capFirstChar(input); 
+		}
+		List<String> strList = new ArrayList<>(Arrays.asList(input.trim().split("[ _]")));
+		List<String> strList2 = strList.stream()
+			.filter(str->(str != null && str.trim().length() > 0))
+			.map(str->capFirstChar(str.toLowerCase()))
+			.collect(Collectors.toList());
+		return String.join("", strList2);
+	}
+	
 }

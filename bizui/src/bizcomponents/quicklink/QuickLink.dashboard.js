@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -105,7 +104,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -118,10 +117,10 @@ const internalSummaryOf = (quickLink,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{quickLink.id}</Description> 
-<Description term="名称">{quickLink.name}</Description> 
-<Description term="图标">{quickLink.icon}</Description> 
-<Description term="链接的目标">{quickLink.linkTarget}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{quickLink.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{quickLink.name}</Description> 
+<Description term="图标" style={{wordBreak: 'break-all'}}>{quickLink.icon}</Description> 
+<Description term="链接的目标" style={{wordBreak: 'break-all'}}>{quickLink.linkTarget}</Description> 
 <Description term="创建时间">{ moment(quickLink.createTime).format('YYYY-MM-DD HH:mm')}</Description> 
 <Description term="应用程序">{quickLink.app==null?appLocaleName(userContext,"NotAssigned"):`${quickLink.app.displayName}(${quickLink.app.id})`}
  <Icon type="swap" onClick={()=>
@@ -166,7 +165,7 @@ class QuickLinkDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"快速链接",cardsFor: "quickLink",
+    const cardsData = {cardsName:window.trans('quick_link'),cardsFor: "quickLink",
     	cardsSource: this.props.quickLink,returnURL,displayName,
   		subItems: [
     
@@ -198,8 +197,9 @@ class QuickLinkDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

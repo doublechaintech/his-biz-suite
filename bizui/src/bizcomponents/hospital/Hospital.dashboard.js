@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -104,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -117,10 +116,10 @@ const internalSummaryOf = (hospital,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{hospital.id}</Description> 
-<Description term="名称">{hospital.name}</Description> 
-<Description term="地址">{hospital.address}</Description> 
-<Description term="电话">{hospital.telephone}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{hospital.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{hospital.name}</Description> 
+<Description term="地址" style={{wordBreak: 'break-all'}}>{hospital.address}</Description> 
+<Description term="电话" style={{wordBreak: 'break-all'}}>{hospital.telephone}</Description> 
 	
         {buildTransferModal(hospital,targetComponent)}
       </DescriptionList>
@@ -158,11 +157,11 @@ class HospitalDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"医院",cardsFor: "hospital",
+    const cardsData = {cardsName:window.trans('hospital'),cardsFor: "hospital",
     	cardsSource: this.props.hospital,returnURL,displayName,
   		subItems: [
-{name: 'doctorList', displayName:'医生',type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo, renderItem: GlobalComponents.DoctorBase.renderItemOfList},
-{name: 'doctorScheduleList', displayName:'医生安排',type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo, renderItem: GlobalComponents.DoctorScheduleBase.renderItemOfList},
+{name: 'doctorList', displayName: window.mtrans('doctor','hospital.doctor_list',false) ,viewGroup:'__no_group', type:'doctor',count:doctorCount,addFunction: true, role: 'doctor', metaInfo: doctorListMetaInfo, renderItem: GlobalComponents.DoctorBase.renderItemOfList},
+{name: 'doctorScheduleList', displayName: window.mtrans('doctor_schedule','hospital.doctor_schedule_list',false) ,viewGroup:'__no_group', type:'doctorSchedule',count:doctorScheduleCount,addFunction: true, role: 'doctorSchedule', metaInfo: doctorScheduleListMetaInfo, renderItem: GlobalComponents.DoctorScheduleBase.renderItemOfList},
     
       	],
    		subSettingItems: [
@@ -196,8 +195,9 @@ class HospitalDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

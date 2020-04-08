@@ -20,6 +20,7 @@ const testValues = {};
 const testValues = {
   title: '审车平台',
   appIcon: 'users',
+  fullAccess: '1',
   permission: 'MXWR',
   objectType: 'CarInspectionPlatform',
   objectId: 'CIP000001',
@@ -146,7 +147,7 @@ class UserAppAssociateForm extends Component {
                   {getFieldDecorator('title', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="标题" />
+                    <Input size="large"  placeHolder={fieldLabels.title} />
                   )}
                 </Form.Item>
               </Col>
@@ -156,7 +157,17 @@ class UserAppAssociateForm extends Component {
                   {getFieldDecorator('appIcon', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="应用程序图标" />
+                    <Input size="large"  placeHolder={fieldLabels.appIcon} />
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={12}>
+                <Form.Item label={fieldLabels.fullAccess} {...formItemLayout}>
+                  {getFieldDecorator('fullAccess', {
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large"  placeHolder={fieldLabels.fullAccess} />
                   )}
                 </Form.Item>
               </Col>
@@ -166,7 +177,7 @@ class UserAppAssociateForm extends Component {
                   {getFieldDecorator('permission', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="许可" />
+                    <Input size="large"  placeHolder={fieldLabels.permission} />
                   )}
                 </Form.Item>
               </Col>
@@ -176,7 +187,7 @@ class UserAppAssociateForm extends Component {
                   {getFieldDecorator('objectType', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="访问对象类型" />
+                    <Input size="large"  placeHolder={fieldLabels.objectType} />
                   )}
                 </Form.Item>
               </Col>
@@ -186,7 +197,7 @@ class UserAppAssociateForm extends Component {
                   {getFieldDecorator('objectId', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="对象ID" />
+                    <Input size="large"  placeHolder={fieldLabels.objectId} />
                   )}
                 </Form.Item>
               </Col>
@@ -196,7 +207,7 @@ class UserAppAssociateForm extends Component {
                   {getFieldDecorator('location', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="位置" />
+                    <Input size="large"  placeHolder={fieldLabels.location} />
                   )}
                 </Form.Item>
               </Col>
@@ -204,26 +215,7 @@ class UserAppAssociateForm extends Component {
             </Row>
 
 
-        
-
-            <Row gutter={16}>
-            
-
-              <Col lg={12} md={12} sm={12}>
-                <Form.Item label={fieldLabels.fullAccess}  {...switchFormItemLayout}>
-                  {getFieldDecorator('fullAccess', {
-                    initialValue: false,
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
-                  })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
-                  )}
-                </Form.Item>
-              </Col>
-
-            </Row>
        
-        
         
 
 

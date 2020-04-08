@@ -33,7 +33,7 @@ public class GeographyUtil {
     }
     
     public static void main(String[] args) {
-    	double dis = caclDistance(104.06476, 30.5702, 104.051, 30.528);
+    	double dis = caclDistance(104.0713512897, 30.5477464088, 104.0680575371, 30.5525047568);
     	System.out.println("dis=" + dis);
     }
 

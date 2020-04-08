@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -49,6 +50,7 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
 	
 	
 	protected		SmartList<CandidateElement>	mCandidateElementList;
+
 	
 		
 	public 	CandidateContainer(){
@@ -57,7 +59,7 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
 	public 	static CandidateContainer withId(String id){
 		CandidateContainer candidateContainer = new CandidateContainer();
 		candidateContainer.setId(id);
-		// candidateContainer.setVersion(Integer.MAX_VALUE);
+		candidateContainer.setVersion(Integer.MAX_VALUE);
 		return candidateContainer;
 	}
 	public 	static CandidateContainer refById(String id){
@@ -70,12 +72,6 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
 		this.changed = true;
 	}
 	
-	public 	CandidateContainer(String name)
-	{
-		setName(name);
-
-		this.mCandidateElementList = new SmartList<CandidateElement>();	
-	}
 	
 	//Support for changing the property
 	
@@ -90,6 +86,7 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -99,7 +96,7 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -319,7 +316,9 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
 			appendKeyValuePair(result, "candidateElementCurrentPageNumber", getCandidateElementList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -374,7 +373,9 @@ public class CandidateContainer extends BaseEntity implements  java.io.Serializa
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

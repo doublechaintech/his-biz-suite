@@ -10,10 +10,15 @@ import com.doublechaintech.his.doctor.Doctor;
 import com.doublechaintech.his.department.Department;
 import com.doublechaintech.his.doctorassignment.DoctorAssignment;
 import com.doublechaintech.his.doctorschedule.DoctorSchedule;
+import com.doublechaintech.his.mobileapp.MobileApp;
+import com.doublechaintech.his.page.Page;
+import com.doublechaintech.his.pagetype.PageType;
+import com.doublechaintech.his.slide.Slide;
+import com.doublechaintech.his.uiaction.UiAction;
+import com.doublechaintech.his.section.Section;
 import com.doublechaintech.his.userdomain.UserDomain;
 import com.doublechaintech.his.userwhitelist.UserWhiteList;
 import com.doublechaintech.his.secuser.SecUser;
-import com.doublechaintech.his.secuserblocking.SecUserBlocking;
 import com.doublechaintech.his.userapp.UserApp;
 import com.doublechaintech.his.quicklink.QuickLink;
 import com.doublechaintech.his.listaccess.ListAccess;
@@ -26,6 +31,9 @@ import com.doublechaintech.his.formfield.FormField;
 import com.doublechaintech.his.formaction.FormAction;
 import com.doublechaintech.his.candidatecontainer.CandidateContainer;
 import com.doublechaintech.his.candidateelement.CandidateElement;
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentify;
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentify;
+import com.doublechaintech.his.treenode.TreeNode;
 
 public class BeanFactoryImpl{
 
@@ -70,6 +78,36 @@ public class BeanFactoryImpl{
 	}
 
 
+	public MobileApp createMobileApp(Map<String,Object> options){
+		return new MobileApp();
+	}
+
+
+	public Page createPage(Map<String,Object> options){
+		return new Page();
+	}
+
+
+	public PageType createPageType(Map<String,Object> options){
+		return new PageType();
+	}
+
+
+	public Slide createSlide(Map<String,Object> options){
+		return new Slide();
+	}
+
+
+	public UiAction createUiAction(Map<String,Object> options){
+		return new UiAction();
+	}
+
+
+	public Section createSection(Map<String,Object> options){
+		return new Section();
+	}
+
+
 	public UserDomain createUserDomain(Map<String,Object> options){
 		return new UserDomain();
 	}
@@ -82,11 +120,6 @@ public class BeanFactoryImpl{
 
 	public SecUser createSecUser(Map<String,Object> options){
 		return new SecUser();
-	}
-
-
-	public SecUserBlocking createSecUserBlocking(Map<String,Object> options){
-		return new SecUserBlocking();
 	}
 
 
@@ -150,10 +183,35 @@ public class BeanFactoryImpl{
 	}
 
 
+	public WechatWorkappIdentify createWechatWorkappIdentify(Map<String,Object> options){
+		return new WechatWorkappIdentify();
+	}
+
+
+	public WechatMiniappIdentify createWechatMiniappIdentify(Map<String,Object> options){
+		return new WechatMiniappIdentify();
+	}
+
+
+	public TreeNode createTreeNode(Map<String,Object> options){
+		return new TreeNode();
+	}
+
+
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

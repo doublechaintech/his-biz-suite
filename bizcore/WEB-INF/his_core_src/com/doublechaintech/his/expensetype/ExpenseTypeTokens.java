@@ -144,9 +144,13 @@ public class ExpenseTypeTokens extends CommonTokens{
 	}
 	private int expenseItemListSearchCounter = 0;
 	public ExpenseTypeTokens searchExpenseItemListWith(String field, String verb, String value){		
+		
+		withExpenseItemList();
 		addSearchMoreOptions(EXPENSE_ITEM_LIST,expenseItemListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public ExpenseTypeTokens searchAllTextOfExpenseItemList(String verb, String value){	
 		String field = "id|name";
@@ -210,9 +214,13 @@ public class ExpenseTypeTokens extends CommonTokens{
 	}
 	private int doctorScheduleListSearchCounter = 0;
 	public ExpenseTypeTokens searchDoctorScheduleListWith(String field, String verb, String value){		
+		
+		withDoctorScheduleList();
 		addSearchMoreOptions(DOCTOR_SCHEDULE_LIST,doctorScheduleListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public ExpenseTypeTokens searchAllTextOfDoctorScheduleList(String verb, String value){	
 		String field = "id|name";

@@ -12,14 +12,12 @@
 
 
 package com.doublechaintech.his.department;
+import java.util.Date;
+import com.doublechaintech.his.HisUserContext;
 
 public class DepartmentCustomManagerImpl extends DepartmentManagerImpl{
 
-	public boolean like(String articleId) {
-		
-		return 1==5;
-		
-	}
+
 
 
 

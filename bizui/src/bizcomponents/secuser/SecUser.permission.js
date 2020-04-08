@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -24,7 +23,7 @@ const {defaultRenderExtraHeader}= DashboardTool
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
 }
@@ -32,7 +31,7 @@ const internalSummaryOf = (secUser,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{secUser.id}</Description> 
+<Description term="序号">{secUser.id}</Description> 
 <Description term="登录">{secUser.login}</Description> 
 <Description term="手机号码">{secUser.mobile}</Description> 
 <Description term="电子邮件">{secUser.email}</Description> 
@@ -43,7 +42,6 @@ const internalSummaryOf = (secUser,targetComponent) =>{
 <Description term="验证码">{secUser.verificationCode}</Description> 
 <Description term="验证码过期">{ moment(secUser.verificationCodeExpire).format('YYYY-MM-DD')}</Description> 
 <Description term="最后登录时间">{ moment(secUser.lastLoginTime).format('YYYY-MM-DD')}</Description> 
-<Description term="当前状态">{secUser.currentStatus}</Description> 
 	
       </DescriptionList>
 	)
@@ -68,7 +66,7 @@ class SecUserPermission extends Component {
   render() {
     // eslint-disable-next-line max-len
     const  secUser = this.props.secUser
-    const { id,displayName, userAppCount, loginHistoryCount } = secUser
+    const { id,displayName, userAppCount, loginHistoryCount, wechatWorkappIdentifyCount, wechatMiniappIdentifyCount } = secUser
     const  returnURL = `/secUser/${id}/dashboard`
     const cardsData = {cardsName:"安全用户",cardsFor: "secUser",cardsSource: secUser,displayName,returnURL,
   		subItems: [

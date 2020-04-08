@@ -28,23 +28,23 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 
 	//默认支持中文和英文
 	protected static Map<String,String> chineseMap;
-	
+
 	protected static Map<String,String> englishMap;
-	
+
 	protected double longitude;
 	protected double latitude;
-	
-	
+
+
 	static final String RESOURCE_PATH="com.doublechaintech.his.HisResources";
 	static final String CUSTOM_RESOURCE_PATH="com.doublechaintech.his.HisCustomResources";
-	
+
 	public Map<String,String> ensureLocaleMaps(Locale locale ){
-		
+
 		String [] resources = {RESOURCE_PATH, CUSTOM_RESOURCE_PATH};
 		return ensureResourceAddResourceMaps(resources, locale);
-		
+
 	}
-	
+
 	protected Map<String,String> ensureResourceAddResourceMaps(String[] paths, Locale locale){
 		Map<String,String> localeMap= new HashMap<String,String>();
 		for(String path: paths){
@@ -58,7 +58,7 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		}
 		return localeMap;
 	}
-	
+
 	protected void addResourceToMap(Map<String,String> localeMap, ResourceBundle resourceBundle){
 		Enumeration<String> bundleKeys = resourceBundle.getKeys();
 
@@ -68,8 +68,8 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		    //System.out.println("key = " + key + ", " + "value = " + value);
 		    localeMap.put(key, value);
 		}
-		
-		
+
+
 	}
 	public void init(){
 		if(chineseMap==null){
@@ -79,24 +79,24 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 			englishMap = ensureLocaleMaps(Locale.US);
 		}
 
-		
+
 	}
 	public Map<String,String> getLocaleMap(){
-		
+
 		init();
 
 		return chineseMap;
 
-		
+
 	}
-	
+
 	protected Locale getLocale(){
 		return Locale.US;
 	}
 	public String getLocaleKey(String subject) {
 		return getLocaleMap().get(subject);
 	}
-	
+
 	public double getLatitude() {
         return latitude;
     }
@@ -194,23 +194,23 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		}
 		return apps.get(0);
 	}
-	
+
 	private HisObjectChecker checker;
 	public void setChecker(HisObjectChecker checker) {
 		this.checker = checker;
-		
+
 	}
 
 	@Override
 	public HisObjectChecker getChecker() {
-		
+
 		if(this.checker==null) {
 			throw new IllegalStateException("每个实例必须配置Checker，请检查相关Spring的XML配置文件中 checker的配置");
 		}
 		checker.setUserContext(this);
 		return checker;
 	}
-	
+
 	protected static final String ACCESS_PARAMETERS_KEY = "$access_parameters";
 	protected static final String ACCESS_METHOD_NAME_KEY = "$access_method_name";
 	protected static final String ACCESS_BEAN_NAME_KEY = "$access_bean_name";
@@ -255,7 +255,7 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 			putFootprintIntoCache(history);
 			return;
 		}
-		
+
 		Footprint replacedFp = null;
 		for(Footprint item : history) {
 			if (helper.canReplaceFootPrint(fp, item)) {
@@ -263,7 +263,7 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 				break;
 			}
 		}
-		
+
 		if (replacedFp == null) {
 			// 没找到可替换的目标，追加到队列最后
 			history.add(fp);
@@ -271,7 +271,7 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 			putFootprintIntoCache(history);
 			return;
 		}
-		
+
 		// 找到可替换的目标以后，还要决定怎么做
 		if (helper.clearTop()) {
 			Iterator<Footprint> it = history.iterator();
@@ -324,10 +324,10 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		if (history == null || history.isEmpty()) {
 			return null;
 		}
-		
+
 		Footprint fp = history.remove(history.size()-1);
 		putFootprintIntoCache(history);
-		
+
 		Object service = this.getBean(fp.getBeanName());
 		fp.getParameters()[0] = this;
 		Method[] methods = service.getClass().getMethods();
@@ -344,7 +344,7 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		if (history == null || history.isEmpty()) {
 			return null;
 		}
-		
+
 		Footprint fp = history.remove(history.size()-1);
 		if (history.isEmpty()) {
 			putFootprintIntoCache(history);
@@ -352,7 +352,7 @@ public class HisUserContextImpl extends UserContextImpl implements HisUserContex
 		}
 		fp = history.remove(history.size()-1);
 		putFootprintIntoCache(history);
-		
+
 		Object service = this.getBean(fp.getBeanName());
 		fp.getParameters()[0] = this;
 		Method[] methods = service.getClass().getMethods();

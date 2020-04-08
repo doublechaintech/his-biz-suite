@@ -28,7 +28,6 @@
 <li><span>${userContext.localeMap['sec_user.verification_code']}</span> ${secUser.verificationCode}</li>
 <li><span>${userContext.localeMap['sec_user.verification_code_expire']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${secUser.verificationCodeExpire}" /></li>
 <li><span>${userContext.localeMap['sec_user.last_login_time']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${secUser.lastLoginTime}" /></li>
-<li><span>${userContext.localeMap['sec_user.current_status']}</span> ${secUser.currentStatus}</li>
 
 	
 	</ul>

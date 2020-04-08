@@ -33,7 +33,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setId(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(UserAppTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -45,7 +47,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setTitle(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String title = rs.getString(UserAppTable.COLUMN_TITLE);
+		
 		if(title == null){
 			//do nothing when nothing found in database
 			return;
@@ -75,7 +79,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setAppIcon(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String appIcon = rs.getString(UserAppTable.COLUMN_APP_ICON);
+		
 		if(appIcon == null){
 			//do nothing when nothing found in database
 			return;
@@ -87,7 +93,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setFullAccess(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean fullAccess = rs.getBoolean(UserAppTable.COLUMN_FULL_ACCESS);
+		
 		if(fullAccess == null){
 			//do nothing when nothing found in database
 			return;
@@ -99,7 +107,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setPermission(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String permission = rs.getString(UserAppTable.COLUMN_PERMISSION);
+		
 		if(permission == null){
 			//do nothing when nothing found in database
 			return;
@@ -111,7 +121,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setObjectType(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String objectType = rs.getString(UserAppTable.COLUMN_OBJECT_TYPE);
+		
 		if(objectType == null){
 			//do nothing when nothing found in database
 			return;
@@ -123,7 +135,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setObjectId(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String objectId = rs.getString(UserAppTable.COLUMN_OBJECT_ID);
+		
 		if(objectId == null){
 			//do nothing when nothing found in database
 			return;
@@ -135,7 +149,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setLocation(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String location = rs.getString(UserAppTable.COLUMN_LOCATION);
+		
 		if(location == null){
 			//do nothing when nothing found in database
 			return;
@@ -147,7 +163,9 @@ public class UserAppMapper extends BaseRowMapper<UserApp>{
 	protected void setVersion(UserApp userApp, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(UserAppTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

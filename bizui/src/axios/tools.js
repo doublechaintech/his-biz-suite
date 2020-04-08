@@ -9,8 +9,6 @@ import ImageUpload from '../components/ImageUpload';
 import OssPictureEdit from '../components/OSSPictureEdit';
 
 export const ImageComponent = OssPictureEdit
-
-
 //for BBT only
 //export const ImageComponent = ImageUpload;
 
@@ -78,21 +76,29 @@ export const get = ({ url, msg = '接口异常', headers }) =>
       message.warn(msg);
     });
 
+
+
 export const getURLPrefix = () => {
-      const url = new URL(window.location);
-      
-      if (url.hostname === 'localhost') {
-        return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`
-      }
-      if (url.hostname === '127.0.0.1') {
-        return `https://demo.doublechaintech.com/${SYSTEM_SHORT_NAME}/`
-      }
-    
-    
-      return `${url.origin}/${SYSTEM_SHORT_NAME}/`;
-    
-    };
-    
+  const url = new URL(window.location);
+  if (url.hostname === 'clariones.doublechaintech.com') {
+    //return `http://${url.hostname}:8080/naf/`
+    return `http://clariones.doublechaintech.com/naf/`;
+  }
+  if (url.hostname === '30.30.126.37') {
+    return `http://${url.hostname}:8080/naf/`;
+  }
+  if (url.hostname === 'localhost') {
+    return `http://${url.hostname}:8080/${SYSTEM_SHORT_NAME}/`
+  }
+  if (url.hostname === '127.0.0.1') {
+    return `https://app.art0x.com/moyi/`
+  }
+  //return `http://xm.jl51.com.cn/cis/`
+
+  return `${url.origin}/${SYSTEM_SHORT_NAME}/`;
+  //return `${url.origin}/${SYSTEM_SHORT_NAME}/`
+};
+
 export const joinParameters = (parameters) => {
     const obj = parameters // {value1: 'prop1', value2: 'prop2', value3: 'prop3'}
     const arr = []
@@ -177,6 +183,27 @@ export const postForm = ({ url, requestParameters, msg = '接口异常'})=>{
     headers,
   })
 }
+
+
+
+export const put = ({ url,data, msg = '接口异常', headers }) =>
+    axios
+      .put(url, data, headers)
+      .then(function(res) {
+        console.log('http headers', res.headers);
+        const clazz = res.headers['x-class'];
+        if (clazz) {
+          if (clazz.indexOf('CommonError') > 0 || clazz.indexOf('Exception') > 0) {
+            message.error('后台系统出错，请检查错误消息' + res.data);
+          }
+        }
+        return res.data;
+      })
+      .catch(err => {
+        console.log(err);
+        message.warn(msg);
+      });
+
 
 
 

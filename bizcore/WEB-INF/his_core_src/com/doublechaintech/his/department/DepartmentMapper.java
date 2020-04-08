@@ -28,7 +28,9 @@ public class DepartmentMapper extends BaseRowMapper<Department>{
 	protected void setId(Department department, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(DepartmentTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -40,7 +42,9 @@ public class DepartmentMapper extends BaseRowMapper<Department>{
 	protected void setName(Department department, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(DepartmentTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -70,7 +74,9 @@ public class DepartmentMapper extends BaseRowMapper<Department>{
 	protected void setUpdateTime(Department department, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date updateTime = rs.getTimestamp(DepartmentTable.COLUMN_UPDATE_TIME);
+		
 		if(updateTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -82,7 +88,9 @@ public class DepartmentMapper extends BaseRowMapper<Department>{
 	protected void setVersion(Department department, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(DepartmentTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

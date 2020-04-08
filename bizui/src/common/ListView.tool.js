@@ -7,6 +7,7 @@ import Result from '../components/Result'
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message,Alert } from 'antd';
 
 import GlobalComponents from '../custcomponents'
+import { string } from 'prop-types';
 
 
 const toggle=(src, dest)=>{
@@ -143,7 +144,7 @@ const handleDeletionModalVisible = (event,targetComponent) => {
   const convertToBackendSorter=({listName,sorter})=>{
 
     const sortProperties = {}
-    
+    console.log("list", listName, "sorter", sorter)
     if(!sorter){
       return sortProperties
     }
@@ -170,16 +171,28 @@ const handleDeletionModalVisible = (event,targetComponent) => {
     const {listName} = owner;
     const listParameters = {};
     listParameters[listName]=1;
-    listParameters[`${listName}CurrentPage`]=pagination.current;
-    listParameters[`${listName}RowsPerPage`]=pagination.pageSize;
-
+    listParameters[`${listName}CurrentPage`]=pagination.current?pagination.current:pagination;
+    listParameters[`${listName}RowsPerPage`]=pagination.pageSize?pagination.pageSize:10;
+    console.log("pagination", pagination)
     const sortProperties = convertToBackendSorter({listName,sorter})
-    const newSearchParameters = {...searchParameters,...listParameters,...sortProperties}
-    console.log("newSearchParameters",newSearchParameters)
-    if(!sorter.field){
-      delete newSearchParameters[`${listName}.orderBy.0`]
-      delete newSearchParameters[`${listName}..descOrAsc.0`]
+
+    if(!sorter || !sorter.field){
+      
+      listParameters[`${listName}.orderBy.0`]="id";
+      listParameters[`${listName}.descOrAsc.0`]="desc";
+     
     }
+    const selectedSearchParameters = {}
+    Object.entries(searchParameters).forEach(([key,value])=>{
+      if(!key.startsWith(listName)){
+        return
+      }
+      selectedSearchParameters[key] = value
+    })
+    // filter out the search parameters
+    
+
+    const newSearchParameters = {...selectedSearchParameters,...listParameters,...sortProperties}
     const params = {
       ...searchParameters,
       ...listParameters,
@@ -188,8 +201,6 @@ const handleDeletionModalVisible = (event,targetComponent) => {
       ...filters,
 
     }
-    
-    console.log("handleStandardTableChange", params,"sorter",sorter)
     
     dispatch({
       type: `${owner.type}/load`,

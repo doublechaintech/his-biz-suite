@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -71,6 +72,7 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	DoctorSchedule(){
@@ -79,7 +81,7 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 	public 	static DoctorSchedule withId(String id){
 		DoctorSchedule doctorSchedule = new DoctorSchedule();
 		doctorSchedule.setId(id);
-		// doctorSchedule.setVersion(Integer.MAX_VALUE);
+		doctorSchedule.setVersion(Integer.MAX_VALUE);
 		return doctorSchedule;
 	}
 	public 	static DoctorSchedule refById(String id){
@@ -97,21 +99,6 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	DoctorSchedule(String name, Doctor doctor, Date scheduleDate, Period period, Department department, int available, BigDecimal price, ExpenseType expenseType, DateTime createTime, DateTime updateTime, Hospital hospital)
-	{
-		setName(name);
-		setDoctor(doctor);
-		setScheduleDate(scheduleDate);
-		setPeriod(period);
-		setDepartment(department);
-		setAvailable(available);
-		setPrice(price);
-		setExpenseType(expenseType);
-		setCreateTime(createTime);
-		setUpdateTime(updateTime);
-		setHospital(hospital);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -141,6 +128,7 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -150,12 +138,13 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeScheduleDateProperty(String newValueExpr){
+	
 		Date oldValue = getScheduleDate();
 		Date newValue = parseDate(newValueExpr);
 		if(equalsDate(oldValue , newValue)){
@@ -165,12 +154,13 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		updateScheduleDate(newValue);
 		this.onChangeProperty(SCHEDULE_DATE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeAvailableProperty(String newValueExpr){
+	
 		int oldValue = getAvailable();
 		int newValue = parseInt(newValueExpr);
 		if(equalsInt(oldValue , newValue)){
@@ -180,12 +170,13 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		updateAvailable(newValue);
 		this.onChangeProperty(AVAILABLE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changePriceProperty(String newValueExpr){
+	
 		BigDecimal oldValue = getPrice();
 		BigDecimal newValue = parseBigDecimal(newValueExpr);
 		if(equalsBigDecimal(oldValue , newValue)){
@@ -195,12 +186,13 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		updatePrice(newValue);
 		this.onChangeProperty(PRICE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeCreateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getCreateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -210,12 +202,13 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		updateCreateTime(newValue);
 		this.onChangeProperty(CREATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUpdateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getUpdateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -225,7 +218,7 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		updateUpdateTime(newValue);
 		this.onChangeProperty(UPDATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -557,7 +550,9 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, HOSPITAL_PROPERTY, getHospital());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -635,7 +630,9 @@ public class DoctorSchedule extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getDoctor(), getScheduleDate(), getPeriod(), getDepartment(), getAvailable(), getPrice(), getExpenseType(), getCreateTime(), getUpdateTime(), getHospital(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

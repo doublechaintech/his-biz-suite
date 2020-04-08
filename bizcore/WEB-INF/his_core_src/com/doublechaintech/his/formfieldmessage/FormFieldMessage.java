@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -53,6 +54,7 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	FormFieldMessage(){
@@ -61,7 +63,7 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 	public 	static FormFieldMessage withId(String id){
 		FormFieldMessage formFieldMessage = new FormFieldMessage();
 		formFieldMessage.setId(id);
-		// formFieldMessage.setVersion(Integer.MAX_VALUE);
+		formFieldMessage.setVersion(Integer.MAX_VALUE);
 		return formFieldMessage;
 	}
 	public 	static FormFieldMessage refById(String id){
@@ -75,14 +77,6 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		this.changed = true;
 	}
 	
-	public 	FormFieldMessage(String title, String parameterName, GenericForm form, String level)
-	{
-		setTitle(title);
-		setParameterName(parameterName);
-		setForm(form);
-		setLevel(level);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -103,6 +97,7 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
     
     
 	protected void changeTitleProperty(String newValueExpr){
+	
 		String oldValue = getTitle();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -112,12 +107,13 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		updateTitle(newValue);
 		this.onChangeProperty(TITLE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeParameterNameProperty(String newValueExpr){
+	
 		String oldValue = getParameterName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -127,12 +123,13 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		updateParameterName(newValue);
 		this.onChangeProperty(PARAMETER_NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeLevelProperty(String newValueExpr){
+	
 		String oldValue = getLevel();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -142,7 +139,7 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		updateLevel(newValue);
 		this.onChangeProperty(LEVEL_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -310,7 +307,9 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		appendKeyValuePair(result, LEVEL_PROPERTY, getLevel());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -371,7 +370,9 @@ public class FormFieldMessage extends BaseEntity implements  java.io.Serializabl
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getTitle(), getParameterName(), getForm(), getLevel(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

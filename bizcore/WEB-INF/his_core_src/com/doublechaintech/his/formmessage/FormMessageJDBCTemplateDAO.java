@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -52,6 +56,11 @@ public class FormMessageJDBCTemplateDAO extends HisBaseDAOImpl implements FormMe
 		return loadInternalFormMessage(accessKey, options);
 	}
 	*/
+	
+	public SmartList<FormMessage> loadAll() {
+	    return this.loadAll(getFormMessageMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -430,12 +439,16 @@ public class FormMessageJDBCTemplateDAO extends HisBaseDAOImpl implements FormMe
  	protected Object[] prepareFormMessageUpdateParameters(FormMessage formMessage){
  		Object[] parameters = new Object[6];
  
- 		parameters[0] = formMessage.getTitle(); 	
+ 		
+ 		parameters[0] = formMessage.getTitle();
+ 		 	
  		if(formMessage.getForm() != null){
  			parameters[1] = formMessage.getForm().getId();
  		}
  
- 		parameters[2] = formMessage.getLevel();		
+ 		
+ 		parameters[2] = formMessage.getLevel();
+ 				
  		parameters[3] = formMessage.nextVersion();
  		parameters[4] = formMessage.getId();
  		parameters[5] = formMessage.getVersion();
@@ -448,13 +461,17 @@ public class FormMessageJDBCTemplateDAO extends HisBaseDAOImpl implements FormMe
 		formMessage.setId(newFormMessageId);
 		parameters[0] =  formMessage.getId();
  
- 		parameters[1] = formMessage.getTitle(); 	
+ 		
+ 		parameters[1] = formMessage.getTitle();
+ 		 	
  		if(formMessage.getForm() != null){
  			parameters[2] = formMessage.getForm().getId();
  		
  		}
  		
- 		parameters[3] = formMessage.getLevel();		
+ 		
+ 		parameters[3] = formMessage.getLevel();
+ 				
  				
  		return parameters;
  	}
@@ -551,6 +568,34 @@ public class FormMessageJDBCTemplateDAO extends HisBaseDAOImpl implements FormMe
 	@Override
 	public SmartList<FormMessage> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getFormMessageMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateFormMessage executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateFormMessage result = new CandidateFormMessage();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

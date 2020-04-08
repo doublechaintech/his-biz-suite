@@ -8,10 +8,11 @@ import styles from './SecUser.search.less'
 import GlobalComponents from '../../custcomponents'
 import SelectObject from '../../components/SelectObject'
 import appLocaleName from '../../common/Locale.tool'
+import SecUserBase from './SecUser.base'
 const FormItem = Form.Item
 const { Option } = Select
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',')
-
+const {fieldLabels} = SecUserBase
 const pushIfNotNull=(holder,value)=>{
   if(value==null){
     return
@@ -139,7 +140,6 @@ componentDidMount() {
 		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'weixinAppid'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'accessToken'))
 		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'eq', 'domain'))
-		pushIfNotNull(paramList,this.buildStringSearchParameters(listName, fieldsValue,'contains', 'currentStatus'))
 
      
       console.log("the final parameter", paramList)
@@ -198,17 +198,17 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
        <Col md={8} sm={24}>
-         <FormItem label="ID">
+         <FormItem label={fieldLabels.id}>
            {getFieldDecorator('id')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
 
        <Col md={8} sm={24}>
-         <FormItem label="登录">
+         <FormItem label={fieldLabels.login}>
            {getFieldDecorator('login')(
-             <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+             <Input size="default" placeholder={appLocaleName(userContext,"PleaseInput")} />
            )}
          </FormItem>
        </Col>
@@ -253,88 +253,80 @@ componentDidMount() {
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
 
           <Col md={8} sm={24}>
-            <FormItem label="ID">
+            <FormItem label={fieldLabels.id}>
               {getFieldDecorator('id')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="登录">
+            <FormItem label={fieldLabels.login}>
               {getFieldDecorator('login')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="手机号码">
+            <FormItem label={fieldLabels.mobile}>
               {getFieldDecorator('mobile')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="电子邮件">
+            <FormItem label={fieldLabels.email}>
               {getFieldDecorator('email')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="密码">
+            <FormItem label={fieldLabels.pwd}>
               {getFieldDecorator('pwd')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="微信openid">
+            <FormItem label={fieldLabels.weixinOpenid}>
               {getFieldDecorator('weixinOpenid')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="微信Appid">
+            <FormItem label={fieldLabels.weixinAppid}>
               {getFieldDecorator('weixinAppid')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
 
           <Col md={8} sm={24}>
-            <FormItem label="访问令牌">
+            <FormItem label={fieldLabels.accessToken}>
               {getFieldDecorator('accessToken')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
+                <Input placeholder={appLocaleName(userContext,"PleaseInput")} />
               )}
             </FormItem>
           </Col>
  <Col md={8} sm={24}>
-                    <Form.Item label="域">
+                    <Form.Item label={fieldLabels.domain}>
                   {getFieldDecorator('domain', {initialValue: tryinit('domain')})(
                   
                   <SelectObject 
                     disabled={!availableForEdit('domain')}
                     targetType={"domain"} 
-                    requestFunction={SecUserService.requestCandidateDomain}/>
-                  
+                    requestFunction={SecUserService.requestCandidateDomain} useForSearch />
+                  	
                  
                   )}
                 </Form.Item></Col>
-
-          <Col md={8} sm={24}>
-            <FormItem label="当前状态">
-              {getFieldDecorator('currentStatus')(
-                <Input size="large" placeholder={appLocaleName(userContext,"PleaseInput")} />
-              )}
-            </FormItem>
-          </Col>
 
         </Row>
         <div style={{ overflow: 'hidden' }}>
@@ -347,7 +339,7 @@ componentDidMount() {
       </Form>
     )
   }
-
+	
   render() {
   	const expandForm = overrideValue([this.state.expandForm],false)
     return expandForm ? this.renderAdvancedForm() : this.renderSimpleForm()

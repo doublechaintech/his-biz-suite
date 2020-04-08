@@ -33,7 +33,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setId(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(ListAccessTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -45,7 +47,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setName(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(ListAccessTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -57,7 +61,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setInternalName(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String internalName = rs.getString(ListAccessTable.COLUMN_INTERNAL_NAME);
+		
 		if(internalName == null){
 			//do nothing when nothing found in database
 			return;
@@ -69,7 +75,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setReadPermission(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean readPermission = rs.getBoolean(ListAccessTable.COLUMN_READ_PERMISSION);
+		
 		if(readPermission == null){
 			//do nothing when nothing found in database
 			return;
@@ -81,7 +89,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setCreatePermission(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean createPermission = rs.getBoolean(ListAccessTable.COLUMN_CREATE_PERMISSION);
+		
 		if(createPermission == null){
 			//do nothing when nothing found in database
 			return;
@@ -93,7 +103,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setDeletePermission(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean deletePermission = rs.getBoolean(ListAccessTable.COLUMN_DELETE_PERMISSION);
+		
 		if(deletePermission == null){
 			//do nothing when nothing found in database
 			return;
@@ -105,7 +117,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setUpdatePermission(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean updatePermission = rs.getBoolean(ListAccessTable.COLUMN_UPDATE_PERMISSION);
+		
 		if(updatePermission == null){
 			//do nothing when nothing found in database
 			return;
@@ -117,7 +131,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setExecutionPermission(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Boolean executionPermission = rs.getBoolean(ListAccessTable.COLUMN_EXECUTION_PERMISSION);
+		
 		if(executionPermission == null){
 			//do nothing when nothing found in database
 			return;
@@ -147,7 +163,9 @@ public class ListAccessMapper extends BaseRowMapper<ListAccess>{
 	protected void setVersion(ListAccess listAccess, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(ListAccessTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

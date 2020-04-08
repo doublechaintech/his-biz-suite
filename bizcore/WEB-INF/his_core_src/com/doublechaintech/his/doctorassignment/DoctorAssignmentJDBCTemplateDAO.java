@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -63,6 +67,11 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements D
 		return loadInternalDoctorAssignment(accessKey, options);
 	}
 	*/
+	
+	public SmartList<DoctorAssignment> loadAll() {
+	    return this.loadAll(getDoctorAssignmentMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -545,7 +554,9 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements D
  	protected Object[] prepareDoctorAssignmentUpdateParameters(DoctorAssignment doctorAssignment){
  		Object[] parameters = new Object[7];
  
- 		parameters[0] = doctorAssignment.getName(); 	
+ 		
+ 		parameters[0] = doctorAssignment.getName();
+ 		 	
  		if(doctorAssignment.getDoctor() != null){
  			parameters[1] = doctorAssignment.getDoctor().getId();
  		}
@@ -554,7 +565,9 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements D
  			parameters[2] = doctorAssignment.getDepartment().getId();
  		}
  
- 		parameters[3] = doctorAssignment.getUpdateTime();		
+ 		
+ 		parameters[3] = doctorAssignment.getUpdateTime();
+ 				
  		parameters[4] = doctorAssignment.nextVersion();
  		parameters[5] = doctorAssignment.getId();
  		parameters[6] = doctorAssignment.getVersion();
@@ -567,7 +580,9 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements D
 		doctorAssignment.setId(newDoctorAssignmentId);
 		parameters[0] =  doctorAssignment.getId();
  
- 		parameters[1] = doctorAssignment.getName(); 	
+ 		
+ 		parameters[1] = doctorAssignment.getName();
+ 		 	
  		if(doctorAssignment.getDoctor() != null){
  			parameters[2] = doctorAssignment.getDoctor().getId();
  		
@@ -578,7 +593,9 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements D
  		
  		}
  		
- 		parameters[4] = doctorAssignment.getUpdateTime();		
+ 		
+ 		parameters[4] = doctorAssignment.getUpdateTime();
+ 				
  				
  		return parameters;
  	}
@@ -696,6 +713,34 @@ public class DoctorAssignmentJDBCTemplateDAO extends HisBaseDAOImpl implements D
 	@Override
 	public SmartList<DoctorAssignment> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDoctorAssignmentMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateDoctorAssignment executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateDoctorAssignment result = new CandidateDoctorAssignment();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

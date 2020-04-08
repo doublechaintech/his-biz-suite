@@ -145,9 +145,13 @@ public class UserAppTokens extends CommonTokens{
 	}
 	private int quickLinkListSearchCounter = 0;
 	public UserAppTokens searchQuickLinkListWith(String field, String verb, String value){		
+		
+		withQuickLinkList();
 		addSearchMoreOptions(QUICK_LINK_LIST,quickLinkListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public UserAppTokens searchAllTextOfQuickLinkList(String verb, String value){	
 		String field = "id|name|icon|linkTarget";
@@ -211,9 +215,13 @@ public class UserAppTokens extends CommonTokens{
 	}
 	private int listAccessListSearchCounter = 0;
 	public UserAppTokens searchListAccessListWith(String field, String verb, String value){		
+		
+		withListAccessList();
 		addSearchMoreOptions(LIST_ACCESS_LIST,listAccessListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public UserAppTokens searchAllTextOfListAccessList(String verb, String value){	
 		String field = "id|name|internalName";
@@ -277,9 +285,13 @@ public class UserAppTokens extends CommonTokens{
 	}
 	private int objectAccessListSearchCounter = 0;
 	public UserAppTokens searchObjectAccessListWith(String field, String verb, String value){		
+		
+		withObjectAccessList();
 		addSearchMoreOptions(OBJECT_ACCESS_LIST,objectAccessListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public UserAppTokens searchAllTextOfObjectAccessList(String verb, String value){	
 		String field = "id|name|objectType|list1|list2|list3|list4|list5|list6|list7|list8|list9";

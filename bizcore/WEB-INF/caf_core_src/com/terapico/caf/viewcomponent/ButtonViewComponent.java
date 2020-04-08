@@ -43,8 +43,17 @@ public class ButtonViewComponent extends BaseViewComponent {
     protected String callbackUrl;
 
     protected String shareRouter;
+    protected boolean ajax = false;
     
-    public String getShareRouter() {
+    public boolean isAjax() {
+		return ajax;
+	}
+
+	public void setAjax(boolean ajax) {
+		this.ajax = ajax;
+	}
+
+	public String getShareRouter() {
 		return shareRouter;
 	}
 
@@ -106,10 +115,14 @@ public class ButtonViewComponent extends BaseViewComponent {
     }
 
     public ButtonViewComponent(String content, String classes, String tag) {
+    	this(content, classes, tag, null);
+    }
+    public ButtonViewComponent(String content, String classes, String tag, String linkToUrl) {
         this.setContent(content);
         this.setClasses(classes);
         this.setTag(tag);
         this.setComponentType("button");
+        this.setLinkToUrl(linkToUrl);
     }
 
 	@Override

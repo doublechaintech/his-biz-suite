@@ -1,5 +1,5 @@
-import { get,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
+import { get,put,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
 const view = (targetObjectId) => {
   return get({
@@ -26,7 +26,6 @@ const requestCandidateExpenseType = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherExpenseType = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}expenseItemManager/transferToAnotherExpenseType/id/anotherExpenseTypeId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -42,7 +41,6 @@ const requestCandidateHospital = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherHospital = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}expenseItemManager/transferToAnotherHospital/id/anotherHospitalId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -53,11 +51,38 @@ const transferToAnotherHospital = (id, parameters) => {
 
 
 
+
+// Filter this out when no functions
+
+const  listFunctions = () => {
+  return get({
+    url: `${PREFIX}expenseItemService/listFunctions/`,
+  })
+}
+
+
+const  saveRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}expenseItemService/save/`,
+    data,
+  })
+}
+
+
+const  processRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}expenseItemService/process/`,
+    data,
+  })
+}
+
 const ExpenseItemService = { view,
   load,
   requestCandidateExpenseType,
   requestCandidateHospital,
   transferToAnotherExpenseType,
-  transferToAnotherHospital }
+  transferToAnotherHospital, listFunctions, saveRequest, processRequest}
 export default ExpenseItemService
 

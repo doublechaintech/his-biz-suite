@@ -73,16 +73,16 @@ public class SecUserTokens extends CommonTokens{
 		
 		return start()
 			.withDomain()
-			.withBlocking()
 			.withUserAppList()
-			.withLoginHistoryList();
+			.withLoginHistoryList()
+			.withWechatWorkappIdentifyList()
+			.withWechatMiniappIdentifyList();
 	
 	}
 	public static SecUserTokens withoutListsTokens(){
 		
 		return start()
-			.withDomain()
-			.withBlocking();
+			.withDomain();
 	
 	}
 	
@@ -107,16 +107,6 @@ public class SecUserTokens extends CommonTokens{
 	}
 	public SecUserTokens withDomain(){		
 		addSimpleOptions(DOMAIN);
-		return this;
-	}
-	
-	
-	protected static final String BLOCKING = "blocking";
-	public String getBlocking(){
-		return BLOCKING;
-	}
-	public SecUserTokens withBlocking(){		
-		addSimpleOptions(BLOCKING);
 		return this;
 	}
 	
@@ -156,9 +146,13 @@ public class SecUserTokens extends CommonTokens{
 	}
 	private int userAppListSearchCounter = 0;
 	public SecUserTokens searchUserAppListWith(String field, String verb, String value){		
+		
+		withUserAppList();
 		addSearchMoreOptions(USER_APP_LIST,userAppListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public SecUserTokens searchAllTextOfUserAppList(String verb, String value){	
 		String field = "id|title|appIcon|permission|objectType|objectId|location";
@@ -222,9 +216,13 @@ public class SecUserTokens extends CommonTokens{
 	}
 	private int loginHistoryListSearchCounter = 0;
 	public SecUserTokens searchLoginHistoryListWith(String field, String verb, String value){		
+		
+		withLoginHistoryList();
 		addSearchMoreOptions(LOGIN_HISTORY_LIST,loginHistoryListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public SecUserTokens searchAllTextOfLoginHistoryList(String verb, String value){	
 		String field = "id|fromIp|description";
@@ -253,11 +251,153 @@ public class SecUserTokens extends CommonTokens{
 	
 	
 		
+	protected static final String WECHAT_WORKAPP_IDENTIFY_LIST = "wechatWorkappIdentifyList";
+	public String getWechatWorkappIdentifyList(){
+		return WECHAT_WORKAPP_IDENTIFY_LIST;
+	}
+	public SecUserTokens withWechatWorkappIdentifyList(){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST);
+		return this;
+	}
+	public SecUserTokens analyzeWechatWorkappIdentifyList(){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeWechatWorkappIdentifyListEnabled(){		
+		
+		if(checkOptions(this.options(), WECHAT_WORKAPP_IDENTIFY_LIST+".anaylze")){
+			return true; //most of the case, should call here
+		}
+		//if not true, then query for global setting
+		return checkOptions(this.options(), ALL_LISTS_ANALYZE);
+	}
+	public SecUserTokens extractMoreFromWechatWorkappIdentifyList(String idsSeperatedWithComma){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int wechatWorkappIdentifyListSortCounter = 0;
+	public SecUserTokens sortWechatWorkappIdentifyListWith(String field, String descOrAsc){		
+		addSortMoreOptions(WECHAT_WORKAPP_IDENTIFY_LIST,wechatWorkappIdentifyListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int wechatWorkappIdentifyListSearchCounter = 0;
+	public SecUserTokens searchWechatWorkappIdentifyListWith(String field, String verb, String value){		
+		
+		withWechatWorkappIdentifyList();
+		addSearchMoreOptions(WECHAT_WORKAPP_IDENTIFY_LIST,wechatWorkappIdentifyListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public SecUserTokens searchAllTextOfWechatWorkappIdentifyList(String verb, String value){	
+		String field = "id|corpId|userId";
+		addSearchMoreOptions(WECHAT_WORKAPP_IDENTIFY_LIST,wechatWorkappIdentifyListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public SecUserTokens rowsPerPageOfWechatWorkappIdentifyList(int rowsPerPage){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public SecUserTokens currentPageNumberOfWechatWorkappIdentifyList(int currentPageNumber){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public SecUserTokens retainColumnsOfWechatWorkappIdentifyList(String[] columns){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public SecUserTokens excludeColumnsOfWechatWorkappIdentifyList(String[] columns){		
+		addSimpleOptions(WECHAT_WORKAPP_IDENTIFY_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
+	protected static final String WECHAT_MINIAPP_IDENTIFY_LIST = "wechatMiniappIdentifyList";
+	public String getWechatMiniappIdentifyList(){
+		return WECHAT_MINIAPP_IDENTIFY_LIST;
+	}
+	public SecUserTokens withWechatMiniappIdentifyList(){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST);
+		return this;
+	}
+	public SecUserTokens analyzeWechatMiniappIdentifyList(){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeWechatMiniappIdentifyListEnabled(){		
+		
+		if(checkOptions(this.options(), WECHAT_MINIAPP_IDENTIFY_LIST+".anaylze")){
+			return true; //most of the case, should call here
+		}
+		//if not true, then query for global setting
+		return checkOptions(this.options(), ALL_LISTS_ANALYZE);
+	}
+	public SecUserTokens extractMoreFromWechatMiniappIdentifyList(String idsSeperatedWithComma){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int wechatMiniappIdentifyListSortCounter = 0;
+	public SecUserTokens sortWechatMiniappIdentifyListWith(String field, String descOrAsc){		
+		addSortMoreOptions(WECHAT_MINIAPP_IDENTIFY_LIST,wechatMiniappIdentifyListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int wechatMiniappIdentifyListSearchCounter = 0;
+	public SecUserTokens searchWechatMiniappIdentifyListWith(String field, String verb, String value){		
+		
+		withWechatMiniappIdentifyList();
+		addSearchMoreOptions(WECHAT_MINIAPP_IDENTIFY_LIST,wechatMiniappIdentifyListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public SecUserTokens searchAllTextOfWechatMiniappIdentifyList(String verb, String value){	
+		String field = "id|openId|appId";
+		addSearchMoreOptions(WECHAT_MINIAPP_IDENTIFY_LIST,wechatMiniappIdentifyListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public SecUserTokens rowsPerPageOfWechatMiniappIdentifyList(int rowsPerPage){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public SecUserTokens currentPageNumberOfWechatMiniappIdentifyList(int currentPageNumber){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public SecUserTokens retainColumnsOfWechatMiniappIdentifyList(String[] columns){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public SecUserTokens excludeColumnsOfWechatMiniappIdentifyList(String[] columns){		
+		addSimpleOptions(WECHAT_MINIAPP_IDENTIFY_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  SecUserTokens searchEntireObjectText(String verb, String value){
 		
 		searchAllTextOfUserAppList(verb, value);	
 		searchAllTextOfLoginHistoryList(verb, value);	
+		searchAllTextOfWechatWorkappIdentifyList(verb, value);	
+		searchAllTextOfWechatMiniappIdentifyList(verb, value);	
 		return this;
 	}
 }

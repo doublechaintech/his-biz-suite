@@ -3,6 +3,8 @@ package com.doublechaintech.his.department;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -17,9 +19,9 @@ import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
 import com.doublechaintech.his.hospital.HospitalDAO;
 
 
-public interface DepartmentDAO{
+public interface DepartmentDAO extends BaseDAO{
 
-	
+	public SmartList<Department> loadAll();
 	public Department load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<Department> departmentList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -83,6 +85,8 @@ public interface DepartmentDAO{
 	
 	
 	public SmartList<Department> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateDepartment executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<Department> findDepartmentByHospital(String hospitalId, Map<String,Object> options);
  	public int countDepartmentByHospital(String hospitalId, Map<String,Object> options);

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -65,6 +66,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 	
 	
 	protected		SmartList<DoctorSchedule>	mDoctorScheduleList ;
+
 	
 		
 	public 	Period(){
@@ -73,7 +75,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 	public 	static Period withId(String id){
 		Period period = new Period();
 		period.setId(id);
-		// period.setVersion(Integer.MAX_VALUE);
+		period.setVersion(Integer.MAX_VALUE);
 		return period;
 	}
 	public 	static Period refById(String id){
@@ -87,14 +89,6 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	Period(String name, String code, Hospital hospital)
-	{
-		setName(name);
-		setCode(code);
-		setHospital(hospital);
-
-		this.mDoctorScheduleList = new SmartList<DoctorSchedule>();	
-	}
 	
 	//Support for changing the property
 	
@@ -112,6 +106,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -121,12 +116,13 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeCodeProperty(String newValueExpr){
+	
 		String oldValue = getCode();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -136,7 +132,7 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		updateCode(newValue);
 		this.onChangeProperty(CODE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -402,7 +398,9 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "doctorScheduleCurrentPageNumber", getDoctorScheduleList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -462,7 +460,9 @@ public class Period extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getCode(), getHospital(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

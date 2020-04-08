@@ -3,6 +3,8 @@ package com.doublechaintech.his.genericform;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -19,9 +21,9 @@ import com.doublechaintech.his.formfield.FormFieldDAO;
 import com.doublechaintech.his.formaction.FormActionDAO;
 
 
-public interface GenericFormDAO{
+public interface GenericFormDAO extends BaseDAO{
 
-	
+	public SmartList<GenericForm> loadAll();
 	public GenericForm load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<GenericForm> genericFormList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -79,6 +81,8 @@ public interface GenericFormDAO{
 
 	
 	public SmartList<GenericForm> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateGenericForm executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
 
 	// 需要一个加载引用我的对象的enhance方法:FormMessage的form的FormMessageList
 	public SmartList<FormMessage> loadOurFormMessageList(HisUserContext userContext, List<GenericForm> us, Map<String,Object> options) throws Exception;

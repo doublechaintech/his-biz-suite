@@ -1,6 +1,7 @@
 package com.skynet.infrastructure;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InMemoryCacheService  extends InfraBaseService implements CacheService {
@@ -15,6 +16,9 @@ public class InMemoryCacheService  extends InfraBaseService implements CacheServ
 		synchronized(cacheMap){//protect HashMap as it is not a thread safe class
 			return cacheMap.get(key);
 		}
+	}
+	public List<Object> mget(List<String >keys,Class<?> clazz) {
+		throw new IllegalStateException("InMemoryCacheService not implemented mget(List<String >keys,Class<?> clazz)");
 	}
 	
 	public void put(String key, Object value,int ttlInSeconds) {

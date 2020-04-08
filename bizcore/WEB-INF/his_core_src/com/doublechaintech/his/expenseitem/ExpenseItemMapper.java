@@ -31,7 +31,9 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
 	protected void setId(ExpenseItem expenseItem, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(ExpenseItemTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -43,7 +45,9 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
 	protected void setName(ExpenseItem expenseItem, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(ExpenseItemTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -55,7 +59,9 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
 	protected void setPrice(ExpenseItem expenseItem, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		BigDecimal price = rs.getBigDecimal(ExpenseItemTable.COLUMN_PRICE);
+		
 		if(price == null){
 			//do nothing when nothing found in database
 			return;
@@ -103,7 +109,9 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
 	protected void setUpdateTime(ExpenseItem expenseItem, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date updateTime = rs.getTimestamp(ExpenseItemTable.COLUMN_UPDATE_TIME);
+		
 		if(updateTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -115,7 +123,9 @@ public class ExpenseItemMapper extends BaseRowMapper<ExpenseItem>{
 	protected void setVersion(ExpenseItem expenseItem, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(ExpenseItemTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

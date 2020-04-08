@@ -236,17 +236,22 @@ class ListAccessUpdateForm extends Component {
 	const selectedRow = this.getSelectedRow()
 
 	const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
-
+	
+	const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"Update")}访问列表: {(currentUpdateIndex+1)}/{selectedRows.length}</div>)
+    }
+	
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
+        title={internalRenderTitle()}
         content={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
         wrapperClassName={styles.advancedForm}
       >
@@ -255,118 +260,117 @@ class ListAccessUpdateForm extends Component {
             <Row gutter={16}>
             
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="ID" disabled/>
+                    <Input size="large"  placeHolder={fieldLabels.id} disabled/>
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="名称" />
+                    <Input size="large"  placeHolder={fieldLabels.name} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.internalName} {...formItemLayout}>
                   {getFieldDecorator('internalName', {
                     initialValue: selectedRow.internalName,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="内部名称" />
+                    <Input size="large"  placeHolder={fieldLabels.internalName} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-            </Row>
-          </Form>  
-        </Card>
-        
-        <Card title={appLocaleName(userContext,"Preference")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
-            
-
-              <Col lg={8} md={12} sm={24}>
-                <Form.Item label={fieldLabels.readPermission} {...switchFormItemLayout}>
+              <Col lg={24} md={24} sm={24}>
+                <Form.Item label={fieldLabels.readPermission} {...formItemLayout}>
                   {getFieldDecorator('readPermission', {
                     initialValue: selectedRow.readPermission,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
                   })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
+                    <Input size="large"  placeHolder={fieldLabels.readPermission} />
+                    
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={8} md={12} sm={24}>
-                <Form.Item label={fieldLabels.createPermission} {...switchFormItemLayout}>
+              <Col lg={24} md={24} sm={24}>
+                <Form.Item label={fieldLabels.createPermission} {...formItemLayout}>
                   {getFieldDecorator('createPermission', {
                     initialValue: selectedRow.createPermission,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
                   })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
+                    <Input size="large"  placeHolder={fieldLabels.createPermission} />
+                    
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={8} md={12} sm={24}>
-                <Form.Item label={fieldLabels.deletePermission} {...switchFormItemLayout}>
+              <Col lg={24} md={24} sm={24}>
+                <Form.Item label={fieldLabels.deletePermission} {...formItemLayout}>
                   {getFieldDecorator('deletePermission', {
                     initialValue: selectedRow.deletePermission,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
                   })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
+                    <Input size="large"  placeHolder={fieldLabels.deletePermission} />
+                    
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={8} md={12} sm={24}>
-                <Form.Item label={fieldLabels.updatePermission} {...switchFormItemLayout}>
+              <Col lg={24} md={24} sm={24}>
+                <Form.Item label={fieldLabels.updatePermission} {...formItemLayout}>
                   {getFieldDecorator('updatePermission', {
                     initialValue: selectedRow.updatePermission,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
                   })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
+                    <Input size="large"  placeHolder={fieldLabels.updatePermission} />
+                    
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={8} md={12} sm={24}>
-                <Form.Item label={fieldLabels.executionPermission} {...switchFormItemLayout}>
+              <Col lg={24} md={24} sm={24}>
+                <Form.Item label={fieldLabels.executionPermission} {...formItemLayout}>
                   {getFieldDecorator('executionPermission', {
                     initialValue: selectedRow.executionPermission,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
                   })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
+                    <Input size="large"  placeHolder={fieldLabels.executionPermission} />
+                    
                   )}
                 </Form.Item>
               </Col>
 
-            </Row>
-          </Form>  
-        </Card>        
+            
+       
         
         
         
-        
+
+
+			</Row>
+          </Form>
+        </Card>
+
+
+
+
+
 
 
         <FooterToolbar>

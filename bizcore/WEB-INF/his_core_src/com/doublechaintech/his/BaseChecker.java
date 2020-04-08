@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import com.terapico.caf.DateTime;
-
+import com.terapico.caf.Images;
 
 public class BaseChecker {
 	protected HisUserContext userContext;
@@ -140,6 +140,9 @@ public class BaseChecker {
 	protected String parseString(String stringExpr){		
 		return stringExpr;
 	}
+	protected Images parseImages(String stringExpr){		
+		return Images.fromString(stringExpr);
+	}
 	protected boolean integerValueInClosedRange(int value, int min, int max){
 		if(value < min){
 			return false;
@@ -223,7 +226,41 @@ public class BaseChecker {
 	 		return;
 	 	}
 		
-	} 		
+	}
+	protected void checkImagesRange(Images value, int minLength, int maxLength, String propertyKey) {
+		if(value == null){
+			if(minLength == 0 ){
+				//如果最小长度为0，则改值允许为NULL
+				return;
+			}
+			packMessage(messageList, "STRING_NOT_ALLOW_TO_BE_NULL",propertyKey,new Object[]{propertyKey, value, minLength, maxLength},
+					"您输入的 '"+propertyKey+"' 的值'"+value+"'有误，最少"+minLength+"张图片.");
+			return;
+		}
+		
+		if(integerValueInClosedRange(value.size(), minLength, maxLength)){
+			return;
+		}
+		
+		if(minLength == maxLength){
+			//固定长度，
+			packMessage(messageList, "STRING_NOT_FIXED_LENGTH",propertyKey,new Object[]{propertyKey, value, minLength, maxLength, value.size()},
+					"您输入的 '"+propertyKey+"' 的'"+value+"'数量不对, 该值包含 "+ value.size()+" 张图, 系统预期是固定数量为 "+minLength + " 张图.");
+	 		return;
+		}
+		if(value.size()>maxLength){
+			packMessage(messageList, "STRING_TOO_LONG",propertyKey,new Object[]{propertyKey, value, minLength, maxLength, value.size()},
+					"您输入的 '"+propertyKey+"' 的值'"+value+"'数量太多, 该值包含 "+ value.size()+" 张图, 系统预期最多 "+maxLength+" 张图.");
+	 		return;
+	 	}
+		if(value.size()<minLength){
+	 		
+			packMessage(messageList, "STRING_TOO_SHORT",propertyKey,new Object[]{propertyKey, value, minLength, maxLength, value.size()},
+					"您输入的 '"+propertyKey+"' 的值'"+value+"'数量太少, 该值包含 "+ value.size()+" 张图, 系统预期最少 "+minLength+" 张图.");
+	 		return;
+	 	}
+		
+	}
 	protected void checkGender(String gender, int i, int j,String targetFieldName) {
 		
 		
@@ -411,6 +448,9 @@ public class BaseChecker {
 	}
 	protected void checkEmail(String value, int min, int max,
 			String propertyKey) {
+		if (min == 0 && (value==null || value.isEmpty())) {
+			return;
+		}
 		checkStringLengthRange(value, 5, 256, propertyKey);
 		/*
 		 * The maximum length is specified in RFC 5321: "The maximum total length of 
@@ -546,6 +586,16 @@ public class BaseChecker {
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

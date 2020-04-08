@@ -29,7 +29,9 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 	protected void setId(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(DoctorTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -41,7 +43,9 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 	protected void setName(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(DoctorTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -53,7 +57,9 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 	protected void setShotImage(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String shotImage = rs.getString(DoctorTable.COLUMN_SHOT_IMAGE);
+		
 		if(shotImage == null){
 			//do nothing when nothing found in database
 			return;
@@ -83,7 +89,9 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 	protected void setUpdateTime(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date updateTime = rs.getTimestamp(DoctorTable.COLUMN_UPDATE_TIME);
+		
 		if(updateTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -95,7 +103,9 @@ public class DoctorMapper extends BaseRowMapper<Doctor>{
 	protected void setVersion(Doctor doctor, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(DoctorTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

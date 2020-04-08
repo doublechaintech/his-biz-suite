@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.skynet.infrastructure.CacheService;
 import com.skynet.infrastructure.ESClient;
 import com.skynet.infrastructure.StorageService;
+import com.skynet.infrastructure.BlockChainAdvancer;
 import com.skynet.infrastructure.EventService;
 import com.skynet.infrastructure.GraphService;
 import com.skynet.infrastructure.SMTPService;
@@ -32,14 +33,16 @@ import com.doublechaintech.his.objectaccess.*;
 import com.doublechaintech.his.HisObjectChecker;
 import com.doublechaintech.his.loginhistory.LoginHistory;
 import com.doublechaintech.his.Message;
-
-
+import com.doublechaintech.his.CustomHisUserContextImpl;
+import com.doublechaintech.his.services.IamService;
+import com.doublechaintech.his.tree.*;
 
 import com.terapico.uccaf.BaseUserContext;
 import com.terapico.uccaf.UserContextProvider;
 import com.terapico.caf.BeanFactory;
 import com.terapico.caf.Password;
 import com.terapico.utils.TextUtil;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,13 +52,28 @@ import java.lang.reflect.InvocationTargetException;
 public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         UserContextProvider {
     protected StorageService storageService;
+    protected BlockChainAdvancer blockChainAdvancer;
+    protected TreeServiceImpl mTreeService;
+    public TreeServiceImpl getTreeService(){
+        return mTreeService;
+    }
+    public void setTreeService(TreeServiceImpl treeService){
+        mTreeService = treeService;
+    }
     protected String environmentName;
     protected Boolean productEnvironment;
     protected DAOGroup daoGroup;
     protected ManagerGroup managerGroup;
     protected EventService eventService;
     protected String checkerBeanName = "checker";
-    
+
+    public BlockChainAdvancer getBlockChainAdvancer(){
+        return blockChainAdvancer;
+    }
+
+   public void setBlockChainAdvancer(BlockChainAdvancer pBlockChainAdvancer){
+     blockChainAdvancer = pBlockChainAdvancer;
+   }
     public StorageService getStorageService() {
         return storageService;
     }
@@ -100,11 +118,11 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     public void setProductEnvironment(Boolean productEnvironment) {
         this.productEnvironment = productEnvironment;
     }
-    
+
     public CustomSecUserManagerImpl() {
         // TODO Auto-generated constructor stub
     }
-    
+
     public String confirmSession(HisUserContext userContext){
         SecUser user = cachedUser(userContext);
         if(user==null){
@@ -112,10 +130,10 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         }
         return "OK";
     }
-    
+
     public Object resetPassword(HisUserContext userContext, String mobile, int verifycationCode, String newPassword) {
-        
-        
+
+
         SecUser user;
         try {
             user = this.loadUserWith(userContext, "mobile", mobile);
@@ -131,16 +149,16 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
             this.saveSecUser(userContext, user, SecUserTokens.withoutLists());
             Password pwd = new Password(newPassword);
             return this.loginWithMobile(userContext, mobile, pwd);
-            
-            
+
+
         } catch (Exception e) {
             // TODO Auto-generated catch block
             return "FAIL";
         }
-        
+
         //return this.getSecUserDAO().clone(fromSecUserId, this.allTokens());
     }
-    
+
     public Object resetPasswordWithoutLogin(HisUserContext userContext, String loginType, String loginKey, int verifycationCode, String newPassword) {
         SecUser user;
         try {
@@ -160,7 +178,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
             return "FAIL";
         }
     }
-    
+
     protected boolean isVerificationCodeExpired(SecUser user) {
         // TODO Auto-generated method stub
         return false;
@@ -175,41 +193,41 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         List<UserApp> userApps = user.getUserAppList();
         for (UserApp app : userApps) {
             if (app.getId().equals(appId)) {
-                
-                
+
+
                 return gotoApp(userContext,app);
             }
         }
         return user;
     }
-    
+
     public SecUser manage(HisUserContext userContext) throws Exception{
         SecUser user = cachedUser(userContext);
         SecUser user2 = this.loadSecUser(userContext, user.getId(), this.allTokens());
         return this.present(userContext, user2, this.allTokens());
-        
+
     }
-    
+
     protected SecUser cachedUser(HisUserContext userContext)
     {
         return (SecUser)userContext.getCachedObject(this.getUserKey(userContext), SecUser.class);
     }
-    
+
     public SecUser getCachedSecUser(HisUserContext userContext) {
 		return cachedUser(userContext);
 	}
-    
+
     protected BaseEntity error(String message){
         BaseEntity entity = new CommonError();
         entity.addErrorMessage(message, null);
         return entity;
     }
-    
-   
+
+
 
     protected Object gotoApp(HisUserContext userContext, UserApp app) throws Exception {
-        
-        UserApp fullAppData = userContext.getDAOGroup().getUserAppDAO().load(app.getId(), UserAppTokens.all());
+
+        UserApp fullAppData = userAppDaoOf(userContext).load(app.getId(), UserAppTokens.all());
         userContext.putToCache(getCurrentAppKey(userContext), fullAppData, 1000000);
         // the app has all the accessable objects
         String targetBeanName = getBeanName( userContext,  app);
@@ -218,7 +236,8 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         }
         Object targetObject = userContext.getBean(targetBeanName );
         if(targetObject == null){
-            return error("targetObject is null");
+        	userContext.log("出现这个错误很可能是数据库因为各种原因没到导入完成或者导入了错误的数据库脚本");
+            return error("targetObject is not found for bean name "+targetBeanName);
         }
 
         String targetId = getTargetObjectId( userContext,  app);
@@ -233,47 +252,55 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         if(methodName == null){
             return error("methodName is null");
         }
-        
+
         ObjectAccess oa = findAppliedObjectAccess(fullAppData,serviceType);
         Map<String,Object > tokens =  packTokens(oa);
-        
+
 
         userContext.addAccessTokens(tokens);
-        //String 
+        //String
         try {
-            
+
             String className =ucClassNameOf(serviceType);
             return invokeWithOneString(userContext,targetBeanName,methodName,className,targetId);
         } catch (NoSuchMethodException e) {
-            
+
             return error("NoSuchMethodException: "+ e.getMessage());
         } catch (SecurityException e) {
-            
+
             return error("SecurityException: "+ e.getMessage());
         } catch (IllegalAccessException e) {
-            
+
             return error("IllegalAccessException: "+ e.getMessage());
         } catch (IllegalArgumentException e) {
-            
+
             return error("IllegalArgumentException: "+ e.getMessage());
         } catch (InvocationTargetException e) {
-            
-            return error("InvocationTargetException: "+ e.getTargetException().getMessage());
+        	Throwable rootCause = e;
+        	while((rootCause != null) && !(rootCause instanceof java.sql.SQLException)) {
+        		rootCause = rootCause.getCause();
+        	}
+        	if(rootCause instanceof java.sql.SQLException) {
+        		userContext.log("SQL出错, 很可能模型更新后，JAVA代码更新了，但是数据库没有重新导入: "+e.getTargetException().getMessage());
+        	}
+            return error("InvocationTargetException: 服务器出错，请管理员帮忙查看服务器端日志" );
+
         }catch (Exception e) {
             e.printStackTrace();
             return error("Exception1: "+ e.getMessage());
         }
 
+
     }
-    
-    
+
+
     public String showMessage(BaseUserContext baseUserContext){
         return "hello";
     }
-    
-    
+
+
     public String getVerificationCode(HisUserContext userContext,String mobile){
-        
+
         try {
             SecUser user = this.loadUserWith(userContext, "mobile", mobile);
             int verificationCode = getRandomVerificationCode(userContext,6);
@@ -281,38 +308,38 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
             user.setVerificationCodeExpire(userContext.now());
             /*
             userContext.sendEmail(
-                    "philip_chang@163.com,kala.niubility@gmail.com", 
-                    "verificationCode:"+verificationCode +" for "+mobile+"@"+userContext.now() , 
+                    "philip_chang@163.com,kala.niubility@gmail.com",
+                    "verificationCode:"+verificationCode +" for "+mobile+"@"+userContext.now() ,
                     "verificationCode:"+verificationCode );
-            
+
             */
             sendVerificationCode(userContext, mobile,verificationCode+"");
-            
-            
+
+
             this.saveSecUser(userContext, user, SecUserTokens.withoutLists());
-            
+
         } catch (Exception e) {
             // TODO Auto-generated catch block
             return "USER_NOT_FOUNT";
         }
-        
+
         return "OK";
     }
-    
+
     protected void sendVerificationCode(HisUserContext userContext, String mobile,String code) throws Exception{
         Map<String, String> parameters = new HashMap<String, String>();
-        
+
         parameters.put("passcode", code);
 
         userContext.sendMessage("13880964614", "开心帮帮兔", "SMS_33585577", parameters);
     }
-    
+
     protected int getRandomVerificationCode(HisUserContext userContex, int length){
         int base = (int)Math.pow(10, length-1);
         return base+(int)(9*base*Math.random());
         //like 100+900*random
-        
-        
+
+
     }
     public String showMessage2(BaseUserContext baseUserContext){
         return "hello";
@@ -321,23 +348,23 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         //com.skynet.scm;
         String packageName = "com.skynet.scm";
         return packageName +"."+type.toLowerCase()+"."+type+"UserContext";
-        
+
     }
-    
+
     protected String getBeanName(HisUserContext userContext, UserApp app){
 
         String target = app.getObjectType();
         String lowerCase = target.substring(0,1).toLowerCase()+target.substring(1);
         return lowerCase+"Manager";
-        
+
     }
     protected String getTargetObjectId(HisUserContext userContext, UserApp app){
-        
+
         return  app.getObjectId();
-        
+
     }
     protected String getServiceType(HisUserContext userContext, UserApp app){
-        
+
         return app.getObjectType();
     }
     protected String getMethodName(HisUserContext userContext, UserApp app){
@@ -345,8 +372,8 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         return "view";
     }
 
-    
-    
+
+
     public Object home(HisUserContext userContext) {
         SecUser user = (SecUser) userContext.getCachedObject(
                 getUserKey(userContext), SecUser.class);
@@ -362,7 +389,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
             Password password) {
 
         return loginInternal(userContext,"email",email, password);
-    
+
     }
     public Object login(HisUserContext userContext, String email,
             Password password) {
@@ -370,18 +397,18 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     		return loginWithMobile(userContext, email, password);
     	}
         return loginInternal(userContext,"userId",email, password);
-    
+
     }
     public Object loginWithLogin(HisUserContext userContext, String email,
             Password password) {
 
         return loginInternal(userContext,"login",email, password);
-    
+
     }
     public Object loginWithMobile(HisUserContext userContext, String email,
             Password password) {
         return loginInternal(userContext,"mobile",email, password);
-    
+
     }
     protected SecUser loadUserWith(HisUserContext userContext, String type, String userId) throws Exception{
         if("email".equals(type)){
@@ -401,16 +428,16 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 
         try {
             SecUser user = this.loadUserWith(userContext, type, userId);
-            
+
             String hashedPassed = this.hashStringWithSHA256(password.getClearTextPassword(), user.getId());
             log("hashed pass: "+ hashedPassed);
             log("stored pass: "+user.getPwd());
-            
+
             if (!user.getPwd().equals(hashedPassed)) {
                 this.addLoginHistory(userContext, user.getId(), userContext.getRemoteIP(), "密码错误", "x".split("."));
                 return errorLogin("密码错了!");
             }
-            
+
             return loginTheSecUserInternal(userContext, user, "成功登陆");
         } catch (SecUserNotFoundException e) {
             return errorLogin("对不起，不认识你");
@@ -429,23 +456,25 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		tokens.put("secUserList", "secUserList");
 		tokens.put("objectAccessList", "objectAccessList");
 		userContext.addAccessTokens(tokens);
-	
+
 		userContext.putToCache(getUserKey(userContext), user, 100000);
-	
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		iamService.onLoginSecUserInternalSuccess((HisUserContextImpl) userContext, user);
+
 		CustomSecUser customUser = new CustomSecUser();
 		user.copyTo(customUser);
 
 		user.addLoginHistory(this.createLoginHistory(userContext, userContext.getRemoteIP(), TextUtil.firstChars(loginComments, 16)));
 		user.setLastLoginTime(userContext.now());
 		this.saveSecUser(userContext, user, this.allTokens());
-	
+
 		return customUser;
     }
 
     public Object showlogin(HisUserContext userContext) {
-        
+
         userContext.removeFromCache(getUserKey(userContext));
-        
+
         LoginForm form = new LoginForm();
 
         return form;
@@ -495,7 +524,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     public void setEsClient(ESClient esClient) {
         this.esClient = esClient;
     }
-    
+
     private SMTPService smtpService;
 
     public SMTPService getSmtpService() {
@@ -505,9 +534,9 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     public void setSmtpService(SMTPService smtpService) {
         this.smtpService = smtpService;
     }
-    
+
     private MessageService messageService;
-    
+
     public MessageService getMessageService() {
         return messageService;
     }
@@ -533,18 +562,18 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     public void setPublicMediaServicePrefix(String publicMediaServicePrefix) {
         this.publicMediaServicePrefix = publicMediaServicePrefix;
     }
-    
+
     protected HisObjectChecker checker;
     public HisObjectChecker getChecker(){
         return checker;
     }
-    
+
     public void setChecker(HisObjectChecker checker){
         this.checker = checker;
     }
-    
+
     protected void init(UserContextImpl userContext, HttpServletRequest request) {
-        
+
         BeanFactory beanFactory = (BeanFactory)request.getAttribute("beanFactory");
         userContext.setProductEnvironment(getProductEnvironment());
         userContext.setEnvironmentName(getEnvironmentName());
@@ -556,6 +585,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         userContext.setSmtpService(smtpService);
         userContext.setGraphService(graphService);
         userContext.setMessageService(messageService);
+        userContext.setBlockChainAdvancer(blockChainAdvancer);
         userContext.setTokenId(request.getSession().getId());
         userContext.setUserAgent(request.getHeader("User-Agent"));
         Enumeration<String> headerNames = request.getHeaderNames();
@@ -567,17 +597,19 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         	}
         }
         userContext.setPublicMediaServicePrefix(getPublicMediaServicePrefix());
-       
+
         userContext.setRequestParameters((Map)request.getParameterMap());
+        userContext.setRequestCookies(request.getCookies());
         userContext.setDaoGroup(getDaoGroup());
         userContext.setEventService(this.getEventService());
         userContext.setManagerGroup(getManagerGroup());
+        userContext.setTreeService(getTreeService());
         // 原则上不要自己读取request的内容. 特殊情况下读取, 请注明原因. 以下为读取POST的body的例子.
 		//        ServletInputStream ins;
 		//        try {
 		//        	if (request.getMethod().equalsIgnoreCase("post")) {
 		//	            ins = request.getInputStream();
-		//	
+		//
 		//	            if (ins != null) {
 		//	                if (ins.available() > 0) {
 		//	                    System.out.println("input stream can read");
@@ -587,7 +619,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		//	                    while ((n = ins.read(buff)) > 0) {
 		//	                        bout.write(buff, 0, n);
 		//	                    }
-		//	
+		//
 		//	                    userContext.setRequestBody(bout.toByteArray());
 		//	                } else {
 		//	                    System.out.println("input stream cannot read");
@@ -598,11 +630,11 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		//            e.printStackTrace();
 		//        }
     }
-    
+
     protected String getRemoteIP(HttpServletRequest request){
         String remoteHost = request.getHeader("X-Forwarded-For");
         if(remoteHost != null){
-            return remoteHost;    
+            return remoteHost;
         }
         return request.getRemoteAddr();
     }
@@ -615,23 +647,23 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 
     protected HisUserContextImpl createNewConext(String path) {
 
-        return new HisUserContextImpl();
+        return new CustomHisUserContextImpl();
 
     }
 
     public void saveUserContext(BaseUserContext uc) throws Exception {
         // TODO Auto-generated method stub
-        
+
     }
-    
-    
+
+
     public Object checkOtherLogin(HisUserContext userContext) throws Exception {
-    	
+
     	SecUser user = (SecUser) userContext.getCachedObject(
                 getUserKey(userContext), SecUser.class);
     	//compare the user in db;
     	String tokens [] = SecUserTokens.start().withLoginHistoryList().sortLoginHistoryListWith(LoginHistory.LOGIN_TIME_PROPERTY, "desc").toArray();
-    	
+
     	SecUser userInDB = userContext.getManagerGroup().getSecUserManager().loadSecUser(userContext, user.getId(), tokens);
     	if(user.getLastLoginTime().after(userInDB.getLastLoginTime())) {
     		//如果不一样，而且比缓存里面的用户更新一些
@@ -642,20 +674,20 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
     	String fromIp = userInDB.getLoginHistoryList().first().getFromIp();
     	String proceedIp = (String)userContext.getCachedObject(key, String.class);
     	if(fromIp.equals(proceedIp)) {
-    		
+
     		return "PROCEED";
     	}
 
     	userContext.putToCache(key,fromIp , 86400);
     	return "有其他人用跟你同一个账号在"+fromIp+"登录";
     	//有其他人登录
-    	
-    	
-    	
+
+
+
     }
-    
+
     ////////////////////////////START OF THE CUSTOM IMPL FUNCITONS///////////////////////////////////
-    
+
     boolean isOneOf(String value, String candiates[]) {
 		for (String candidate : candiates) {
 			if (value.equals(candidate)) {
@@ -668,7 +700,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 	@Override
 	public Object checkAccess(BaseUserContext baseUserContext, String methodName, Object[] parameters)
 			throws IllegalAccessException {
-	
+
 		if(methodName.startsWith("login")){
             return accessOK();
         }
@@ -687,17 +719,17 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
         if(methodName.startsWith("verificationCodeForm")){
             return accessOK();
         }
-	
+
 		String managementAccessMethods[] = new String[] { "updateAppPermission","updateListAccess" ,"loadUserAppWithUser" ,"updateListAccess","testIfHasManagementAccess" };
 
 		if(this.isOneOf(methodName, managementAccessMethods)) {
-			
-			
-			
+
+
+
 			return this.accessOK();
-			
+
 		}
-		
+
 		return super.checkAccess(baseUserContext, methodName, parameters);
 	}
 
@@ -711,7 +743,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		}
 		return true;
 	}
-	
+
 	protected void checkUserHasManagementAccess(HisUserContext userContext, String objectType, String objectId)
 			throws SecUserManagerException {
 
@@ -765,8 +797,8 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 	protected UserApp patchWithTokens(UserApp userApp, String tokensExpr, String displayName) {
 
 		//this.checkUserHasManagementAccess(userContext, userApp.getObjectType(), userApp.getObjectId());
-		
-		
+
+
 		for (ListAccess access : userApp.getListAccessList()) {
 			resetListAccess(access);
 		}
@@ -830,14 +862,14 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 
 	public UserApp updateListAccess(HisUserContext userContext, String secUserId, String userAppId, String displayName,
 			String permissionTokens) throws Exception {
-		
+
 		UserAppTokens token = UserAppTokens.start().withListAccessList();
 
 		UserApp userApp = userContext.getManagerGroup().getUserAppManager().loadUserApp(userContext, userAppId,
 				token.toArray());
 
 		this.checkUserHasManagementAccess(userContext, userApp.getObjectType(), userApp.getObjectId());
-		
+
 		this.patchWithTokens(userApp, permissionTokens, displayName);
 
 		return userContext.getManagerGroup().getUserAppManager().internalSaveUserApp(userContext, userApp,
@@ -848,7 +880,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 	public UserApp loadUserAppWithUser(HisUserContext userContext, String secUserId, String objectType,
 			String objectId, String title, String appIcon) throws Exception {
 
-		
+
 		userContext.getChecker()
 			.checkIdOfSecUser(secUserId)
 			.checkObjectTypeOfUserApp(objectType)
@@ -856,7 +888,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 			.throwExceptionIfHasErrors(SecUserManagerException.class);
 
 		this.checkUserHasManagementAccess(userContext, objectType, objectId);
-		
+
 		SecUser secUser = this.loadSecUser(userContext, secUserId, buildLoadTokens(objectType, objectId).done());
 
 		if (secUser.getUserAppList().isEmpty()) {
@@ -882,20 +914,20 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		return userAppInDB;
 
 	}
-    
+
     public Object changeCurUserPassword(HisUserContext userContext, String currentPassword, String newPassword)
 			throws Exception {
 		SecUser curUser = cachedUser(userContext);
-		
+
 		if(curUser==null) {
 			this.throwExceptionWithMessage("修改密码之前必须登录，如果当前您已经登录，请退出后再试");
 		}
-		
-		
+
+
 		curUser = this.loadSecUser(userContext, curUser.getId(), new String[] {});
-		
+
 		String hasedPassword = this.hashStringWithSHA256(currentPassword, curUser.getId());
-		
+
 		if (!hasedPassword.equals(curUser.getPwd())) {
 			throw new SecUserManagerException("当前密码输入错误, 请重新输入");
 		}
@@ -904,7 +936,7 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		this.saveSecUser(userContext, curUser, SecUserTokens.withoutLists());
 		return "OK";
 	}
-	
+
 	public String testIfHasManagementAccess(HisUserContext userContext,String objectType,String objectId) {
 		try {
 			this.checkUserHasManagementAccess(userContext, objectType, objectId);
@@ -912,10 +944,10 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 		}catch(Exception e){
 			return "FAIL";
 		}
-		
+
 	}
-    
-    
+
+
     public Map<String, Object> testoss(HisUserContext userContext) throws SecUserManagerException {
 
 		String key = this.getCurrentAppKey(userContext);
@@ -931,6 +963,16 @@ public class CustomSecUserManagerImpl extends SecUserManagerImpl implements
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

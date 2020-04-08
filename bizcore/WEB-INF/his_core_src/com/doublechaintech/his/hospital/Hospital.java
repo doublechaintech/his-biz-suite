@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -68,6 +69,7 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 	protected		SmartList<Doctor>   	mDoctorList         ;
 	protected		SmartList<Department>	mDepartmentList     ;
 	protected		SmartList<DoctorSchedule>	mDoctorScheduleList ;
+
 	
 		
 	public 	Hospital(){
@@ -76,7 +78,7 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 	public 	static Hospital withId(String id){
 		Hospital hospital = new Hospital();
 		hospital.setId(id);
-		// hospital.setVersion(Integer.MAX_VALUE);
+		hospital.setVersion(Integer.MAX_VALUE);
 		return hospital;
 	}
 	public 	static Hospital refById(String id){
@@ -89,19 +91,6 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	Hospital(String name, String address, String telephone)
-	{
-		setName(name);
-		setAddress(address);
-		setTelephone(telephone);
-
-		this.mExpenseTypeList = new SmartList<ExpenseType>();
-		this.mPeriodList = new SmartList<Period>();
-		this.mExpenseItemList = new SmartList<ExpenseItem>();
-		this.mDoctorList = new SmartList<Doctor>();
-		this.mDepartmentList = new SmartList<Department>();
-		this.mDoctorScheduleList = new SmartList<DoctorSchedule>();	
-	}
 	
 	//Support for changing the property
 	
@@ -122,6 +111,7 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -131,12 +121,13 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeAddressProperty(String newValueExpr){
+	
 		String oldValue = getAddress();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -146,12 +137,13 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 		updateAddress(newValue);
 		this.onChangeProperty(ADDRESS_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeTelephoneProperty(String newValueExpr){
+	
 		String oldValue = getTelephone();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -161,7 +153,7 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 		updateTelephone(newValue);
 		this.onChangeProperty(TELEPHONE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -1011,7 +1003,9 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "doctorScheduleCurrentPageNumber", getDoctorScheduleList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -1082,7 +1076,9 @@ public class Hospital extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getAddress(), getTelephone(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -115,6 +119,11 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 		return loadInternalUserApp(accessKey, options);
 	}
 	*/
+	
+	public SmartList<UserApp> loadAll() {
+	    return this.loadAll(getUserAppMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -730,17 +739,31 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
  	protected Object[] prepareUserAppUpdateParameters(UserApp userApp){
  		Object[] parameters = new Object[11];
  
- 		parameters[0] = userApp.getTitle(); 	
+ 		
+ 		parameters[0] = userApp.getTitle();
+ 		 	
  		if(userApp.getSecUser() != null){
  			parameters[1] = userApp.getSecUser().getId();
  		}
  
+ 		
  		parameters[2] = userApp.getAppIcon();
+ 		
+ 		
  		parameters[3] = userApp.getFullAccess();
+ 		
+ 		
  		parameters[4] = userApp.getPermission();
+ 		
+ 		
  		parameters[5] = userApp.getObjectType();
+ 		
+ 		
  		parameters[6] = userApp.getObjectId();
- 		parameters[7] = userApp.getLocation();		
+ 		
+ 		
+ 		parameters[7] = userApp.getLocation();
+ 				
  		parameters[8] = userApp.nextVersion();
  		parameters[9] = userApp.getId();
  		parameters[10] = userApp.getVersion();
@@ -753,18 +776,32 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 		userApp.setId(newUserAppId);
 		parameters[0] =  userApp.getId();
  
- 		parameters[1] = userApp.getTitle(); 	
+ 		
+ 		parameters[1] = userApp.getTitle();
+ 		 	
  		if(userApp.getSecUser() != null){
  			parameters[2] = userApp.getSecUser().getId();
  		
  		}
  		
+ 		
  		parameters[3] = userApp.getAppIcon();
+ 		
+ 		
  		parameters[4] = userApp.getFullAccess();
+ 		
+ 		
  		parameters[5] = userApp.getPermission();
+ 		
+ 		
  		parameters[6] = userApp.getObjectType();
+ 		
+ 		
  		parameters[7] = userApp.getObjectId();
- 		parameters[8] = userApp.getLocation();		
+ 		
+ 		
+ 		parameters[8] = userApp.getLocation();
+ 				
  				
  		return parameters;
  	}
@@ -1186,19 +1223,19 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
     public SmartList<UserApp> requestCandidateUserAppForQuickLink(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, filterKey, pageNo, pageSize, getUserAppMapper());
+		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, UserAppTable.COLUMN_SEC_USER, filterKey, pageNo, pageSize, getUserAppMapper());
     }
 		
     public SmartList<UserApp> requestCandidateUserAppForListAccess(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, filterKey, pageNo, pageSize, getUserAppMapper());
+		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, UserAppTable.COLUMN_SEC_USER, filterKey, pageNo, pageSize, getUserAppMapper());
     }
 		
     public SmartList<UserApp> requestCandidateUserAppForObjectAccess(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, filterKey, pageNo, pageSize, getUserAppMapper());
+		return findAllCandidateByFilter(UserAppTable.COLUMN_TITLE, UserAppTable.COLUMN_SEC_USER, filterKey, pageNo, pageSize, getUserAppMapper());
     }
 		
 
@@ -1314,6 +1351,34 @@ public class UserAppJDBCTemplateDAO extends HisBaseDAOImpl implements UserAppDAO
 	@Override
 	public SmartList<UserApp> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getUserAppMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateUserApp executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateUserApp result = new CandidateUserApp();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

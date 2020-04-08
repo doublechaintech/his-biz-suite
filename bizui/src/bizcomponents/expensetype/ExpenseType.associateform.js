@@ -143,7 +143,7 @@ class ExpenseTypeAssociateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="名称" />
+                    <Input size="large"  placeHolder={fieldLabels.name} />
                   )}
                 </Form.Item>
               </Col>
@@ -153,7 +153,7 @@ class ExpenseTypeAssociateForm extends Component {
                   {getFieldDecorator('helperChars', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="辅助识字课" />
+                    <Input size="large"  placeHolder={fieldLabels.helperChars} />
                   )}
                 </Form.Item>
               </Col>
@@ -163,7 +163,7 @@ class ExpenseTypeAssociateForm extends Component {
                   {getFieldDecorator('status', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="状态" />
+                    <Input size="large"  placeHolder={fieldLabels.status} />
                   )}
                 </Form.Item>
               </Col>

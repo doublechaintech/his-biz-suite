@@ -4,9 +4,12 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -41,7 +44,7 @@ public class MessageTemplateUtil {
 	protected static Map<String, MessageTemplate> templates;
 	protected static Date loadedTime;
 	
-	public static String getMessage(String templateName, Locale language, Map<String, Object> params) {
+	public static String getMessage(String templateName, Locale language, Map<String, ? extends Object> params) {
 		ensureTemplates();
 		MessageTemplate tmpl = templates.get(templateName);
 		if (tmpl == null) {
@@ -52,12 +55,18 @@ public class MessageTemplateUtil {
 		return MessageFormat.format(templateStr, arguments.toArray());
 	}
 
-	private static List<Object> convertParams(MessageTemplate tmpl, Map<String, Object> params) {
+	private static List<Object> convertParams(MessageTemplate tmpl, Map<String, ? extends Object> params) {
 		ArrayList<Object> list =new ArrayList<>();
 		if (tmpl.getDeclaration() == null || params == null) {
 			return list;
 		}
 		params.forEach((key,val)->{
+			if(tmpl.getDeclaration() == null || tmpl.getDeclaration().isEmpty()) {
+				return;
+			}
+			if (!tmpl.getDeclaration().containsKey(key)) {
+				return;
+			}
 			int idx = tmpl.getDeclaration().get(key);
 			CollectionUtils.addItem(list, idx, val);
 		});
@@ -119,4 +128,70 @@ public class MessageTemplateUtil {
 	protected static String getFileName() {
 		return TextUtil.getExtVariable("MESSAGE_TEMPLATE_FILE", "./message_templates.xml");
 	}
+	
+	public static String getMessage(List<String> templateSegments, Map<String, Object> params) {
+		if (templateSegments == null || templateSegments.isEmpty()) {
+			return "";
+		}
+		StringBuilder rstSb = new StringBuilder();
+		for(String tmpSeg: templateSegments) {
+			rstSb.append(renderLine(tmpSeg, params));
+		}
+		return rstSb.toString();
+	}
+
+	private static Pattern ptnParamExp = Pattern.compile("\\$\\s*\\{[^}]+\\}");
+	private static Pattern ptnParamExpContent = Pattern.compile("\\$\\s*\\{([^}]+)\\}");
+	private static String renderLine(String tmpSeg, Map<String, Object> params) {
+		if (TextUtil.isBlank(tmpSeg)) {
+			return "";
+		}
+		List<String> paramExps = TextUtil.findAllMatched(tmpSeg, ptnParamExp);
+		if (paramExps == null || paramExps.isEmpty()) {
+			return tmpSeg;
+		}
+		Map<String, Object> oldValue = new HashMap<>(params);
+		for(String paramExp : paramExps) {
+			Matcher m = ptnParamExpContent.matcher(paramExp);
+			if (!m.matches()) {
+				continue;
+			}
+			String exp = m.group(1);
+			System.out.println("do work for: " + paramExp +"="+exp);
+			int pos = exp.indexOf(':');
+			if (pos < 0) {
+				// 没有表达式，直接替换
+				tmpSeg = Pattern.compile(paramExp, Pattern.LITERAL).matcher(tmpSeg)
+						.replaceFirst(Matcher.quoteReplacement(String.valueOf(params.get(exp))));
+				continue;
+			}
+			String expression = exp.substring(pos+1);
+			String paramName = exp.substring(0,pos);
+			Object value = params.get(paramName);
+			switch (expression) {
+			case "++":
+			{
+				Number nValue = (Number) value;
+				params.put(paramName, nValue.intValue()+1);
+				tmpSeg = Pattern.compile(paramExp, Pattern.LITERAL).matcher(
+						tmpSeg).replaceFirst(Matcher.quoteReplacement(String.valueOf(params.get(paramName))));
+			}
+			break;
+			case "?":
+			{
+				if (value == null) {
+					params.putAll(oldValue);
+					return "";
+				}
+				tmpSeg = Pattern.compile(paramExp, Pattern.LITERAL).matcher(
+						tmpSeg).replaceFirst(Matcher.quoteReplacement(String.valueOf(params.get(paramName))));
+			}
+			break;
+			default:
+				throw new RuntimeException("不支持表达式:"+expression);
+			}
+		}
+		return tmpSeg;
+	}
+	
 }

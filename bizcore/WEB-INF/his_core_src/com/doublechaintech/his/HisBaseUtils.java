@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.function.Consumer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -21,9 +22,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.terapico.caf.form.ImageInfo;
+import com.terapico.caf.viewcomponent.ButtonViewComponent;
 import com.terapico.utils.TextUtil;
 
 import com.doublechaintech.his.period.Period;
+import com.doublechaintech.his.pagetype.PageType;
 
 public class HisBaseUtils {
 	protected static final Map<String, Object> emptyOptions = new HashMap<>();
@@ -50,19 +53,10 @@ public class HisBaseUtils {
 		}
 	}
 	
-	private static final Pattern ptnChnMobile = Pattern.compile("1[3-9]\\d{9}");
 	public static String formatChinaMobile(String mobile) {
-		String num = TextUtil.onlyNumber(mobile);
-		if (num.startsWith("86") || num.startsWith("086") || num.startsWith("0086")) {
-			int pos = num.indexOf("86");
-			num = num.substring(pos+2);
-		}
-		Matcher m = ptnChnMobile.matcher(num);
-		if (m.matches()) {
-			return num;
-		}
-		return null;
+		return TextUtil.formatChinaMobile(mobile);
 	}
+	
 	public static String checkChinaMobile(String mobile) throws Exception {
 		String cleanMobile = formatChinaMobile(mobile);
 		if (cleanMobile == null) {
@@ -185,6 +179,7 @@ public class HisBaseUtils {
 		return false;
 	}
 	
+	static Pattern ptnVersionSegment = Pattern.compile("\\d+");
 	public static int getBuildVersion(String appVersionStr) {
 		if (appVersionStr == null || appVersionStr.isEmpty()) {
 			return 0;
@@ -193,7 +188,9 @@ public class HisBaseUtils {
 		if (pos < 0) {
 			return Integer.parseInt(appVersionStr);
 		}
-		return Integer.parseInt(appVersionStr.substring(pos+1));
+		//return Integer.parseInt(appVersionStr.substring(pos+1));
+		List<String> list = TextUtil.findAllMatched(appVersionStr, ptnVersionSegment);
+		return Integer.parseInt(list.get(0));
 	}
 	public static int getAppBuildVersion(HisUserContext ctx) {
 		return getBuildVersion(getRequestAppVersion(ctx));
@@ -242,6 +239,18 @@ public class HisBaseUtils {
 		return data;
 	}
 
+
+	public static PageType getPageType(HisUserContext userContext, String code) throws Exception {
+		String key = "enum:" + PageType.INTERNAL_TYPE + ":" + code;
+		PageType data = (PageType) userContext.getFromContextLocalStorage(key);
+		if (data != null) {
+			return data;
+		}
+		data = userContext.getDAOGroup().getPageTypeDAO().loadByCode(code, emptyOptions);
+		userContext.putIntoContextLocalStorage(key, data);
+		return data;
+	}
+
 	public static <T> T loadBaseEntityById(HisUserContext ctx, String type, String id) throws Exception {
 		return loadBaseEntityById(ctx, type, id, null);
 	}
@@ -262,7 +271,52 @@ public class HisBaseUtils {
 	}
 	
 
+	
+	public static <T extends BaseEntity> void appendLinkToUrl(HisUserContext ctx, List<T> list,
+			Function<T, String> makeFunc) {
+		if (list == null || list.isEmpty()) {
+			return;
+		}
+		list.forEach(it -> {
+			it.addItemToValueMap(HisBaseConstants.X_LINK_TO_URL, makeFunc.apply(it));
+		});
+	}
+
+	public static <T extends BaseEntity> void appendLinkToUrl(HisUserContext ctx, T obj, String url) {
+		if (obj == null) {
+			return;
+		}
+		obj.addItemToValueMap(HisBaseConstants.X_LINK_TO_URL, url);
+	}
+
+	public static ButtonViewComponent addAction(HisUserContext ctx, BaseEntity obj, String title, String code,
+			String linkToUrl) {
+		ButtonViewComponent actionBtn = new ButtonViewComponent(title, null, code);
+		actionBtn.setLinkToUrl(linkToUrl);
+		List<ButtonViewComponent> actions = (List<ButtonViewComponent>) obj.valueByKey("actionList");
+		if (actions == null) {
+			actions = new ArrayList<>();
+			obj.addItemToValueMap("actionList", actions);
+		}
+		actions.add(actionBtn);
+		return actionBtn;
+	}
+
+	public static void setAction(HisUserContext ctx, BaseEntity obj, String title, String code, String linkToUrl) {
+		ButtonViewComponent actionBtn = new ButtonViewComponent(title, null, code);
+		actionBtn.setLinkToUrl(linkToUrl);
+		obj.addItemToValueMap("action", actionBtn);
+	}
 }
+
+
+
+
+
+
+
+
+
 
 
 

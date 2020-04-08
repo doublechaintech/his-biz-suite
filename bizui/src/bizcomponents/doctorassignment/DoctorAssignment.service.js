@@ -1,5 +1,5 @@
-import { get,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
+import { get,put,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
 const view = (targetObjectId) => {
   return get({
@@ -26,7 +26,6 @@ const requestCandidateDoctor = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherDoctor = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorAssignmentManager/transferToAnotherDoctor/id/anotherDoctorId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -42,7 +41,6 @@ const requestCandidateDepartment = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherDepartment = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}doctorAssignmentManager/transferToAnotherDepartment/id/anotherDepartmentId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -53,11 +51,38 @@ const transferToAnotherDepartment = (id, parameters) => {
 
 
 
+
+// Filter this out when no functions
+
+const  listFunctions = () => {
+  return get({
+    url: `${PREFIX}doctorAssignmentService/listFunctions/`,
+  })
+}
+
+
+const  saveRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}doctorAssignmentService/save/`,
+    data,
+  })
+}
+
+
+const  processRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}doctorAssignmentService/process/`,
+    data,
+  })
+}
+
 const DoctorAssignmentService = { view,
   load,
   requestCandidateDoctor,
   requestCandidateDepartment,
   transferToAnotherDoctor,
-  transferToAnotherDepartment }
+  transferToAnotherDepartment, listFunctions, saveRequest, processRequest}
 export default DoctorAssignmentService
 

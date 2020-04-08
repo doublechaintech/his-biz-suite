@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -56,6 +57,7 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	ExpenseItem(){
@@ -64,7 +66,7 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 	public 	static ExpenseItem withId(String id){
 		ExpenseItem expenseItem = new ExpenseItem();
 		expenseItem.setId(id);
-		// expenseItem.setVersion(Integer.MAX_VALUE);
+		expenseItem.setVersion(Integer.MAX_VALUE);
 		return expenseItem;
 	}
 	public 	static ExpenseItem refById(String id){
@@ -79,15 +81,6 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	ExpenseItem(String name, BigDecimal price, ExpenseType expenseType, Hospital hospital, DateTime updateTime)
-	{
-		setName(name);
-		setPrice(price);
-		setExpenseType(expenseType);
-		setHospital(hospital);
-		setUpdateTime(updateTime);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -108,6 +101,7 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -117,12 +111,13 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changePriceProperty(String newValueExpr){
+	
 		BigDecimal oldValue = getPrice();
 		BigDecimal newValue = parseBigDecimal(newValueExpr);
 		if(equalsBigDecimal(oldValue , newValue)){
@@ -132,12 +127,13 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 		updatePrice(newValue);
 		this.onChangeProperty(PRICE_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUpdateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getUpdateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -147,7 +143,7 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 		updateUpdateTime(newValue);
 		this.onChangeProperty(UPDATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -341,7 +337,9 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, UPDATE_TIME_PROPERTY, getUpdateTime());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -404,7 +402,9 @@ public class ExpenseItem extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getPrice(), getExpenseType(), getHospital(), getUpdateTime(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

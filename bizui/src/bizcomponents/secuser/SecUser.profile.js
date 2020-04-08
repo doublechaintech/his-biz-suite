@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import GlobalComponents from '../../custcomponents';
@@ -30,7 +29,7 @@ const internalSubListsOf = defaultSubListsOf
 const internalRenderSettingList = defaultRenderSettingList
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
 }
@@ -54,7 +53,7 @@ class SecUserProfile extends Component {
   render() {
     // eslint-disable-next-line max-len
     const  secUser = this.props.secUser;
-    const { id,displayName, userAppCount, loginHistoryCount } = secUser
+    const { id,displayName, userAppCount, loginHistoryCount, wechatWorkappIdentifyCount, wechatMiniappIdentifyCount } = secUser
     const  returnURL = `/secUser/${id}/dashboard`
     const cardsData = {cardsName:"安全用户",cardsFor: "secUser",cardsSource: secUser,displayName,returnURL,
   		subItems: [

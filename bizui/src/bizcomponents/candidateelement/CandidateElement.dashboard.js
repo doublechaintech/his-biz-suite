@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -105,7 +104,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -118,9 +117,9 @@ const internalSummaryOf = (candidateElement,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{candidateElement.id}</Description> 
-<Description term="名称">{candidateElement.name}</Description> 
-<Description term="类型">{candidateElement.type}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{candidateElement.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{candidateElement.name}</Description> 
+<Description term="类型" style={{wordBreak: 'break-all'}}>{candidateElement.type}</Description> 
 	
         {buildTransferModal(candidateElement,targetComponent)}
       </DescriptionList>
@@ -158,7 +157,7 @@ class CandidateElementDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"候选人元素",cardsFor: "candidateElement",
+    const cardsData = {cardsName:window.trans('candidate_element'),cardsFor: "candidateElement",
     	cardsSource: this.props.candidateElement,returnURL,displayName,
   		subItems: [
     
@@ -190,8 +189,9 @@ class CandidateElementDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

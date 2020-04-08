@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -52,6 +56,11 @@ public class ObjectAccessJDBCTemplateDAO extends HisBaseDAOImpl implements Objec
 		return loadInternalObjectAccess(accessKey, options);
 	}
 	*/
+	
+	public SmartList<ObjectAccess> loadAll() {
+	    return this.loadAll(getObjectAccessMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -430,17 +439,39 @@ public class ObjectAccessJDBCTemplateDAO extends HisBaseDAOImpl implements Objec
  	protected Object[] prepareObjectAccessUpdateParameters(ObjectAccess objectAccess){
  		Object[] parameters = new Object[15];
  
+ 		
  		parameters[0] = objectAccess.getName();
+ 		
+ 		
  		parameters[1] = objectAccess.getObjectType();
+ 		
+ 		
  		parameters[2] = objectAccess.getList1();
+ 		
+ 		
  		parameters[3] = objectAccess.getList2();
+ 		
+ 		
  		parameters[4] = objectAccess.getList3();
+ 		
+ 		
  		parameters[5] = objectAccess.getList4();
+ 		
+ 		
  		parameters[6] = objectAccess.getList5();
+ 		
+ 		
  		parameters[7] = objectAccess.getList6();
+ 		
+ 		
  		parameters[8] = objectAccess.getList7();
+ 		
+ 		
  		parameters[9] = objectAccess.getList8();
- 		parameters[10] = objectAccess.getList9(); 	
+ 		
+ 		
+ 		parameters[10] = objectAccess.getList9();
+ 		 	
  		if(objectAccess.getApp() != null){
  			parameters[11] = objectAccess.getApp().getId();
  		}
@@ -457,17 +488,39 @@ public class ObjectAccessJDBCTemplateDAO extends HisBaseDAOImpl implements Objec
 		objectAccess.setId(newObjectAccessId);
 		parameters[0] =  objectAccess.getId();
  
+ 		
  		parameters[1] = objectAccess.getName();
+ 		
+ 		
  		parameters[2] = objectAccess.getObjectType();
+ 		
+ 		
  		parameters[3] = objectAccess.getList1();
+ 		
+ 		
  		parameters[4] = objectAccess.getList2();
+ 		
+ 		
  		parameters[5] = objectAccess.getList3();
+ 		
+ 		
  		parameters[6] = objectAccess.getList4();
+ 		
+ 		
  		parameters[7] = objectAccess.getList5();
+ 		
+ 		
  		parameters[8] = objectAccess.getList6();
+ 		
+ 		
  		parameters[9] = objectAccess.getList7();
+ 		
+ 		
  		parameters[10] = objectAccess.getList8();
- 		parameters[11] = objectAccess.getList9(); 	
+ 		
+ 		
+ 		parameters[11] = objectAccess.getList9();
+ 		 	
  		if(objectAccess.getApp() != null){
  			parameters[12] = objectAccess.getApp().getId();
  		
@@ -569,6 +622,34 @@ public class ObjectAccessJDBCTemplateDAO extends HisBaseDAOImpl implements Objec
 	@Override
 	public SmartList<ObjectAccess> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getObjectAccessMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateObjectAccess executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateObjectAccess result = new CandidateObjectAccess();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

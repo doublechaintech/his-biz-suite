@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -57,6 +58,7 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 	
 	protected		SmartList<DoctorAssignment>	mDoctorAssignmentList;
 	protected		SmartList<DoctorSchedule>	mDoctorScheduleList ;
+
 	
 		
 	public 	Department(){
@@ -65,7 +67,7 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 	public 	static Department withId(String id){
 		Department department = new Department();
 		department.setId(id);
-		// department.setVersion(Integer.MAX_VALUE);
+		department.setVersion(Integer.MAX_VALUE);
 		return department;
 	}
 	public 	static Department refById(String id){
@@ -79,15 +81,6 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	Department(String name, Hospital hospital, DateTime updateTime)
-	{
-		setName(name);
-		setHospital(hospital);
-		setUpdateTime(updateTime);
-
-		this.mDoctorAssignmentList = new SmartList<DoctorAssignment>();
-		this.mDoctorScheduleList = new SmartList<DoctorSchedule>();	
-	}
 	
 	//Support for changing the property
 	
@@ -105,6 +98,7 @@ public class Department extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -114,12 +108,13 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUpdateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getUpdateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -129,7 +124,7 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 		updateUpdateTime(newValue);
 		this.onChangeProperty(UPDATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -513,7 +508,9 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "doctorScheduleCurrentPageNumber", getDoctorScheduleList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -575,7 +572,9 @@ public class Department extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getHospital(), getUpdateTime(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

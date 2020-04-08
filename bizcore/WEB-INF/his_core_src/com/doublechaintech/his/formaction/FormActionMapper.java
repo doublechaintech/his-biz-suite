@@ -31,7 +31,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setId(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(FormActionTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -43,7 +45,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setLabel(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String label = rs.getString(FormActionTable.COLUMN_LABEL);
+		
 		if(label == null){
 			//do nothing when nothing found in database
 			return;
@@ -55,7 +59,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setLocaleKey(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String localeKey = rs.getString(FormActionTable.COLUMN_LOCALE_KEY);
+		
 		if(localeKey == null){
 			//do nothing when nothing found in database
 			return;
@@ -67,7 +73,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setActionKey(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String actionKey = rs.getString(FormActionTable.COLUMN_ACTION_KEY);
+		
 		if(actionKey == null){
 			//do nothing when nothing found in database
 			return;
@@ -79,7 +87,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setLevel(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String level = rs.getString(FormActionTable.COLUMN_LEVEL);
+		
 		if(level == null){
 			//do nothing when nothing found in database
 			return;
@@ -91,7 +101,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setUrl(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String url = rs.getString(FormActionTable.COLUMN_URL);
+		
 		if(url == null){
 			//do nothing when nothing found in database
 			return;
@@ -121,7 +133,9 @@ public class FormActionMapper extends BaseRowMapper<FormAction>{
 	protected void setVersion(FormAction formAction, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(FormActionTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

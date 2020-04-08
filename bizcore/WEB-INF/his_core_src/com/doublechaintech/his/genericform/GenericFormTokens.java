@@ -134,9 +134,13 @@ public class GenericFormTokens extends CommonTokens{
 	}
 	private int formMessageListSearchCounter = 0;
 	public GenericFormTokens searchFormMessageListWith(String field, String verb, String value){		
+		
+		withFormMessageList();
 		addSearchMoreOptions(FORM_MESSAGE_LIST,formMessageListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public GenericFormTokens searchAllTextOfFormMessageList(String verb, String value){	
 		String field = "id|title|level";
@@ -200,9 +204,13 @@ public class GenericFormTokens extends CommonTokens{
 	}
 	private int formFieldMessageListSearchCounter = 0;
 	public GenericFormTokens searchFormFieldMessageListWith(String field, String verb, String value){		
+		
+		withFormFieldMessageList();
 		addSearchMoreOptions(FORM_FIELD_MESSAGE_LIST,formFieldMessageListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public GenericFormTokens searchAllTextOfFormFieldMessageList(String verb, String value){	
 		String field = "id|title|parameterName|level";
@@ -266,9 +274,13 @@ public class GenericFormTokens extends CommonTokens{
 	}
 	private int formFieldListSearchCounter = 0;
 	public GenericFormTokens searchFormFieldListWith(String field, String verb, String value){		
+		
+		withFormFieldList();
 		addSearchMoreOptions(FORM_FIELD_LIST,formFieldListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public GenericFormTokens searchAllTextOfFormFieldList(String verb, String value){	
 		String field = "id|label|localeKey|parameterName|type|placeholder|defaultValue|description|fieldGroup|minimumValue|maximumValue|candidateValues|suggestValues";
@@ -332,9 +344,13 @@ public class GenericFormTokens extends CommonTokens{
 	}
 	private int formActionListSearchCounter = 0;
 	public GenericFormTokens searchFormActionListWith(String field, String verb, String value){		
+		
+		withFormActionList();
 		addSearchMoreOptions(FORM_ACTION_LIST,formActionListSearchCounter++, field, verb, value);
 		return this;
 	}
+	
+	
 	
 	public GenericFormTokens searchAllTextOfFormActionList(String verb, String value){	
 		String field = "id|label|localeKey|actionKey|level|url";

@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.net.URLEncoder;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.skynet.infrastructure.GraphService;
 import com.terapico.caf.baseelement.Event;
 import com.skynet.infrastructure.EventService;
@@ -44,7 +45,17 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 			throw new IllegalStateException("Not able to get a context from");
 		}
 		UserContext userContext = (UserContext)baseUserContext;
-		return (UserApp) userContext.getCachedObject(this.getCurrentAppKey(userContext), UserApp.class);
+		
+		String currentUserAppKey = this.getCurrentAppKey(userContext);
+		
+		Object localCachedUserApp = userContext.getFromContextLocalStorage(currentUserAppKey);
+		
+		if(localCachedUserApp!=null) {
+			return (UserApp)localCachedUserApp;
+		}
+		Object remoteObject = userContext.getCachedObject(this.getCurrentAppKey(userContext), UserApp.class);
+		userContext.putIntoContextLocalStorage(currentUserAppKey, remoteObject);
+		return (UserApp) remoteObject;
 		
 	}
 	public static String getSystemInternalName() {
@@ -159,14 +170,9 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 		UserContext userContext = (UserContext)baseUserContext;
 		logCall(userContext, methodName, parameters);
 		
-		String xauth = userContext.getRequestHeader("X-Auth");
-		if(xauth!=null) {
-			return accessOK(); //for temporary use， security leak for demo only
-		}
 		
 		//如果来自本地IP，则放开访问
-		UserApp app =(UserApp) userContext.getCachedObject(this.getCurrentAppKey(userContext), UserApp.class);
-		
+		UserApp app = this.currentApp(baseUserContext);
 		if(app == null){
 			userContext.log("app is null!");
 			return accessFail("没有选择App");
@@ -509,7 +515,9 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 		stringBuilder.append("\'");
 		
 	}
-	
+	protected String getCacheKey(UserContext userContext, String prefix){
+		return "his:"+prefix+":"+userContext.tokenId();
+	}
 	protected String getUserKey(UserContext userContext){
 		return "his:user:"+userContext.tokenId();
 	}
@@ -599,6 +607,9 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 
 	protected String parseString(String stringExpr){		
 		return stringExpr;
+	}
+	protected Images parseImages(String stringExpr){		
+		return Images.fromString(stringExpr);
 	}
 	protected boolean integerValueInClosedRange(int value, int min, int max){
 		if(value < min){
@@ -810,6 +821,9 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 	}
 	protected void checkEmail(String value, int min, int max,
 			String propertyKey, List<Message> messageList) {
+		if (min == 0 && (value==null || value.isEmpty())) {
+			return;
+		}
 		checkStringLengthRange(value, 5, 256, propertyKey, messageList);
 		/*
 		 * The maximum length is specified in RFC 5321: "The maximum total length of 
@@ -1114,6 +1128,16 @@ public class BaseManagerImpl implements AccessControledService,BeanNameAware{
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

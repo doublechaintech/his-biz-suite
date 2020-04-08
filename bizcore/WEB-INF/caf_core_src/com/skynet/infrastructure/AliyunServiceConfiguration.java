@@ -27,7 +27,35 @@ public class AliyunServiceConfiguration {
 	protected String region = REGION_CN_BEIJING;
 	protected String stsVersion = STS_API_VERSION;
 	protected long durationSeconds = 3600;
-	
+
+	protected String signName ="Art0X";
+	protected String product = "Dysmsapi";
+	protected String domain = "dysmsapi.aliyuncs.com";
+
+	public String getSignName() {
+		return signName;
+	}
+
+	public void setSignName(String pSignName) {
+		signName = pSignName;
+	}
+
+	public String getProduct() {
+		return product;
+	}
+
+	public void setProduct(String pProduct) {
+		product = pProduct;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String pDomain) {
+		domain = pDomain;
+	}
+
 	protected String getValueByConfig(String cfgValue) {
 		if (TextUtil.isBlank(cfgValue)) {
 			return null;

@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -104,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -117,10 +116,10 @@ const internalSummaryOf = (loginHistory,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{loginHistory.id}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{loginHistory.id}</Description> 
 <Description term="登录时间">{ moment(loginHistory.loginTime).format('YYYY-MM-DD HH:mm')}</Description> 
-<Description term="来自IP">{loginHistory.fromIp}</Description> 
-<Description term="描述">{loginHistory.description}</Description> 
+<Description term="来自IP" style={{wordBreak: 'break-all'}}>{loginHistory.fromIp}</Description> 
+<Description term="描述" style={{wordBreak: 'break-all'}}>{loginHistory.description}</Description> 
 <Description term="安全用户">{loginHistory.secUser==null?appLocaleName(userContext,"NotAssigned"):`${loginHistory.secUser.displayName}(${loginHistory.secUser.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"安全用户","secUser",LoginHistoryService.requestCandidateSecUser,
@@ -164,7 +163,7 @@ class LoginHistoryDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"登录历史",cardsFor: "loginHistory",
+    const cardsData = {cardsName:window.trans('login_history'),cardsFor: "loginHistory",
     	cardsSource: this.props.loginHistory,returnURL,displayName,
   		subItems: [
     
@@ -196,8 +195,9 @@ class LoginHistoryDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

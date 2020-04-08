@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -104,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -117,8 +116,8 @@ const internalSummaryOf = (doctorSchedule,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{doctorSchedule.id}</Description> 
-<Description term="名称">{doctorSchedule.name}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{doctorSchedule.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{doctorSchedule.name}</Description> 
 <Description term="医生">{doctorSchedule.doctor==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.doctor.displayName}(${doctorSchedule.doctor.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"医生","doctor",DoctorScheduleService.requestCandidateDoctor,
@@ -138,8 +137,8 @@ const internalSummaryOf = (doctorSchedule,targetComponent) =>{
 	      DoctorScheduleService.transferToAnotherDepartment,"anotherDepartmentId",doctorSchedule.department?doctorSchedule.department.id:"")} 
   style={{fontSize: 20,color:"red"}} />
 </Description>
-<Description term="可用">{doctorSchedule.available}</Description> 
-<Description term="价格">{doctorSchedule.price}</Description> 
+<Description term="可用" style={{wordBreak: 'break-all'}}>{doctorSchedule.available}</Description> 
+<Description term="价格" style={{wordBreak: 'break-all'}}>{doctorSchedule.price}</Description> 
 <Description term="费用类型">{doctorSchedule.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${doctorSchedule.expenseType.displayName}(${doctorSchedule.expenseType.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"费用类型","expenseType",DoctorScheduleService.requestCandidateExpenseType,
@@ -185,7 +184,7 @@ class DoctorScheduleDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"医生安排",cardsFor: "doctorSchedule",
+    const cardsData = {cardsName:window.trans('doctor_schedule'),cardsFor: "doctorSchedule",
     	cardsSource: this.props.doctorSchedule,returnURL,displayName,
   		subItems: [
     
@@ -217,8 +216,9 @@ class DoctorScheduleDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

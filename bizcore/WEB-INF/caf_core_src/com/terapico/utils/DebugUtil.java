@@ -28,6 +28,9 @@ public class DebugUtil {
     private static final NumberFormat cashFormat = new DecimalFormat("#,##0.00");
     
     public static String dumpAsJson(Object object, boolean pretty) throws Exception {
+    	if (object == null) {
+    		return null;
+    	}
         ObjectMapper mapper = getObjectMapper();
         String jsonStr = null;
         if (pretty) {
@@ -35,19 +38,19 @@ public class DebugUtil {
         } else {
             jsonStr = mapper.writeValueAsString(object);
         }
-        System.out.println(jsonStr);
+//        System.out.println(jsonStr);
         return jsonStr;
     }
 
     public static ObjectMapper getObjectMapper() {
-        if (_mapper != null) {
-            return _mapper.copy();
-        }
-        _mapper = new ObjectMapper();
-        _mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        _mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        _mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-        return _mapper;
+//        if (_mapper != null) {
+//            return _mapper.copy();
+//        }
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        return mapper;
     }
     
     public static Map<String, Object> toMap(Object data, String className) throws IOException {
@@ -87,38 +90,51 @@ public class DebugUtil {
     		
     		if (value instanceof Map && (key.toLowerCase().endsWith("form") && !key.toLowerCase().endsWith("platform"))) {
     			Map<String, Object> form = (Map<String, Object>) value;
-    			template = "<div class=\"form-container\">";
-    			out.write(String.format(template));
-    			template = "<form method=\"post\">";
-    			out.write(String.format(template));
-    			template = "<lable ondblclick='handleDbClick(this)'>%s</lable>";
-    			out.write(String.format(template, form.get("title")));
     			Map<String, Object> fields = (Map<String, Object>) form.get("fields");
-    			List<String> keys = new ArrayList<>(fields.keySet());
-    			Collections.sort(keys);
-    			for(String fieldName : keys) {
-    				Map<String, Object> fieldValue = (Map<String, Object>) fields.get(fieldName);
-    				template = "<div>(%s)<lable ondblclick='handleDbClick(this)'>%s</lable>";
-    				out.write(String.format(template,fieldValue.get("type"), fieldValue.get("name")));
-    				template = "<input data-type=\"%s\" name=\"%s\" value=\"%s\"/>";
-    				out.write(String.format(template, fieldValue.get("type"), fieldValue.get("name"), 
-    						fieldValue.get("value")==null?"":fieldValue.get("value")));
-    				Object candidateValues = fieldValue.get("candidateValues");
-    				template = "</div>";
+    			if (fields != null) {
+    				template = "<div class=\"form-container\">";
     				out.write(String.format(template));
-    				if (candidateValues != null) {
-    					template = "<div class=\"candidate_values\">Candidate values:<br/> %s</div>";
-        				out.write(String.format(template, getObjectMapper().writeValueAsString(candidateValues)));
+    				template = "<form method=\"post\">";
+    				out.write(String.format(template));
+    				template = "<lable ondblclick='handleDbClick(this)'>%s</lable>";
+    				out.write(String.format(template, form.get("title")));
+    				List<String> keys = new ArrayList<>(fields.keySet());
+    				Collections.sort(keys);
+    				for(String fieldName : keys) {
+    					Map<String, Object> fieldValue = (Map<String, Object>) fields.get(fieldName);
+    					template = "<div>(%s)<lable ondblclick='handleDbClick(this)'>%s</lable>";
+    					out.write(String.format(template,fieldValue.get("type"), fieldValue.get("name")));
+    					template = "<input data-type=\"%s\" name=\"%s\" value=\"%s\"/>";
+    					if (fieldValue.get("type").equals("images")) {
+    						try {
+    							template = "<input data-type=\"%s\" name=\"%s\" value=\'%s\'/>";
+								out.write(String.format(template, fieldValue.get("type"), fieldValue.get("name"), 
+										fieldValue.get("value")==null?"":dumpAsJson(fieldValue.get("value"),false)));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+    					}else {
+    						out.write(String.format(template, fieldValue.get("type"), fieldValue.get("name"), 
+    							fieldValue.get("value")==null?"":fieldValue.get("value")));
+    					}
+    					Object candidateValues = fieldValue.get("candidateValues");
+    					template = "</div>";
+    					out.write(String.format(template));
+    					if (candidateValues != null) {
+    						template = "<div class=\"candidate_values\">Candidate values:<br/> %s</div>";
+    						out.write(String.format(template, getObjectMapper().writeValueAsString(candidateValues)));
+    					}
     				}
+    				List<Map<String, Object>> actionList = (List<Map<String, Object>>) form.get("actionList");
+    				for(Map<String, Object> action: actionList) {
+    					template = "<button type=\"button\" data-url=\"%s\" code=\"%s\" onclick=\"formButtonClicked(this)\">%s</button>";
+    					out.write(String.format(template, action.get("linkToUrl"), action.get("code"), action.get("title")));
+    				}
+    				template = "</form></div>";
+    				out.write(String.format(template));
+    				continue;
     			}
-    			List<Map<String, Object>> actionList = (List<Map<String, Object>>) form.get("actionList");
-    			for(Map<String, Object> action: actionList) {
-    				template = "<button type=\"button\" data-url=\"%s\" code=\"%s\" onclick=\"formButtonClicked(this)\">%s</button>";
-    				out.write(String.format(template, action.get("linkToUrl"), action.get("code"), action.get("title")));
-    			}
-    			template = "</form>";
-    			out.write(String.format(template));
-    			continue;
     		}
     		if (value instanceof Map) {
     			template = "<div class='kv_row map_row'>";
@@ -179,7 +195,7 @@ public class DebugUtil {
 		return true;
 	}
 
-	private static Pattern ptnDataIdIndex = Pattern.compile("^[a-zA-Z0-9]+_[A-Z]+\\d+$");
+	private static Pattern ptnDataIdIndex = Pattern.compile("^[a-zA-Z0-9]+(_[A-Z]+\\d+)+$");
 	private static void renderObject(String key, Object value, Writer out, int level) throws IOException {
 		if (putArchorLink(key, value, out)) {
 			String template = "<a href=\"javascript:;\" onclick=\"gotoAnchor('%s');\">%s</a>";
@@ -227,7 +243,7 @@ public class DebugUtil {
 	}
 
 	public static boolean isImageData(String key, Object value) {
-		if ( key.equals("imageUrl") || key.toLowerCase().endsWith("image")) {
+		if ( key.equals("imageUrl") || key.toLowerCase().endsWith("image") ||  key.toLowerCase().endsWith("imageurl")) {
 			return true;
 		}
 		

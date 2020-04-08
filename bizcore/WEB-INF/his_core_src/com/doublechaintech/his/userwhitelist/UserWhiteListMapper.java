@@ -28,7 +28,9 @@ public class UserWhiteListMapper extends BaseRowMapper<UserWhiteList>{
 	protected void setId(UserWhiteList userWhiteList, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(UserWhiteListTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -40,7 +42,9 @@ public class UserWhiteListMapper extends BaseRowMapper<UserWhiteList>{
 	protected void setUserIdentity(UserWhiteList userWhiteList, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String userIdentity = rs.getString(UserWhiteListTable.COLUMN_USER_IDENTITY);
+		
 		if(userIdentity == null){
 			//do nothing when nothing found in database
 			return;
@@ -52,7 +56,9 @@ public class UserWhiteListMapper extends BaseRowMapper<UserWhiteList>{
 	protected void setUserSpecialFunctions(UserWhiteList userWhiteList, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String userSpecialFunctions = rs.getString(UserWhiteListTable.COLUMN_USER_SPECIAL_FUNCTIONS);
+		
 		if(userSpecialFunctions == null){
 			//do nothing when nothing found in database
 			return;
@@ -82,7 +88,9 @@ public class UserWhiteListMapper extends BaseRowMapper<UserWhiteList>{
 	protected void setVersion(UserWhiteList userWhiteList, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(UserWhiteListTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

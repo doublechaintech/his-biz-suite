@@ -1,5 +1,5 @@
-import { get,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
+import { get,put,postForm,PREFIX,joinParameters,joinPostParameters } from '../../axios/tools'
 
 const view = (targetObjectId) => {
   return get({
@@ -26,7 +26,6 @@ const requestCandidateHospital = (ownerClass, id, filterKey, pageNo) => {
 }	
 
 const transferToAnotherHospital = (id, parameters) => {
-  //const parametersExpr = joinParameters(parameters)
   const url = `${PREFIX}expenseTypeManager/transferToAnotherHospital/id/anotherHospitalId/`
   const requestParameters = {id, ...parameters}
   return postForm({url,requestParameters})
@@ -81,6 +80,33 @@ const removeDoctorScheduleList = (targetObjectId, parameters) => {
 }
 
 
+
+// Filter this out when no functions
+
+const  listFunctions = () => {
+  return get({
+    url: `${PREFIX}expenseTypeService/listFunctions/`,
+  })
+}
+
+
+const  saveRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}expenseTypeService/save/`,
+    data,
+  })
+}
+
+
+const  processRequest = (data) => {
+
+  return put({
+    url: `${PREFIX}expenseTypeService/process/`,
+    data,
+  })
+}
+
 const ExpenseTypeService = { view,
   load,
   addExpenseItem,
@@ -90,6 +116,6 @@ const ExpenseTypeService = { view,
   removeExpenseItemList,
   removeDoctorScheduleList,
   requestCandidateHospital,
-  transferToAnotherHospital }
+  transferToAnotherHospital, listFunctions, saveRequest, processRequest}
 export default ExpenseTypeService
 

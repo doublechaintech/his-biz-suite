@@ -3,6 +3,8 @@ package com.doublechaintech.his.doctorassignment;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -15,9 +17,9 @@ import com.doublechaintech.his.department.DepartmentDAO;
 import com.doublechaintech.his.doctor.DoctorDAO;
 
 
-public interface DoctorAssignmentDAO{
+public interface DoctorAssignmentDAO extends BaseDAO{
 
-	
+	public SmartList<DoctorAssignment> loadAll();
 	public DoctorAssignment load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<DoctorAssignment> doctorAssignmentList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -47,6 +49,8 @@ public interface DoctorAssignmentDAO{
 	
 	
 	public SmartList<DoctorAssignment> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateDoctorAssignment executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<DoctorAssignment> findDoctorAssignmentByDoctor(String doctorId, Map<String,Object> options);
  	public int countDoctorAssignmentByDoctor(String doctorId, Map<String,Object> options);

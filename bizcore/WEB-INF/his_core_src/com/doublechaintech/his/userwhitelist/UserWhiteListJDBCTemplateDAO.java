@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -52,6 +56,11 @@ public class UserWhiteListJDBCTemplateDAO extends HisBaseDAOImpl implements User
 		return loadInternalUserWhiteList(accessKey, options);
 	}
 	*/
+	
+	public SmartList<UserWhiteList> loadAll() {
+	    return this.loadAll(getUserWhiteListMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -430,8 +439,12 @@ public class UserWhiteListJDBCTemplateDAO extends HisBaseDAOImpl implements User
  	protected Object[] prepareUserWhiteListUpdateParameters(UserWhiteList userWhiteList){
  		Object[] parameters = new Object[6];
  
+ 		
  		parameters[0] = userWhiteList.getUserIdentity();
- 		parameters[1] = userWhiteList.getUserSpecialFunctions(); 	
+ 		
+ 		
+ 		parameters[1] = userWhiteList.getUserSpecialFunctions();
+ 		 	
  		if(userWhiteList.getDomain() != null){
  			parameters[2] = userWhiteList.getDomain().getId();
  		}
@@ -448,8 +461,12 @@ public class UserWhiteListJDBCTemplateDAO extends HisBaseDAOImpl implements User
 		userWhiteList.setId(newUserWhiteListId);
 		parameters[0] =  userWhiteList.getId();
  
+ 		
  		parameters[1] = userWhiteList.getUserIdentity();
- 		parameters[2] = userWhiteList.getUserSpecialFunctions(); 	
+ 		
+ 		
+ 		parameters[2] = userWhiteList.getUserSpecialFunctions();
+ 		 	
  		if(userWhiteList.getDomain() != null){
  			parameters[3] = userWhiteList.getDomain().getId();
  		
@@ -551,6 +568,34 @@ public class UserWhiteListJDBCTemplateDAO extends HisBaseDAOImpl implements User
 	@Override
 	public SmartList<UserWhiteList> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getUserWhiteListMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateUserWhiteList executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateUserWhiteList result = new CandidateUserWhiteList();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

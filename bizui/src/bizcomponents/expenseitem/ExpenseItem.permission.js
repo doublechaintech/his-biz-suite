@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -24,7 +23,7 @@ const {defaultRenderExtraHeader}= DashboardTool
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
 }
@@ -32,7 +31,7 @@ const internalSummaryOf = (expenseItem,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{expenseItem.id}</Description> 
+<Description term="序号">{expenseItem.id}</Description> 
 <Description term="名称">{expenseItem.name}</Description> 
 <Description term="价格">{expenseItem.price}</Description> 
 <Description term="更新时间">{ moment(expenseItem.updateTime).format('YYYY-MM-DD')}</Description> 

@@ -27,7 +27,9 @@ public class HospitalMapper extends BaseRowMapper<Hospital>{
 	protected void setId(Hospital hospital, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(HospitalTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -39,7 +41,9 @@ public class HospitalMapper extends BaseRowMapper<Hospital>{
 	protected void setName(Hospital hospital, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(HospitalTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -51,7 +55,9 @@ public class HospitalMapper extends BaseRowMapper<Hospital>{
 	protected void setAddress(Hospital hospital, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String address = rs.getString(HospitalTable.COLUMN_ADDRESS);
+		
 		if(address == null){
 			//do nothing when nothing found in database
 			return;
@@ -63,7 +69,9 @@ public class HospitalMapper extends BaseRowMapper<Hospital>{
 	protected void setTelephone(Hospital hospital, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String telephone = rs.getString(HospitalTable.COLUMN_TELEPHONE);
+		
 		if(telephone == null){
 			//do nothing when nothing found in database
 			return;
@@ -75,7 +83,9 @@ public class HospitalMapper extends BaseRowMapper<Hospital>{
 	protected void setVersion(Hospital hospital, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(HospitalTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

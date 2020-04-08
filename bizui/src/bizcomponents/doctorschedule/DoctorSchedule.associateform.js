@@ -19,9 +19,9 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-  scheduleDate: '2017-09-18',
+  scheduleDate: '2020-02-20',
   available: '18',
-  price: '108.52',
+  price: '113.25',
   doctorId: 'D000001',
   periodId: 'MORNING',
   departmentId: 'D000001',
@@ -145,7 +145,7 @@ class DoctorScheduleAssociateForm extends Component {
                   {getFieldDecorator('name', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="名称" />
+                    <Input size="large"  placeHolder={fieldLabels.name} />
                   )}
                 </Form.Item>
               </Col>
@@ -155,7 +155,7 @@ class DoctorScheduleAssociateForm extends Component {
                   {getFieldDecorator('scheduleDate', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker size="large" format="YYYY-MM-DD" placeholder="安排日期" />
+                    <DatePicker size="large" format="YYYY-MM-DD"  placeHolder={fieldLabels.scheduleDate}/>
                   )}
                 </Form.Item>
               </Col>
@@ -165,7 +165,7 @@ class DoctorScheduleAssociateForm extends Component {
                   {getFieldDecorator('available', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="可用" />
+                    <Input size="large"  placeHolder={fieldLabels.available} />
                   )}
                 </Form.Item>
               </Col>
@@ -175,7 +175,7 @@ class DoctorScheduleAssociateForm extends Component {
                   {getFieldDecorator('price', {
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" prefix={`${appLocaleName(userContext,"Currency")}`} placeholder="价格" />
+                    <Input size="large" prefix={`${appLocaleName(userContext,"Currency")}`} placeHolder={fieldLabels.price} />
                   )}
                 </Form.Item>
               </Col>

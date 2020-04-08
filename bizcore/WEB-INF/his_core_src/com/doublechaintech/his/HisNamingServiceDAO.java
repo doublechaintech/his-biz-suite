@@ -27,10 +27,15 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 		namingTableMap.put("Department", new String[]{"department_data","name"});
 		namingTableMap.put("DoctorAssignment", new String[]{"doctor_assignment_data","name"});
 		namingTableMap.put("DoctorSchedule", new String[]{"doctor_schedule_data","name"});
+		namingTableMap.put("MobileApp", new String[]{"mobile_app_data","name"});
+		namingTableMap.put("Page", new String[]{"page_data","page_title"});
+		namingTableMap.put("PageType", new String[]{"page_type_data","name"});
+		namingTableMap.put("Slide", new String[]{"slide_data","name"});
+		namingTableMap.put("UiAction", new String[]{"ui_action_data","code"});
+		namingTableMap.put("Section", new String[]{"section_data","title"});
 		namingTableMap.put("UserDomain", new String[]{"user_domain_data","name"});
 		namingTableMap.put("UserWhiteList", new String[]{"user_white_list_data","user_identity"});
 		namingTableMap.put("SecUser", new String[]{"sec_user_data","login"});
-		namingTableMap.put("SecUserBlocking", new String[]{"sec_user_blocking_data","who"});
 		namingTableMap.put("UserApp", new String[]{"user_app_data","title"});
 		namingTableMap.put("QuickLink", new String[]{"quick_link_data","name"});
 		namingTableMap.put("ListAccess", new String[]{"list_access_data","name"});
@@ -43,6 +48,9 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 		namingTableMap.put("FormAction", new String[]{"form_action_data","label"});
 		namingTableMap.put("CandidateContainer", new String[]{"candidate_container_data","name"});
 		namingTableMap.put("CandidateElement", new String[]{"candidate_element_data","name"});
+		namingTableMap.put("WechatWorkappIdentify", new String[]{"wechat_workapp_identify_data","corp_id"});
+		namingTableMap.put("WechatMiniappIdentify", new String[]{"wechat_miniapp_identify_data","open_id"});
+		namingTableMap.put("TreeNode", new String[]{"tree_node_data","node_id"});
 		
 
 		
@@ -299,8 +307,87 @@ public class HisNamingServiceDAO extends CommonJDBCTemplateDAO {
 		
 	}*/
 	
+    public SmartList<BaseEntity> requestCandidateValuesForSearch(String ownerMemberName, String ownerId, String resultMemberName, String resutlClassName, String targetClassName, String filterKey, int pageNo){
+    	this.checkFieldName(resultMemberName);
+    	this.checkFieldName(resutlClassName);
+    	this.checkFieldName(ownerMemberName);
+    	this.checkFieldName(targetClassName);
+    	
+    	List<Object> params = new ArrayList<>();
+    	params.add(ownerId);
+    	
+    	String filterClause = " ";
+    	String joinClause = " ";
+    	if (filterKey != null && !filterKey.trim().isEmpty() ) {
+    		String[] sqlInfo=namingTableMap.get(targetClassName);
+    		if(sqlInfo==null){
+    			throw new IllegalArgumentException("sqlOf(String currentClassName): Not able to find sql info for filter class: "+targetClassName);
+    		}
+    		if(sqlInfo.length<2){
+    			throw new IllegalArgumentException("sqlOf(String currentClassName): sqlInfo.length should equals 2 for filter class: "+targetClassName);
+    			
+    		}
+    		String displayExpr = sqlInfo[1];
+    		joinClause = String.format(" left join %s_data T2 on T1.%s=T2.id ", mapToInternalColumn(targetClassName), mapToInternalColumn(resultMemberName));
+    		filterClause = String.format(" and T2.%s like ? ", displayExpr);
+    		params.add("%"+filterKey.trim()+"%");
+    	}
+    	String sql = String.format("select distinct T1.%s from %s_data T1%swhere T1.%s = ?%sorder by cast(%s as CHAR CHARACTER SET GBK) asc", 
+    			mapToInternalColumn(resultMemberName), mapToInternalColumn(resutlClassName), 
+    			joinClause,
+    			mapToInternalColumn(ownerMemberName), 
+    			filterClause,
+    			mapToInternalColumn(resultMemberName));
+    	// System.out.println(sql +" executed with " + params);
+    	List<String> keyList = getJdbcTemplateObject().queryForList(sql, params.toArray(), String.class);
+    	SmartList<BaseEntity> resultList = new SmartList<>();
+    	if (keyList == null) {
+    		return resultList;
+    	}
+    	keyList.forEach(key->{
+    		resultList.add(BaseEntity.pretendToBe(targetClassName, key));
+    	});
+    	this.alias(resultList);
+    	return resultList;
+    }
     
+    protected String mapToInternalColumn(String field){
+		char [] fieldArray = field.toCharArray();
+		StringBuilder internalFieldBuffer = new StringBuilder();
+		int i = 0;
+		for(char ch:fieldArray){
+			i++;
+			if(Character.isUpperCase(ch) ){
+				if (i > 1) {
+					internalFieldBuffer.append('_');
+				}
+				char lowerCaseChar = Character.toLowerCase(ch);
+				internalFieldBuffer.append(lowerCaseChar);
+				continue;
+			}
+			internalFieldBuffer.append(ch);
+		}
+		return internalFieldBuffer.toString();
+	}
+	
+	public static String getDisplayNameColumnName(String modelName) {
+    	String[] sqlInfo=namingTableMap.get(modelName);
+    	if (sqlInfo == null || sqlInfo.length < 2) {
+    		return null;
+    	}
+    	return sqlInfo[1];
+    }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

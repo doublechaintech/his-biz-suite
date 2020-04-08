@@ -9,6 +9,7 @@ import styles from './SecUser.createform.less'
 import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
 import SecUserBase from './SecUser.base'
+import SecUserCreateFormBody from './SecUser.createformbody'
 import appLocaleName from '../../common/Locale.tool'
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -19,14 +20,14 @@ const testValues = {};
 const testValues = {
   login: 'login',
   mobile: '13900000001',
-  email: '',
+  email: 'suddy_chang@163.com',
   pwd: 'C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95',
   weixinOpenid: 'wx123456789abcdefghijklmn',
   weixinAppid: 'wxapp12098410239840',
   accessToken: 'jwt_token_12345678',
   verificationCode: '0',
-  verificationCodeExpire: '2019-08-26 07:34:13',
-  lastLoginTime: '2019-09-14 17:44:37',
+  verificationCodeExpire: '2020-03-29 14:59:06',
+  lastLoginTime: '2020-04-01 07:07:42',
   domainId: 'UD000001',
 }
 */
@@ -60,7 +61,7 @@ class SecUserCreateForm extends Component {
 
 
 
-  handleChange = (event, source) => {
+  handleImageChange = (event, source) => {
     console.log('get file list from change in update change:', source)
 
     const { fileList } = event
@@ -68,9 +69,9 @@ class SecUserCreateForm extends Component {
 
     convertedImagesValues[source] = fileList
     this.setState({ convertedImagesValues })
-    console.log('/get file list from change in update change:', source)
+    console.log('/get file list from change in update change:', source, "file list" ,fileList)
   }
-	
+  
   
 
   render() {
@@ -177,6 +178,9 @@ class SecUserCreateForm extends Component {
     
     const tryinit  = (fieldName) => {
       const { owner } = this.props
+      if(!owner){
+      	return null
+      }
       const { referenceName } = owner
       if(referenceName!=fieldName){
         return null
@@ -186,6 +190,9 @@ class SecUserCreateForm extends Component {
     
     const availableForEdit= (fieldName) =>{
       const { owner } = this.props
+      if(!owner){
+      	return true
+      }
       const { referenceName } = owner
       if(referenceName!=fieldName){
         return true
@@ -193,165 +200,29 @@ class SecUserCreateForm extends Component {
       return false
     
     }
-    const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+	const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 3 },
+      wrapperCol: { span: 9 },
     }
+    
+    const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"CreateNew")}{window.trans('sec_user')}</div>)
+    }
+
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"CreateNew")}安全用户`}
-        content={`${appLocaleName(userContext,"CreateNew")}安全用户`}
+        title={internalRenderTitle()}
+        content={`${appLocaleName(userContext,"CreateNew")}${window.trans('sec_user')}`}
         wrapperClassName={styles.advancedForm}
       >
-        <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
+   			
+   		<SecUserCreateFormBody	 {...this.props} handleImageChange={this.handleImageChange}/>
 
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.login} {...formItemLayout}>
-                  {getFieldDecorator('login', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="登录" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.mobile} {...formItemLayout}>
-                  {getFieldDecorator('mobile', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="手机号码" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.email} {...formItemLayout}>
-                  {getFieldDecorator('email', {
-                    rules: [{ required: false, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="电子邮件" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.pwd} {...formItemLayout}>
-                  {getFieldDecorator('pwd', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="密码" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.weixinOpenid} {...formItemLayout}>
-                  {getFieldDecorator('weixinOpenid', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="微信openid" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.weixinAppid} {...formItemLayout}>
-                  {getFieldDecorator('weixinAppid', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="微信Appid" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.accessToken} {...formItemLayout}>
-                  {getFieldDecorator('accessToken', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="访问令牌" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.verificationCode} {...formItemLayout}>
-                  {getFieldDecorator('verificationCode', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="验证码" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.verificationCodeExpire} {...formItemLayout}>
-                  {getFieldDecorator('verificationCodeExpire', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="验证码过期" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.lastLoginTime} {...formItemLayout}>
-                  {getFieldDecorator('lastLoginTime', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <DatePicker size="large" showTime format="YYYY-MM-DD HH:mm" minuteStep={5} placeholder="最后登录时间" />
-                  )}
-                </Form.Item>
-              </Col>
-
-            </Row>
-          </Form>
-        </Card>
-
-
-
-       
-        
-
-
-
-
-
-
-
-
-
-        <Card title={appLocaleName(userContext,"Associate")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.domain} {...formItemLayout}>
-                  {getFieldDecorator('domainId', {
-                  	initialValue: tryinit('domain'),
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('domain')}
-                    targetType={"domain"} 
-                    requestFunction={SecUserService.requestCandidateDomain}/>
-                  
-                 
-                  )}
-                </Form.Item>
-              </Col>
-
-            </Row>
-          </Form>  
-        </Card>
 
         <FooterToolbar>
           {getErrorInfo()}
@@ -365,6 +236,7 @@ class SecUserCreateForm extends Component {
             {appLocaleName(userContext,"Discard")}
           </Button>
         </FooterToolbar>
+      
       </PageHeaderLayout>
     )
   }

@@ -3,22 +3,30 @@ package com.doublechaintech.his.genericform;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
-import com.doublechaintech.his.BaseEntity;
+import com.terapico.caf.Images;
+import com.terapico.caf.Password;
+import com.terapico.utils.MapUtil;
+import com.terapico.utils.ListofUtils;
+import com.terapico.utils.TextUtil;
+import com.terapico.caf.viewpage.SerializeScope;
 
+import com.doublechaintech.his.*;
+import com.doublechaintech.his.tree.*;
+import com.doublechaintech.his.treenode.*;
+import com.doublechaintech.his.HisUserContextImpl;
+import com.doublechaintech.his.iamservice.*;
+import com.doublechaintech.his.services.IamService;
+import com.doublechaintech.his.secuser.SecUser;
+import com.doublechaintech.his.userapp.UserApp;
+import com.doublechaintech.his.BaseViewPage;
+import com.terapico.uccaf.BaseUserContext;
 
-import com.doublechaintech.his.Message;
-import com.doublechaintech.his.SmartList;
-import com.doublechaintech.his.MultipleAccessKey;
-
-import com.doublechaintech.his.HisUserContext;
-//import com.doublechaintech.his.BaseManagerImpl;
-import com.doublechaintech.his.HisCheckerManager;
-import com.doublechaintech.his.CustomHisCheckerManager;
 
 import com.doublechaintech.his.formfield.FormField;
 import com.doublechaintech.his.formfieldmessage.FormFieldMessage;
@@ -33,25 +41,32 @@ import com.doublechaintech.his.genericform.GenericForm;
 
 
 
-public class GenericFormManagerImpl extends CustomHisCheckerManager implements GenericFormManager {
-	
+public class GenericFormManagerImpl extends CustomHisCheckerManager implements GenericFormManager, BusinessHandler{
+
+  
+
+
 	private static final String SERVICE_TYPE = "GenericForm";
-	
+	@Override
+	public GenericFormDAO daoOf(HisUserContext userContext) {
+		return genericFormDaoOf(userContext);
+	}
+
 	@Override
 	public String serviceFor(){
 		return SERVICE_TYPE;
 	}
-	
-	
+
+
 	protected void throwExceptionWithMessage(String value) throws GenericFormManagerException{
-	
+
 		Message message = new Message();
 		message.setBody(value);
 		throw new GenericFormManagerException(message);
 
 	}
-	
-	
+
+
 
  	protected GenericForm saveGenericForm(HisUserContext userContext, GenericForm genericForm, String [] tokensExpr) throws Exception{	
  		//return getGenericFormDAO().save(genericForm, tokens);
@@ -69,8 +84,8 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
  	
  	public GenericForm loadGenericForm(HisUserContext userContext, String genericFormId, String [] tokensExpr) throws Exception{				
  
- 		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().throwExceptionIfHasErrors( GenericFormManagerException.class);
+ 		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).throwExceptionIfHasErrors( GenericFormManagerException.class);
 
  			
  		Map<String,Object>tokens = parseTokens(tokensExpr);
@@ -83,8 +98,8 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
  	
  	 public GenericForm searchGenericForm(HisUserContext userContext, String genericFormId, String textToSearch,String [] tokensExpr) throws Exception{				
  
- 		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().throwExceptionIfHasErrors( GenericFormManagerException.class);
+ 		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).throwExceptionIfHasErrors( GenericFormManagerException.class);
 
  		
  		Map<String,Object>tokens = tokens().allTokens().searchEntireObjectText("startsWith", textToSearch).initWithArray(tokensExpr);
@@ -102,10 +117,10 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		addActions(userContext,genericForm,tokens);
 		
 		
-		GenericForm  genericFormToPresent = userContext.getDAOGroup().getGenericFormDAO().present(genericForm, tokens);
+		GenericForm  genericFormToPresent = genericFormDaoOf(userContext).present(genericForm, tokens);
 		
 		List<BaseEntity> entityListToNaming = genericFormToPresent.collectRefercencesFromLists();
-		userContext.getDAOGroup().getGenericFormDAO().alias(entityListToNaming);
+		genericFormDaoOf(userContext).alias(entityListToNaming);
 		
 		return  genericFormToPresent;
 		
@@ -126,14 +141,14 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		
  	}
  	protected GenericForm saveGenericForm(HisUserContext userContext, GenericForm genericForm, Map<String,Object>tokens) throws Exception{	
- 		return userContext.getDAOGroup().getGenericFormDAO().save(genericForm, tokens);
+ 		return genericFormDaoOf(userContext).save(genericForm, tokens);
  	}
  	protected GenericForm loadGenericForm(HisUserContext userContext, String genericFormId, Map<String,Object>tokens) throws Exception{	
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().throwExceptionIfHasErrors( GenericFormManagerException.class);
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).throwExceptionIfHasErrors( GenericFormManagerException.class);
 
  
- 		return userContext.getDAOGroup().getGenericFormDAO().load(genericFormId, tokens);
+ 		return genericFormDaoOf(userContext).load(genericFormId, tokens);
  	}
 
 	
@@ -178,18 +193,18 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
  	
  	
 
-
-	public GenericForm createGenericForm(HisUserContext userContext,String title, String description) throws Exception
+	public GenericForm createGenericForm(HisUserContext userContext, String title,String description) throws Exception
+	//public GenericForm createGenericForm(HisUserContext userContext,String title, String description) throws Exception
 	{
-		
-		
 
 		
 
-		userContext.getChecker().checkTitleOfGenericForm(title);
-		userContext.getChecker().checkDescriptionOfGenericForm(description);
+		
+
+		checkerOf(userContext).checkTitleOfGenericForm(title);
+		checkerOf(userContext).checkDescriptionOfGenericForm(description);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
 
 
 		GenericForm genericForm=createNewGenericForm();	
@@ -202,54 +217,60 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		onNewInstanceCreated(userContext, genericForm);
 		return genericForm;
 
-		
+
 	}
-	protected GenericForm createNewGenericForm() 
+	protected GenericForm createNewGenericForm()
 	{
-		
-		return new GenericForm();		
+
+		return new GenericForm();
 	}
-	
+
 	protected void checkParamsForUpdatingGenericForm(HisUserContext userContext,String genericFormId, int genericFormVersion, String property, String newValueExpr,String [] tokensExpr)throws Exception
 	{
 		
 
 		
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkVersionOfGenericForm( genericFormVersion);
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkVersionOfGenericForm( genericFormVersion);
 		
 
 		if(GenericForm.TITLE_PROPERTY.equals(property)){
-			userContext.getChecker().checkTitleOfGenericForm(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkTitleOfGenericForm(parseString(newValueExpr));
+		
+			
 		}
 		if(GenericForm.DESCRIPTION_PROPERTY.equals(property)){
-			userContext.getChecker().checkDescriptionOfGenericForm(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkDescriptionOfGenericForm(parseString(newValueExpr));
+		
+			
 		}
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
-		
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
+
 	}
-	
-	
-	
+
+
+
 	public GenericForm clone(HisUserContext userContext, String fromGenericFormId) throws Exception{
-		
-		return userContext.getDAOGroup().getGenericFormDAO().clone(fromGenericFormId, this.allTokens());
+
+		return genericFormDaoOf(userContext).clone(fromGenericFormId, this.allTokens());
 	}
-	
-	public GenericForm internalSaveGenericForm(HisUserContext userContext, GenericForm genericForm) throws Exception 
+
+	public GenericForm internalSaveGenericForm(HisUserContext userContext, GenericForm genericForm) throws Exception
 	{
 		return internalSaveGenericForm(userContext, genericForm, allTokens());
 
 	}
-	public GenericForm internalSaveGenericForm(HisUserContext userContext, GenericForm genericForm, Map<String,Object> options) throws Exception 
+	public GenericForm internalSaveGenericForm(HisUserContext userContext, GenericForm genericForm, Map<String,Object> options) throws Exception
 	{
 		//checkParamsForUpdatingGenericForm(userContext, genericFormId, genericFormVersion, property, newValueExpr, tokensExpr);
-		
-		
-		synchronized(genericForm){ 
+
+
+		synchronized(genericForm){
 			//will be good when the genericForm loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to GenericForm.
@@ -258,23 +279,23 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 			}
 			genericForm = saveGenericForm(userContext, genericForm, options);
 			return genericForm;
-			
+
 		}
 
 	}
-	
-	public GenericForm updateGenericForm(HisUserContext userContext,String genericFormId, int genericFormVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception 
+
+	public GenericForm updateGenericForm(HisUserContext userContext,String genericFormId, int genericFormVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception
 	{
 		checkParamsForUpdatingGenericForm(userContext, genericFormId, genericFormVersion, property, newValueExpr, tokensExpr);
-		
-		
-		
+
+
+
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
 		if(genericForm.getVersion() != genericFormVersion){
 			String message = "The target version("+genericForm.getVersion()+") is not equals to version("+genericFormVersion+") provided";
 			throwExceptionWithMessage(message);
 		}
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//will be good when the genericForm loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to GenericForm.
@@ -286,21 +307,21 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		}
 
 	}
-	
-	public GenericForm updateGenericFormProperty(HisUserContext userContext,String genericFormId, int genericFormVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception 
+
+	public GenericForm updateGenericFormProperty(HisUserContext userContext,String genericFormId, int genericFormVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception
 	{
 		checkParamsForUpdatingGenericForm(userContext, genericFormId, genericFormVersion, property, newValueExpr, tokensExpr);
-		
+
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
 		if(genericForm.getVersion() != genericFormVersion){
 			String message = "The target version("+genericForm.getVersion()+") is not equals to version("+genericFormVersion+") provided";
 			throwExceptionWithMessage(message);
 		}
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//will be good when the genericForm loaded from this JVM process cache.
 			//also good when there is a ram based DAO implementation
 			//make changes to GenericForm.
-			
+
 			genericForm.changeProperty(property, newValueExpr);
 			
 			genericForm = saveGenericForm(userContext, genericForm, tokens().done());
@@ -312,7 +333,7 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	protected Map<String,Object> emptyOptions(){
 		return tokens().done();
 	}
-	
+
 	protected GenericFormTokens tokens(){
 		return GenericFormTokens.start();
 	}
@@ -340,25 +361,26 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	//--------------------------------------------------------------
 
 	public void delete(HisUserContext userContext, String genericFormId, int genericFormVersion) throws Exception {
-		//deleteInternal(userContext, genericFormId, genericFormVersion);		
+		//deleteInternal(userContext, genericFormId, genericFormVersion);
 	}
 	protected void deleteInternal(HisUserContext userContext,
 			String genericFormId, int genericFormVersion) throws Exception{
-			
-		userContext.getDAOGroup().getGenericFormDAO().delete(genericFormId, genericFormVersion);
+
+		genericFormDaoOf(userContext).delete(genericFormId, genericFormVersion);
 	}
-	
+
 	public GenericForm forgetByAll(HisUserContext userContext, String genericFormId, int genericFormVersion) throws Exception {
-		return forgetByAllInternal(userContext, genericFormId, genericFormVersion);		
+		return forgetByAllInternal(userContext, genericFormId, genericFormVersion);
 	}
 	protected GenericForm forgetByAllInternal(HisUserContext userContext,
 			String genericFormId, int genericFormVersion) throws Exception{
-			
-		return userContext.getDAOGroup().getGenericFormDAO().disconnectFromAll(genericFormId, genericFormVersion);
-	}
-	
 
-	
+		return genericFormDaoOf(userContext).disconnectFromAll(genericFormId, genericFormVersion);
+	}
+
+
+
+
 	public int deleteAll(HisUserContext userContext, String secureCode) throws Exception
 	{
 		/*
@@ -369,48 +391,44 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		*/
 		return 0;
 	}
-	
-	
+
+
 	protected int deleteAllInternal(HisUserContext userContext) throws Exception{
-		return userContext.getDAOGroup().getGenericFormDAO().deleteAll();
+		return genericFormDaoOf(userContext).deleteAll();
 	}
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 
 	protected void checkParamsForAddingFormMessage(HisUserContext userContext, String genericFormId, String title, String level,String [] tokensExpr) throws Exception{
-		
-		
+
+				checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 
 		
+		checkerOf(userContext).checkTitleOfFormMessage(title);
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-
-		
-		userContext.getChecker().checkTitleOfFormMessage(title);
-		
-		userContext.getChecker().checkLevelOfFormMessage(level);
+		checkerOf(userContext).checkLevelOfFormMessage(level);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
 
-	
+
 	}
 	public  GenericForm addFormMessage(HisUserContext userContext, String genericFormId, String title, String level, String [] tokensExpr) throws Exception
-	{	
-		
+	{
+
 		checkParamsForAddingFormMessage(userContext,genericFormId,title, level,tokensExpr);
-		
+
 		FormMessage formMessage = createFormMessage(userContext,title, level);
-		
-		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+
+		GenericForm genericForm = loadGenericForm(userContext, genericFormId, emptyOptions());
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.addFormMessage( formMessage );		
+			genericForm.addFormMessage( formMessage );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormMessageList().done());
 			
 			userContext.getManagerGroup().getFormMessageManager().onNewInstanceCreated(userContext, formMessage);
@@ -418,45 +436,45 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		}
 	}
 	protected void checkParamsForUpdatingFormMessageProperties(HisUserContext userContext, String genericFormId,String id,String title,String level,String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormMessage(id);
-		
-		userContext.getChecker().checkTitleOfFormMessage( title);
-		userContext.getChecker().checkLevelOfFormMessage( level);
 
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormMessage(id);
+
+		checkerOf(userContext).checkTitleOfFormMessage( title);
+		checkerOf(userContext).checkLevelOfFormMessage( level);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
 	public  GenericForm updateFormMessageProperties(HisUserContext userContext, String genericFormId, String id,String title,String level, String [] tokensExpr) throws Exception
-	{	
+	{
 		checkParamsForUpdatingFormMessageProperties(userContext,genericFormId,id,title,level,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
 				//.withFormMessageListList()
 				.searchFormMessageListWith(FormMessage.ID_PROPERTY, "is", id).done();
-		
+
 		GenericForm genericFormToUpdate = loadGenericForm(userContext, genericFormId, options);
-		
+
 		if(genericFormToUpdate.getFormMessageList().isEmpty()){
 			throw new GenericFormManagerException("FormMessage is NOT FOUND with id: '"+id+"'");
 		}
-		
+
 		FormMessage item = genericFormToUpdate.getFormMessageList().first();
-		
+
 		item.updateTitle( title );
 		item.updateLevel( level );
 
-		
+
 		//checkParamsForAddingFormMessage(userContext,genericFormId,name, code, used,tokensExpr);
 		GenericForm genericForm = saveGenericForm(userContext, genericFormToUpdate, tokens().withFormMessageList().done());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
 	}
-	
-	
+
+
 	protected FormMessage createFormMessage(HisUserContext userContext, String title, String level) throws Exception{
 
 		FormMessage formMessage = new FormMessage();
@@ -467,150 +485,154 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	
 		
 		return formMessage;
-	
-		
+
+
 	}
-	
+
 	protected FormMessage createIndexedFormMessage(String id, int version){
 
 		FormMessage formMessage = new FormMessage();
 		formMessage.setId(id);
 		formMessage.setVersion(version);
-		return formMessage;			
-		
+		return formMessage;
+
 	}
-	
-	protected void checkParamsForRemovingFormMessageList(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormMessageList(HisUserContext userContext, String genericFormId,
 			String formMessageIds[],String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
+
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 		for(String formMessageIdItem: formMessageIds){
-			userContext.getChecker().checkIdOfFormMessage(formMessageIdItem);
+			checkerOf(userContext).checkIdOfFormMessage(formMessageIdItem);
 		}
-		
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormMessageList(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormMessageList(HisUserContext userContext, String genericFormId,
 			String formMessageIds[],String [] tokensExpr) throws Exception{
-			
+
 			checkParamsForRemovingFormMessageList(userContext, genericFormId,  formMessageIds, tokensExpr);
-			
-			
+
+
 			GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-			synchronized(genericForm){ 
+			synchronized(genericForm){
 				//Will be good when the genericForm loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				userContext.getDAOGroup().getGenericFormDAO().planToRemoveFormMessageList(genericForm, formMessageIds, allTokens());
+				genericFormDaoOf(userContext).planToRemoveFormMessageList(genericForm, formMessageIds, allTokens());
 				genericForm = saveGenericForm(userContext, genericForm, tokens().withFormMessageList().done());
 				deleteRelationListInGraph(userContext, genericForm.getFormMessageList());
 				return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 			}
 	}
-	
-	protected void checkParamsForRemovingFormMessage(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormMessage(HisUserContext userContext, String genericFormId,
 		String formMessageId, int formMessageVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormMessage(formMessageId);
-		userContext.getChecker().checkVersionOfFormMessage(formMessageVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormMessage(formMessageId);
+		checkerOf(userContext).checkVersionOfFormMessage(formMessageVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormMessage(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormMessage(HisUserContext userContext, String genericFormId,
 		String formMessageId, int formMessageVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForRemovingFormMessage(userContext,genericFormId, formMessageId, formMessageVersion,tokensExpr);
-		
+
 		FormMessage formMessage = createIndexedFormMessage(formMessageId, formMessageVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.removeFormMessage( formMessage );		
+			genericForm.removeFormMessage( formMessage );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormMessageList().done());
 			deleteRelationInGraph(userContext, formMessage);
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
-		
+
+
 	}
-	protected void checkParamsForCopyingFormMessage(HisUserContext userContext, String genericFormId, 
+	protected void checkParamsForCopyingFormMessage(HisUserContext userContext, String genericFormId,
 		String formMessageId, int formMessageVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormMessage(formMessageId);
-		userContext.getChecker().checkVersionOfFormMessage(formMessageVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormMessage(formMessageId);
+		checkerOf(userContext).checkVersionOfFormMessage(formMessageVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm copyFormMessageFrom(HisUserContext userContext, String genericFormId, 
+	public  GenericForm copyFormMessageFrom(HisUserContext userContext, String genericFormId,
 		String formMessageId, int formMessageVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForCopyingFormMessage(userContext,genericFormId, formMessageId, formMessageVersion,tokensExpr);
-		
+
 		FormMessage formMessage = createIndexedFormMessage(formMessageId, formMessageVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
+
 			
-			
-			
-			genericForm.copyFormMessageFrom( formMessage );		
+
+			genericForm.copyFormMessageFrom( formMessage );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormMessageList().done());
 			
 			userContext.getManagerGroup().getFormMessageManager().onNewInstanceCreated(userContext, (FormMessage)genericForm.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
+
 	}
-	
+
 	protected void checkParamsForUpdatingFormMessage(HisUserContext userContext, String genericFormId, String formMessageId, int formMessageVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
 		
 
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormMessage(formMessageId);
-		userContext.getChecker().checkVersionOfFormMessage(formMessageVersion);
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormMessage(formMessageId);
+		checkerOf(userContext).checkVersionOfFormMessage(formMessageVersion);
 		
 
 		if(FormMessage.TITLE_PROPERTY.equals(property)){
-			userContext.getChecker().checkTitleOfFormMessage(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkTitleOfFormMessage(parseString(newValueExpr));
+		
 		}
 		
 		if(FormMessage.LEVEL_PROPERTY.equals(property)){
-			userContext.getChecker().checkLevelOfFormMessage(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLevelOfFormMessage(parseString(newValueExpr));
+		
 		}
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	
+
 	public  GenericForm updateFormMessage(HisUserContext userContext, String genericFormId, String formMessageId, int formMessageVersion, String property, String newValueExpr,String [] tokensExpr)
 			throws Exception{
-		
+
 		checkParamsForUpdatingFormMessage(userContext, genericFormId, formMessageId, formMessageVersion, property, newValueExpr,  tokensExpr);
-		
+
 		Map<String,Object> loadTokens = this.tokens().withFormMessageList().searchFormMessageListWith(FormMessage.ID_PROPERTY, "eq", formMessageId).done();
-		
-		
-		
+
+
+
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, loadTokens);
-		
-		synchronized(genericForm){ 
+
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			//genericForm.removeFormMessage( formMessage );	
+			//genericForm.removeFormMessage( formMessage );
 			//make changes to AcceleraterAccount.
 			FormMessage formMessageIndex = createIndexedFormMessage(formMessageId, formMessageVersion);
-		
+
 			FormMessage formMessage = genericForm.findTheFormMessage(formMessageIndex);
 			if(formMessage == null){
 				throw new GenericFormManagerException(formMessage+" is NOT FOUND" );
 			}
-			
+
 			formMessage.changeProperty(property, newValueExpr);
 			
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormMessageList().done());
@@ -621,41 +643,37 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	/*
 
 	*/
-	
+
 
 
 
 	protected void checkParamsForAddingFormFieldMessage(HisUserContext userContext, String genericFormId, String title, String parameterName, String level,String [] tokensExpr) throws Exception{
-		
-		
+
+				checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 
 		
+		checkerOf(userContext).checkTitleOfFormFieldMessage(title);
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-
+		checkerOf(userContext).checkParameterNameOfFormFieldMessage(parameterName);
 		
-		userContext.getChecker().checkTitleOfFormFieldMessage(title);
-		
-		userContext.getChecker().checkParameterNameOfFormFieldMessage(parameterName);
-		
-		userContext.getChecker().checkLevelOfFormFieldMessage(level);
+		checkerOf(userContext).checkLevelOfFormFieldMessage(level);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
 
-	
+
 	}
 	public  GenericForm addFormFieldMessage(HisUserContext userContext, String genericFormId, String title, String parameterName, String level, String [] tokensExpr) throws Exception
-	{	
-		
+	{
+
 		checkParamsForAddingFormFieldMessage(userContext,genericFormId,title, parameterName, level,tokensExpr);
-		
+
 		FormFieldMessage formFieldMessage = createFormFieldMessage(userContext,title, parameterName, level);
-		
-		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+
+		GenericForm genericForm = loadGenericForm(userContext, genericFormId, emptyOptions());
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.addFormFieldMessage( formFieldMessage );		
+			genericForm.addFormFieldMessage( formFieldMessage );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldMessageList().done());
 			
 			userContext.getManagerGroup().getFormFieldMessageManager().onNewInstanceCreated(userContext, formFieldMessage);
@@ -663,47 +681,47 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		}
 	}
 	protected void checkParamsForUpdatingFormFieldMessageProperties(HisUserContext userContext, String genericFormId,String id,String title,String parameterName,String level,String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormFieldMessage(id);
-		
-		userContext.getChecker().checkTitleOfFormFieldMessage( title);
-		userContext.getChecker().checkParameterNameOfFormFieldMessage( parameterName);
-		userContext.getChecker().checkLevelOfFormFieldMessage( level);
 
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormFieldMessage(id);
+
+		checkerOf(userContext).checkTitleOfFormFieldMessage( title);
+		checkerOf(userContext).checkParameterNameOfFormFieldMessage( parameterName);
+		checkerOf(userContext).checkLevelOfFormFieldMessage( level);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
 	public  GenericForm updateFormFieldMessageProperties(HisUserContext userContext, String genericFormId, String id,String title,String parameterName,String level, String [] tokensExpr) throws Exception
-	{	
+	{
 		checkParamsForUpdatingFormFieldMessageProperties(userContext,genericFormId,id,title,parameterName,level,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
 				//.withFormFieldMessageListList()
 				.searchFormFieldMessageListWith(FormFieldMessage.ID_PROPERTY, "is", id).done();
-		
+
 		GenericForm genericFormToUpdate = loadGenericForm(userContext, genericFormId, options);
-		
+
 		if(genericFormToUpdate.getFormFieldMessageList().isEmpty()){
 			throw new GenericFormManagerException("FormFieldMessage is NOT FOUND with id: '"+id+"'");
 		}
-		
+
 		FormFieldMessage item = genericFormToUpdate.getFormFieldMessageList().first();
-		
+
 		item.updateTitle( title );
 		item.updateParameterName( parameterName );
 		item.updateLevel( level );
 
-		
+
 		//checkParamsForAddingFormFieldMessage(userContext,genericFormId,name, code, used,tokensExpr);
 		GenericForm genericForm = saveGenericForm(userContext, genericFormToUpdate, tokens().withFormFieldMessageList().done());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
 	}
-	
-	
+
+
 	protected FormFieldMessage createFormFieldMessage(HisUserContext userContext, String title, String parameterName, String level) throws Exception{
 
 		FormFieldMessage formFieldMessage = new FormFieldMessage();
@@ -715,154 +733,160 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	
 		
 		return formFieldMessage;
-	
-		
+
+
 	}
-	
+
 	protected FormFieldMessage createIndexedFormFieldMessage(String id, int version){
 
 		FormFieldMessage formFieldMessage = new FormFieldMessage();
 		formFieldMessage.setId(id);
 		formFieldMessage.setVersion(version);
-		return formFieldMessage;			
-		
+		return formFieldMessage;
+
 	}
-	
-	protected void checkParamsForRemovingFormFieldMessageList(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormFieldMessageList(HisUserContext userContext, String genericFormId,
 			String formFieldMessageIds[],String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
+
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 		for(String formFieldMessageIdItem: formFieldMessageIds){
-			userContext.getChecker().checkIdOfFormFieldMessage(formFieldMessageIdItem);
+			checkerOf(userContext).checkIdOfFormFieldMessage(formFieldMessageIdItem);
 		}
-		
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormFieldMessageList(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormFieldMessageList(HisUserContext userContext, String genericFormId,
 			String formFieldMessageIds[],String [] tokensExpr) throws Exception{
-			
+
 			checkParamsForRemovingFormFieldMessageList(userContext, genericFormId,  formFieldMessageIds, tokensExpr);
-			
-			
+
+
 			GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-			synchronized(genericForm){ 
+			synchronized(genericForm){
 				//Will be good when the genericForm loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				userContext.getDAOGroup().getGenericFormDAO().planToRemoveFormFieldMessageList(genericForm, formFieldMessageIds, allTokens());
+				genericFormDaoOf(userContext).planToRemoveFormFieldMessageList(genericForm, formFieldMessageIds, allTokens());
 				genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldMessageList().done());
 				deleteRelationListInGraph(userContext, genericForm.getFormFieldMessageList());
 				return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 			}
 	}
-	
-	protected void checkParamsForRemovingFormFieldMessage(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormFieldMessage(HisUserContext userContext, String genericFormId,
 		String formFieldMessageId, int formFieldMessageVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormFieldMessage(formFieldMessageId);
-		userContext.getChecker().checkVersionOfFormFieldMessage(formFieldMessageVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormFieldMessage(formFieldMessageId);
+		checkerOf(userContext).checkVersionOfFormFieldMessage(formFieldMessageVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormFieldMessage(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormFieldMessage(HisUserContext userContext, String genericFormId,
 		String formFieldMessageId, int formFieldMessageVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForRemovingFormFieldMessage(userContext,genericFormId, formFieldMessageId, formFieldMessageVersion,tokensExpr);
-		
+
 		FormFieldMessage formFieldMessage = createIndexedFormFieldMessage(formFieldMessageId, formFieldMessageVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.removeFormFieldMessage( formFieldMessage );		
+			genericForm.removeFormFieldMessage( formFieldMessage );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldMessageList().done());
 			deleteRelationInGraph(userContext, formFieldMessage);
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
-		
+
+
 	}
-	protected void checkParamsForCopyingFormFieldMessage(HisUserContext userContext, String genericFormId, 
+	protected void checkParamsForCopyingFormFieldMessage(HisUserContext userContext, String genericFormId,
 		String formFieldMessageId, int formFieldMessageVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormFieldMessage(formFieldMessageId);
-		userContext.getChecker().checkVersionOfFormFieldMessage(formFieldMessageVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormFieldMessage(formFieldMessageId);
+		checkerOf(userContext).checkVersionOfFormFieldMessage(formFieldMessageVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm copyFormFieldMessageFrom(HisUserContext userContext, String genericFormId, 
+	public  GenericForm copyFormFieldMessageFrom(HisUserContext userContext, String genericFormId,
 		String formFieldMessageId, int formFieldMessageVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForCopyingFormFieldMessage(userContext,genericFormId, formFieldMessageId, formFieldMessageVersion,tokensExpr);
-		
+
 		FormFieldMessage formFieldMessage = createIndexedFormFieldMessage(formFieldMessageId, formFieldMessageVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
+
 			
-			
-			
-			genericForm.copyFormFieldMessageFrom( formFieldMessage );		
+
+			genericForm.copyFormFieldMessageFrom( formFieldMessage );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldMessageList().done());
 			
 			userContext.getManagerGroup().getFormFieldMessageManager().onNewInstanceCreated(userContext, (FormFieldMessage)genericForm.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
+
 	}
-	
+
 	protected void checkParamsForUpdatingFormFieldMessage(HisUserContext userContext, String genericFormId, String formFieldMessageId, int formFieldMessageVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
 		
 
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormFieldMessage(formFieldMessageId);
-		userContext.getChecker().checkVersionOfFormFieldMessage(formFieldMessageVersion);
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormFieldMessage(formFieldMessageId);
+		checkerOf(userContext).checkVersionOfFormFieldMessage(formFieldMessageVersion);
 		
 
 		if(FormFieldMessage.TITLE_PROPERTY.equals(property)){
-			userContext.getChecker().checkTitleOfFormFieldMessage(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkTitleOfFormFieldMessage(parseString(newValueExpr));
+		
 		}
 		
 		if(FormFieldMessage.PARAMETER_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkParameterNameOfFormFieldMessage(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkParameterNameOfFormFieldMessage(parseString(newValueExpr));
+		
 		}
 		
 		if(FormFieldMessage.LEVEL_PROPERTY.equals(property)){
-			userContext.getChecker().checkLevelOfFormFieldMessage(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLevelOfFormFieldMessage(parseString(newValueExpr));
+		
 		}
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	
+
 	public  GenericForm updateFormFieldMessage(HisUserContext userContext, String genericFormId, String formFieldMessageId, int formFieldMessageVersion, String property, String newValueExpr,String [] tokensExpr)
 			throws Exception{
-		
+
 		checkParamsForUpdatingFormFieldMessage(userContext, genericFormId, formFieldMessageId, formFieldMessageVersion, property, newValueExpr,  tokensExpr);
-		
+
 		Map<String,Object> loadTokens = this.tokens().withFormFieldMessageList().searchFormFieldMessageListWith(FormFieldMessage.ID_PROPERTY, "eq", formFieldMessageId).done();
-		
-		
-		
+
+
+
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, loadTokens);
-		
-		synchronized(genericForm){ 
+
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			//genericForm.removeFormFieldMessage( formFieldMessage );	
+			//genericForm.removeFormFieldMessage( formFieldMessage );
 			//make changes to AcceleraterAccount.
 			FormFieldMessage formFieldMessageIndex = createIndexedFormFieldMessage(formFieldMessageId, formFieldMessageVersion);
-		
+
 			FormFieldMessage formFieldMessage = genericForm.findTheFormFieldMessage(formFieldMessageIndex);
 			if(formFieldMessage == null){
 				throw new GenericFormManagerException(formFieldMessage+" is NOT FOUND" );
 			}
-			
+
 			formFieldMessage.changeProperty(property, newValueExpr);
 			
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldMessageList().done());
@@ -873,65 +897,61 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	/*
 
 	*/
-	
+
 
 
 
 	protected void checkParamsForAddingFormField(HisUserContext userContext, String genericFormId, String label, String localeKey, String parameterName, String type, String placeholder, String defaultValue, String description, String fieldGroup, String minimumValue, String maximumValue, boolean required, boolean disabled, boolean customRendering, String candidateValues, String suggestValues,String [] tokensExpr) throws Exception{
-		
-		
+
+				checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 
 		
+		checkerOf(userContext).checkLabelOfFormField(label);
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-
+		checkerOf(userContext).checkLocaleKeyOfFormField(localeKey);
 		
-		userContext.getChecker().checkLabelOfFormField(label);
+		checkerOf(userContext).checkParameterNameOfFormField(parameterName);
 		
-		userContext.getChecker().checkLocaleKeyOfFormField(localeKey);
+		checkerOf(userContext).checkTypeOfFormField(type);
 		
-		userContext.getChecker().checkParameterNameOfFormField(parameterName);
+		checkerOf(userContext).checkPlaceholderOfFormField(placeholder);
 		
-		userContext.getChecker().checkTypeOfFormField(type);
+		checkerOf(userContext).checkDefaultValueOfFormField(defaultValue);
 		
-		userContext.getChecker().checkPlaceholderOfFormField(placeholder);
+		checkerOf(userContext).checkDescriptionOfFormField(description);
 		
-		userContext.getChecker().checkDefaultValueOfFormField(defaultValue);
+		checkerOf(userContext).checkFieldGroupOfFormField(fieldGroup);
 		
-		userContext.getChecker().checkDescriptionOfFormField(description);
+		checkerOf(userContext).checkMinimumValueOfFormField(minimumValue);
 		
-		userContext.getChecker().checkFieldGroupOfFormField(fieldGroup);
+		checkerOf(userContext).checkMaximumValueOfFormField(maximumValue);
 		
-		userContext.getChecker().checkMinimumValueOfFormField(minimumValue);
+		checkerOf(userContext).checkRequiredOfFormField(required);
 		
-		userContext.getChecker().checkMaximumValueOfFormField(maximumValue);
+		checkerOf(userContext).checkDisabledOfFormField(disabled);
 		
-		userContext.getChecker().checkRequiredOfFormField(required);
+		checkerOf(userContext).checkCustomRenderingOfFormField(customRendering);
 		
-		userContext.getChecker().checkDisabledOfFormField(disabled);
+		checkerOf(userContext).checkCandidateValuesOfFormField(candidateValues);
 		
-		userContext.getChecker().checkCustomRenderingOfFormField(customRendering);
-		
-		userContext.getChecker().checkCandidateValuesOfFormField(candidateValues);
-		
-		userContext.getChecker().checkSuggestValuesOfFormField(suggestValues);
+		checkerOf(userContext).checkSuggestValuesOfFormField(suggestValues);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
 
-	
+
 	}
 	public  GenericForm addFormField(HisUserContext userContext, String genericFormId, String label, String localeKey, String parameterName, String type, String placeholder, String defaultValue, String description, String fieldGroup, String minimumValue, String maximumValue, boolean required, boolean disabled, boolean customRendering, String candidateValues, String suggestValues, String [] tokensExpr) throws Exception
-	{	
-		
+	{
+
 		checkParamsForAddingFormField(userContext,genericFormId,label, localeKey, parameterName, type, placeholder, defaultValue, description, fieldGroup, minimumValue, maximumValue, required, disabled, customRendering, candidateValues, suggestValues,tokensExpr);
-		
+
 		FormField formField = createFormField(userContext,label, localeKey, parameterName, type, placeholder, defaultValue, description, fieldGroup, minimumValue, maximumValue, required, disabled, customRendering, candidateValues, suggestValues);
-		
-		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+
+		GenericForm genericForm = loadGenericForm(userContext, genericFormId, emptyOptions());
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.addFormField( formField );		
+			genericForm.addFormField( formField );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldList().done());
 			
 			userContext.getManagerGroup().getFormFieldManager().onNewInstanceCreated(userContext, formField);
@@ -939,46 +959,46 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		}
 	}
 	protected void checkParamsForUpdatingFormFieldProperties(HisUserContext userContext, String genericFormId,String id,String label,String localeKey,String parameterName,String type,String placeholder,String defaultValue,String description,String fieldGroup,String minimumValue,String maximumValue,boolean required,boolean disabled,boolean customRendering,String candidateValues,String suggestValues,String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormField(id);
-		
-		userContext.getChecker().checkLabelOfFormField( label);
-		userContext.getChecker().checkLocaleKeyOfFormField( localeKey);
-		userContext.getChecker().checkParameterNameOfFormField( parameterName);
-		userContext.getChecker().checkTypeOfFormField( type);
-		userContext.getChecker().checkPlaceholderOfFormField( placeholder);
-		userContext.getChecker().checkDefaultValueOfFormField( defaultValue);
-		userContext.getChecker().checkDescriptionOfFormField( description);
-		userContext.getChecker().checkFieldGroupOfFormField( fieldGroup);
-		userContext.getChecker().checkMinimumValueOfFormField( minimumValue);
-		userContext.getChecker().checkMaximumValueOfFormField( maximumValue);
-		userContext.getChecker().checkRequiredOfFormField( required);
-		userContext.getChecker().checkDisabledOfFormField( disabled);
-		userContext.getChecker().checkCustomRenderingOfFormField( customRendering);
-		userContext.getChecker().checkCandidateValuesOfFormField( candidateValues);
-		userContext.getChecker().checkSuggestValuesOfFormField( suggestValues);
 
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormField(id);
+
+		checkerOf(userContext).checkLabelOfFormField( label);
+		checkerOf(userContext).checkLocaleKeyOfFormField( localeKey);
+		checkerOf(userContext).checkParameterNameOfFormField( parameterName);
+		checkerOf(userContext).checkTypeOfFormField( type);
+		checkerOf(userContext).checkPlaceholderOfFormField( placeholder);
+		checkerOf(userContext).checkDefaultValueOfFormField( defaultValue);
+		checkerOf(userContext).checkDescriptionOfFormField( description);
+		checkerOf(userContext).checkFieldGroupOfFormField( fieldGroup);
+		checkerOf(userContext).checkMinimumValueOfFormField( minimumValue);
+		checkerOf(userContext).checkMaximumValueOfFormField( maximumValue);
+		checkerOf(userContext).checkRequiredOfFormField( required);
+		checkerOf(userContext).checkDisabledOfFormField( disabled);
+		checkerOf(userContext).checkCustomRenderingOfFormField( customRendering);
+		checkerOf(userContext).checkCandidateValuesOfFormField( candidateValues);
+		checkerOf(userContext).checkSuggestValuesOfFormField( suggestValues);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
 	public  GenericForm updateFormFieldProperties(HisUserContext userContext, String genericFormId, String id,String label,String localeKey,String parameterName,String type,String placeholder,String defaultValue,String description,String fieldGroup,String minimumValue,String maximumValue,boolean required,boolean disabled,boolean customRendering,String candidateValues,String suggestValues, String [] tokensExpr) throws Exception
-	{	
+	{
 		checkParamsForUpdatingFormFieldProperties(userContext,genericFormId,id,label,localeKey,parameterName,type,placeholder,defaultValue,description,fieldGroup,minimumValue,maximumValue,required,disabled,customRendering,candidateValues,suggestValues,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
 				//.withFormFieldListList()
 				.searchFormFieldListWith(FormField.ID_PROPERTY, "is", id).done();
-		
+
 		GenericForm genericFormToUpdate = loadGenericForm(userContext, genericFormId, options);
-		
+
 		if(genericFormToUpdate.getFormFieldList().isEmpty()){
 			throw new GenericFormManagerException("FormField is NOT FOUND with id: '"+id+"'");
 		}
-		
+
 		FormField item = genericFormToUpdate.getFormFieldList().first();
-		
+
 		item.updateLabel( label );
 		item.updateLocaleKey( localeKey );
 		item.updateParameterName( parameterName );
@@ -995,15 +1015,15 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		item.updateCandidateValues( candidateValues );
 		item.updateSuggestValues( suggestValues );
 
-		
+
 		//checkParamsForAddingFormField(userContext,genericFormId,name, code, used,tokensExpr);
 		GenericForm genericForm = saveGenericForm(userContext, genericFormToUpdate, tokens().withFormFieldList().done());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
 	}
-	
-	
+
+
 	protected FormField createFormField(HisUserContext userContext, String label, String localeKey, String parameterName, String type, String placeholder, String defaultValue, String description, String fieldGroup, String minimumValue, String maximumValue, boolean required, boolean disabled, boolean customRendering, String candidateValues, String suggestValues) throws Exception{
 
 		FormField formField = new FormField();
@@ -1027,202 +1047,232 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	
 		
 		return formField;
-	
-		
+
+
 	}
-	
+
 	protected FormField createIndexedFormField(String id, int version){
 
 		FormField formField = new FormField();
 		formField.setId(id);
 		formField.setVersion(version);
-		return formField;			
-		
+		return formField;
+
 	}
-	
-	protected void checkParamsForRemovingFormFieldList(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormFieldList(HisUserContext userContext, String genericFormId,
 			String formFieldIds[],String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
+
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 		for(String formFieldIdItem: formFieldIds){
-			userContext.getChecker().checkIdOfFormField(formFieldIdItem);
+			checkerOf(userContext).checkIdOfFormField(formFieldIdItem);
 		}
-		
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormFieldList(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormFieldList(HisUserContext userContext, String genericFormId,
 			String formFieldIds[],String [] tokensExpr) throws Exception{
-			
+
 			checkParamsForRemovingFormFieldList(userContext, genericFormId,  formFieldIds, tokensExpr);
-			
-			
+
+
 			GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-			synchronized(genericForm){ 
+			synchronized(genericForm){
 				//Will be good when the genericForm loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				userContext.getDAOGroup().getGenericFormDAO().planToRemoveFormFieldList(genericForm, formFieldIds, allTokens());
+				genericFormDaoOf(userContext).planToRemoveFormFieldList(genericForm, formFieldIds, allTokens());
 				genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldList().done());
 				deleteRelationListInGraph(userContext, genericForm.getFormFieldList());
 				return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 			}
 	}
-	
-	protected void checkParamsForRemovingFormField(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormField(HisUserContext userContext, String genericFormId,
 		String formFieldId, int formFieldVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormField(formFieldId);
-		userContext.getChecker().checkVersionOfFormField(formFieldVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormField(formFieldId);
+		checkerOf(userContext).checkVersionOfFormField(formFieldVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormField(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormField(HisUserContext userContext, String genericFormId,
 		String formFieldId, int formFieldVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForRemovingFormField(userContext,genericFormId, formFieldId, formFieldVersion,tokensExpr);
-		
+
 		FormField formField = createIndexedFormField(formFieldId, formFieldVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.removeFormField( formField );		
+			genericForm.removeFormField( formField );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldList().done());
 			deleteRelationInGraph(userContext, formField);
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
-		
+
+
 	}
-	protected void checkParamsForCopyingFormField(HisUserContext userContext, String genericFormId, 
+	protected void checkParamsForCopyingFormField(HisUserContext userContext, String genericFormId,
 		String formFieldId, int formFieldVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormField(formFieldId);
-		userContext.getChecker().checkVersionOfFormField(formFieldVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormField(formFieldId);
+		checkerOf(userContext).checkVersionOfFormField(formFieldVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm copyFormFieldFrom(HisUserContext userContext, String genericFormId, 
+	public  GenericForm copyFormFieldFrom(HisUserContext userContext, String genericFormId,
 		String formFieldId, int formFieldVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForCopyingFormField(userContext,genericFormId, formFieldId, formFieldVersion,tokensExpr);
-		
+
 		FormField formField = createIndexedFormField(formFieldId, formFieldVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
+
 			
-			
-			
-			genericForm.copyFormFieldFrom( formField );		
+
+			genericForm.copyFormFieldFrom( formField );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldList().done());
 			
 			userContext.getManagerGroup().getFormFieldManager().onNewInstanceCreated(userContext, (FormField)genericForm.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
+
 	}
-	
+
 	protected void checkParamsForUpdatingFormField(HisUserContext userContext, String genericFormId, String formFieldId, int formFieldVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
 		
 
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormField(formFieldId);
-		userContext.getChecker().checkVersionOfFormField(formFieldVersion);
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormField(formFieldId);
+		checkerOf(userContext).checkVersionOfFormField(formFieldVersion);
 		
 
 		if(FormField.LABEL_PROPERTY.equals(property)){
-			userContext.getChecker().checkLabelOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLabelOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.LOCALE_KEY_PROPERTY.equals(property)){
-			userContext.getChecker().checkLocaleKeyOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLocaleKeyOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.PARAMETER_NAME_PROPERTY.equals(property)){
-			userContext.getChecker().checkParameterNameOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkParameterNameOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.TYPE_PROPERTY.equals(property)){
-			userContext.getChecker().checkTypeOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkTypeOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.PLACEHOLDER_PROPERTY.equals(property)){
-			userContext.getChecker().checkPlaceholderOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkPlaceholderOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.DEFAULT_VALUE_PROPERTY.equals(property)){
-			userContext.getChecker().checkDefaultValueOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkDefaultValueOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.DESCRIPTION_PROPERTY.equals(property)){
-			userContext.getChecker().checkDescriptionOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkDescriptionOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.FIELD_GROUP_PROPERTY.equals(property)){
-			userContext.getChecker().checkFieldGroupOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkFieldGroupOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.MINIMUM_VALUE_PROPERTY.equals(property)){
-			userContext.getChecker().checkMinimumValueOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkMinimumValueOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.MAXIMUM_VALUE_PROPERTY.equals(property)){
-			userContext.getChecker().checkMaximumValueOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkMaximumValueOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.REQUIRED_PROPERTY.equals(property)){
-			userContext.getChecker().checkRequiredOfFormField(parseBoolean(newValueExpr));
+		
+			checkerOf(userContext).checkRequiredOfFormField(parseBoolean(newValueExpr));
+		
 		}
 		
 		if(FormField.DISABLED_PROPERTY.equals(property)){
-			userContext.getChecker().checkDisabledOfFormField(parseBoolean(newValueExpr));
+		
+			checkerOf(userContext).checkDisabledOfFormField(parseBoolean(newValueExpr));
+		
 		}
 		
 		if(FormField.CUSTOM_RENDERING_PROPERTY.equals(property)){
-			userContext.getChecker().checkCustomRenderingOfFormField(parseBoolean(newValueExpr));
+		
+			checkerOf(userContext).checkCustomRenderingOfFormField(parseBoolean(newValueExpr));
+		
 		}
 		
 		if(FormField.CANDIDATE_VALUES_PROPERTY.equals(property)){
-			userContext.getChecker().checkCandidateValuesOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkCandidateValuesOfFormField(parseString(newValueExpr));
+		
 		}
 		
 		if(FormField.SUGGEST_VALUES_PROPERTY.equals(property)){
-			userContext.getChecker().checkSuggestValuesOfFormField(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkSuggestValuesOfFormField(parseString(newValueExpr));
+		
 		}
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	
+
 	public  GenericForm updateFormField(HisUserContext userContext, String genericFormId, String formFieldId, int formFieldVersion, String property, String newValueExpr,String [] tokensExpr)
 			throws Exception{
-		
+
 		checkParamsForUpdatingFormField(userContext, genericFormId, formFieldId, formFieldVersion, property, newValueExpr,  tokensExpr);
-		
+
 		Map<String,Object> loadTokens = this.tokens().withFormFieldList().searchFormFieldListWith(FormField.ID_PROPERTY, "eq", formFieldId).done();
-		
-		
-		
+
+
+
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, loadTokens);
-		
-		synchronized(genericForm){ 
+
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			//genericForm.removeFormField( formField );	
+			//genericForm.removeFormField( formField );
 			//make changes to AcceleraterAccount.
 			FormField formFieldIndex = createIndexedFormField(formFieldId, formFieldVersion);
-		
+
 			FormField formField = genericForm.findTheFormField(formFieldIndex);
 			if(formField == null){
 				throw new GenericFormManagerException(formField+" is NOT FOUND" );
 			}
-			
+
 			formField.changeProperty(property, newValueExpr);
 			
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormFieldList().done());
@@ -1233,45 +1283,41 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	/*
 
 	*/
-	
+
 
 
 
 	protected void checkParamsForAddingFormAction(HisUserContext userContext, String genericFormId, String label, String localeKey, String actionKey, String level, String url,String [] tokensExpr) throws Exception{
-		
-		
+
+				checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 
 		
+		checkerOf(userContext).checkLabelOfFormAction(label);
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-
+		checkerOf(userContext).checkLocaleKeyOfFormAction(localeKey);
 		
-		userContext.getChecker().checkLabelOfFormAction(label);
+		checkerOf(userContext).checkActionKeyOfFormAction(actionKey);
 		
-		userContext.getChecker().checkLocaleKeyOfFormAction(localeKey);
+		checkerOf(userContext).checkLevelOfFormAction(level);
 		
-		userContext.getChecker().checkActionKeyOfFormAction(actionKey);
-		
-		userContext.getChecker().checkLevelOfFormAction(level);
-		
-		userContext.getChecker().checkUrlOfFormAction(url);
+		checkerOf(userContext).checkUrlOfFormAction(url);
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
 
-	
+
 	}
 	public  GenericForm addFormAction(HisUserContext userContext, String genericFormId, String label, String localeKey, String actionKey, String level, String url, String [] tokensExpr) throws Exception
-	{	
-		
+	{
+
 		checkParamsForAddingFormAction(userContext,genericFormId,label, localeKey, actionKey, level, url,tokensExpr);
-		
+
 		FormAction formAction = createFormAction(userContext,label, localeKey, actionKey, level, url);
-		
-		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+
+		GenericForm genericForm = loadGenericForm(userContext, genericFormId, emptyOptions());
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.addFormAction( formAction );		
+			genericForm.addFormAction( formAction );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormActionList().done());
 			
 			userContext.getManagerGroup().getFormActionManager().onNewInstanceCreated(userContext, formAction);
@@ -1279,51 +1325,51 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 		}
 	}
 	protected void checkParamsForUpdatingFormActionProperties(HisUserContext userContext, String genericFormId,String id,String label,String localeKey,String actionKey,String level,String url,String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormAction(id);
-		
-		userContext.getChecker().checkLabelOfFormAction( label);
-		userContext.getChecker().checkLocaleKeyOfFormAction( localeKey);
-		userContext.getChecker().checkActionKeyOfFormAction( actionKey);
-		userContext.getChecker().checkLevelOfFormAction( level);
-		userContext.getChecker().checkUrlOfFormAction( url);
 
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormAction(id);
+
+		checkerOf(userContext).checkLabelOfFormAction( label);
+		checkerOf(userContext).checkLocaleKeyOfFormAction( localeKey);
+		checkerOf(userContext).checkActionKeyOfFormAction( actionKey);
+		checkerOf(userContext).checkLevelOfFormAction( level);
+		checkerOf(userContext).checkUrlOfFormAction( url);
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
 	public  GenericForm updateFormActionProperties(HisUserContext userContext, String genericFormId, String id,String label,String localeKey,String actionKey,String level,String url, String [] tokensExpr) throws Exception
-	{	
+	{
 		checkParamsForUpdatingFormActionProperties(userContext,genericFormId,id,label,localeKey,actionKey,level,url,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
 				//.withFormActionListList()
 				.searchFormActionListWith(FormAction.ID_PROPERTY, "is", id).done();
-		
+
 		GenericForm genericFormToUpdate = loadGenericForm(userContext, genericFormId, options);
-		
+
 		if(genericFormToUpdate.getFormActionList().isEmpty()){
 			throw new GenericFormManagerException("FormAction is NOT FOUND with id: '"+id+"'");
 		}
-		
+
 		FormAction item = genericFormToUpdate.getFormActionList().first();
-		
+
 		item.updateLabel( label );
 		item.updateLocaleKey( localeKey );
 		item.updateActionKey( actionKey );
 		item.updateLevel( level );
 		item.updateUrl( url );
 
-		
+
 		//checkParamsForAddingFormAction(userContext,genericFormId,name, code, used,tokensExpr);
 		GenericForm genericForm = saveGenericForm(userContext, genericFormToUpdate, tokens().withFormActionList().done());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
 	}
-	
-	
+
+
 	protected FormAction createFormAction(HisUserContext userContext, String label, String localeKey, String actionKey, String level, String url) throws Exception{
 
 		FormAction formAction = new FormAction();
@@ -1337,162 +1383,172 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	
 		
 		return formAction;
-	
-		
+
+
 	}
-	
+
 	protected FormAction createIndexedFormAction(String id, int version){
 
 		FormAction formAction = new FormAction();
 		formAction.setId(id);
 		formAction.setVersion(version);
-		return formAction;			
-		
+		return formAction;
+
 	}
-	
-	protected void checkParamsForRemovingFormActionList(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormActionList(HisUserContext userContext, String genericFormId,
 			String formActionIds[],String [] tokensExpr) throws Exception {
-		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
+
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
 		for(String formActionIdItem: formActionIds){
-			userContext.getChecker().checkIdOfFormAction(formActionIdItem);
+			checkerOf(userContext).checkIdOfFormAction(formActionIdItem);
 		}
-		
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-		
+
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormActionList(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormActionList(HisUserContext userContext, String genericFormId,
 			String formActionIds[],String [] tokensExpr) throws Exception{
-			
+
 			checkParamsForRemovingFormActionList(userContext, genericFormId,  formActionIds, tokensExpr);
-			
-			
+
+
 			GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-			synchronized(genericForm){ 
+			synchronized(genericForm){
 				//Will be good when the genericForm loaded from this JVM process cache.
 				//Also good when there is a RAM based DAO implementation
-				userContext.getDAOGroup().getGenericFormDAO().planToRemoveFormActionList(genericForm, formActionIds, allTokens());
+				genericFormDaoOf(userContext).planToRemoveFormActionList(genericForm, formActionIds, allTokens());
 				genericForm = saveGenericForm(userContext, genericForm, tokens().withFormActionList().done());
 				deleteRelationListInGraph(userContext, genericForm.getFormActionList());
 				return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 			}
 	}
-	
-	protected void checkParamsForRemovingFormAction(HisUserContext userContext, String genericFormId, 
+
+	protected void checkParamsForRemovingFormAction(HisUserContext userContext, String genericFormId,
 		String formActionId, int formActionVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormAction(formActionId);
-		userContext.getChecker().checkVersionOfFormAction(formActionVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormAction(formActionId);
+		checkerOf(userContext).checkVersionOfFormAction(formActionVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm removeFormAction(HisUserContext userContext, String genericFormId, 
+	public  GenericForm removeFormAction(HisUserContext userContext, String genericFormId,
 		String formActionId, int formActionVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForRemovingFormAction(userContext,genericFormId, formActionId, formActionVersion,tokensExpr);
-		
+
 		FormAction formAction = createIndexedFormAction(formActionId, formActionVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			genericForm.removeFormAction( formAction );		
+			genericForm.removeFormAction( formAction );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormActionList().done());
 			deleteRelationInGraph(userContext, formAction);
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
-		
+
+
 	}
-	protected void checkParamsForCopyingFormAction(HisUserContext userContext, String genericFormId, 
+	protected void checkParamsForCopyingFormAction(HisUserContext userContext, String genericFormId,
 		String formActionId, int formActionVersion,String [] tokensExpr) throws Exception{
 		
-		userContext.getChecker().checkIdOfGenericForm( genericFormId);
-		userContext.getChecker().checkIdOfFormAction(formActionId);
-		userContext.getChecker().checkVersionOfFormAction(formActionVersion);
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).checkIdOfGenericForm( genericFormId);
+		checkerOf(userContext).checkIdOfFormAction(formActionId);
+		checkerOf(userContext).checkVersionOfFormAction(formActionVersion);
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	public  GenericForm copyFormActionFrom(HisUserContext userContext, String genericFormId, 
+	public  GenericForm copyFormActionFrom(HisUserContext userContext, String genericFormId,
 		String formActionId, int formActionVersion,String [] tokensExpr) throws Exception{
-		
+
 		checkParamsForCopyingFormAction(userContext,genericFormId, formActionId, formActionVersion,tokensExpr);
-		
+
 		FormAction formAction = createIndexedFormAction(formActionId, formActionVersion);
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, allTokens());
-		synchronized(genericForm){ 
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
+
 			
-			
-			
-			genericForm.copyFormActionFrom( formAction );		
+
+			genericForm.copyFormActionFrom( formAction );
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormActionList().done());
 			
 			userContext.getManagerGroup().getFormActionManager().onNewInstanceCreated(userContext, (FormAction)genericForm.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
 			return present(userContext,genericForm, mergedAllTokens(tokensExpr));
 		}
-		
+
 	}
-	
+
 	protected void checkParamsForUpdatingFormAction(HisUserContext userContext, String genericFormId, String formActionId, int formActionVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
 		
 
 		
-		userContext.getChecker().checkIdOfGenericForm(genericFormId);
-		userContext.getChecker().checkIdOfFormAction(formActionId);
-		userContext.getChecker().checkVersionOfFormAction(formActionVersion);
+		checkerOf(userContext).checkIdOfGenericForm(genericFormId);
+		checkerOf(userContext).checkIdOfFormAction(formActionId);
+		checkerOf(userContext).checkVersionOfFormAction(formActionVersion);
 		
 
 		if(FormAction.LABEL_PROPERTY.equals(property)){
-			userContext.getChecker().checkLabelOfFormAction(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLabelOfFormAction(parseString(newValueExpr));
+		
 		}
 		
 		if(FormAction.LOCALE_KEY_PROPERTY.equals(property)){
-			userContext.getChecker().checkLocaleKeyOfFormAction(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLocaleKeyOfFormAction(parseString(newValueExpr));
+		
 		}
 		
 		if(FormAction.ACTION_KEY_PROPERTY.equals(property)){
-			userContext.getChecker().checkActionKeyOfFormAction(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkActionKeyOfFormAction(parseString(newValueExpr));
+		
 		}
 		
 		if(FormAction.LEVEL_PROPERTY.equals(property)){
-			userContext.getChecker().checkLevelOfFormAction(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkLevelOfFormAction(parseString(newValueExpr));
+		
 		}
 		
 		if(FormAction.URL_PROPERTY.equals(property)){
-			userContext.getChecker().checkUrlOfFormAction(parseString(newValueExpr));
+		
+			checkerOf(userContext).checkUrlOfFormAction(parseString(newValueExpr));
+		
 		}
 		
 	
-		userContext.getChecker().throwExceptionIfHasErrors(GenericFormManagerException.class);
-	
+		checkerOf(userContext).throwExceptionIfHasErrors(GenericFormManagerException.class);
+
 	}
-	
+
 	public  GenericForm updateFormAction(HisUserContext userContext, String genericFormId, String formActionId, int formActionVersion, String property, String newValueExpr,String [] tokensExpr)
 			throws Exception{
-		
+
 		checkParamsForUpdatingFormAction(userContext, genericFormId, formActionId, formActionVersion, property, newValueExpr,  tokensExpr);
-		
+
 		Map<String,Object> loadTokens = this.tokens().withFormActionList().searchFormActionListWith(FormAction.ID_PROPERTY, "eq", formActionId).done();
-		
-		
-		
+
+
+
 		GenericForm genericForm = loadGenericForm(userContext, genericFormId, loadTokens);
-		
-		synchronized(genericForm){ 
+
+		synchronized(genericForm){
 			//Will be good when the genericForm loaded from this JVM process cache.
 			//Also good when there is a RAM based DAO implementation
-			//genericForm.removeFormAction( formAction );	
+			//genericForm.removeFormAction( formAction );
 			//make changes to AcceleraterAccount.
 			FormAction formActionIndex = createIndexedFormAction(formActionId, formActionVersion);
-		
+
 			FormAction formAction = genericForm.findTheFormAction(formActionIndex);
 			if(formAction == null){
 				throw new GenericFormManagerException(formAction+" is NOT FOUND" );
 			}
-			
+
 			formAction.changeProperty(property, newValueExpr);
 			
 			genericForm = saveGenericForm(userContext, genericForm, tokens().withFormActionList().done());
@@ -1503,13 +1559,306 @@ public class GenericFormManagerImpl extends CustomHisCheckerManager implements G
 	/*
 
 	*/
-	
+
 
 
 
 	public void onNewInstanceCreated(HisUserContext userContext, GenericForm newCreated) throws Exception{
 		ensureRelationInGraph(userContext, newCreated);
 		sendCreationEvent(userContext, newCreated);
+
+    
+	}
+
+  
+  
+
+	// -----------------------------------//  登录部分处理 \\-----------------------------------
+	// 手机号+短信验证码 登录
+	public Object loginByMobile(HisUserContextImpl userContext, String mobile, String verifyCode) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByMobile");
+		LoginData loginData = new LoginData();
+		loginData.setMobile(mobile);
+		loginData.setVerifyCode(verifyCode);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.MOBILE, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 账号+密码登录
+	public Object loginByPassword(HisUserContextImpl userContext, String loginId, Password password) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(), "loginByPassword");
+		LoginData loginData = new LoginData();
+		loginData.setLoginId(loginId);
+		loginData.setPassword(password.getClearTextPassword());
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.PASSWORD, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 微信小程序登录
+	public Object loginByWechatMiniProgram(HisUserContextImpl userContext, String code) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByWechatMiniProgram");
+		LoginData loginData = new LoginData();
+		loginData.setCode(code);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.WECHAT_MINIPROGRAM, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 企业微信小程序登录
+	public Object loginByWechatWorkMiniProgram(HisUserContextImpl userContext, String code) throws Exception {
+		LoginChannel loginChannel = LoginChannel.of(HisBaseUtils.getRequestAppType(userContext), this.getBeanName(),
+				"loginByWechatWorkMiniProgram");
+		LoginData loginData = new LoginData();
+		loginData.setCode(code);
+
+		LoginContext loginContext = LoginContext.of(LoginMethod.WECHAT_WORK_MINIPROGRAM, loginChannel, loginData);
+		return processLoginRequest(userContext, loginContext);
+	}
+	// 调用登录处理
+	protected Object processLoginRequest(HisUserContextImpl userContext, LoginContext loginContext) throws Exception {
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		LoginResult loginResult = iamService.doLogin(userContext, loginContext, this);
+		// 根据登录结果
+		if (!loginResult.isAuthenticated()) {
+			throw new Exception(loginResult.getMessage());
+		}
+		if (loginResult.isSuccess()) {
+			return onLoginSuccess(userContext, loginResult);
+		}
+		if (loginResult.isNewUser()) {
+			throw new Exception("请联系你的上级,先为你创建账号,然后再来登录.");
+		}
+		return new LoginForm();
+	}
+
+	@Override
+	public Object checkAccess(BaseUserContext baseUserContext, String methodName, Object[] parameters)
+			throws IllegalAccessException {
+		HisUserContextImpl userContext = (HisUserContextImpl)baseUserContext;
+		IamService iamService = (IamService) userContext.getBean("iamService");
+		Map<String, Object> loginInfo = iamService.getCachedLoginInfo(userContext);
+
+		SecUser secUser = iamService.tryToLoadSecUser(userContext, loginInfo);
+		UserApp userApp = iamService.tryToLoadUserApp(userContext, loginInfo);
+		if (userApp != null) {
+			userApp.setSecUser(secUser);
+		}
+		if (secUser == null) {
+			iamService.onCheckAccessWhenAnonymousFound(userContext, loginInfo);
+		}
+		afterSecUserAppLoadedWhenCheckAccess(userContext, loginInfo, secUser, userApp);
+		if (!isMethodNeedLogin(userContext, methodName, parameters)) {
+			return accessOK();
+		}
+
+		return super.checkAccess(baseUserContext, methodName, parameters);
+	}
+
+	// 判断哪些接口需要登录后才能执行. 默认除了loginBy开头的,其他都要登录
+	protected boolean isMethodNeedLogin(HisUserContextImpl userContext, String methodName, Object[] parameters) {
+		if (methodName.startsWith("loginBy")) {
+			return false;
+		}
+		if (methodName.startsWith("logout")) {
+			return false;
+		}
+		return true;
+	}
+
+	// 在checkAccess中加载了secUser和userApp后会调用此方法,用于定制化的用户数据加载. 默认什么也不做
+	protected void afterSecUserAppLoadedWhenCheckAccess(HisUserContextImpl userContext, Map<String, Object> loginInfo,
+			SecUser secUser, UserApp userApp) throws IllegalAccessException{
+	}
+
+
+
+	protected Object onLoginSuccess(HisUserContext userContext, LoginResult loginResult) throws Exception {
+		// by default, return the view of this object
+		UserApp userApp = loginResult.getLoginContext().getLoginTarget().getUserApp();
+		return this.view(userContext, userApp.getObjectId());
+	}
+
+	public void onAuthenticationFailed(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// by default, failed is failed, nothing can do
+	}
+	// when user authenticated success, but no sec_user related, this maybe a new user login from 3-rd party service.
+	public void onAuthenticateNewUserLogged(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// Generally speaking, when authenticated user logined, we will create a new account for him/her.
+		// you need do it like :
+		// First, you should create new data such as:
+		//   GenericForm newGenericForm = this.createGenericForm(userContext, ...
+		// Next, create a sec-user in your business way:
+		//   SecUser secUser = secUserManagerOf(userContext).createSecUser(userContext, login, mobile ...
+		// And set it into loginContext:
+		//   loginContext.getLoginTarget().setSecUser(secUser);
+		// Next, create an user-app to connect secUser and newGenericForm
+		//   UserApp uerApp = userAppManagerOf(userContext).createUserApp(userContext, secUser.getId(), ...
+		// Also, set it into loginContext:
+		//   loginContext.getLoginTarget().setUserApp(userApp);
+		// Since many of detailed info were depending business requirement, So,
+		throw new Exception("请重载函数onAuthenticateNewUserLogged()以处理新用户登录");
+	}
+	public void onAuthenticateUserLogged(HisUserContext userContext, LoginContext loginContext,
+			LoginResult loginResult, IdentificationHandler idHandler, BusinessHandler bizHandler)
+			throws Exception {
+		// by default, find the correct user-app
+		SecUser secUser = loginResult.getLoginContext().getLoginTarget().getSecUser();
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserApp.SEC_USER_PROPERTY, secUser.getId());
+		key.put(UserApp.OBJECT_TYPE_PROPERTY, GenericForm.INTERNAL_TYPE);
+		SmartList<UserApp> userApps = userContext.getDAOGroup().getUserAppDAO().findUserAppWithKey(key, EO);
+		if (userApps == null || userApps.isEmpty()) {
+			throw new Exception("您的账号未关联销售人员,请联系客服处理账号异常.");
+		}
+		UserApp userApp = userApps.first();
+		userApp.setSecUser(secUser);
+		loginResult.getLoginContext().getLoginTarget().setUserApp(userApp);
+	}
+	// -----------------------------------\\  登录部分处理 //-----------------------------------
+
+
+	// -----------------------------------// list-of-view 处理 \\-----------------------------------
+    protected void enhanceForListOfView(HisUserContext userContext,SmartList<GenericForm> list) throws Exception {
+    	if (list == null || list.isEmpty()){
+    		return;
+    	}
+
+
+    }
+	
+  // -----------------------------------\\ list-of-view 处理 //-----------------------------------v
+  
+ 	/**
+	 * miniprogram调用返回固定的detail class
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+ 	public Object wxappview(HisUserContext userContext, String genericFormId) throws Exception{
+	  SerializeScope vscope = HisViewScope.getInstance().getGenericFormDetailScope().clone();
+		GenericForm merchantObj = (GenericForm) this.view(userContext, genericFormId);
+    String merchantObjId = genericFormId;
+    String linkToUrl =	"genericFormManager/wxappview/" + merchantObjId + "/";
+    String pageTitle = "通用的形式"+"详情";
+		Map result = new HashMap();
+		List propList = new ArrayList();
+		List sections = new ArrayList();
+ 
+		propList.add(
+				MapUtil.put("id", "1-id")
+				    .put("fieldName", "id")
+				    .put("label", "序号")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("id", merchantObj.getId());
+
+		propList.add(
+				MapUtil.put("id", "2-title")
+				    .put("fieldName", "title")
+				    .put("label", "标题")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("title", merchantObj.getTitle());
+
+		propList.add(
+				MapUtil.put("id", "3-description")
+				    .put("fieldName", "description")
+				    .put("label", "描述")
+				    .put("type", "text")
+				    .put("displayField", "")
+				    .put("linkToUrl", "")
+				    .into_map()
+		);
+		result.put("description", merchantObj.getDescription());
+
+		//处理 sectionList
+
+		//处理Section：formMessageListSection
+		Map formMessageListSection = ListofUtils.buildSection(
+		    "formMessageListSection",
+		    "消息列表形式",
+		    null,
+		    "",
+		    "__no_group",
+		    "formMessageManager/listByForm/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(formMessageListSection);
+
+		result.put("formMessageListSection", ListofUtils.toShortList(merchantObj.getFormMessageList(), "formMessage"));
+		vscope.field("formMessageListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( FormMessage.class.getName(), null));
+
+		//处理Section：formFieldMessageListSection
+		Map formFieldMessageListSection = ListofUtils.buildSection(
+		    "formFieldMessageListSection",
+		    "表单字段消息列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "formFieldMessageManager/listByForm/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(formFieldMessageListSection);
+
+		result.put("formFieldMessageListSection", ListofUtils.toShortList(merchantObj.getFormFieldMessageList(), "formFieldMessage"));
+		vscope.field("formFieldMessageListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( FormFieldMessage.class.getName(), null));
+
+		//处理Section：formFieldListSection
+		Map formFieldListSection = ListofUtils.buildSection(
+		    "formFieldListSection",
+		    "表单字段列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "formFieldManager/listByForm/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(formFieldListSection);
+
+		result.put("formFieldListSection", ListofUtils.toShortList(merchantObj.getFormFieldList(), "formField"));
+		vscope.field("formFieldListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( FormField.class.getName(), null));
+
+		//处理Section：formActionListSection
+		Map formActionListSection = ListofUtils.buildSection(
+		    "formActionListSection",
+		    "表单动作列表",
+		    null,
+		    "",
+		    "__no_group",
+		    "formActionManager/listByForm/"+merchantObjId+"/",
+		    "auto"
+		);
+		sections.add(formActionListSection);
+
+		result.put("formActionListSection", ListofUtils.toShortList(merchantObj.getFormActionList(), "formAction"));
+		vscope.field("formActionListSection", HisListOfViewScope.getInstance()
+					.getListOfViewScope( FormAction.class.getName(), null));
+
+		result.put("propList", propList);
+		result.put("sectionList", sections);
+		result.put("pageTitle", pageTitle);
+		result.put("linkToUrl", linkToUrl);
+
+		vscope.field("propList", SerializeScope.EXCLUDE())
+				.field("sectionList", SerializeScope.EXCLUDE())
+				.field("pageTitle", SerializeScope.EXCLUDE())
+				.field("linkToUrl", SerializeScope.EXCLUDE());
+		userContext.forceResponseXClassHeader("com.terapico.appview.DetailPage");
+		return BaseViewPage.serialize(result, vscope);
 	}
 
 }

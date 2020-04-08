@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -94,6 +98,11 @@ public class DepartmentJDBCTemplateDAO extends HisBaseDAOImpl implements Departm
 		return loadInternalDepartment(accessKey, options);
 	}
 	*/
+	
+	public SmartList<Department> loadAll() {
+	    return this.loadAll(getDepartmentMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -646,12 +655,16 @@ public class DepartmentJDBCTemplateDAO extends HisBaseDAOImpl implements Departm
  	protected Object[] prepareDepartmentUpdateParameters(Department department){
  		Object[] parameters = new Object[6];
  
- 		parameters[0] = department.getName(); 	
+ 		
+ 		parameters[0] = department.getName();
+ 		 	
  		if(department.getHospital() != null){
  			parameters[1] = department.getHospital().getId();
  		}
  
- 		parameters[2] = department.getUpdateTime();		
+ 		
+ 		parameters[2] = department.getUpdateTime();
+ 				
  		parameters[3] = department.nextVersion();
  		parameters[4] = department.getId();
  		parameters[5] = department.getVersion();
@@ -664,13 +677,17 @@ public class DepartmentJDBCTemplateDAO extends HisBaseDAOImpl implements Departm
 		department.setId(newDepartmentId);
 		parameters[0] =  department.getId();
  
- 		parameters[1] = department.getName(); 	
+ 		
+ 		parameters[1] = department.getName();
+ 		 	
  		if(department.getHospital() != null){
  			parameters[2] = department.getHospital().getId();
  		
  		}
  		
- 		parameters[3] = department.getUpdateTime();		
+ 		
+ 		parameters[3] = department.getUpdateTime();
+ 				
  				
  		return parameters;
  	}
@@ -1190,13 +1207,13 @@ public class DepartmentJDBCTemplateDAO extends HisBaseDAOImpl implements Departm
     public SmartList<Department> requestCandidateDepartmentForDoctorAssignment(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(DepartmentTable.COLUMN_NAME, filterKey, pageNo, pageSize, getDepartmentMapper());
+		return findAllCandidateByFilter(DepartmentTable.COLUMN_NAME, DepartmentTable.COLUMN_HOSPITAL, filterKey, pageNo, pageSize, getDepartmentMapper());
     }
 		
     public SmartList<Department> requestCandidateDepartmentForDoctorSchedule(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(DepartmentTable.COLUMN_NAME, filterKey, pageNo, pageSize, getDepartmentMapper());
+		return findAllCandidateByFilter(DepartmentTable.COLUMN_NAME, DepartmentTable.COLUMN_HOSPITAL, filterKey, pageNo, pageSize, getDepartmentMapper());
     }
 		
 
@@ -1289,6 +1306,34 @@ public class DepartmentJDBCTemplateDAO extends HisBaseDAOImpl implements Departm
 	@Override
 	public SmartList<Department> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDepartmentMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateDepartment executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateDepartment result = new CandidateDepartment();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

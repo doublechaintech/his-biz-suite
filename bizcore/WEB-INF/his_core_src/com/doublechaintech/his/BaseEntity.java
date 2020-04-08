@@ -1,7 +1,6 @@
 package com.doublechaintech.his;
 
 
-
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -18,12 +17,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.terapico.caf.RemoteInitiable;
+import com.terapico.uccaf.CafEntity;
 import com.terapico.utils.TextUtil;
 
-public class BaseEntity implements Serializable, RemoteInitiable{
+public class BaseEntity implements CafEntity, Serializable, RemoteInitiable{
+	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getVersion()};
+	}
+	
+	private String internalType = null; // 禁止直接操作这个成员
+	public static BaseEntity pretendToBe(String classShortName, String id) {
+		BaseEntity result = new BaseEntity();
+		result.internalType = classShortName;
+		result.setId(id);
+		result.setDisplayName(id);
+		return result;
+	}
 	public  void ensureAccess(Map<String,Object> accessTokens) {
 		
 		List<SmartList<?>> allLists = this.getAllRelatedLists();
@@ -46,17 +61,27 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 		
 	}
 	
+	protected List<Action> filterActionList(){
+		if(this.getActionList()==null) {
+			return null;
+		}
+		List<Action> filteredActionList = this.getActionList()
+				.stream()
+				.filter(action->this.isOneOf(action.getActionGroup(), action.specialActionTypes()))
+				.collect(Collectors.toList());
+		
+		return filteredActionList;
+		
+	}
+	
 	public List<KeyValuePair> keyValuePairOf(){
 		
 		List<KeyValuePair> result = new ArrayList<KeyValuePair>();
-		
-		this.appendKeyValuePair(result, "actionList", this.getActionList());
+		this.appendKeyValuePair(result, "actionList", filterActionList() );
 		this.appendKeyValuePair(result, "messageList", this.getErrorMessageList());
-		
-		
-		
 		return result;
 	}
+	
 	protected void appendKeyValuePair(List<KeyValuePair> list, String key, Object value) {
 		
 		
@@ -81,6 +106,9 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 		return null;
 	}
 	public String getInternalType(){
+		if (internalType != null){
+			return internalType;
+		}
 		return this.getClass().getSimpleName();
 	}
 	boolean endsWithOneOf(String value, String candiates[]){
@@ -376,6 +404,9 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 	public Map<String, Object> getValueMap() {
 		return valueMap;
 	}
+	public void setValueMap(Map<String, Object> valueMap) {
+		this.valueMap = valueMap;
+	}
 	public <T> void  addItemToValueMap(String key, T item){
 		ensureValueMap();
 		valueMap.put(key, item);
@@ -566,6 +597,9 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 	protected Integer parseInt(String intExpr){		
 		return Integer.parseInt(intExpr);
 	}
+	protected Long parseLong(String longExpr){		
+		return Long.parseLong(longExpr);
+	}
 	protected Boolean parseBoolean(String booleanExpr){		
 		return Boolean.parseBoolean(booleanExpr);
 	}
@@ -591,7 +625,9 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 	protected String parseString(String stringExpr){		
 		return stringExpr;
 	}
-	
+	protected Images parseImages(String stringExpr){		
+		return Images.fromString(stringExpr);
+	}
 	
 	protected boolean equalsInt(int a, int b){
 		return a==b;
@@ -610,7 +646,7 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 		return a.equals(b);
 	}
 	
-	private boolean equalsObject(Object a, Object b){
+	protected boolean equalsObject(Object a, Object b){
 		if(a==b){
 			return true;//they can be both null, or exact the same object, this is much faster than equals function
 		}
@@ -747,7 +783,7 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 		return this.getId();
 	}
 	protected boolean equalsTimestamp(Date oldValue, Date newValue) {
-		// TODO Auto-generated method stub
+		
 		return equalsDate(oldValue,newValue);
 	}
 
@@ -815,7 +851,7 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 	
 	protected void collectFromList(BaseEntity owner, List<BaseEntity> entityList,
 			SmartList<? extends BaseEntity> targetEntityList, String internalType) {
-		// TODO Auto-generated method stub
+		
 		if(targetEntityList==null){
 			return;
 		}
@@ -871,6 +907,16 @@ public class BaseEntity implements Serializable, RemoteInitiable{
 		return this.isValidFieldChar(fieldChar);
 	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

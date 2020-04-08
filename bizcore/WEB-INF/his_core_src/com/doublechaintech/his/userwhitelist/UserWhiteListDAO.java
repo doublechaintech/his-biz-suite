@@ -3,6 +3,8 @@ package com.doublechaintech.his.userwhitelist;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -13,9 +15,9 @@ import com.doublechaintech.his.userdomain.UserDomain;
 import com.doublechaintech.his.userdomain.UserDomainDAO;
 
 
-public interface UserWhiteListDAO{
+public interface UserWhiteListDAO extends BaseDAO{
 
-	
+	public SmartList<UserWhiteList> loadAll();
 	public UserWhiteList load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<UserWhiteList> userWhiteListList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -45,6 +47,8 @@ public interface UserWhiteListDAO{
 	
 	
 	public SmartList<UserWhiteList> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateUserWhiteList executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<UserWhiteList> findUserWhiteListByDomain(String userDomainId, Map<String,Object> options);
  	public int countUserWhiteListByDomain(String userDomainId, Map<String,Object> options);

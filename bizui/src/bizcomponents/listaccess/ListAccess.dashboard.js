@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -45,12 +44,7 @@ const imageList =(listAccess)=>{return [
 const internalImageListOf = (listAccess) =>defaultImageListOf(listAccess,imageList)
 
 const optionList =(listAccess)=>{return [ 
-	  {"title":'读权限',"value":listAccess.readPermission,"parameterName":"readPermission"},
-  {"title":'创建权限',"value":listAccess.createPermission,"parameterName":"createPermission"},
-  {"title":'删除权限',"value":listAccess.deletePermission,"parameterName":"deletePermission"},
-  {"title":'更新权限',"value":listAccess.updatePermission,"parameterName":"updatePermission"},
-  {"title":'执行权限',"value":listAccess.executionPermission,"parameterName":"executionPermission"},
-]}
+	]}
 
 const buildTransferModal = defaultBuildTransferModal
 const showTransferModel = defaultShowTransferModel
@@ -109,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -122,9 +116,14 @@ const internalSummaryOf = (listAccess,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{listAccess.id}</Description> 
-<Description term="名称">{listAccess.name}</Description> 
-<Description term="内部名称">{listAccess.internalName}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{listAccess.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{listAccess.name}</Description> 
+<Description term="内部名称" style={{wordBreak: 'break-all'}}>{listAccess.internalName}</Description> 
+<Description term="读权限" style={{wordBreak: 'break-all'}}>{listAccess.readPermission}</Description> 
+<Description term="创建权限" style={{wordBreak: 'break-all'}}>{listAccess.createPermission}</Description> 
+<Description term="删除权限" style={{wordBreak: 'break-all'}}>{listAccess.deletePermission}</Description> 
+<Description term="更新许可" style={{wordBreak: 'break-all'}}>{listAccess.updatePermission}</Description> 
+<Description term="执行权限" style={{wordBreak: 'break-all'}}>{listAccess.executionPermission}</Description> 
 <Description term="应用程序">{listAccess.app==null?appLocaleName(userContext,"NotAssigned"):`${listAccess.app.displayName}(${listAccess.app.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"应用程序","userApp",ListAccessService.requestCandidateApp,
@@ -168,7 +167,7 @@ class ListAccessDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"访问列表",cardsFor: "listAccess",
+    const cardsData = {cardsName:window.trans('list_access'),cardsFor: "listAccess",
     	cardsSource: this.props.listAccess,returnURL,displayName,
   		subItems: [
     
@@ -200,8 +199,9 @@ class ListAccessDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

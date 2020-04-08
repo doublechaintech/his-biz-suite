@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -96,6 +100,11 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
 		return loadInternalDoctorSchedule(accessKey, options);
 	}
 	*/
+	
+	public SmartList<DoctorSchedule> loadAll() {
+	    return this.loadAll(getDoctorScheduleMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -842,12 +851,16 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
  	protected Object[] prepareDoctorScheduleUpdateParameters(DoctorSchedule doctorSchedule){
  		Object[] parameters = new Object[14];
  
- 		parameters[0] = doctorSchedule.getName(); 	
+ 		
+ 		parameters[0] = doctorSchedule.getName();
+ 		 	
  		if(doctorSchedule.getDoctor() != null){
  			parameters[1] = doctorSchedule.getDoctor().getId();
  		}
  
- 		parameters[2] = doctorSchedule.getScheduleDate(); 	
+ 		
+ 		parameters[2] = doctorSchedule.getScheduleDate();
+ 		 	
  		if(doctorSchedule.getPeriod() != null){
  			parameters[3] = doctorSchedule.getPeriod().getId();
  		}
@@ -856,14 +869,22 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
  			parameters[4] = doctorSchedule.getDepartment().getId();
  		}
  
+ 		
  		parameters[5] = doctorSchedule.getAvailable();
- 		parameters[6] = doctorSchedule.getPrice(); 	
+ 		
+ 		
+ 		parameters[6] = doctorSchedule.getPrice();
+ 		 	
  		if(doctorSchedule.getExpenseType() != null){
  			parameters[7] = doctorSchedule.getExpenseType().getId();
  		}
  
+ 		
  		parameters[8] = doctorSchedule.getCreateTime();
- 		parameters[9] = doctorSchedule.getUpdateTime(); 	
+ 		
+ 		
+ 		parameters[9] = doctorSchedule.getUpdateTime();
+ 		 	
  		if(doctorSchedule.getHospital() != null){
  			parameters[10] = doctorSchedule.getHospital().getId();
  		}
@@ -880,13 +901,17 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
 		doctorSchedule.setId(newDoctorScheduleId);
 		parameters[0] =  doctorSchedule.getId();
  
- 		parameters[1] = doctorSchedule.getName(); 	
+ 		
+ 		parameters[1] = doctorSchedule.getName();
+ 		 	
  		if(doctorSchedule.getDoctor() != null){
  			parameters[2] = doctorSchedule.getDoctor().getId();
  		
  		}
  		
- 		parameters[3] = doctorSchedule.getScheduleDate(); 	
+ 		
+ 		parameters[3] = doctorSchedule.getScheduleDate();
+ 		 	
  		if(doctorSchedule.getPeriod() != null){
  			parameters[4] = doctorSchedule.getPeriod().getId();
  		
@@ -897,15 +922,23 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
  		
  		}
  		
+ 		
  		parameters[6] = doctorSchedule.getAvailable();
- 		parameters[7] = doctorSchedule.getPrice(); 	
+ 		
+ 		
+ 		parameters[7] = doctorSchedule.getPrice();
+ 		 	
  		if(doctorSchedule.getExpenseType() != null){
  			parameters[8] = doctorSchedule.getExpenseType().getId();
  		
  		}
  		
+ 		
  		parameters[9] = doctorSchedule.getCreateTime();
- 		parameters[10] = doctorSchedule.getUpdateTime(); 	
+ 		
+ 		
+ 		parameters[10] = doctorSchedule.getUpdateTime();
+ 		 	
  		if(doctorSchedule.getHospital() != null){
  			parameters[11] = doctorSchedule.getHospital().getId();
  		
@@ -1091,6 +1124,34 @@ public class DoctorScheduleJDBCTemplateDAO extends HisBaseDAOImpl implements Doc
 	@Override
 	public SmartList<DoctorSchedule> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getDoctorScheduleMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateDoctorSchedule executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateDoctorSchedule result = new CandidateDoctorSchedule();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

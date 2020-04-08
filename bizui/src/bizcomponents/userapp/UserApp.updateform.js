@@ -236,17 +236,22 @@ class UserAppUpdateForm extends Component {
 	const selectedRow = this.getSelectedRow()
 
 	const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
-
+	
+	const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"Update")}用户应用程序: {(currentUpdateIndex+1)}/{selectedRows.length}</div>)
+    }
+	
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
+        title={internalRenderTitle()}
         content={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
         wrapperClassName={styles.advancedForm}
       >
@@ -255,118 +260,117 @@ class UserAppUpdateForm extends Component {
             <Row gutter={16}>
             
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="ID" disabled/>
+                    <Input size="large"  placeHolder={fieldLabels.id} disabled/>
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.title} {...formItemLayout}>
                   {getFieldDecorator('title', {
                     initialValue: selectedRow.title,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="标题" />
+                    <Input size="large"  placeHolder={fieldLabels.title} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.appIcon} {...formItemLayout}>
                   {getFieldDecorator('appIcon', {
                     initialValue: selectedRow.appIcon,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="应用程序图标" />
+                    <Input size="large"  placeHolder={fieldLabels.appIcon} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
+                <Form.Item label={fieldLabels.fullAccess} {...formItemLayout}>
+                  {getFieldDecorator('fullAccess', {
+                    initialValue: selectedRow.fullAccess,
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                    <Input size="large"  placeHolder={fieldLabels.fullAccess} />
+                    
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.permission} {...formItemLayout}>
                   {getFieldDecorator('permission', {
                     initialValue: selectedRow.permission,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="许可" />
+                    <Input size="large"  placeHolder={fieldLabels.permission} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.objectType} {...formItemLayout}>
                   {getFieldDecorator('objectType', {
                     initialValue: selectedRow.objectType,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="访问对象类型" />
+                    <Input size="large"  placeHolder={fieldLabels.objectType} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.objectId} {...formItemLayout}>
                   {getFieldDecorator('objectId', {
                     initialValue: selectedRow.objectId,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="对象ID" />
+                    <Input size="large"  placeHolder={fieldLabels.objectId} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.location} {...formItemLayout}>
                   {getFieldDecorator('location', {
                     initialValue: selectedRow.location,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="位置" />
+                    <Input size="large"  placeHolder={fieldLabels.location} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-            </Row>
-          </Form>  
-        </Card>
-        
-        <Card title={appLocaleName(userContext,"Preference")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
             
+       
+        
+        
+        
 
-              <Col lg={8} md={12} sm={24}>
-                <Form.Item label={fieldLabels.fullAccess} {...switchFormItemLayout}>
-                  {getFieldDecorator('fullAccess', {
-                    initialValue: selectedRow.fullAccess,
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                    valuePropName: 'checked'
-                  })(
-                    <Switch checkedChildren={appLocaleName(userContext,"Yes")} unCheckedChildren={appLocaleName(userContext,"No")}  placeholder={appLocaleName(userContext,"PleaseInput")} />
-                  )}
-                </Form.Item>
-              </Col>
 
-            </Row>
-          </Form>  
-        </Card>        
-        
-        
-        
-        
+			</Row>
+          </Form>
+        </Card>
+
+
+
+
+
 
 
         <FooterToolbar>

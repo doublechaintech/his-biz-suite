@@ -43,21 +43,27 @@ public class JWTUtil {
 	 * @return
 	 */
 	public static String getJwtToken(String userId, String userUploadHome, String envType) {
-		return getJwtToken(userId, userUploadHome, envType, new Date());
+		return getJwtToken(userId, userUploadHome, envType, userId);
 	}
-	
-	public static String getJwtToken(String userId, String userUploadHome, String envType, Date now) {
+	public static String getJwtToken(String userId, String userUploadHome, String envType, String tokenKey) {
+		return getJwtToken(userId, userUploadHome, envType, tokenKey, new Date());
+	}
+	public static String getJwtToken(String userId, String userUploadHome, String envType, String tokenKey, Date date) {
+		return getJwtToken(userId, userUploadHome, envType, tokenKey, date, new String[] {userId});
+	}
+	public static String getJwtToken(String userId, String userUploadHome, String envType, String tokenKey, Date date, String[] tags) {
 		try {
 			
 		    Algorithm algorithm = Algorithm.HMAC256(getSecret());
 		    String token = JWT.create()
 		        .withIssuer(getIssuer())
 		        .withKeyId(userId)
-		        .withIssuedAt(now)
-		        .withExpiresAt(DateTimeUtil.addDays(now, 7, false))
+		        .withIssuedAt(date)
+		        .withExpiresAt(DateTimeUtil.addDays(date, 7, false))
 		        .withClaim("userUploadHome", userUploadHome)
 		        .withClaim("envType", envType)
-		        .withArrayClaim("tags", new String[] {userId})
+		        .withClaim("tokenKey", tokenKey)
+		        .withArrayClaim("tags", tags)
 		        .sign(algorithm);
 		    return token;
 		} catch (JWTCreationException exception){

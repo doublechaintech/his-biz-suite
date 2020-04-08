@@ -3,6 +3,8 @@ package com.doublechaintech.his.objectaccess;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.doublechaintech.his.BaseDAO;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.MultipleAccessKey;
@@ -13,9 +15,9 @@ import com.doublechaintech.his.userapp.UserApp;
 import com.doublechaintech.his.userapp.UserAppDAO;
 
 
-public interface ObjectAccessDAO{
+public interface ObjectAccessDAO extends BaseDAO{
 
-	
+	public SmartList<ObjectAccess> loadAll();
 	public ObjectAccess load(String id, Map<String,Object> options) throws Exception;
 	public void enhanceList(List<ObjectAccess> objectAccessList);
 	public void collectAndEnhance(BaseEntity ownerEntity);
@@ -45,6 +47,8 @@ public interface ObjectAccessDAO{
 	
 	
 	public SmartList<ObjectAccess> queryList(String sql, Object ... parmeters);
+	public int count(String sql, Object ... parmeters);
+	public CandidateObjectAccess executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception ;
  
  	public SmartList<ObjectAccess> findObjectAccessByApp(String userAppId, Map<String,Object> options);
  	public int countObjectAccessByApp(String userAppId, Map<String,Object> options);

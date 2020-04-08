@@ -239,17 +239,22 @@ class DoctorScheduleUpdateForm extends Component {
 	const selectedRow = this.getSelectedRow()
 
 	const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
-
+	
+	const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"Update")}医生安排: {(currentUpdateIndex+1)}/{selectedRows.length}</div>)
+    }
+	
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
+        title={internalRenderTitle()}
         content={`${appLocaleName(userContext,"Update")}${(currentUpdateIndex+1)}/${selectedRows.length}`}
         wrapperClassName={styles.advancedForm}
       >
@@ -258,73 +263,81 @@ class DoctorScheduleUpdateForm extends Component {
             <Row gutter={16}>
             
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.id} {...formItemLayout}>
                   {getFieldDecorator('id', {
                     initialValue: selectedRow.id,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="ID" disabled/>
+                    <Input size="large"  placeHolder={fieldLabels.id} disabled/>
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.name} {...formItemLayout}>
                   {getFieldDecorator('name', {
                     initialValue: selectedRow.name,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="名称" />
+                    <Input size="large"  placeHolder={fieldLabels.name} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.scheduleDate} {...formItemLayout}>
                   {getFieldDecorator('scheduleDate', {
                     initialValue: selectedRow.scheduleDate,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <DatePicker size="large" format="YYYY-MM-DD" placeholder="安排日期" />
+                    <DatePicker size="large" format="YYYY-MM-DD"  placeHolder={fieldLabels.scheduleDate}/>
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.available} {...formItemLayout}>
                   {getFieldDecorator('available', {
                     initialValue: selectedRow.available,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" placeholder="可用" />
+                    <Input size="large"  placeHolder={fieldLabels.available} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-              <Col lg={12} md={12} sm={24}>
+              <Col lg={24} md={24} sm={24}>
                 <Form.Item label={fieldLabels.price} {...formItemLayout}>
                   {getFieldDecorator('price', {
                     initialValue: selectedRow.price,
                     rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
                   })(
-                    <Input size="large" prefix={`${appLocaleName(userContext,"Currency")}`} placeholder="价格" />
+                    <Input size="large" prefix={`${appLocaleName(userContext,"Currency")}`} placeHolder={fieldLabels.price} />
                     
                   )}
                 </Form.Item>
               </Col>
 
-            </Row>
-          </Form>  
-        </Card>
+            
        
         
         
         
+
+
+			</Row>
+          </Form>
+        </Card>
+
+
+
+
+
 
 
         <FooterToolbar>

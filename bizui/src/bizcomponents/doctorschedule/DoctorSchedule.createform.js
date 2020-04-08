@@ -9,6 +9,7 @@ import styles from './DoctorSchedule.createform.less'
 import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
 import DoctorScheduleBase from './DoctorSchedule.base'
+import DoctorScheduleCreateFormBody from './DoctorSchedule.createformbody'
 import appLocaleName from '../../common/Locale.tool'
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -18,9 +19,9 @@ const testValues = {};
 /*
 const testValues = {
   name: '2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10',
-  scheduleDate: '2018-11-16',
-  available: '20',
-  price: '111.75',
+  scheduleDate: '2019-12-08',
+  available: '18',
+  price: '119.05',
   doctorId: 'D000001',
   periodId: 'MORNING',
   departmentId: 'D000001',
@@ -58,7 +59,7 @@ class DoctorScheduleCreateForm extends Component {
 
 
 
-  handleChange = (event, source) => {
+  handleImageChange = (event, source) => {
     console.log('get file list from change in update change:', source)
 
     const { fileList } = event
@@ -66,9 +67,9 @@ class DoctorScheduleCreateForm extends Component {
 
     convertedImagesValues[source] = fileList
     this.setState({ convertedImagesValues })
-    console.log('/get file list from change in update change:', source)
+    console.log('/get file list from change in update change:', source, "file list" ,fileList)
   }
-	
+  
   
 
   render() {
@@ -175,6 +176,9 @@ class DoctorScheduleCreateForm extends Component {
     
     const tryinit  = (fieldName) => {
       const { owner } = this.props
+      if(!owner){
+      	return null
+      }
       const { referenceName } = owner
       if(referenceName!=fieldName){
         return null
@@ -184,6 +188,9 @@ class DoctorScheduleCreateForm extends Component {
     
     const availableForEdit= (fieldName) =>{
       const { owner } = this.props
+      if(!owner){
+      	return true
+      }
       const { referenceName } = owner
       if(referenceName!=fieldName){
         return true
@@ -191,173 +198,29 @@ class DoctorScheduleCreateForm extends Component {
       return false
     
     }
-    const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+	const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 3 },
+      wrapperCol: { span: 9 },
     }
+    
+    const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"CreateNew")}{window.trans('doctor_schedule')}</div>)
+    }
+
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"CreateNew")}医生安排`}
-        content={`${appLocaleName(userContext,"CreateNew")}医生安排`}
+        title={internalRenderTitle()}
+        content={`${appLocaleName(userContext,"CreateNew")}${window.trans('doctor_schedule')}`}
         wrapperClassName={styles.advancedForm}
       >
-        <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
+   			
+   		<DoctorScheduleCreateFormBody	 {...this.props} handleImageChange={this.handleImageChange}/>
 
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.name} {...formItemLayout}>
-                  {getFieldDecorator('name', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="名称" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.scheduleDate} {...formItemLayout}>
-                  {getFieldDecorator('scheduleDate', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <DatePicker size="large" format="YYYY-MM-DD" placeholder="安排日期" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.available} {...formItemLayout}>
-                  {getFieldDecorator('available', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="可用" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.price} {...formItemLayout}>
-                  {getFieldDecorator('price', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" prefix={`${appLocaleName(userContext,"Currency")}`} placeholder="价格" />
-                  )}
-                </Form.Item>
-              </Col>
-
-            </Row>
-          </Form>
-        </Card>
-
-
-
-       
-        
-
-
-
-
-
-
-
-
-
-        <Card title={appLocaleName(userContext,"Associate")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.doctor} {...formItemLayout}>
-                  {getFieldDecorator('doctorId', {
-                  	initialValue: tryinit('doctor'),
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('doctor')}
-                    targetType={"doctor"} 
-                    requestFunction={DoctorScheduleService.requestCandidateDoctor}/>
-                  
-                 
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.period} {...formItemLayout}>
-                  {getFieldDecorator('periodId', {
-                  	initialValue: tryinit('period'),
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('period')}
-                    targetType={"period"} 
-                    requestFunction={DoctorScheduleService.requestCandidatePeriod}/>
-                  
-                 
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.department} {...formItemLayout}>
-                  {getFieldDecorator('departmentId', {
-                  	initialValue: tryinit('department'),
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('department')}
-                    targetType={"department"} 
-                    requestFunction={DoctorScheduleService.requestCandidateDepartment}/>
-                  
-                 
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.expenseType} {...formItemLayout}>
-                  {getFieldDecorator('expenseTypeId', {
-                  	initialValue: tryinit('expenseType'),
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('expenseType')}
-                    targetType={"expenseType"} 
-                    requestFunction={DoctorScheduleService.requestCandidateExpenseType}/>
-                  
-                 
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.hospital} {...formItemLayout}>
-                  {getFieldDecorator('hospitalId', {
-                  	initialValue: tryinit('hospital'),
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                  
-                  <SelectObject 
-                    disabled={!availableForEdit('hospital')}
-                    targetType={"hospital"} 
-                    requestFunction={DoctorScheduleService.requestCandidateHospital}/>
-                  
-                 
-                  )}
-                </Form.Item>
-              </Col>
-
-            </Row>
-          </Form>  
-        </Card>
 
         <FooterToolbar>
           {getErrorInfo()}
@@ -371,6 +234,7 @@ class DoctorScheduleCreateForm extends Component {
             {appLocaleName(userContext,"Discard")}
           </Button>
         </FooterToolbar>
+      
       </PageHeaderLayout>
     )
   }

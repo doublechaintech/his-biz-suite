@@ -1,7 +1,10 @@
 
+@warning object definition: wechat_workapp_identify: word 'workapp' seems not found in library
+@warning object definition: wechat_miniapp_identify: word 'miniapp' seems not found in library
 
 
-=================Execute Report (Model Time 190826T1611) @Mon Sep 16 18:37:41 CST 2019, 24 objects and 181 fields===========================
+
+=================Execute Report (Model Time 191029T1628) @Wed Apr 08 18:26:05 CST 2020, 32 objects and 235 fields===========================
 
 
 
@@ -109,13 +112,14 @@ Info: Add virtual field [doctor_schedules(es)] to <hospital>
 
 **************************************************
 
+meta{name=hospital}
 hospital{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('上和医院'), verb: false, required: true;
-		string	address('毕升路22号'), verb: false, required: true;
-		string	telephone('028-9123123'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('上和医院'), verb: false, required: true,type:string;
+		string	address('毕升路22号'), verb: false, required: true,type:string;
+		string	telephone('028-9123123'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(6){
 		expenseTypeList	hospital(__no_group)--hospital;
@@ -127,16 +131,17 @@ hospital{
 	}
 } depth=0; isRoot = true
 
+meta{name=expense_type, features=setting}
 expense_type{
 	fields(8){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
-		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
-		string	status('正常|停用'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList;
-		string_longtext	description('text()'), verb: false, required: true;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('诊疗费|治疗费|检查费'), verb: false, required: true,type:string;
+		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true,type:string;
+		string	status('正常|停用'), verb: false, required: true,type:string;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList,type:hospital;
+		string_longtext	description('text()'), verb: false, required: true,type:string_longtext;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		expenseItemList	expense_type(__no_group)--expense_type;
@@ -144,41 +149,44 @@ expense_type{
 	}
 } depth=1; isRoot = false
 
+meta{name=period, identified_by=code, features=status}
 period{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('上午|下午|夜班'), verb: false, required: true;
-		string	code('MORNING|AFTERNOON|NIGHT'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('上午|下午|夜班'), verb: false, required: true,type:string;
+		string	code('MORNING|AFTERNOON|NIGHT'), verb: false, required: true,type:string;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList,type:hospital;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(1){
 		doctorScheduleList	period(__no_group)--period;
 	}
 } depth=1; isRoot = false
 
+meta{name=expense_item, features=setting}
 expense_item{
 	fields(7){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
-		money	price('$99999999999.00'), verb: false, required: true;
-		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true,type:string;
+		money	price('$99999999999.00'), verb: false, required: true,type:money;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList,type:expense_type;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList,type:hospital;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=doctor}
 doctor{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('魏松全'), verb: false, required: true;
-		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('魏松全'), verb: false, required: true,type:string;
+		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true,type:string_image;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList,type:hospital;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		doctorAssignmentList	doctor(__no_group)--doctor;
@@ -186,13 +194,14 @@ doctor{
 	}
 } depth=1; isRoot = false
 
+meta{name=department, features=setting}
 department{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('放射科'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('放射科'), verb: false, required: true,type:string;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList,type:hospital;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		doctorAssignmentList	department(__no_group)--department;
@@ -200,46 +209,49 @@ department{
 	}
 } depth=1; isRoot = false
 
+meta{name=doctor_assignment, features=setting}
 doctor_assignment{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('魏松全在内分泌科室上'), verb: false, required: true;
-		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
-		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('魏松全在内分泌科室上'), verb: false, required: true,type:string;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList,type:doctor;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList,type:department;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=doctor_schedule}
 doctor_schedule{
 	fields(13){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
-		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		date	schedule_date('2019-3-11'), verb: false, required: true;
-		period	period('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		int	available('20'), verb: false, required: true;
-		money	price('$123.99'), verb: false, required: true;
-		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		date_time_create	create_time('createTime()'), verb: false, required: true;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true,type:string;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:doctor;
+		date	schedule_date('2019-3-11'), verb: false, required: true,type:date;
+		period	period('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:period;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:department;
+		int	available('20'), verb: false, required: true,type:int;
+		money	price('$123.99'), verb: false, required: true,type:money;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:expense_type;
+		date_time_create	create_time('createTime()'), verb: false, required: true,type:date_time_create;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:hospital;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=hospital}
 hospital{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('上和医院'), verb: false, required: true;
-		string	address('毕升路22号'), verb: false, required: true;
-		string	telephone('028-9123123'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('上和医院'), verb: false, required: true,type:string;
+		string	address('毕升路22号'), verb: false, required: true,type:string;
+		string	telephone('028-9123123'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(6){
 		expenseTypeList	hospital(__no_group)--hospital;
@@ -251,16 +263,17 @@ hospital{
 	}
 } depth=0; isRoot = true
 
+meta{name=expense_type, features=setting}
 expense_type{
 	fields(8){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('诊疗费|治疗费|检查费'), verb: false, required: true;
-		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true;
-		string	status('正常|停用'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList;
-		string_longtext	description('text()'), verb: false, required: true;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('诊疗费|治疗费|检查费'), verb: false, required: true,type:string;
+		string	helper_chars('zlf|zlf|jcf'), verb: false, required: true,type:string;
+		string	status('正常|停用'), verb: false, required: true,type:string;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseTypeList,type:hospital;
+		string_longtext	description('text()'), verb: false, required: true,type:string_longtext;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		expenseItemList	expense_type(__no_group)--expense_type;
@@ -268,41 +281,44 @@ expense_type{
 	}
 } depth=1; isRoot = false
 
+meta{name=period, identified_by=code, features=status}
 period{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('上午|下午|夜班'), verb: false, required: true;
-		string	code('MORNING|AFTERNOON|NIGHT'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('上午|下午|夜班'), verb: false, required: true,type:string;
+		string	code('MORNING|AFTERNOON|NIGHT'), verb: false, required: true,type:string;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: periodList,type:hospital;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(1){
 		doctorScheduleList	period(__no_group)--period;
 	}
 } depth=1; isRoot = false
 
+meta{name=expense_item, features=setting}
 expense_item{
 	fields(7){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true;
-		money	price('$99999999999.00'), verb: false, required: true;
-		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('专家诊疗费|血常规|煎药费'), verb: false, required: true,type:string;
+		money	price('$99999999999.00'), verb: false, required: true,type:money;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: expenseItemList,type:expense_type;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: expenseItemList,type:hospital;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=doctor}
 doctor{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('魏松全'), verb: false, required: true;
-		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('魏松全'), verb: false, required: true,type:string;
+		string_image	shot_image('snap.shot-400-300-red.jpg'), verb: false, required: true,type:string_image;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorList,type:hospital;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		doctorAssignmentList	doctor(__no_group)--doctor;
@@ -310,13 +326,14 @@ doctor{
 	}
 } depth=1; isRoot = false
 
+meta{name=department, features=setting}
 department{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('放射科'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('放射科'), verb: false, required: true,type:string;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: departmentList,type:hospital;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		doctorAssignmentList	department(__no_group)--department;
@@ -324,44 +341,141 @@ department{
 	}
 } depth=1; isRoot = false
 
+meta{name=doctor_assignment, features=setting}
 doctor_assignment{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('魏松全在内分泌科室上'), verb: false, required: true;
-		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
-		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('魏松全在内分泌科室上'), verb: false, required: true,type:string;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList,type:doctor;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorAssignmentList,type:department;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=doctor_schedule}
 doctor_schedule{
 	fields(13){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true;
-		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		date	schedule_date('2019-3-11'), verb: false, required: true;
-		period	period('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		int	available('20'), verb: false, required: true;
-		money	price('$123.99'), verb: false, required: true;
-		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		date_time_create	create_time('createTime()'), verb: false, required: true;
-		date_time_update	update_time('updateTime()'), verb: false, required: true;
-		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('2019年3月11日魏松全在内分泌科坐班收诊疗费,每个10'), verb: false, required: true,type:string;
+		doctor	doctor('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:doctor;
+		date	schedule_date('2019-3-11'), verb: false, required: true,type:date;
+		period	period('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:period;
+		department	department('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:department;
+		int	available('20'), verb: false, required: true,type:int;
+		money	price('$123.99'), verb: false, required: true,type:money;
+		expense_type	expense_type('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:expense_type;
+		date_time_create	create_time('createTime()'), verb: false, required: true,type:date_time_create;
+		date_time_update	update_time('updateTime()'), verb: false, required: true,type:date_time_update;
+		hospital	hospital('$(object)'), verb: false, required: true, referenceBy: doctorScheduleList,type:hospital;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=mobile_app, features=ootb}
+mobile_app{
+	fields(3){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('移动端配置'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(2){
+		pageList	mobile_app(__no_group)--mobile_app;
+		pageTypeList	mobile_app(__no_group)--mobile_app;
+	}
+} depth=0; isRoot = true
+
+meta{name=page}
+page{
+	fields(6){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	page_title('首页'), verb: false, required: true,type:string;
+		string	link_to_url('首页'), verb: false, required: true,type:string;
+		page_type	page_type('$(object)'), verb: false, required: true, referenceBy: pageList,type:page_type;
+		mobile_app	mobile_app('$(object)'), verb: false, required: true, referenceBy: pageList,type:mobile_app;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(2){
+		slideList	page(__no_group)--page;
+		uiActionList	page(__no_group)--page;
+	}
+} depth=2; isRoot = false
+
+meta{name=page_type, features=status, identified_by=code}
+page_type{
+	fields(6){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('首页|我的|Generic Page|Listof Page|功能大厅|普通'), verb: false, required: true,type:string;
+		string	code('home|me|generic-page|listof-page|service-center|simple'), verb: false, required: true,type:string;
+		mobile_app	mobile_app('$(object)'), verb: false, required: true, referenceBy: pageTypeList,type:mobile_app;
+		bool	footer_tab('true|false'), verb: false, required: true,type:bool;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(1){
+		pageList	page_type(__no_group)--page_type;
+	}
+} depth=1; isRoot = false
+
+meta{name=slide}
+slide{
+	fields(8){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		int	display_order('1|2|3'), verb: false, required: true,type:int;
+		string	name('首页Focus的内容'), verb: false, required: true,type:string;
+		string_image	image_url('https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_1.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_2.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_3.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_4.jpg'), verb: false, required: true,type:string_image;
+		string_image	video_url('https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_1.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_2.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_3.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_4.jpg'), verb: false, required: true,type:string_image;
+		string	link_to_url('|/section/article/'), verb: false, required: false,type:string;
+		page	page('$(object)'), verb: false, required: true, referenceBy: slideList,type:page;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(0){
+	}
+} depth=3; isRoot = false
+
+meta{name=ui_action}
+ui_action{
+	fields(10){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	code('submit|share|view|more'), verb: false, required: true,type:string;
+		string	icon('icon_edit|icon_share|icon_eye|icon_more'), verb: false, required: true,type:string;
+		string	title('提交|分享|查看|更多'), verb: false, required: true,type:string;
+		string	brief('Submit|Share|View|View More'), verb: false, required: true,type:string;
+		string_image	image_url('https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_1.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_2.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_3.jpg|https://xubai-test.oss-cn-beijing.aliyuncs.com/app/test/slide_4.jpg'), verb: false, required: true,type:string_image;
+		string	link_to_url('/section/article/'), verb: false, required: true,type:string;
+		string_longtext	extra_data('text()'), verb: false, required: true,type:string_longtext;
+		page	page('$(object)'), verb: false, required: true, referenceBy: uiActionList,type:page;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(0){
+	}
+} depth=3; isRoot = false
+
+meta{name=section}
+section{
+	fields(8){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	title('文章|作品'), verb: false, required: true,type:string;
+		string	brief('Article|Artwork'), verb: false, required: true,type:string;
+		string	icon('icon_edit|icon_share|icon_eye|icon_more'), verb: false, required: true,type:string;
+		string	view_group('icon_edit|icon_share|icon_eye|icon_more'), verb: false, required: true,type:string;
+		string	link_to_url('/section/article/'), verb: false, required: true,type:string;
+		string	page('${page}'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(0){
+	}
+} depth=0; isRoot = true
+
+meta{name=user_domain, features=ootb}
 user_domain{
 	fields(3){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('用户区域'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('用户区域'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(2){
 		userWhiteListList	domain(__no_group)--domain;
@@ -369,67 +483,57 @@ user_domain{
 	}
 } depth=0; isRoot = true
 
+meta{name=user_white_list, features=syssetting}
 user_white_list{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	user_identity('clariones|13808188512'), verb: false, required: true;
-		string	user_special_functions('tester;ios-spokesperson'), verb: false, required: true;
-		user_domain	domain('$(object)'), verb: false, required: true, referenceBy: userWhiteListList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	user_identity('clariones|13808188512'), verb: false, required: true,type:string;
+		string	user_special_functions('tester;ios-spokesperson'), verb: false, required: true,type:string;
+		user_domain	domain('$(object)'), verb: false, required: true, referenceBy: userWhiteListList,type:user_domain;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=1; isRoot = false
 
+meta{name=sec_user, features=ootb, identified_by=login,email,mobile}
 sec_user{
-	fields(15){
-		string	id('ABCD'), verb: false, required: true;
-		string	login('login'), verb: false, required: true;
-		string_china_mobile_phone	mobile('13900000001'), verb: false, required: true;
-		string	email('|suddy_chang@163.com'), verb: false, required: false;
-		string_password	pwd('*******'), verb: false, required: true;
-		string	weixin_openid('wx123456789abcdefghijklmn'), verb: false, required: true;
-		string	weixin_appid('wxapp12098410239840'), verb: false, required: true;
-		string	access_token('jwt_token_12345678'), verb: false, required: true;
-		int	verification_code('0|9999999'), verb: false, required: true;
-		date_time	verification_code_expire('2099-12-31T09:09:09'), verb: false, required: true;
-		date_time	last_login_time('2099-12-31T09:09:09'), verb: false, required: true;
-		user_domain	domain('$(object)'), verb: false, required: true, referenceBy: secUserList;
-		sec_user_blocking	blocking('$(object)'), verb: true, required: true, referenceBy: secUserList;
-		string	current_status('BLOCKED'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+	fields(13){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	login('login'), verb: false, required: true,type:string;
+		string_china_mobile_phone	mobile('13900000001'), verb: false, required: true,type:string_china_mobile_phone;
+		string_email	email('suddy_chang@163.com'), verb: false, required: true,type:string_email;
+		string_password	pwd('*******'), verb: false, required: true,type:string_password;
+		string	weixin_openid('wx123456789abcdefghijklmn'), verb: false, required: true,type:string;
+		string	weixin_appid('wxapp12098410239840'), verb: false, required: true,type:string;
+		string	access_token('jwt_token_12345678'), verb: false, required: true,type:string;
+		int	verification_code('0|9999999'), verb: false, required: true,type:int;
+		date_time	verification_code_expire('2099-12-31T09:09:09'), verb: false, required: true,type:date_time;
+		date_time	last_login_time('2099-12-31T09:09:09'), verb: false, required: false,type:date_time;
+		user_domain	domain('$(object)'), verb: false, required: true, referenceBy: secUserList,type:user_domain;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
-	references field(2){
+	references field(4){
 		userAppList	sec_user(__no_group)--sec_user;
 		loginHistoryList	sec_user(__no_group)--sec_user;
+		wechatWorkappIdentifyList	sec_user(__no_group)--sec_user;
+		wechatMiniappIdentifyList	sec_user(__no_group)--sec_user;
 	}
 } depth=1; isRoot = false
 
-sec_user_blocking{
-	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	who('currentUser()'), verb: false, required: true;
-		date_time_create	block_time('createTime()'), verb: false, required: true;
-		string	comments('这个用户多次发送违反社区的帖子，现在把他给屏蔽了'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
-	}
-	references field(1){
-		secUserList	blocking(__no_group)--blocking;
-	}
-} depth=0; isRoot = true
-
+meta{name=user_app, features=ootb}
 user_app{
 	fields(10){
-		string	id('ABCD'), verb: false, required: true;
-		string	title('审车平台|账户管理|接车公司|审车公司|维修公司|顾客'), verb: false, required: true;
-		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: userAppList;
-		string	app_icon('users|bank|wechat|bar-chart|user|users'), verb: false, required: true;
-		bool	full_access('true'), verb: false, required: true;
-		string	permission('MXWR|MXWR'), verb: false, required: true;
-		string	object_type('CarInspectionPlatform|UserDomain|CarReceivingServiceCompany|CarInspectionServiceCompany|CarRepairingServiceCompany|CustomerInfo'), verb: false, required: true;
-		string	object_id('CIP000001|UD000001|CRSC000001|CISC000001|CRSC000001|CI000001'), verb: false, required: true;
-		string	location('/link/to/app'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	title('审车平台|账户管理|接车公司|审车公司|维修公司|顾客'), verb: false, required: true,type:string;
+		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: userAppList,type:sec_user;
+		string	app_icon('users|bank|wechat|bar-chart|user|users'), verb: false, required: true,type:string;
+		bool	full_access('true'), verb: false, required: true,type:bool;
+		string	permission('MXWR|MXWR'), verb: false, required: true,type:string;
+		string	object_type('CarInspectionPlatform|UserDomain|CarReceivingServiceCompany|CarInspectionServiceCompany|CarRepairingServiceCompany|CustomerInfo'), verb: false, required: true,type:string;
+		string	object_id('CIP000001|UD000001|CRSC000001|CISC000001|CRSC000001|CI000001'), verb: false, required: true,type:string;
+		string	location('/link/to/app'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(3){
 		quickLinkList	app(__no_group)--app;
@@ -438,78 +542,83 @@ user_app{
 	}
 } depth=2; isRoot = false
 
+meta{name=quick_link, features=ootb}
 quick_link{
 	fields(8){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('列表'), verb: false, required: true;
-		string	icon('facebook|google'), verb: false, required: true;
-		string_image	image_path('y-200-200-red.jpg'), verb: false, required: true;
-		string	link_target('列表'), verb: false, required: true;
-		date_time_create	create_time('createTime()'), verb: false, required: true;
-		user_app	app('$(object)'), verb: false, required: true, referenceBy: quickLinkList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('列表'), verb: false, required: true,type:string;
+		string	icon('facebook|google'), verb: false, required: true,type:string;
+		string_image	image_path('y-200-200-red.jpg'), verb: false, required: true,type:string_image;
+		string	link_target('列表'), verb: false, required: true,type:string;
+		date_time_create	create_time('createTime()'), verb: false, required: true,type:date_time_create;
+		user_app	app('$(object)'), verb: false, required: true, referenceBy: quickLinkList,type:user_app;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=3; isRoot = false
 
+meta{name=list_access, features=ootb}
 list_access{
 	fields(10){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('列表'), verb: false, required: true;
-		string	internal_name('levelOneCategoryList'), verb: false, required: true;
-		bool	read_permission('true'), verb: false, required: true;
-		bool	create_permission('true'), verb: false, required: true;
-		bool	delete_permission('true'), verb: false, required: true;
-		bool	update_permission('true'), verb: false, required: true;
-		bool	execution_permission('true'), verb: false, required: true;
-		user_app	app('$(object)'), verb: false, required: true, referenceBy: listAccessList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('列表'), verb: false, required: true,type:string;
+		string	internal_name('levelOneCategoryList'), verb: false, required: true,type:string;
+		bool	read_permission('true'), verb: false, required: true,type:bool;
+		bool	create_permission('true'), verb: false, required: true,type:bool;
+		bool	delete_permission('true'), verb: false, required: true,type:bool;
+		bool	update_permission('true'), verb: false, required: true,type:bool;
+		bool	execution_permission('true'), verb: false, required: true,type:bool;
+		user_app	app('$(object)'), verb: false, required: true, referenceBy: listAccessList,type:user_app;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=3; isRoot = false
 
+meta{name=object_access, features=ootb}
 object_access{
 	fields(14){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('控制访问列表1'), verb: false, required: true;
-		string	object_type('FranchiseeStoreCountryCenter|AccountSet'), verb: false, required: true;
-		string	list1('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list2('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list3('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list4('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list5('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list6('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list7('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list8('catalogList|levelOneCategoryList'), verb: false, required: true;
-		string	list9('catalogList|levelOneCategoryList'), verb: false, required: true;
-		user_app	app('$(object)'), verb: false, required: true, referenceBy: objectAccessList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('控制访问列表1'), verb: false, required: true,type:string;
+		string	object_type('FranchiseeStoreCountryCenter|AccountSet'), verb: false, required: true,type:string;
+		string	list1('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list2('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list3('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list4('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list5('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list6('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list7('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list8('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		string	list9('catalogList|levelOneCategoryList'), verb: false, required: true,type:string;
+		user_app	app('$(object)'), verb: false, required: true, referenceBy: objectAccessList,type:user_app;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=3; isRoot = false
 
+meta{name=login_history, features=syslog}
 login_history{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		date_time_create	login_time('createTime()'), verb: false, required: true;
-		string	from_ip('192.168.1.1|192.168.1.2'), verb: false, required: true;
-		string	description('登陆成功'), verb: false, required: true;
-		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: loginHistoryList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		date_time_create	login_time('createTime()'), verb: false, required: true,type:date_time_create;
+		string	from_ip('192.168.1.1|192.168.1.2'), verb: false, required: true,type:string;
+		string	description('登陆成功'), verb: false, required: true,type:string;
+		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: loginHistoryList,type:sec_user;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=2; isRoot = false
 
+meta{name=generic_form, features=internal,ootb}
 generic_form{
 	fields(4){
-		string	id('ABCD'), verb: false, required: true;
-		string	title('登记输入单'), verb: false, required: true;
-		string	description('姓名就是你身份证上的名字'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	title('登记输入单'), verb: false, required: true,type:string;
+		string	description('姓名就是你身份证上的名字'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(4){
 		formMessageList	form(__no_group)--form;
@@ -519,94 +628,144 @@ generic_form{
 	}
 } depth=0; isRoot = true
 
+meta{name=form_message, features=internal,ootb}
 form_message{
 	fields(5){
-		string	id('ABCD'), verb: false, required: true;
-		string	title('字段组合错误'), verb: false, required: true;
-		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formMessageList;
-		string	level('success|info|warning|danger'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	title('字段组合错误'), verb: false, required: true,type:string;
+		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formMessageList,type:generic_form;
+		string	level('success|info|warning|danger'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=1; isRoot = false
 
+meta{name=form_field_message, features=internal,ootb}
 form_field_message{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		string	title('输入错误'), verb: false, required: true;
-		string	parameter_name('name'), verb: false, required: true;
-		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formFieldMessageList;
-		string	level('success|info|warning|danger'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	title('输入错误'), verb: false, required: true,type:string;
+		string	parameter_name('name'), verb: false, required: true,type:string;
+		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formFieldMessageList,type:generic_form;
+		string	level('success|info|warning|danger'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=1; isRoot = false
 
+meta{name=form_field, features=internal,ootb}
 form_field{
 	fields(18){
-		string	id('ABCD'), verb: false, required: true;
-		string	label('姓名|年龄|出生地|国籍'), verb: false, required: true;
-		string	locale_key('name|age|birth_place|country'), verb: false, required: true;
-		string	parameter_name('name'), verb: false, required: true;
-		string	type('text|longtext|date|date_time|money|url|image|password|number|switch|vcode'), verb: false, required: true;
-		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formFieldList;
-		string	placeholder('姓名就是你身份证上的名字'), verb: false, required: true;
-		string	default_value('李一一'), verb: false, required: true;
-		string	description('姓名就是你身份证上的名字'), verb: false, required: true;
-		string	field_group('基础信息|扩展信息'), verb: false, required: true;
-		string	minimum_value('maybe any value'), verb: false, required: true;
-		string	maximum_value('a value expression'), verb: false, required: true;
-		bool	required('true|false'), verb: false, required: true;
-		bool	disabled('true|false'), verb: false, required: true;
-		bool	custom_rendering('false'), verb: false, required: true;
-		string	candidate_values('|||男,女|高,矮'), verb: false, required: false;
-		string	suggest_values('|||男,女|高,矮'), verb: false, required: false;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	label('姓名|年龄|出生地|国籍'), verb: false, required: true,type:string;
+		string	locale_key('name|age|birth_place|country'), verb: false, required: true,type:string;
+		string	parameter_name('name'), verb: false, required: true,type:string;
+		string	type('text|longtext|date|date_time|money|url|image|password|number|switch|vcode'), verb: false, required: true,type:string;
+		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formFieldList,type:generic_form;
+		string	placeholder('姓名就是你身份证上的名字'), verb: false, required: true,type:string;
+		string	default_value('李一一'), verb: false, required: true,type:string;
+		string	description('姓名就是你身份证上的名字'), verb: false, required: true,type:string;
+		string	field_group('基础信息|扩展信息'), verb: false, required: true,type:string;
+		string	minimum_value('maybe any value'), verb: false, required: true,type:string;
+		string	maximum_value('a value expression'), verb: false, required: true,type:string;
+		bool	required('true|false'), verb: false, required: true,type:bool;
+		bool	disabled('true|false'), verb: false, required: true,type:bool;
+		bool	custom_rendering('false'), verb: false, required: true,type:bool;
+		string	candidate_values('|||男,女|高,矮'), verb: false, required: false,type:string;
+		string	suggest_values('|||男,女|高,矮'), verb: false, required: false,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=1; isRoot = false
 
+meta{name=form_action, features=internal,ootb}
 form_action{
 	fields(8){
-		string	id('ABCD'), verb: false, required: true;
-		string	label('功能'), verb: false, required: true;
-		string	locale_key('name'), verb: false, required: true;
-		string	action_key('save|update|remove'), verb: false, required: true;
-		string	level('default|warning|danger|primary'), verb: false, required: true;
-		string	url('genericFormManager/name/name0002/name0003/'), verb: false, required: true;
-		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formActionList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	label('功能'), verb: false, required: true,type:string;
+		string	locale_key('name'), verb: false, required: true,type:string;
+		string	action_key('save|update|remove'), verb: false, required: true,type:string;
+		string	level('default|warning|danger|primary'), verb: false, required: true,type:string;
+		string	url('genericFormManager/name/name0002/name0003/'), verb: false, required: true,type:string;
+		generic_form	form('$(object)'), verb: false, required: true, referenceBy: formActionList,type:generic_form;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=1; isRoot = false
 
+meta{name=candidate_container, features=internal,ootb}
 candidate_container{
 	fields(3){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('我只是一个容器'), verb: false, required: true;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('我只是一个容器'), verb: false, required: true,type:string;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(1){
 		candidateElementList	container(__no_group)--container;
 	}
 } depth=0; isRoot = true
 
+meta{name=candidate_element, features=internal,ootb}
 candidate_element{
 	fields(6){
-		string	id('ABCD'), verb: false, required: true;
-		string	name('搜索到的匹配字段'), verb: false, required: true;
-		string	type('类型描述'), verb: false, required: true;
-		string_image	image('1.jpg'), verb: false, required: true;
-		candidate_container	container('$(object)'), verb: false, required: true, referenceBy: candidateElementList;
-		int	version('2147483647'), verb: false, required: true;
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	name('搜索到的匹配字段'), verb: false, required: true,type:string;
+		string	type('类型描述'), verb: false, required: true,type:string;
+		string_image	image('1.jpg'), verb: false, required: true,type:string_image;
+		candidate_container	container('$(object)'), verb: false, required: true, referenceBy: candidateElementList,type:candidate_container;
+		int	version('2147483647'), verb: false, required: true,type:int;
 	}
 	references field(0){
 	}
 } depth=1; isRoot = false
+
+meta{name=wechat_workapp_identify}
+wechat_workapp_identify{
+	fields(7){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	corp_id('corporation123'), verb: false, required: true,type:string;
+		string	user_id('user123'), verb: false, required: true,type:string;
+		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: wechatWorkappIdentifyList,type:sec_user;
+		date_time_create	create_time('createTime()'), verb: false, required: true,type:date_time_create;
+		date_time	last_login_time('2100-01-01T00:00:00'), verb: false, required: false,type:date_time;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
+meta{name=wechat_miniapp_identify}
+wechat_miniapp_identify{
+	fields(7){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	open_id('wechat_open_id_1234567890'), verb: false, required: true,type:string;
+		string	app_id('wechat_miniapp_id_1234567890'), verb: false, required: true,type:string;
+		sec_user	sec_user('$(object)'), verb: false, required: true, referenceBy: wechatMiniappIdentifyList,type:sec_user;
+		date_time_create	create_time('createTime()'), verb: false, required: true,type:date_time_create;
+		date_time	last_login_time('2100-01-01T00:00:00'), verb: false, required: false,type:date_time;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
+meta{name=tree_node}
+tree_node{
+	fields(6){
+		string	id('ABCD'), verb: false, required: true,type:string;
+		string	node_id('node000001'), verb: false, required: true,type:string;
+		string	node_type('nodetype'), verb: false, required: true,type:string;
+		int	left_value('1'), verb: false, required: true,type:int;
+		int	right_value('10'), verb: false, required: true,type:int;
+		int	version('2147483647'), verb: false, required: true,type:int;
+	}
+	references field(0){
+	}
+} depth=0; isRoot = true
 
 
 

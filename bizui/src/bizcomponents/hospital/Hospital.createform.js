@@ -9,6 +9,7 @@ import styles from './Hospital.createform.less'
 import {mapBackToImageValues, mapFromImageValues} from '../../axios/tools'
 import GlobalComponents from '../../custcomponents';
 import HospitalBase from './Hospital.base'
+import HospitalCreateFormBody from './Hospital.createformbody'
 import appLocaleName from '../../common/Locale.tool'
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -52,7 +53,7 @@ class HospitalCreateForm extends Component {
 
 
 
-  handleChange = (event, source) => {
+  handleImageChange = (event, source) => {
     console.log('get file list from change in update change:', source)
 
     const { fileList } = event
@@ -60,9 +61,9 @@ class HospitalCreateForm extends Component {
 
     convertedImagesValues[source] = fileList
     this.setState({ convertedImagesValues })
-    console.log('/get file list from change in update change:', source)
+    console.log('/get file list from change in update change:', source, "file list" ,fileList)
   }
-	
+  
   
 
   render() {
@@ -169,6 +170,9 @@ class HospitalCreateForm extends Component {
     
     const tryinit  = (fieldName) => {
       const { owner } = this.props
+      if(!owner){
+      	return null
+      }
       const { referenceName } = owner
       if(referenceName!=fieldName){
         return null
@@ -178,6 +182,9 @@ class HospitalCreateForm extends Component {
     
     const availableForEdit= (fieldName) =>{
       const { owner } = this.props
+      if(!owner){
+      	return true
+      }
       const { referenceName } = owner
       if(referenceName!=fieldName){
         return true
@@ -185,69 +192,28 @@ class HospitalCreateForm extends Component {
       return false
     
     }
-    const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+	const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 12 },
     }
     const switchFormItemLayout = {
-      labelCol: { span: 14 },
-      wrapperCol: { span: 4 },
+      labelCol: { span: 3 },
+      wrapperCol: { span: 9 },
     }
+    
+    const internalRenderTitle = () =>{
+      const linkComp=<a onClick={goback}  > <Icon type="double-left" style={{marginRight:"10px"}} /> </a>
+      return (<div>{linkComp}{appLocaleName(userContext,"CreateNew")}{window.trans('hospital')}</div>)
+    }
+
 	return (
       <PageHeaderLayout
-        title={`${appLocaleName(userContext,"CreateNew")}医院`}
-        content={`${appLocaleName(userContext,"CreateNew")}医院`}
+        title={internalRenderTitle()}
+        content={`${appLocaleName(userContext,"CreateNew")}${window.trans('hospital')}`}
         wrapperClassName={styles.advancedForm}
       >
-        <Card title={appLocaleName(userContext,"BasicInfo")} className={styles.card} bordered={false}>
-          <Form >
-            <Row gutter={16}>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.name} {...formItemLayout}>
-                  {getFieldDecorator('name', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="名称" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.address} {...formItemLayout}>
-                  {getFieldDecorator('address', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="地址" />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} md={12} sm={24}>
-                <Form.Item label={fieldLabels.telephone} {...formItemLayout}>
-                  {getFieldDecorator('telephone', {
-                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
-                  })(
-                    <Input size="large" placeholder="电话" />
-                  )}
-                </Form.Item>
-              </Col>
-
-            </Row>
-          </Form>
-        </Card>
-
-
-
-       
-        
-
-
-
-
-
-
-
+   			
+   		<HospitalCreateFormBody	 {...this.props} handleImageChange={this.handleImageChange}/>
 
 
         <FooterToolbar>
@@ -262,6 +228,7 @@ class HospitalCreateForm extends Component {
             {appLocaleName(userContext,"Discard")}
           </Button>
         </FooterToolbar>
+      
       </PageHeaderLayout>
     )
   }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -61,6 +62,7 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	ListAccess(){
@@ -69,7 +71,7 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 	public 	static ListAccess withId(String id){
 		ListAccess listAccess = new ListAccess();
 		listAccess.setId(id);
-		// listAccess.setVersion(Integer.MAX_VALUE);
+		listAccess.setVersion(Integer.MAX_VALUE);
 		return listAccess;
 	}
 	public 	static ListAccess refById(String id){
@@ -83,18 +85,6 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	ListAccess(String name, String internalName, boolean readPermission, boolean createPermission, boolean deletePermission, boolean updatePermission, boolean executionPermission, UserApp app)
-	{
-		setName(name);
-		setInternalName(internalName);
-		setReadPermission(readPermission);
-		setCreatePermission(createPermission);
-		setDeletePermission(deletePermission);
-		setUpdatePermission(updatePermission);
-		setExecutionPermission(executionPermission);
-		setApp(app);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -127,6 +117,7 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -136,12 +127,13 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeInternalNameProperty(String newValueExpr){
+	
 		String oldValue = getInternalName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -151,12 +143,13 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateInternalName(newValue);
 		this.onChangeProperty(INTERNAL_NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeReadPermissionProperty(String newValueExpr){
+	
 		boolean oldValue = getReadPermission();
 		boolean newValue = parseBoolean(newValueExpr);
 		if(equalsBoolean(oldValue , newValue)){
@@ -166,12 +159,13 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateReadPermission(newValue);
 		this.onChangeProperty(READ_PERMISSION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeCreatePermissionProperty(String newValueExpr){
+	
 		boolean oldValue = getCreatePermission();
 		boolean newValue = parseBoolean(newValueExpr);
 		if(equalsBoolean(oldValue , newValue)){
@@ -181,12 +175,13 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateCreatePermission(newValue);
 		this.onChangeProperty(CREATE_PERMISSION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeDeletePermissionProperty(String newValueExpr){
+	
 		boolean oldValue = getDeletePermission();
 		boolean newValue = parseBoolean(newValueExpr);
 		if(equalsBoolean(oldValue , newValue)){
@@ -196,12 +191,13 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateDeletePermission(newValue);
 		this.onChangeProperty(DELETE_PERMISSION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUpdatePermissionProperty(String newValueExpr){
+	
 		boolean oldValue = getUpdatePermission();
 		boolean newValue = parseBoolean(newValueExpr);
 		if(equalsBoolean(oldValue , newValue)){
@@ -211,12 +207,13 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateUpdatePermission(newValue);
 		this.onChangeProperty(UPDATE_PERMISSION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeExecutionPermissionProperty(String newValueExpr){
+	
 		boolean oldValue = getExecutionPermission();
 		boolean newValue = parseBoolean(newValueExpr);
 		if(equalsBoolean(oldValue , newValue)){
@@ -226,7 +223,7 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		updateExecutionPermission(newValue);
 		this.onChangeProperty(EXECUTION_PERMISSION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -474,7 +471,9 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, APP_PROPERTY, getApp());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -547,7 +546,9 @@ public class ListAccess extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getInternalName(), getReadPermission(), getCreatePermission(), getDeletePermission(), getUpdatePermission(), getExecutionPermission(), getApp(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

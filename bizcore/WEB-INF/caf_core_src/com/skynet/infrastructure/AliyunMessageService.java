@@ -1,7 +1,5 @@
 package com.skynet.infrastructure;
 
-import java.util.Map;
-
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -11,6 +9,8 @@ import com.aliyuncs.profile.IClientProfile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.terapico.utils.DebugUtil;
+
+import java.util.Map;
 /**
  * @author Philip
  *       MessageAttributes messageAttributes = new MessageAttributes();
@@ -33,23 +33,18 @@ import com.terapico.utils.DebugUtil;
         } 
  */
 public class AliyunMessageService implements MessageService {
-	
-	
-	
-	static final String product = "Dysmsapi";
-    //产品域名,开发者无需替换
-    static final String domain = "dysmsapi.aliyuncs.com";
 
-   
-    //static final String accessKeyId = "LTAIjgtFYFzCSVXV";
-    //static final String accessKeySecret = "aHkZZuP9vqC54LFAUrlMRlUTdmyXNi";
-    
-    static final String accessKeyId = "LTAIWnBvwlEfgzUT";
-    static final String accessKeySecret = "9iSNfVFdo4vT35Re5VgX5r88cSi2me";
-//    static final String templateId="SMS_142146358";
-    static final String signName ="Art0X";
-    
-    protected static String toJson(Map<String, String> parameters) throws JsonProcessingException {
+    private AliyunServiceConfiguration config;
+
+    public AliyunServiceConfiguration getConfig() {
+        return config;
+    }
+
+    public void setConfig(AliyunServiceConfiguration pConfig) {
+        config = pConfig;
+    }
+
+    protected  String toJson(Map<String, String> parameters) throws JsonProcessingException {
     	
     	ObjectMapper mapper = new ObjectMapper();
     	String jsonResult = mapper.writerWithDefaultPrettyPrinter()
@@ -57,7 +52,7 @@ public class AliyunMessageService implements MessageService {
     	return jsonResult;
     }
     
-    public static SendSmsResponse sendSms(String dest, String fromWho, String template,
+    public  SendSmsResponse sendSms(String dest, String fromWho, String template,
 			Map<String, String> parameters) throws Exception {
 
         //可自助调整超时时间
@@ -65,8 +60,8 @@ public class AliyunMessageService implements MessageService {
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
         //初始化acsClient,暂不支持region化
-        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
-        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
+        IClientProfile profile = DefaultProfile.getProfile(getConfig().getRegion(), getConfig().getAccessKeyId(), getConfig().getAccessKeySecret());
+        DefaultProfile.addEndpoint(getConfig().getRegion(), getConfig().getRegion(), getConfig().getProduct(), getConfig().getDomain());
         IAcsClient acsClient = new DefaultAcsClient(profile);
 
         //组装请求对象-具体描述见控制台-文档部分内容
@@ -74,7 +69,7 @@ public class AliyunMessageService implements MessageService {
         //必填:待发送手机号
         request.setPhoneNumbers(dest);
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName(signName);
+        request.setSignName(getConfig().getSignName());
         //必填:短信模板-可在短信控制台中找到
         request.setTemplateCode(template);
         

@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -24,7 +23,7 @@ const {defaultRenderExtraHeader}= DashboardTool
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const internalRenderTitle = (cardsData,targetComponent) =>{
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName}</div>)
 
 }
@@ -32,7 +31,7 @@ const internalSummaryOf = (quickLink,targetComponent) =>{
     const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{quickLink.id}</Description> 
+<Description term="序号">{quickLink.id}</Description> 
 <Description term="名称">{quickLink.name}</Description> 
 <Description term="图标">{quickLink.icon}</Description> 
 <Description term="链接的目标">{quickLink.linkTarget}</Description> 

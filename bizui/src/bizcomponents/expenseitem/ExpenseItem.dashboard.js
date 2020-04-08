@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -104,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -117,9 +116,9 @@ const internalSummaryOf = (expenseItem,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{expenseItem.id}</Description> 
-<Description term="名称">{expenseItem.name}</Description> 
-<Description term="价格">{expenseItem.price}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{expenseItem.id}</Description> 
+<Description term="名称" style={{wordBreak: 'break-all'}}>{expenseItem.name}</Description> 
+<Description term="价格" style={{wordBreak: 'break-all'}}>{expenseItem.price}</Description> 
 <Description term="费用类型">{expenseItem.expenseType==null?appLocaleName(userContext,"NotAssigned"):`${expenseItem.expenseType.displayName}(${expenseItem.expenseType.id})`}
  <Icon type="swap" onClick={()=>
   showTransferModel(targetComponent,"费用类型","expenseType",ExpenseItemService.requestCandidateExpenseType,
@@ -164,7 +163,7 @@ class ExpenseItemDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"费用项目",cardsFor: "expenseItem",
+    const cardsData = {cardsName:window.trans('expense_item'),cardsFor: "expenseItem",
     	cardsSource: this.props.expenseItem,returnURL,displayName,
   		subItems: [
     
@@ -196,8 +195,9 @@ class ExpenseItemDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

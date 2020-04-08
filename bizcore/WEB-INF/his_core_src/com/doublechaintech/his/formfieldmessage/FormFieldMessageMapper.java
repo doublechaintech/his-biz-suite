@@ -29,7 +29,9 @@ public class FormFieldMessageMapper extends BaseRowMapper<FormFieldMessage>{
 	protected void setId(FormFieldMessage formFieldMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(FormFieldMessageTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -41,7 +43,9 @@ public class FormFieldMessageMapper extends BaseRowMapper<FormFieldMessage>{
 	protected void setTitle(FormFieldMessage formFieldMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String title = rs.getString(FormFieldMessageTable.COLUMN_TITLE);
+		
 		if(title == null){
 			//do nothing when nothing found in database
 			return;
@@ -53,7 +57,9 @@ public class FormFieldMessageMapper extends BaseRowMapper<FormFieldMessage>{
 	protected void setParameterName(FormFieldMessage formFieldMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String parameterName = rs.getString(FormFieldMessageTable.COLUMN_PARAMETER_NAME);
+		
 		if(parameterName == null){
 			//do nothing when nothing found in database
 			return;
@@ -83,7 +89,9 @@ public class FormFieldMessageMapper extends BaseRowMapper<FormFieldMessage>{
 	protected void setLevel(FormFieldMessage formFieldMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String level = rs.getString(FormFieldMessageTable.COLUMN_LEVEL);
+		
 		if(level == null){
 			//do nothing when nothing found in database
 			return;
@@ -95,7 +103,9 @@ public class FormFieldMessageMapper extends BaseRowMapper<FormFieldMessage>{
 	protected void setVersion(FormFieldMessage formFieldMessage, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(FormFieldMessageTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

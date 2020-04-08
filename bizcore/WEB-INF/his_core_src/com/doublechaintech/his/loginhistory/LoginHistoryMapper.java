@@ -29,7 +29,9 @@ public class LoginHistoryMapper extends BaseRowMapper<LoginHistory>{
 	protected void setId(LoginHistory loginHistory, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(LoginHistoryTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -41,7 +43,9 @@ public class LoginHistoryMapper extends BaseRowMapper<LoginHistory>{
 	protected void setLoginTime(LoginHistory loginHistory, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date loginTime = rs.getTimestamp(LoginHistoryTable.COLUMN_LOGIN_TIME);
+		
 		if(loginTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -53,7 +57,9 @@ public class LoginHistoryMapper extends BaseRowMapper<LoginHistory>{
 	protected void setFromIp(LoginHistory loginHistory, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String fromIp = rs.getString(LoginHistoryTable.COLUMN_FROM_IP);
+		
 		if(fromIp == null){
 			//do nothing when nothing found in database
 			return;
@@ -65,7 +71,9 @@ public class LoginHistoryMapper extends BaseRowMapper<LoginHistory>{
 	protected void setDescription(LoginHistory loginHistory, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String description = rs.getString(LoginHistoryTable.COLUMN_DESCRIPTION);
+		
 		if(description == null){
 			//do nothing when nothing found in database
 			return;
@@ -95,7 +103,9 @@ public class LoginHistoryMapper extends BaseRowMapper<LoginHistory>{
 	protected void setVersion(LoginHistory loginHistory, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(LoginHistoryTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

@@ -3,6 +3,7 @@ package com.doublechaintech.his;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.doublechaintech.his.hospital.Hospital;
 import com.doublechaintech.his.hospital.HospitalDAO;
@@ -28,6 +29,24 @@ import com.doublechaintech.his.doctorassignment.DoctorAssignmentTokens;
 import com.doublechaintech.his.doctorschedule.DoctorSchedule;
 import com.doublechaintech.his.doctorschedule.DoctorScheduleDAO;
 import com.doublechaintech.his.doctorschedule.DoctorScheduleTokens;
+import com.doublechaintech.his.mobileapp.MobileApp;
+import com.doublechaintech.his.mobileapp.MobileAppDAO;
+import com.doublechaintech.his.mobileapp.MobileAppTokens;
+import com.doublechaintech.his.page.Page;
+import com.doublechaintech.his.page.PageDAO;
+import com.doublechaintech.his.page.PageTokens;
+import com.doublechaintech.his.pagetype.PageType;
+import com.doublechaintech.his.pagetype.PageTypeDAO;
+import com.doublechaintech.his.pagetype.PageTypeTokens;
+import com.doublechaintech.his.slide.Slide;
+import com.doublechaintech.his.slide.SlideDAO;
+import com.doublechaintech.his.slide.SlideTokens;
+import com.doublechaintech.his.uiaction.UiAction;
+import com.doublechaintech.his.uiaction.UiActionDAO;
+import com.doublechaintech.his.uiaction.UiActionTokens;
+import com.doublechaintech.his.section.Section;
+import com.doublechaintech.his.section.SectionDAO;
+import com.doublechaintech.his.section.SectionTokens;
 import com.doublechaintech.his.userdomain.UserDomain;
 import com.doublechaintech.his.userdomain.UserDomainDAO;
 import com.doublechaintech.his.userdomain.UserDomainTokens;
@@ -37,9 +56,6 @@ import com.doublechaintech.his.userwhitelist.UserWhiteListTokens;
 import com.doublechaintech.his.secuser.SecUser;
 import com.doublechaintech.his.secuser.SecUserDAO;
 import com.doublechaintech.his.secuser.SecUserTokens;
-import com.doublechaintech.his.secuserblocking.SecUserBlocking;
-import com.doublechaintech.his.secuserblocking.SecUserBlockingDAO;
-import com.doublechaintech.his.secuserblocking.SecUserBlockingTokens;
 import com.doublechaintech.his.userapp.UserApp;
 import com.doublechaintech.his.userapp.UserAppDAO;
 import com.doublechaintech.his.userapp.UserAppTokens;
@@ -76,6 +92,15 @@ import com.doublechaintech.his.candidatecontainer.CandidateContainerTokens;
 import com.doublechaintech.his.candidateelement.CandidateElement;
 import com.doublechaintech.his.candidateelement.CandidateElementDAO;
 import com.doublechaintech.his.candidateelement.CandidateElementTokens;
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentify;
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentifyDAO;
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentifyTokens;
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentify;
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentifyDAO;
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentifyTokens;
+import com.doublechaintech.his.treenode.TreeNode;
+import com.doublechaintech.his.treenode.TreeNodeDAO;
+import com.doublechaintech.his.treenode.TreeNodeTokens;
 
 public class DAOGroup {
 
@@ -95,13 +120,23 @@ public class DAOGroup {
 
 	protected DoctorScheduleDAO doctorScheduleDAO;
 
+	protected MobileAppDAO mobileAppDAO;
+
+	protected PageDAO pageDAO;
+
+	protected PageTypeDAO pageTypeDAO;
+
+	protected SlideDAO slideDAO;
+
+	protected UiActionDAO uiActionDAO;
+
+	protected SectionDAO sectionDAO;
+
 	protected UserDomainDAO userDomainDAO;
 
 	protected UserWhiteListDAO userWhiteListDAO;
 
 	protected SecUserDAO secUserDAO;
-
-	protected SecUserBlockingDAO secUserBlockingDAO;
 
 	protected UserAppDAO userAppDAO;
 
@@ -127,7 +162,13 @@ public class DAOGroup {
 
 	protected CandidateElementDAO candidateElementDAO;
 
-	
+	protected WechatWorkappIdentifyDAO wechatWorkappIdentifyDAO;
+
+	protected WechatMiniappIdentifyDAO wechatMiniappIdentifyDAO;
+
+	protected TreeNodeDAO treeNodeDAO;
+
+
 
 	public HospitalDAO getHospitalDAO(){
 		return this.hospitalDAO;
@@ -193,6 +234,54 @@ public class DAOGroup {
 	}
 
 
+	public MobileAppDAO getMobileAppDAO(){
+		return this.mobileAppDAO;
+	}
+	public void setMobileAppDAO(MobileAppDAO dao){
+		this.mobileAppDAO = dao;
+	}
+
+
+	public PageDAO getPageDAO(){
+		return this.pageDAO;
+	}
+	public void setPageDAO(PageDAO dao){
+		this.pageDAO = dao;
+	}
+
+
+	public PageTypeDAO getPageTypeDAO(){
+		return this.pageTypeDAO;
+	}
+	public void setPageTypeDAO(PageTypeDAO dao){
+		this.pageTypeDAO = dao;
+	}
+
+
+	public SlideDAO getSlideDAO(){
+		return this.slideDAO;
+	}
+	public void setSlideDAO(SlideDAO dao){
+		this.slideDAO = dao;
+	}
+
+
+	public UiActionDAO getUiActionDAO(){
+		return this.uiActionDAO;
+	}
+	public void setUiActionDAO(UiActionDAO dao){
+		this.uiActionDAO = dao;
+	}
+
+
+	public SectionDAO getSectionDAO(){
+		return this.sectionDAO;
+	}
+	public void setSectionDAO(SectionDAO dao){
+		this.sectionDAO = dao;
+	}
+
+
 	public UserDomainDAO getUserDomainDAO(){
 		return this.userDomainDAO;
 	}
@@ -214,14 +303,6 @@ public class DAOGroup {
 	}
 	public void setSecUserDAO(SecUserDAO dao){
 		this.secUserDAO = dao;
-	}
-
-
-	public SecUserBlockingDAO getSecUserBlockingDAO(){
-		return this.secUserBlockingDAO;
-	}
-	public void setSecUserBlockingDAO(SecUserBlockingDAO dao){
-		this.secUserBlockingDAO = dao;
 	}
 
 
@@ -321,11 +402,37 @@ public class DAOGroup {
 	}
 
 
+	public WechatWorkappIdentifyDAO getWechatWorkappIdentifyDAO(){
+		return this.wechatWorkappIdentifyDAO;
+	}
+	public void setWechatWorkappIdentifyDAO(WechatWorkappIdentifyDAO dao){
+		this.wechatWorkappIdentifyDAO = dao;
+	}
+
+
+	public WechatMiniappIdentifyDAO getWechatMiniappIdentifyDAO(){
+		return this.wechatMiniappIdentifyDAO;
+	}
+	public void setWechatMiniappIdentifyDAO(WechatMiniappIdentifyDAO dao){
+		this.wechatMiniappIdentifyDAO = dao;
+	}
+
+
+	public TreeNodeDAO getTreeNodeDAO(){
+		return this.treeNodeDAO;
+	}
+	public void setTreeNodeDAO(TreeNodeDAO dao){
+		this.treeNodeDAO = dao;
+	}
+
+
 	private interface BasicLoader{
 	    BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception;
 	    void enhanceList(DAOGroup daoGoup, List list) throws Exception;
+	    List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> list) throws Exception;
 	    BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception;
 	    BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception;
+	    SmartList<? extends BaseEntity> queryList(DAOGroup daoGoup, String sql, Object... parmeters) throws Exception;
 	}
 	private static Map<String, BasicLoader> internalLoaderMap;
 	static {
@@ -348,6 +455,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getHospitalDAO().present((Hospital)data, tokens);
 			}
+			@Override
+			public SmartList<Hospital> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getHospitalDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Hospital.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("ExpenseType", new BasicLoader() {
@@ -366,6 +481,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getExpenseTypeDAO().present((ExpenseType)data, tokens);
+			}
+			@Override
+			public SmartList<ExpenseType> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getExpenseTypeDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)ExpenseType.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -386,6 +509,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getPeriodDAO().present((Period)data, tokens);
 			}
+			@Override
+			public SmartList<Period> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getPeriodDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Period.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("ExpenseItem", new BasicLoader() {
@@ -404,6 +535,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getExpenseItemDAO().present((ExpenseItem)data, tokens);
+			}
+			@Override
+			public SmartList<ExpenseItem> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getExpenseItemDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)ExpenseItem.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -424,6 +563,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getDoctorDAO().present((Doctor)data, tokens);
 			}
+			@Override
+			public SmartList<Doctor> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getDoctorDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Doctor.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("Department", new BasicLoader() {
@@ -442,6 +589,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getDepartmentDAO().present((Department)data, tokens);
+			}
+			@Override
+			public SmartList<Department> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getDepartmentDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Department.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -462,6 +617,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getDoctorAssignmentDAO().present((DoctorAssignment)data, tokens);
 			}
+			@Override
+			public SmartList<DoctorAssignment> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getDoctorAssignmentDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)DoctorAssignment.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("DoctorSchedule", new BasicLoader() {
@@ -480,6 +643,176 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getDoctorScheduleDAO().present((DoctorSchedule)data, tokens);
+			}
+			@Override
+			public SmartList<DoctorSchedule> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getDoctorScheduleDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)DoctorSchedule.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("MobileApp", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getMobileAppDAO().load(id, MobileAppTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getMobileAppDAO().enhanceList((List<MobileApp>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getMobileAppDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getMobileAppDAO().present((MobileApp)data, tokens);
+			}
+			@Override
+			public SmartList<MobileApp> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getMobileAppDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)MobileApp.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("Page", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getPageDAO().load(id, PageTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getPageDAO().enhanceList((List<Page>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getPageDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getPageDAO().present((Page)data, tokens);
+			}
+			@Override
+			public SmartList<Page> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getPageDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Page.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("PageType", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getPageTypeDAO().load(id, PageTypeTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getPageTypeDAO().enhanceList((List<PageType>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getPageTypeDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getPageTypeDAO().present((PageType)data, tokens);
+			}
+			@Override
+			public SmartList<PageType> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getPageTypeDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)PageType.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("Slide", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getSlideDAO().load(id, SlideTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getSlideDAO().enhanceList((List<Slide>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getSlideDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getSlideDAO().present((Slide)data, tokens);
+			}
+			@Override
+			public SmartList<Slide> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getSlideDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Slide.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("UiAction", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getUiActionDAO().load(id, UiActionTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getUiActionDAO().enhanceList((List<UiAction>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getUiActionDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getUiActionDAO().present((UiAction)data, tokens);
+			}
+			@Override
+			public SmartList<UiAction> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getUiActionDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)UiAction.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("Section", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getSectionDAO().load(id, SectionTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getSectionDAO().enhanceList((List<Section>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getSectionDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getSectionDAO().present((Section)data, tokens);
+			}
+			@Override
+			public SmartList<Section> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getSectionDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)Section.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -500,6 +833,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getUserDomainDAO().present((UserDomain)data, tokens);
 			}
+			@Override
+			public SmartList<UserDomain> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getUserDomainDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)UserDomain.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("UserWhiteList", new BasicLoader() {
@@ -518,6 +859,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getUserWhiteListDAO().present((UserWhiteList)data, tokens);
+			}
+			@Override
+			public SmartList<UserWhiteList> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getUserWhiteListDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)UserWhiteList.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -538,24 +887,13 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getSecUserDAO().present((SecUser)data, tokens);
 			}
-		});
-
-		internalLoaderMap.put("SecUserBlocking", new BasicLoader() {
 			@Override
-			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
-				return daoGoup.getSecUserBlockingDAO().load(id, SecUserBlockingTokens.withoutLists());
+			public SmartList<SecUser> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getSecUserDAO().queryList(sql, parmeters);
 			}
-			@Override
-			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
-				daoGoup.getSecUserBlockingDAO().enhanceList((List<SecUserBlocking>)list);
-			}
-			@Override
-			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getSecUserBlockingDAO().load(id, tokens);
-			}
-			@Override
-			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
-				return daoGoup.getSecUserBlockingDAO().present((SecUserBlocking)data, tokens);
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)SecUser.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -576,6 +914,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getUserAppDAO().present((UserApp)data, tokens);
 			}
+			@Override
+			public SmartList<UserApp> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getUserAppDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)UserApp.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("QuickLink", new BasicLoader() {
@@ -594,6 +940,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getQuickLinkDAO().present((QuickLink)data, tokens);
+			}
+			@Override
+			public SmartList<QuickLink> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getQuickLinkDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)QuickLink.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -614,6 +968,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getListAccessDAO().present((ListAccess)data, tokens);
 			}
+			@Override
+			public SmartList<ListAccess> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getListAccessDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)ListAccess.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("ObjectAccess", new BasicLoader() {
@@ -632,6 +994,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getObjectAccessDAO().present((ObjectAccess)data, tokens);
+			}
+			@Override
+			public SmartList<ObjectAccess> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getObjectAccessDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)ObjectAccess.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -652,6 +1022,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getLoginHistoryDAO().present((LoginHistory)data, tokens);
 			}
+			@Override
+			public SmartList<LoginHistory> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getLoginHistoryDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)LoginHistory.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("GenericForm", new BasicLoader() {
@@ -670,6 +1048,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getGenericFormDAO().present((GenericForm)data, tokens);
+			}
+			@Override
+			public SmartList<GenericForm> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getGenericFormDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)GenericForm.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -690,6 +1076,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormMessageDAO().present((FormMessage)data, tokens);
 			}
+			@Override
+			public SmartList<FormMessage> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getFormMessageDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)FormMessage.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("FormFieldMessage", new BasicLoader() {
@@ -708,6 +1102,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormFieldMessageDAO().present((FormFieldMessage)data, tokens);
+			}
+			@Override
+			public SmartList<FormFieldMessage> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getFormFieldMessageDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)FormFieldMessage.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -728,6 +1130,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormFieldDAO().present((FormField)data, tokens);
 			}
+			@Override
+			public SmartList<FormField> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getFormFieldDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)FormField.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("FormAction", new BasicLoader() {
@@ -746,6 +1156,14 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getFormActionDAO().present((FormAction)data, tokens);
+			}
+			@Override
+			public SmartList<FormAction> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getFormActionDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)FormAction.withId(id)).collect(Collectors.toList());
 			}
 		});
 
@@ -766,6 +1184,14 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getCandidateContainerDAO().present((CandidateContainer)data, tokens);
 			}
+			@Override
+			public SmartList<CandidateContainer> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getCandidateContainerDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)CandidateContainer.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 		internalLoaderMap.put("CandidateElement", new BasicLoader() {
@@ -785,6 +1211,95 @@ public class DAOGroup {
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getCandidateElementDAO().present((CandidateElement)data, tokens);
 			}
+			@Override
+			public SmartList<CandidateElement> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getCandidateElementDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)CandidateElement.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("WechatWorkappIdentify", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getWechatWorkappIdentifyDAO().load(id, WechatWorkappIdentifyTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getWechatWorkappIdentifyDAO().enhanceList((List<WechatWorkappIdentify>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getWechatWorkappIdentifyDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getWechatWorkappIdentifyDAO().present((WechatWorkappIdentify)data, tokens);
+			}
+			@Override
+			public SmartList<WechatWorkappIdentify> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getWechatWorkappIdentifyDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)WechatWorkappIdentify.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("WechatMiniappIdentify", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getWechatMiniappIdentifyDAO().load(id, WechatMiniappIdentifyTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getWechatMiniappIdentifyDAO().enhanceList((List<WechatMiniappIdentify>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getWechatMiniappIdentifyDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getWechatMiniappIdentifyDAO().present((WechatMiniappIdentify)data, tokens);
+			}
+			@Override
+			public SmartList<WechatMiniappIdentify> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getWechatMiniappIdentifyDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)WechatMiniappIdentify.withId(id)).collect(Collectors.toList());
+			}
+		});
+
+		internalLoaderMap.put("TreeNode", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getTreeNodeDAO().load(id, TreeNodeTokens.withoutLists());
+			}
+			@Override
+			public void enhanceList(DAOGroup daoGoup, List list) throws Exception {
+				daoGoup.getTreeNodeDAO().enhanceList((List<TreeNode>)list);
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getTreeNodeDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getTreeNodeDAO().present((TreeNode)data, tokens);
+			}
+			@Override
+			public SmartList<TreeNode> queryList(DAOGroup daoGoup, String sql, Object ... parmeters) throws Exception {
+				return daoGoup.getTreeNodeDAO().queryList(sql, parmeters);
+			}
+      @Override
+			public List<BaseEntity> wrapperList(DAOGroup daoGoup, List<String> ids) throws Exception{
+				return ids.stream().map(id-> (BaseEntity)TreeNode.withId(id)).collect(Collectors.toList());
+			}
 		});
 
 	}
@@ -800,6 +1315,20 @@ public class DAOGroup {
 	    	return null;
 	    }
 	}
+
+	public List<BaseEntity> wrapperList(String type, List<String> ids){
+  	    BasicLoader loader = internalLoaderMap.get(type);
+  	    if (loader == null) {
+  	    	return null;
+  	    }
+  	    try{
+  	    	return loader.wrapperList(this, ids);
+  	    }catch(Exception e) {
+  	    	e.printStackTrace();
+  	    	return null;
+  	    }
+  	}
+
 	public BaseEntity loadBasicDataWithTokens(String type, String id, Map<String, Object> tokens){
 	    BasicLoader loader = internalLoaderMap.get(type);
 	    if (loader == null) {
@@ -825,12 +1354,30 @@ public class DAOGroup {
 	    }
 	}
 	public <T> void enhanceList(List list, Class<T> clazz) throws Exception{
-	    BasicLoader loader = internalLoaderMap.get(clazz.getName());
+	    BasicLoader loader = internalLoaderMap.get(clazz.getSimpleName());
 	    if (loader == null) {
 	    	return ;
 	    }
 
 	    loader.enhanceList(this, list);
 	}
+
+	public void enhanceList(List list, String type) throws Exception{
+  	    BasicLoader loader = internalLoaderMap.get(type);
+  	    if (loader == null) {
+  	    	return ;
+  	    }
+
+  	    loader.enhanceList(this, list);
+  	}
+  	
+  	public SmartList<? extends BaseEntity> queryList(String type, String sql, Object ... parameters) throws Exception{
+  	    BasicLoader loader = internalLoaderMap.get(type);
+  	    if (loader == null) {
+  	    	return new SmartList();
+  	    }
+
+  	    return loader.queryList(this, sql, parameters);
+  	}
 }
 

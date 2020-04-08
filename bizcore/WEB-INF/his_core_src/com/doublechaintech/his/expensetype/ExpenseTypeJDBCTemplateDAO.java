@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -94,6 +98,11 @@ public class ExpenseTypeJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
 		return loadInternalExpenseType(accessKey, options);
 	}
 	*/
+	
+	public SmartList<ExpenseType> loadAll() {
+	    return this.loadAll(getExpenseTypeMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -646,15 +655,25 @@ public class ExpenseTypeJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
  	protected Object[] prepareExpenseTypeUpdateParameters(ExpenseType expenseType){
  		Object[] parameters = new Object[9];
  
+ 		
  		parameters[0] = expenseType.getName();
+ 		
+ 		
  		parameters[1] = expenseType.getHelperChars();
- 		parameters[2] = expenseType.getStatus(); 	
+ 		
+ 		
+ 		parameters[2] = expenseType.getStatus();
+ 		 	
  		if(expenseType.getHospital() != null){
  			parameters[3] = expenseType.getHospital().getId();
  		}
  
+ 		
  		parameters[4] = expenseType.getDescription();
- 		parameters[5] = expenseType.getUpdateTime();		
+ 		
+ 		
+ 		parameters[5] = expenseType.getUpdateTime();
+ 				
  		parameters[6] = expenseType.nextVersion();
  		parameters[7] = expenseType.getId();
  		parameters[8] = expenseType.getVersion();
@@ -667,16 +686,26 @@ public class ExpenseTypeJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
 		expenseType.setId(newExpenseTypeId);
 		parameters[0] =  expenseType.getId();
  
+ 		
  		parameters[1] = expenseType.getName();
+ 		
+ 		
  		parameters[2] = expenseType.getHelperChars();
- 		parameters[3] = expenseType.getStatus(); 	
+ 		
+ 		
+ 		parameters[3] = expenseType.getStatus();
+ 		 	
  		if(expenseType.getHospital() != null){
  			parameters[4] = expenseType.getHospital().getId();
  		
  		}
  		
+ 		
  		parameters[5] = expenseType.getDescription();
- 		parameters[6] = expenseType.getUpdateTime();		
+ 		
+ 		
+ 		parameters[6] = expenseType.getUpdateTime();
+ 				
  				
  		return parameters;
  	}
@@ -1196,13 +1225,13 @@ public class ExpenseTypeJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
     public SmartList<ExpenseType> requestCandidateExpenseTypeForExpenseItem(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(ExpenseTypeTable.COLUMN_NAME, filterKey, pageNo, pageSize, getExpenseTypeMapper());
+		return findAllCandidateByFilter(ExpenseTypeTable.COLUMN_NAME, ExpenseTypeTable.COLUMN_HOSPITAL, filterKey, pageNo, pageSize, getExpenseTypeMapper());
     }
 		
     public SmartList<ExpenseType> requestCandidateExpenseTypeForDoctorSchedule(HisUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
-		return findAllCandidateByFilter(ExpenseTypeTable.COLUMN_NAME, filterKey, pageNo, pageSize, getExpenseTypeMapper());
+		return findAllCandidateByFilter(ExpenseTypeTable.COLUMN_NAME, ExpenseTypeTable.COLUMN_HOSPITAL, filterKey, pageNo, pageSize, getExpenseTypeMapper());
     }
 		
 
@@ -1295,6 +1324,34 @@ public class ExpenseTypeJDBCTemplateDAO extends HisBaseDAOImpl implements Expens
 	@Override
 	public SmartList<ExpenseType> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getExpenseTypeMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateExpenseType executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateExpenseType result = new CandidateExpenseType();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

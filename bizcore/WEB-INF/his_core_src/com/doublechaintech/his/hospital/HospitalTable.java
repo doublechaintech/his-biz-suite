@@ -23,12 +23,8 @@ public class HospitalTable{
 	static final String COLUMN_TELEPHONE = "telephone";
 	static final String COLUMN_VERSION = "version";
  
-	public static final String []ALL_CLOUMNS = {COLUMN_ID, 
-		COLUMN_NAME, COLUMN_ADDRESS, COLUMN_TELEPHONE, 
-		COLUMN_VERSION};
-	public static final String []NORMAL_CLOUMNS = {
-		COLUMN_NAME, COLUMN_ADDRESS, COLUMN_TELEPHONE
-		};
+	public static final String []ALL_CLOUMNS = {COLUMN_ID,COLUMN_NAME,COLUMN_ADDRESS,COLUMN_TELEPHONE,COLUMN_VERSION};
+	public static final String []NORMAL_CLOUMNS = {COLUMN_NAME,COLUMN_ADDRESS,COLUMN_TELEPHONE};
 	
 	
 }

@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
+
+import com.terapico.caf.baseelement.CandidateQuery;
+import com.terapico.utils.TextUtil;
+
 import com.doublechaintech.his.HisBaseDAOImpl;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
@@ -52,6 +56,11 @@ public class FormActionJDBCTemplateDAO extends HisBaseDAOImpl implements FormAct
 		return loadInternalFormAction(accessKey, options);
 	}
 	*/
+	
+	public SmartList<FormAction> loadAll() {
+	    return this.loadAll(getFormActionMapper());
+	}
+	
 	
 	protected String getIdFormat()
 	{
@@ -430,11 +439,21 @@ public class FormActionJDBCTemplateDAO extends HisBaseDAOImpl implements FormAct
  	protected Object[] prepareFormActionUpdateParameters(FormAction formAction){
  		Object[] parameters = new Object[9];
  
+ 		
  		parameters[0] = formAction.getLabel();
+ 		
+ 		
  		parameters[1] = formAction.getLocaleKey();
+ 		
+ 		
  		parameters[2] = formAction.getActionKey();
+ 		
+ 		
  		parameters[3] = formAction.getLevel();
- 		parameters[4] = formAction.getUrl(); 	
+ 		
+ 		
+ 		parameters[4] = formAction.getUrl();
+ 		 	
  		if(formAction.getForm() != null){
  			parameters[5] = formAction.getForm().getId();
  		}
@@ -451,11 +470,21 @@ public class FormActionJDBCTemplateDAO extends HisBaseDAOImpl implements FormAct
 		formAction.setId(newFormActionId);
 		parameters[0] =  formAction.getId();
  
+ 		
  		parameters[1] = formAction.getLabel();
+ 		
+ 		
  		parameters[2] = formAction.getLocaleKey();
+ 		
+ 		
  		parameters[3] = formAction.getActionKey();
+ 		
+ 		
  		parameters[4] = formAction.getLevel();
- 		parameters[5] = formAction.getUrl(); 	
+ 		
+ 		
+ 		parameters[5] = formAction.getUrl();
+ 		 	
  		if(formAction.getForm() != null){
  			parameters[6] = formAction.getForm().getId();
  		
@@ -557,6 +586,34 @@ public class FormActionJDBCTemplateDAO extends HisBaseDAOImpl implements FormAct
 	@Override
 	public SmartList<FormAction> queryList(String sql, Object... parameters) {
 	    return this.queryForList(sql, parameters, this.getFormActionMapper());
+	}
+	@Override
+	public int count(String sql, Object... parameters) {
+	    return queryInt(sql, parameters);
+	}
+	@Override
+	public CandidateFormAction executeCandidatesQuery(CandidateQuery query, String sql, Object ... parmeters) throws Exception {
+
+		CandidateFormAction result = new CandidateFormAction();
+		int pageNo = Math.max(1, query.getPageNo());
+		result.setOwnerClass(TextUtil.toCamelCase(query.getOwnerType()));
+		result.setOwnerId(query.getOwnerId());
+		result.setFilterKey(query.getFilterKey());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase("displayName")));
+		result.setGroupByFieldName(TextUtil.uncapFirstChar(TextUtil.toCamelCase(query.getGroupBy())));
+
+		SmartList candidateList = queryList(sql, parmeters);
+		this.alias(candidateList);
+		result.setCandidates(candidateList);
+		int offSet = (pageNo - 1 ) * query.getPageSize();
+		if (candidateList.size() > query.getPageSize()) {
+			result.setTotalPage(pageNo+1);
+		}else {
+			result.setTotalPage(pageNo);
+		}
+		return result;
 	}
 	
 	

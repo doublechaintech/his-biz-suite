@@ -31,7 +31,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setId(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String id = rs.getString(QuickLinkTable.COLUMN_ID);
+		
 		if(id == null){
 			//do nothing when nothing found in database
 			return;
@@ -43,7 +45,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setName(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String name = rs.getString(QuickLinkTable.COLUMN_NAME);
+		
 		if(name == null){
 			//do nothing when nothing found in database
 			return;
@@ -55,7 +59,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setIcon(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String icon = rs.getString(QuickLinkTable.COLUMN_ICON);
+		
 		if(icon == null){
 			//do nothing when nothing found in database
 			return;
@@ -67,7 +73,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setImagePath(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String imagePath = rs.getString(QuickLinkTable.COLUMN_IMAGE_PATH);
+		
 		if(imagePath == null){
 			//do nothing when nothing found in database
 			return;
@@ -79,7 +87,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setLinkTarget(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		String linkTarget = rs.getString(QuickLinkTable.COLUMN_LINK_TARGET);
+		
 		if(linkTarget == null){
 			//do nothing when nothing found in database
 			return;
@@ -91,7 +101,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setCreateTime(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Date createTime = rs.getTimestamp(QuickLinkTable.COLUMN_CREATE_TIME);
+		
 		if(createTime == null){
 			//do nothing when nothing found in database
 			return;
@@ -121,7 +133,9 @@ public class QuickLinkMapper extends BaseRowMapper<QuickLink>{
 	protected void setVersion(QuickLink quickLink, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
+		
 		Integer version = rs.getInt(QuickLinkTable.COLUMN_VERSION);
+		
 		if(version == null){
 			//do nothing when nothing found in database
 			return;

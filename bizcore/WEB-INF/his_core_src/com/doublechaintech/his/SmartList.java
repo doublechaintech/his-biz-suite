@@ -130,6 +130,11 @@ public class SmartList<E  extends BaseEntity> extends BaseEntity implements List
 		super();
 		
 	}
+	public SmartList(Collection<E> datas){
+		super();
+		ensureSmartList();
+		smartList.addAll(datas);
+	}
 	public int size() {
 		ensureSmartList();
 		return smartList.size();
@@ -451,6 +456,16 @@ public class SmartList<E  extends BaseEntity> extends BaseEntity implements List
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

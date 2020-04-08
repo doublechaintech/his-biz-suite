@@ -12,3 +12,10 @@ public class HisObjectPlainCustomSerializer<T extends BaseEntity> extends HisObj
 
 
 
+
+
+
+
+
+
+

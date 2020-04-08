@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -63,6 +64,7 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 	
 	protected		SmartList<ExpenseItem>	mExpenseItemList    ;
 	protected		SmartList<DoctorSchedule>	mDoctorScheduleList ;
+
 	
 		
 	public 	ExpenseType(){
@@ -71,7 +73,7 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 	public 	static ExpenseType withId(String id){
 		ExpenseType expenseType = new ExpenseType();
 		expenseType.setId(id);
-		// expenseType.setVersion(Integer.MAX_VALUE);
+		expenseType.setVersion(Integer.MAX_VALUE);
 		return expenseType;
 	}
 	public 	static ExpenseType refById(String id){
@@ -85,18 +87,6 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	ExpenseType(String name, String helperChars, String status, Hospital hospital, String description, DateTime updateTime)
-	{
-		setName(name);
-		setHelperChars(helperChars);
-		setStatus(status);
-		setHospital(hospital);
-		setDescription(description);
-		setUpdateTime(updateTime);
-
-		this.mExpenseItemList = new SmartList<ExpenseItem>();
-		this.mDoctorScheduleList = new SmartList<DoctorSchedule>();	
-	}
 	
 	//Support for changing the property
 	
@@ -123,6 +113,7 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -132,12 +123,13 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeHelperCharsProperty(String newValueExpr){
+	
 		String oldValue = getHelperChars();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -147,12 +139,13 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		updateHelperChars(newValue);
 		this.onChangeProperty(HELPER_CHARS_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeStatusProperty(String newValueExpr){
+	
 		String oldValue = getStatus();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -162,12 +155,13 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		updateStatus(newValue);
 		this.onChangeProperty(STATUS_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeDescriptionProperty(String newValueExpr){
+	
 		String oldValue = getDescription();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -177,12 +171,13 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		updateDescription(newValue);
 		this.onChangeProperty(DESCRIPTION_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUpdateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getUpdateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -192,7 +187,7 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		updateUpdateTime(newValue);
 		this.onChangeProperty(UPDATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -636,7 +631,9 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "doctorScheduleCurrentPageNumber", getDoctorScheduleList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -707,7 +704,9 @@ public class ExpenseType extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getHelperChars(), getStatus(), getHospital(), getDescription(), getUpdateTime(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

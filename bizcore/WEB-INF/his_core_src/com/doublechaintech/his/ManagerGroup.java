@@ -17,13 +17,23 @@ import com.doublechaintech.his.doctorassignment.DoctorAssignmentManager;
 
 import com.doublechaintech.his.doctorschedule.DoctorScheduleManager;
 
+import com.doublechaintech.his.mobileapp.MobileAppManager;
+
+import com.doublechaintech.his.page.PageManager;
+
+import com.doublechaintech.his.pagetype.PageTypeManager;
+
+import com.doublechaintech.his.slide.SlideManager;
+
+import com.doublechaintech.his.uiaction.UiActionManager;
+
+import com.doublechaintech.his.section.SectionManager;
+
 import com.doublechaintech.his.userdomain.UserDomainManager;
 
 import com.doublechaintech.his.userwhitelist.UserWhiteListManager;
 
 import com.doublechaintech.his.secuser.SecUserManager;
-
-import com.doublechaintech.his.secuserblocking.SecUserBlockingManager;
 
 import com.doublechaintech.his.userapp.UserAppManager;
 
@@ -49,6 +59,12 @@ import com.doublechaintech.his.candidatecontainer.CandidateContainerManager;
 
 import com.doublechaintech.his.candidateelement.CandidateElementManager;
 
+import com.doublechaintech.his.wechatworkappidentify.WechatWorkappIdentifyManager;
+
+import com.doublechaintech.his.wechatminiappidentify.WechatMiniappIdentifyManager;
+
+import com.doublechaintech.his.treenode.TreeNodeManager;
+
 
 public class ManagerGroup {
 
@@ -68,13 +84,23 @@ public class ManagerGroup {
 
 	protected DoctorScheduleManager doctorScheduleManager;
 
+	protected MobileAppManager mobileAppManager;
+
+	protected PageManager pageManager;
+
+	protected PageTypeManager pageTypeManager;
+
+	protected SlideManager slideManager;
+
+	protected UiActionManager uiActionManager;
+
+	protected SectionManager sectionManager;
+
 	protected UserDomainManager userDomainManager;
 
 	protected UserWhiteListManager userWhiteListManager;
 
 	protected SecUserManager secUserManager;
-
-	protected SecUserBlockingManager secUserBlockingManager;
 
 	protected UserAppManager userAppManager;
 
@@ -100,7 +126,13 @@ public class ManagerGroup {
 
 	protected CandidateElementManager candidateElementManager;
 
-	
+	protected WechatWorkappIdentifyManager wechatWorkappIdentifyManager;
+
+	protected WechatMiniappIdentifyManager wechatMiniappIdentifyManager;
+
+	protected TreeNodeManager treeNodeManager;
+
+
 
 	public HospitalManager getHospitalManager(){
 		return this.hospitalManager;
@@ -166,6 +198,54 @@ public class ManagerGroup {
 	}
 
 
+	public MobileAppManager getMobileAppManager(){
+		return this.mobileAppManager;
+	}
+	public void setMobileAppManager(MobileAppManager manager){
+		this.mobileAppManager = manager;
+	}
+
+
+	public PageManager getPageManager(){
+		return this.pageManager;
+	}
+	public void setPageManager(PageManager manager){
+		this.pageManager = manager;
+	}
+
+
+	public PageTypeManager getPageTypeManager(){
+		return this.pageTypeManager;
+	}
+	public void setPageTypeManager(PageTypeManager manager){
+		this.pageTypeManager = manager;
+	}
+
+
+	public SlideManager getSlideManager(){
+		return this.slideManager;
+	}
+	public void setSlideManager(SlideManager manager){
+		this.slideManager = manager;
+	}
+
+
+	public UiActionManager getUiActionManager(){
+		return this.uiActionManager;
+	}
+	public void setUiActionManager(UiActionManager manager){
+		this.uiActionManager = manager;
+	}
+
+
+	public SectionManager getSectionManager(){
+		return this.sectionManager;
+	}
+	public void setSectionManager(SectionManager manager){
+		this.sectionManager = manager;
+	}
+
+
 	public UserDomainManager getUserDomainManager(){
 		return this.userDomainManager;
 	}
@@ -187,14 +267,6 @@ public class ManagerGroup {
 	}
 	public void setSecUserManager(SecUserManager manager){
 		this.secUserManager = manager;
-	}
-
-
-	public SecUserBlockingManager getSecUserBlockingManager(){
-		return this.secUserBlockingManager;
-	}
-	public void setSecUserBlockingManager(SecUserBlockingManager manager){
-		this.secUserBlockingManager = manager;
 	}
 
 
@@ -294,7 +366,41 @@ public class ManagerGroup {
 	}
 
 
+	public WechatWorkappIdentifyManager getWechatWorkappIdentifyManager(){
+		return this.wechatWorkappIdentifyManager;
+	}
+	public void setWechatWorkappIdentifyManager(WechatWorkappIdentifyManager manager){
+		this.wechatWorkappIdentifyManager = manager;
+	}
+
+
+	public WechatMiniappIdentifyManager getWechatMiniappIdentifyManager(){
+		return this.wechatMiniappIdentifyManager;
+	}
+	public void setWechatMiniappIdentifyManager(WechatMiniappIdentifyManager manager){
+		this.wechatMiniappIdentifyManager = manager;
+	}
+
+
+	public TreeNodeManager getTreeNodeManager(){
+		return this.treeNodeManager;
+	}
+	public void setTreeNodeManager(TreeNodeManager manager){
+		this.treeNodeManager = manager;
+	}
+
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

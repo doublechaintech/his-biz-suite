@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -57,6 +58,7 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	QuickLink(){
@@ -65,7 +67,7 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 	public 	static QuickLink withId(String id){
 		QuickLink quickLink = new QuickLink();
 		quickLink.setId(id);
-		// quickLink.setVersion(Integer.MAX_VALUE);
+		quickLink.setVersion(Integer.MAX_VALUE);
 		return quickLink;
 	}
 	public 	static QuickLink refById(String id){
@@ -79,16 +81,6 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	QuickLink(String name, String icon, String imagePath, String linkTarget, DateTime createTime, UserApp app)
-	{
-		setName(name);
-		setIcon(icon);
-		setImagePath(imagePath);
-		setLinkTarget(linkTarget);
-		setCreateTime(createTime);
-		setApp(app);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -115,6 +107,7 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -124,12 +117,13 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeIconProperty(String newValueExpr){
+	
 		String oldValue = getIcon();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -139,12 +133,13 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		updateIcon(newValue);
 		this.onChangeProperty(ICON_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeImagePathProperty(String newValueExpr){
+	
 		String oldValue = getImagePath();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -154,12 +149,13 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		updateImagePath(newValue);
 		this.onChangeProperty(IMAGE_PATH_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeLinkTargetProperty(String newValueExpr){
+	
 		String oldValue = getLinkTarget();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -169,12 +165,13 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		updateLinkTarget(newValue);
 		this.onChangeProperty(LINK_TARGET_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeCreateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getCreateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -184,7 +181,7 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		updateCreateTime(newValue);
 		this.onChangeProperty(CREATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -392,7 +389,9 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, APP_PROPERTY, getApp());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -459,7 +458,9 @@ public class QuickLink extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getIcon(), getImagePath(), getLinkTarget(), getCreateTime(), getApp(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

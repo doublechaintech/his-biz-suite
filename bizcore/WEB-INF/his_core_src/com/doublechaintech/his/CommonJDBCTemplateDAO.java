@@ -21,20 +21,37 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.terapico.utils.TextUtil;
 import java.util.Arrays;
 
 
 public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 
+
+	protected String getSelectAllSQL() {
+
+		//return new String[]{"name","bize_order","card_number","billing_address"};
+		StringBuilder stringBuilder=new StringBuilder();
+		stringBuilder.append("select * from ");
+		stringBuilder.append(this.getTableName());
+		return stringBuilder.toString();
+	}
+
+	protected <T  extends BaseEntity> SmartList<T> loadAll(RowMapper<T> mapper) {
+
+		return this.queryForList(getSelectAllSQL(), new Object[] {}, mapper);
+
+	}
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JdbcTemplate jdbcTemplateObject;
-	
+
 	private DataSource dataSource;
-	
+
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 		this.jdbcTemplateObject = new JdbcTemplate(this.dataSource);
@@ -43,7 +60,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		jdbcTemplateObject.setMaxRows(getMaxRows());
 		jdbcTemplateObject.setQueryTimeout(10);
 	}
-	
+
 	protected <T  extends BaseEntity> void  handleNotFullFilled(Map<String, T> entityMap,
 			List<T > databaseEntityList) {
 
@@ -198,7 +215,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	public int getMaxRows() {
 		return 1000;
 	}
-	
+
 	protected Map<String,Object>  emptyOptions() {
 		return new HashMap<String,Object>();
 	}
@@ -228,17 +245,21 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 
 
 	}
-	
+
 	protected static final String DATABASE_PRODUCT_INFORMIX="Informix Server".toLowerCase();
 	protected static final String DATABASE_PRODUCT_GBASE="GBase Server".toLowerCase();
 	protected static final String DATABASE_PRODUCT_MYSQL="MySQL".toLowerCase();
 	protected static final String DATABASE_PRODUCT_PGSQL="PostgreSQL".toLowerCase();
 	protected static final String DATABASE_PRODUCT_ORACLE="Oracle".toLowerCase();
 	protected static final String DATABASE_PRODUCT_MSSQL="Microsoft SQL Server".toLowerCase();
-	//body should like   "* from table where ... order ... group by ... "
+	protected static final String DATABASE_PRODUCT_H2="H2".toLowerCase();
+
 	protected String wrapRangeQuery(String body) {
-		
+
 		if(getDatabaseProductName().equals(DATABASE_PRODUCT_MYSQL)) {
+			return this.join("select ",body," limit ?, ?");
+		}
+		if(getDatabaseProductName().equals(DATABASE_PRODUCT_H2)) {
 			return this.join("select ",body," limit ?, ?");
 		}
 		if(getDatabaseProductName().equals(DATABASE_PRODUCT_GBASE)) {
@@ -250,41 +271,28 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		if(getDatabaseProductName().equals(DATABASE_PRODUCT_PGSQL)) {
 			return this.join("select  ",body," offset ? limit ?");
 		}
-		/*
-		 * select *
-    from (select a.*, rownum rowno
-            from (select t.*
-                    from test t
-                   order by t.create_date desc) a
-           where rownum <= 20) b
-   where b.rowno >= 11;
-		 * 
-		 * */
-		
+
 		if(getDatabaseProductName().equals(DATABASE_PRODUCT_ORACLE)) {
 			//not tested yet, more issue is here
-			return this.join("select * from (",  
+			return this.join("select * from (",
 					"select a.*, rownum rowno from (",
-					"select ",body, 
+					"select ",body,
 					") _external where_external.rownum<=? ",
 					") _internal where _internal.rownum>=? ");
 		}
 		return this.join("select ",body," offset ? limit ?");
-		//please do not go there, will fail for most case;
-		
-		
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	protected String currentDatabaseProductName = null;
-	
-	
-	
+
+
+
 	protected String getDatabaseProductName() {
-		
+
 		if(currentDatabaseProductName!=null) {
 			return currentDatabaseProductName;
 		}
@@ -306,30 +314,30 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			}
 		}
 	}
-	
+
 	protected JdbcTemplate getJdbcTemplateObject()  {
-		
-		
-		
+
+
+
 		return jdbcTemplateObject;
 	}
 	//Having following methods to allow easier logging, performance optimization
 	//The data can be read from read only databases with slave-master arch
-	
+
 	protected int[] batchUpdate(String sql, List<Object[]>args) {
 		if(args.isEmpty()){
 			return new int[0];
 		}
-		
+
 		int[] counts =  getJdbcTemplateObject().batchUpdate(sql, args);
 		logSQLAndParamList("batchUpdate",sql,args,counts);
 		return counts;
-		
+
 	}
 
 
 
-	protected int singleUpdate(String sql,Object [] parameters) {
+	public int singleUpdate(String sql,Object [] parameters) {
 		try {
 			int count = getJdbcTemplateObject().update(sql,parameters);
 			logSQLAndParameters("singleUpdate",sql,parameters,count+" UPDATED");
@@ -338,16 +346,16 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			logSQLAndParameters("singleUpdate",sql,parameters,"FAIL with: "+t.getMessage());
 			throw t;
 		}
-		
+
 	}
 	//compatiable with old code
 	protected int update(String sql,Object [] parameters) {
 		return this.singleUpdate(sql, parameters);
-		
+
 	}
 	protected<T extends BaseEntity> T queryForObject(String sql,Object [] parameters,RowMapper<T> mapper) {
 		//return getJdbcTemplateObject().batchUpdate(sql, args);
-		
+
 		return wrapWithLog("loadSingleObj",sql, parameters,getJdbcTemplateObject().queryForObject(sql,parameters,mapper));
 	}
 	protected<T extends BaseEntity> T loadSingleObject(AccessKey accessKey,RowMapper<T> mapper) {
@@ -355,24 +363,24 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		//String sql="select * from "+ this.getTableName() +" where " + accessKey.getColumnName() + "= ?";
 		String sql = this.join("select * from ",this.getTableName()," where ",accessKey.getColumnName(),"= ?");
 		Object [] parameters={accessKey.getValue()};
-		
+
 		return wrapWithLog("loadSingleObject",sql, parameters,getJdbcTemplateObject().queryForObject(sql,parameters,mapper));
 	}
-	
+
 	protected <T extends BaseEntity> T wrapWithLog(String methodName, String sql, Object [] parameters, T result) {
 		if(result==null) {
 			logSQLAndParameters(methodName,sql,parameters,"NULL");
 			return null;
 		}
 		logSQLAndParameters(methodName,sql,parameters,result.getId());
-		
+
 		return result;
 	}
 	/*
 	protected void logSQLAndParameters2(String method, String sql,Object [] parameters) {
-		
+
 		System.out.println(timeExpr()+": "+method+" excuting: "+ sql);
-		
+
 		for(int i=0;i<parameters.length;i++){
 			logDebug("\t\tp["+i+"]:\t"+parameters[i]);
 		}
@@ -418,7 +426,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			String escapedValue =strValue.replace("\'", "''");
 			return this.join("'",escapedValue,"'");
 		}
-		
+
 		return this.join("'",value,"'");
 
 	}
@@ -451,8 +459,8 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		logDebug(timeExpr()+"\t"+alignWithTabSpace(method,2)+alignWithTabSpace(result,2)+ finalSQL.toString() +";");
 
 
-	}	
-	
+	}
+
 	public String alignWithTabSpace(String value, int tabWidth) {
 		if(tabWidth<=0) {
 			return value;
@@ -462,12 +470,12 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			//超过了
 			return value.substring(0, tabWidth*8-2)+".\t";
 		}
-	
+
 		int count = tabWidth - (length/8);
 
 		return value+repeatTab(count);
-		
-		
+
+
 	}
 	protected String repeatTab(int length) {
 		if(length <= 0){
@@ -475,14 +483,14 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0;i<length;i++){
-			
+
 			stringBuilder.append('\t');
 		}
-		
+
 		return stringBuilder.toString();
 	}
-	
-	
+
+
 	protected void logDebug(String message){
 		System.out.println(message);
 	}
@@ -497,33 +505,33 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		//It is not thread safe, how silly the JDK is!!!
 		return simpleDateFormat.format(dateValue);
 	}	protected String timeExpr(){
-		
+
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd'T'HH:mm:ss.SSS");
 		//It is not thread safe, how silly the JDK is!!!
 		return simpleDateFormat.format(new java.util.Date());
 	}
-	
+
 	protected void logSQLAndParamList(String method, String sql,List<Object[]>args, int []counts) {
 		//System.out.println(timeExpr()+": "+method+"batch excuting: "+ sql);
-		
+
 		int counter = 0;
 		for(Object[] parameters: args){
-			
+
 			this.logSQLAndParameters(this.join(method,"[",counter,"]"), sql, parameters,counts[counter]+" UPDATED");
 			counter++;
 		}
 	}
-	
+
 	protected<T extends BaseEntity> T queryForObject(String sql,Class<T> clazz, Object [] parameters) {
 		//return getJdbcTemplateObject().batchUpdate(sql, args);
-		
+
 		return this.wrapWithLog("queryForObject", sql, parameters, getJdbcTemplateObject().queryForObject(sql,clazz,parameters));
 	}
 	//List<Order> orderList = getJdbcTemplateObject().query(SQL, new Object[]{confirmationId}, getMapper());
-	
+
 	protected <T  extends BaseEntity> SmartList<T> queryForList(String sql,Object [] parameters,RowMapper<T> mapper) {
 		//return getJdbcTemplateObject().batchUpdate(sql, args);
-		
+
 		//return getJdbcTemplateObject().query(sql,parameters,mapper);
 		List<T> originList = getJdbcTemplateObject().query(sql,parameters,mapper);
 		logSQLAndParameters("queryForList",sql,parameters,originList.size()+" ROWS");
@@ -534,9 +542,9 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 
 	protected Integer queryInt(String sql,Object [] parameters) {
 		//return getJdbcTemplateObject().batchUpdate(sql, args);
-		
+
 		//return getJdbcTemplateObject().query(sql,parameters,mapper);
-		
+
 		Integer result =  getJdbcTemplateObject().queryForObject (sql,parameters,Integer.class);
 		logSQLAndParameters("queryInt",sql,parameters,"RESULT: "+result);
 		return result;
@@ -557,17 +565,17 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	}
 
 	static Object[] parse(String maxId) {
-		
+
 		if(maxId==null){
 			return new Object[]{"USER",1L};
 		}
-		
+
 		Object ret[] = new Object[2];
 		StringBuilder numberBuffer = new StringBuilder();
 		StringBuilder prefixBuffer = new StringBuilder();
 		StringBuilder currentBuffer = numberBuffer;
 		char[] chs = maxId.toCharArray();
-		
+
 		int length = chs.length;
 		for(int i=0;i<length;i++) {
 			char ch=chs[length-i-1];
@@ -585,25 +593,25 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			ret[1] = 0L;
 			return ret;
 		}
-		
+
 		ret[1] = Long.parseLong(numberExpr);
 		return ret;
 
 	}
-	
-	//static final String ID_FORMAT="USER%06d"; 
-	
+
+	//static final String ID_FORMAT="USER%06d";
+
 	//There is an issue when runing this code under cluster environment
 	//Since other instance running the same code and keep conflicting each other
-	//When running under a cluster environment, we need a global unique id to ensure 
+	//When running under a cluster environment, we need a global unique id to ensure
 	//The id will not be repeated
-	
+
 	private AtomicLong currentMax = new AtomicLong(-1L);
 
 	protected String getNextId() {
 		synchronized(currentMax){
 			if(currentMax.get() > 0){
-				
+
 				return String.format(getIdFormat(),currentMax.incrementAndGet());
 			}
 			//The following logic just run when the first time loaded the id from table
@@ -614,31 +622,31 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
                     currentMax.set(1L);;
 					return  String.format(getIdFormat(),1);
 				}
-				
+
 				Object ret[]=parse(maxId);
 				currentMax.set((Long)ret[1]+1);
-				System.out.println(this.getClass().getName()+this.hashCode()+":getNextId(start from "+maxId+")="+currentMax);
+				//System.out.println(this.getClass().getName()+this.hashCode()+":getNextId(start from "+maxId+")="+currentMax);
 				return String.format(getIdFormat(),currentMax.get());
-				
+
 			} catch (EmptyResultDataAccessException e) {
                 currentMax.set(1L);
 				return  String.format(getIdFormat(),1);
 			}
 		}
-		
+
 	}
 	protected String getIdFormat() {
 		return getShortName(this.getName())+"%06d";
 	}
-	
-	
+
+
 	public static String getShortName(String name) {
 		String ar[] = name.split("_");
 		String ret = ar[0].substring(0, 1).toUpperCase();
 
 		for (int i = 1; i < ar.length; i++) {
 			ret +=ar[i].substring(0, 1).toUpperCase();
-				
+
 		}
 		return ret;
 	}
@@ -646,16 +654,16 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 	protected String getIdColumnName() {
 		return "id";
 	}
-	
+
 	protected String getVersionColumnName() {
 		return "version";
 	}
 
 	abstract protected String[] getNormalColumnNames();
-	
+
 	abstract protected String getName();
 	abstract protected String getBeanName();
-	
+
 	protected String getTableName() {
 		return this.getName()+"_data";
 	}
@@ -666,32 +674,32 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 
 	protected String getCreateSQL() {
 		StringBuilder stringBuilder=new StringBuilder();
-		
+
 		stringBuilder.append("insert into ");
 		stringBuilder.append(this.getTableName());
 		stringBuilder.append("(id, ");
 		stringBuilder.append(join());
 		stringBuilder.append(", version)values(?, ");
 		stringBuilder.append(getCreateParametersPlaceHolders());
-		stringBuilder.append(", 1);");
-		
+		stringBuilder.append(", 1)");
+
 		return stringBuilder.toString();
 	}
-	
+
 	protected String getDeleteSQL() {
-		// TODO Auto-generated method stub
+
 		//return new String[]{"name","bize_order","card_number","billing_address"};
 		StringBuilder stringBuilder=new StringBuilder();
 		stringBuilder.append("delete from  ");
 		stringBuilder.append(this.getTableName());
 		stringBuilder.append(" where id= ? and version =?;");
-			
+
 		return stringBuilder.toString();
-		
+
 	}
 
 	protected String getUpdateSQL() {
-		// TODO Auto-generated method stub
+
 		//return new String[]{"name","bize_order","card_number","billing_address"};
 		StringBuilder stringBuilder=new StringBuilder();
 		stringBuilder.append("update ");
@@ -699,145 +707,145 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		stringBuilder.append(" set ");
 		stringBuilder.append(joinUpdate());
 		stringBuilder.append(", version = ? ");
-		
+
 		stringBuilder.append("where id=? and version=?");
-		
+
 		return stringBuilder.toString();
-		
+
 	}
-	
+
 	protected String getDeleteWithVerionSQL() {
-		// TODO Auto-generated method stub
+
 		//return new String[]{"name","bize_order","card_number","billing_address"};
 		StringBuilder stringBuilder=new StringBuilder();
 		stringBuilder.append("delete from ");
 		stringBuilder.append(this.getTableName());
-		
-		
+
+
 		stringBuilder.append(" where id=? and version=?");
-		
+
 		return stringBuilder.toString();
-		
+
 	}
-	
-	
-	
+
+
+
 	protected String getCreateParametersPlaceHolders() {
 
-		
+
 		int length=getNormalColumnNames().length;
 		return repeatAndJoin("?",", ",length);
 	}
-	
-	
-	
-	
+
+
+
+
 
 	protected String joinUpdateParametersPlaceHolders() {
 
 		int length=getNormalColumnNames().length;
 		return repeatAndJoin("?",", ",length);
 	}
-	
-	
-	
+
+
+
 	protected String repeatAndJoin(String value, String delimiter, int times) {
 		return IntStream.range(0, times).mapToObj(i -> value).collect(Collectors.joining(delimiter));
 	}
-	
+
 	protected String joinPlaceHolders(String []parameters) {
 		return repeatAndJoin("?",",",parameters.length);
 	}
-	
+
 	protected String join() {
 		String columNames[]=getNormalColumnNames();
 		return Arrays.asList(columNames).stream().collect(Collectors.joining(", "));
-		
+
 	}
 
-	
+
 	protected String joinUpdate() {
-		
+
 		String columNames[]=getNormalColumnNames();
 		return Arrays.asList(columNames).stream().map(columnName->columnName+" = ?").collect(Collectors.joining(", "));
-		
+
 	}
-	
+
 	protected String getDeleteAllSQL() {
-		// TODO Auto-generated method stub
+
 		//return new String[]{"name","bize_order","card_number","billing_address"};
 		StringBuilder stringBuilder=new StringBuilder();
 		stringBuilder.append("delete from  ");
 		stringBuilder.append(this.getTableName());
-		
-			
+
+
 		return stringBuilder.toString();
-		
+
 	}
-	
+
 	public<T extends BaseEntity> SmartList<T> removeList(SmartList<T> entityList, Map<String, Object> options) {
-		
+
 		//if(true) throw new IllegalStateException("removeList-----");
 		//System.out.println("removeList-----");
 		batchDelete(entityList);
 		return entityList;
 	}
-	
+
 	protected<T extends BaseEntity> void batchDelete(List<T> entityList) {
-		
+
 		if(entityList.isEmpty()){
 			return;
 		}
-		
+
 		String SQL=getDeleteWithVerionSQL();
 		List<Object[]> args=prepareBatchDeleteArgs(entityList);
-		
+
 		int affectedNumbers[] = batchUpdate(SQL, args);
-				
-		
+
+
 	}
-	
+
 	protected<T extends BaseEntity> List<Object[]> prepareBatchDeleteArgs(List<T> entityList) {
-		
+
 		List<Object[]> parametersList=new ArrayList<Object[]>();
 		for(T acceleraterAccount:entityList ){
 			Object [] parameters = prepareDeleteEntityParameters(acceleraterAccount);
 			parametersList.add(parameters);
-		
+
 		}
 		return parametersList;
-		
+
 	}
 
 	protected<T extends BaseEntity> Object[] prepareDeleteEntityParameters(T acceleraterAccount) {
- 		Object[] parameters = new Object[2];		
+ 		Object[] parameters = new Object[2];
  		parameters[0] = acceleraterAccount.getId();
  		parameters[1] = acceleraterAccount.getVersion();
- 				
+
  		return parameters;
  	}
-	
+
 	protected int calcToIndex(int totalLoadSize, int currentPage, int rowsPerPage) {
 		int lastIndex = currentPage*rowsPerPage;
 		if( lastIndex> totalLoadSize){
 			return totalLoadSize;
 		}
 		return lastIndex;
-		
+
 	}
-		
+
 	protected boolean isCurrentPageInLoadedList(int totalLoadSize, int currentPage, int rowsPerPage) {
-		
+
 		if(currentPage*rowsPerPage <= totalLoadSize){//is this really needed????????
 			return true;
 		}
-		
+
 		if(totalLoadSize < this.getMaxRows()){
 			//full loaded
 			return true;
 		}
-		
-		
+
+
 		return false;
 	}
 
@@ -863,7 +871,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		}
 
 	}
-	
+
 	protected int currentPageNumberOf(String objectName,Map<String,Object> options) {
 		Object currentPageObject = options.get(objectName + "CurrentPage");
 		if(currentPageObject==null){
@@ -881,18 +889,18 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			return 1;
 		}
 
-		
+
 	}
 
 	protected void convertListOptions(Map<String,Object> options, String fromPrefix, String toPrefix) {
-		
-		
+
+
 		Map<String,Object> optionsToMerge = new HashMap<String,Object>();
-		
+
 		Set<Map.Entry<String,Object>> entrySet = options.entrySet();
-		
+
 		for(Map.Entry<String,Object> entry: entrySet){
-			
+
 			String key = entry.getKey();
 			if(!key.startsWith(fromPrefix+".")){
 				//eg. "XYListAsSender"=>XYList
@@ -904,10 +912,10 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			}
 			String remainKeyPart = key.substring(startIndex);
 			String newKey = this.join(toPrefix,remainKeyPart);
-			
+
 			optionsToMerge.put(newKey, entry.getValue());
-			
-			
+
+
 		}
 		//to avoid concurrent modification
 		Set<Map.Entry<String,Object>> mergeEntrySet = optionsToMerge.entrySet();
@@ -928,41 +936,41 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
  			objs[index++] = obj;
  		}
  		return objs;
- 		
+
  	}*/
 
 	protected Object [] joinArrays(Object [][] arrays) {
 		if(arrays == null){
 			throw new IllegalArgumentException("joinArrays(Object [][] arrays): arrays can not be NULL");
 		}
-		
+
 		int length = 0;
-		
+
 		for(int i=0;i<arrays.length;i++){
 			if(arrays[i] == null){
 				throw new IllegalArgumentException("joinArrays(Object [][] arrays): arrays["+i+"] with can not be NULL");
 			}
 			length += arrays[i].length;
 		}
-		
+
  		Object [] result = new Object[length];
  		int offset = 0;
  		for(int i=0;i<arrays.length;i++){
 			//length += arrays[i].length;
  			Object [] element = arrays[i];
- 			
+
 			System.arraycopy(element,0,result,offset, element.length);
 			offset += element.length;
 		}
- 		
+
  		return result;
- 		
+
  	}
 
 	protected String getListQuerySQL(Object [] array) {
-		
+
 		String SQL = "select * from "+this.getTableName()+" where id in ("+repeatExpr("?",",",array.length)+")";
-		
+
 		return SQL;
 	}
 
@@ -977,33 +985,33 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			}
 			stringBuilder.append(string);
 		}
-		
+
 		return stringBuilder.toString();
 	}
-	
+
 	protected int countWith(String target, Object value, Map<String,Object> options) {
  		MultipleAccessKey key = new MultipleAccessKey();
 		key.put(target, value);
 		return this.countWith(key , options);
  	}
-	
-	
+
+
 	protected QueryCriteria createQueryCriteria(Map<String,Object> options) {
 		return QueryCriteria.createCriteriaFromOptions(this.getBeanListName(), options);
 	}
-	
+
 	protected <T  extends BaseEntity> SmartList<T> queryWith(String target, Object value, Map<String,Object> options,  RowMapper<T> mapper){
-		
+
 		QueryCriteria qc = this.createQueryCriteria(options);
-		
+
 		String SQL = "select * from "+this.getTableName()+" where "+target+" = ? "+ qc.getSQL();
-		
+
 		Object []parameters = this.joinArrays(new Object[][]{new Object[]{value}, qc.getParameters()});
 		SmartList<T> resultList = queryForList(SQL, parameters, mapper);
 		return resultList;
-		
+
  	}
- 	
+
 	protected <T  extends BaseEntity> SmartList<T> queryWith(MultipleAccessKey key,
 			Map<String, Object> options, RowMapper<T> mapper) {
 		QueryCriteria qc = this.createQueryCriteria(options);
@@ -1011,21 +1019,21 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			throw new IllegalArgumentException("The key.sql() from MultipleAccessKey has nothing in it!");
 		}
 		String SQL = "select * from "+this.getTableName()+" where" + key.sql() + qc.getSQL();
-		
+
 		Object []parameters = this.joinArrays(new Object[][]{key.params(), qc.getParameters()});
 		SmartList<T> resultList = queryForList(SQL, parameters, mapper);
 		return resultList;
-		
+
 	}
-	
+
 	protected int countWith(MultipleAccessKey key, Map<String, Object> options) {
 		if(key.isEmpty()){
 			throw new IllegalArgumentException("The key.sql() from MultipleAccessKey has nothing in it!");
 		}
 		QueryCriteria qc = this.createQueryCriteria(options);
-		
+
 		String SQL = "select count(*) from "+this.getTableName()+" where " + key.sql() + qc.getSQL();
-		
+
 		Object []parameters = this.joinArrays(new Object[][]{key.params(), qc.getParameters()});
 		Integer count = queryInt(SQL, parameters);
  		if(count ==  null ){
@@ -1033,7 +1041,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			return 0;
 		}
 		return count;
-		
+
 	}
 	protected Map<String, Integer> countWithIds(String target, String[] ids, Map<String,Object> options) {
 		if (ids == null || ids.length == 0) {
@@ -1069,21 +1077,21 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		}
 		String groupKeyExpr = this.joinArray(",",groupKey);
 		*/
-		
+
 		String internalKey = this.mapToInternalColumn(groupKey);
 		checkFieldName(internalKey);
 		String SQL = "select count(*) as count, "+internalKey+" from "+this.getTableName()
 				+" where " + filterKey.sql() + qc.getSQL() +" group by " +internalKey ;
-		
+
 		Object []parameters = this.joinArrays(new Object[][]{filterKey.params(), qc.getParameters()});
 		if(parameters.length == 0){
 			//if there are no parameters, where does not make sence
 			SQL = "select count(*) as count, "+internalKey+" from "+this.getTableName()
 					+" group by " +internalKey ;
 		}
-		
-		
-		
+
+
+
 		logSQLAndParameters("countWithGroup",SQL,parameters,"PENDING");
 		Map<String, Integer> result = this.getJdbcTemplateObject().query(SQL, parameters, new ResultSetExtractor<Map<String, Integer>>() {
 
@@ -1091,26 +1099,26 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			public Map<String, Integer> extractData(ResultSet rs)
 					throws SQLException, DataAccessException {
 				Map<String, Integer> countResult = new CountingResultMap();
-				
+
 				while (rs.next()){
-					
+
 					int count = rs.getInt(1);
 					//int resultCount = rs.get
 					String key = rs.getString(2);
-					
+
 					countResult.put(key, count);
 				}
 
 				return countResult;
-				
+
 			}
-		
-		
+
+
 		});
-		
+
 		return result;
 	}
-	
+
 	protected String joinArray(String delimiter, Object []args){
 		StringBuilder stringBuilder = new StringBuilder();
 		for(int i=0;i<args.length;i++){
@@ -1118,24 +1126,27 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			stringBuilder.append(args[i]);
 		}
 		return stringBuilder.toString();
-		
+
 	}
-	
-	protected <T  extends BaseEntity> SmartList<T> queryWithRange(String target, Object value, Map<String,Object> options,  
+
+	protected <T  extends BaseEntity> SmartList<T> queryWithRange(String target, Object value, Map<String,Object> options,
 			RowMapper<T> mapper, int start, int count){
 		QueryCriteria qc = this.createQueryCriteria(options);
 		String SQL = wrapRangeQuery("* from "+this.getTableName()+" where "+target+" = ? " + qc.getSQL());
- 		//MySQL only, please replace it when using ORACLE DB
-		
+
+
 		Object []parameters = this.joinArrays(new Object[][]{new Object[]{value}, qc.getParameters(), new Object[]{ start, count}} );
-		
+
 		SmartList<T> resultList = queryForList(SQL, parameters, mapper);
 		return resultList;
-		
+
  	}
-	
+
 	public <T extends BaseEntity> SmartList<T> findAllCandidateByFilter(String fieldName, String filterKey, int pageNo, int pageSize, RowMapper<T> mapper) {
-		Object[] preparedResult = constractFindAllByFilterParams(fieldName, filterKey, pageNo, pageSize);
+		return findAllCandidateByFilter(fieldName, null, filterKey, pageNo, pageSize, mapper);
+	}
+	public <T extends BaseEntity> SmartList<T> findAllCandidateByFilter(String fieldName, String notNullColName, String filterKey, int pageNo, int pageSize, RowMapper<T> mapper) {
+		Object[] preparedResult = constractFindAllByFilterParams(fieldName, notNullColName, filterKey, pageNo, pageSize);
 		String sqlCount = (String) preparedResult[0];
 		Object[] countParams = (Object[]) preparedResult[1];
 		String sqlQuery = (String) preparedResult[2];
@@ -1148,29 +1159,32 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		return resultList;
 	}
 
-	protected Object[] constractFindAllByFilterParams(String fieldName, String filterKey, int pageNo, int pageSize) {
+	protected Object[] constractFindAllByFilterParams(String fieldName, String notNullColName, String filterKey, int pageNo, int pageSize) {
 		if (filterKey == null || filterKey.trim().isEmpty()) {
-			return constractFindAllWithoutFilterKey(fieldName, pageNo, pageSize);
+			return constructFindAllWithoutFilterKey(fieldName, notNullColName, pageNo, pageSize);
 		}
-		return constractFindAllWithFilterKey(fieldName, filterKey, pageNo, pageSize);
+		return constractFindAllWithFilterKey(fieldName, notNullColName, filterKey, pageNo, pageSize);
 	}
-	
-	protected Object[] constractFindAllWithoutFilterKey(String fieldName, int pageNo, int pageSize) {
-		String querySQL = wrapRangeQuery("* from " + this.getTableName() + " order by " + fieldName + " asc ");
-		String countSQL = "select count(*) from " + this.getTableName();
+
+	protected Object[] constructFindAllWithoutFilterKey(String fieldName, String notNullColName, int pageNo, int pageSize) {
+		String querySQL = wrapRangeQuery("* from " + this.getTableName() 
+			+ (notNullColName==null?"":" where "+ notNullColName +" is not null ") 
+			+ " order by " + fieldName + " asc ");
+		String countSQL = "select count(*) from " + this.getTableName() + (notNullColName==null?"":" where "+ notNullColName +" is not null ") ;
 		Object[] params = new Object[] { (pageNo - 1) * pageSize, pageSize };
 		return new Object[] { countSQL, new Object[] {}, querySQL, params };
 	}
 
-	protected Object[] constractFindAllWithFilterKey(String fieldName, String filterKey, int pageNo, int pageSize) {
-		String querySQL =  wrapRangeQuery("* from " + this.getTableName() + " where " + fieldName + " like ? order by " + fieldName + " asc ");
-		String countSQL = "select count(*) from " + this.getTableName() + " where " + fieldName + " like ? ";
+	protected Object[] constractFindAllWithFilterKey(String fieldName, String notNullColName, String filterKey, int pageNo, int pageSize) {
+		String notNullClause = notNullColName==null?"":(" and " + notNullColName +" is not null ");
+		String querySQL =  wrapRangeQuery("* from " + this.getTableName() + " where " + fieldName + " like ? "+ notNullClause +" order by " + fieldName + " asc ");
+		String countSQL = "select count(*) from " + this.getTableName() + " where " + fieldName + " like ? " + notNullClause;
 		Object[] countParams = new Object[] { '%' + filterKey + '%' };
 		Object[] queryParams = new Object[] { '%' + filterKey + '%', (pageNo - 1) * pageSize, pageSize };
 		return new Object[] { countSQL, countParams, querySQL, queryParams };
 	}
 	/*
-	protected Object[] constractFindAllWithoutFilterKey(String fieldName, int pageNo, int pageSize) {
+	protected Object[] constructFindAllWithoutFilterKey(String fieldName, int pageNo, int pageSize) {
 		String querySQL = "select * from " + this.getTableName() + " order by " + fieldName + " asc limit ?,?";
 		String countSQL = "select count(*) from " + this.getTableName();
 		Object[] params = new Object[] { (pageNo - 1) * pageSize, pageSize };
@@ -1185,7 +1199,7 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 		return new Object[] { countSQL, countParams, querySQL, queryParams };
 	}
 	*/
-	
+
 	protected void assertMethodArgumentNotNull(Object object, String method, String parameterName){
 		if(object == null){
 			throw new IllegalArgumentException("Method:" + method +": parameter '"+parameterName+"' shoud NOT be null");
@@ -1235,82 +1249,82 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 			throw new IllegalArgumentException("Method:" + method +": parameter '"+parameterName+"' length shoud be in closed range: ["+lengthMin+","+lengthMax+"] but it is: "+value.length());
 		}
 	}
-	
+
 	protected String wrapWithDate(String fieldName) {
-		
+
 		return this.join("date(",fieldName,")");
-		
-		
+
+
 	}
 	protected String formatKeyForDateLine(String fieldName) {
-		
+
 		return this.join(fieldName,"OfDateline");
-		
-		
+
+
 	}
-	
+
 	//wrapWithDate
 	protected List<AggrResult> statsWithGroup(Class<? extends BaseEntity> type, String groupKey, MultipleAccessKey filterKey, Map<String, Object> options) {
 		if(filterKey.isEmpty()){
 			throw new IllegalArgumentException("The key.sql() from MultipleAccessKey has nothing in it!");
 		}
 		QueryCriteria qc = this.createQueryCriteria(options);
-		
-		
+
+
 		String internalKey = this.mapToInternalColumn(groupKey);
 		checkGroupKey(internalKey);//open for functions
 		String SQL = "select "+internalKey+" as date_key, count(*) as count from "+this.getTableName()
 				+" where " + filterKey.sql() + qc.getSQL() +" group by date_key"  ;
-		
+
 		Object []parameters = this.joinArrays(new Object[][]{filterKey.params(), qc.getParameters()});
 		if(parameters.length == 0){
 			//if there are no parameters, where does not make sence
 			SQL = "select "+internalKey+" as date_key, count(*) as count from "+this.getTableName()
 					+" group by date_key"  ;
 		}
-		
-		
-		
+
+
+
 		logSQLAndParameters("statsWithGroup",SQL,parameters,"PENDING");
 		List<AggrResult> result = this.getJdbcTemplateObject().query(SQL, parameters, new ResultSetExtractor<List<AggrResult> >() {
 
 			@Override
 			public List<AggrResult>  extractData(ResultSet rs)
 					throws SQLException, DataAccessException {
-				
-				
+
+
 				List<AggrResult> resultList = new ArrayList<AggrResult>();
-				
-				
+
+
 				while (rs.next()){
 					AggrResult result = new AggrResult();
 					Object key = rs.getObject(1);
-					int count = rs.getInt(2);					
-					
-					BaseEntity objectKey = convertToBaseEntityKey(type, key);	
-					
+					int count = rs.getInt(2);
+
+					BaseEntity objectKey = convertToBaseEntityKey(type, key);
+
 					result.setKey(objectKey);
 					result.setValue(count);
-					
+
 					resultList.add(result);
-	
+
 				}
 
 				return resultList;
-				
+
 			}
 
 			protected BaseEntity convertToBaseEntityKey(Class<? extends BaseEntity> type, Object key) {
-				
-				
-				
+
+
+
 				if(key != null && (key instanceof Date)) {
 					DateKey objectKey = new DateKey();
 					objectKey.setId(objectKey.toString());
 					objectKey.setDateValue((Date)key);
 					return objectKey;
 				}
-				
+
 				try {
 					BaseEntity objectKey = type.newInstance();
 					objectKey.setId(key==null?null:key.toString());
@@ -1321,35 +1335,50 @@ public abstract class CommonJDBCTemplateDAO extends BaseEntity{
 					return null;//god bless code not going here
 				}
 			}
-		
-		
+
+
 		});
-		
+
 		return result;
 	}
-	
-	
+
+	protected Object toSqlParameter(Object value) {
+		if (value == null) {
+			return value;
+		}
+		return value.toString();
+	}
 
 }
 
 class CountingResultMap extends HashMap<String, Integer> {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Integer get(Object key) {
-		// TODO Auto-generated method stub
+
 		Integer  value = super.get(key);
 		if(value==null){
 			return 0;
 		}
 		return value;
 	}
-	
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

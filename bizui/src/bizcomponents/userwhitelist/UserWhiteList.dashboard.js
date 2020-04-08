@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome';
 import { connect } from 'dva'
 import moment from 'moment'
 import BooleanOption from '../../components/BooleanOption';
@@ -104,7 +103,7 @@ const renderSettingMenu = (cardsData,targetComponent) =>{
 const internalRenderTitle = (cardsData,targetComponent) =>{
   
   
-  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <FontAwesome name="arrow-left"  /> </Link>:null
+  const linkComp=cardsData.returnURL?<Link to={cardsData.returnURL}> <Icon type="double-left" style={{marginRight:"10px"}} /> </Link>:null
   return (<div>{linkComp}{cardsData.cardsName}: {cardsData.displayName} {renderSettingDropDown(cardsData,targetComponent)}</div>)
 
 }
@@ -117,9 +116,9 @@ const internalSummaryOf = (userWhiteList,targetComponent) =>{
 	const userContext = null
 	return (
 	<DescriptionList className={styles.headerList} size="small" col="4">
-<Description term="ID">{userWhiteList.id}</Description> 
-<Description term="用户身份">{userWhiteList.userIdentity}</Description> 
-<Description term="用户特殊功能">{userWhiteList.userSpecialFunctions}</Description> 
+<Description term="序号" style={{wordBreak: 'break-all'}}>{userWhiteList.id}</Description> 
+<Description term="用户身份" style={{wordBreak: 'break-all'}}>{userWhiteList.userIdentity}</Description> 
+<Description term="用户特殊功能" style={{wordBreak: 'break-all'}}>{userWhiteList.userSpecialFunctions}</Description> 
 	
         {buildTransferModal(userWhiteList,targetComponent)}
       </DescriptionList>
@@ -157,7 +156,7 @@ class UserWhiteListDashboard extends Component {
     }
     const returnURL = this.props.returnURL
     
-    const cardsData = {cardsName:"用户白名单",cardsFor: "userWhiteList",
+    const cardsData = {cardsName:window.trans('user_white_list'),cardsFor: "userWhiteList",
     	cardsSource: this.props.userWhiteList,returnURL,displayName,
   		subItems: [
     
@@ -189,8 +188,9 @@ class UserWhiteListDashboard extends Component {
       >
        
         {renderExtraHeader(cardsData.cardsSource)}
-        {imageListOf(cardsData.cardsSource)}  
+        
         {quickFunctions(cardsData)} 
+        {imageListOf(cardsData.cardsSource)}  
         {renderAnalytics(cardsData.cardsSource)}
         {settingListOf(cardsData.cardsSource)}
         {renderSubjectList(cardsData)}       

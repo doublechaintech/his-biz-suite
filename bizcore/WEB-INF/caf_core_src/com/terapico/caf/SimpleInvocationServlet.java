@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimpleInvocationServlet extends HttpServlet {
 	/**
@@ -66,7 +68,7 @@ public class SimpleInvocationServlet extends HttpServlet {
 			origin = "*";
 		}
 		response.addHeader("Access-Control-Allow-Origin",origin);
-		response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+		response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT");
 		// Access-Control-Expose-Headers
 		String reqedHeaders = request.getHeader("Access-Control-Request-Headers");
 		response.addHeader("Access-Control-Allow-Headers", reqedHeaders+", X-Redirect, X-Env-Type, X-Env-Name");
@@ -162,14 +164,16 @@ public class SimpleInvocationServlet extends HttpServlet {
 		}
 
 	}
-
+	
+	
+	private static final Logger logger = LoggerFactory.getLogger(SimpleInvocationServlet.class);
+	
 	private void logInfo(String message) {
-		// TODO Auto-generated method stub
-		String logMessage = timeExpr() + "  " + message;
-		System.out.println(logMessage);
-
+		
+		logger.info(message);
+		
 	}
-
+	
 	ServletInvocationContextFactory factory;
 
 	protected InvocationContext createInvocationContext(HttpServletRequest request) throws InvocationException {

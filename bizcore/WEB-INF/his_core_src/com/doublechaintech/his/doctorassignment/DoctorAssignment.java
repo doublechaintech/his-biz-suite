@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -54,6 +55,7 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 	protected		int                 	mVersion            ;
 	
 	
+
 	
 		
 	public 	DoctorAssignment(){
@@ -62,7 +64,7 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 	public 	static DoctorAssignment withId(String id){
 		DoctorAssignment doctorAssignment = new DoctorAssignment();
 		doctorAssignment.setId(id);
-		// doctorAssignment.setVersion(Integer.MAX_VALUE);
+		doctorAssignment.setVersion(Integer.MAX_VALUE);
 		return doctorAssignment;
 	}
 	public 	static DoctorAssignment refById(String id){
@@ -77,14 +79,6 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 		this.changed = true;
 	}
 	
-	public 	DoctorAssignment(String name, Doctor doctor, Department department, DateTime updateTime)
-	{
-		setName(name);
-		setDoctor(doctor);
-		setDepartment(department);
-		setUpdateTime(updateTime);
-	
-	}
 	
 	//Support for changing the property
 	
@@ -102,6 +96,7 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -111,12 +106,13 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
 			
 	protected void changeUpdateTimeProperty(String newValueExpr){
+	
 		DateTime oldValue = getUpdateTime();
 		DateTime newValue = parseTimestamp(newValueExpr);
 		if(equalsTimestamp(oldValue , newValue)){
@@ -126,7 +122,7 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 		updateUpdateTime(newValue);
 		this.onChangeProperty(UPDATE_TIME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -300,7 +296,9 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 		appendKeyValuePair(result, UPDATE_TIME_PROPERTY, getUpdateTime());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -360,7 +358,9 @@ public class DoctorAssignment extends BaseEntity implements  java.io.Serializabl
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getDoctor(), getDepartment(), getUpdateTime(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

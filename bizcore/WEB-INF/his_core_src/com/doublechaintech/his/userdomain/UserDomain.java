@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
 import com.terapico.caf.DateTime;
+import com.terapico.caf.Images;
 import com.doublechaintech.his.BaseEntity;
 import com.doublechaintech.his.SmartList;
 import com.doublechaintech.his.KeyValuePair;
@@ -52,6 +53,7 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 	
 	protected		SmartList<UserWhiteList>	mUserWhiteListList  ;
 	protected		SmartList<SecUser>  	mSecUserList        ;
+
 	
 		
 	public 	UserDomain(){
@@ -60,7 +62,7 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 	public 	static UserDomain withId(String id){
 		UserDomain userDomain = new UserDomain();
 		userDomain.setId(id);
-		// userDomain.setVersion(Integer.MAX_VALUE);
+		userDomain.setVersion(Integer.MAX_VALUE);
 		return userDomain;
 	}
 	public 	static UserDomain refById(String id){
@@ -73,13 +75,6 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	UserDomain(String name)
-	{
-		setName(name);
-
-		this.mUserWhiteListList = new SmartList<UserWhiteList>();
-		this.mSecUserList = new SmartList<SecUser>();	
-	}
 	
 	//Support for changing the property
 	
@@ -94,6 +89,7 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
     
     
 	protected void changeNameProperty(String newValueExpr){
+	
 		String oldValue = getName();
 		String newValue = parseString(newValueExpr);
 		if(equalsString(oldValue , newValue)){
@@ -103,7 +99,7 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
 		return;
-  
+   
 	}
 			
 			
@@ -441,7 +437,9 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "secUserCurrentPageNumber", getSecUserList().getCurrentPageNumber());
 		}
 
-		
+		if (this.valueByKey("valuesOfGroupBy") != null) {
+			appendKeyValuePair(result, "valuesOfGroupBy", this.valueByKey("valuesOfGroupBy"));
+		}
 		return result;
 	}
 	
@@ -498,7 +496,9 @@ public class UserDomain extends BaseEntity implements  java.io.Serializable{
 		}
 		return baseDest;
 	}
-	
+	public Object[] toFlatArray(){
+		return new Object[]{getId(), getName(), getVersion()};
+	}
 	public String toString(){
 		StringBuilder stringBuilder=new StringBuilder(128);
 

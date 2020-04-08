@@ -158,6 +158,10 @@ public class XlsWriter implements BlockWriter {
                 sheet = mWorkbook.createSheet(sheetName);
             }
         }
+        for(int i=0;i<20;i++) {
+            //add  auto size to sheet to get better view.
+        	sheet.autoSizeColumn(i);
+        }
         return sheet;
     }
 

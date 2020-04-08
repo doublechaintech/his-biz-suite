@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 
 import com.terapico.caf.BlobObject;
+import com.terapico.caf.baseelement.LoginParam;
 import com.terapico.caf.viewcomponent.ButtonViewComponent;
 import com.terapico.caf.viewcomponent.FilterTabsViewComponent;
 import com.terapico.caf.viewcomponent.PopupViewComponent;
@@ -18,7 +19,6 @@ import com.terapico.utils.TextUtil;
 import com.doublechaintech.his.secuser.SecUser;
 
 public class HisBizUserContextImpl extends HisUserContextImpl{
-
 	protected static final String DEFAULT_ACTION_GROUP = "default";
 	protected Map<String, List<ButtonViewComponent>> actionGroups;
 	protected String accessUrl;
@@ -44,6 +44,9 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 	protected String assignmentId;
 	protected BaseHisFormProcessor inputFormData;
 	protected BaseHisFormProcessor outputFormData;
+	protected LoginParam loginParam;
+
+
 
 	public void clearFormResubmitFlag() {
 		removeFromCache(getPostMd5Key(this));
@@ -263,6 +266,12 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 	public void setAssignmentId(String assignmentId) {
 		this.assignmentId = assignmentId;
 	}
+	public LoginParam getLoginParam() {
+		return loginParam;
+	}
+	public void setLoginParam(LoginParam loginParam) {
+		this.loginParam = loginParam;
+	}
 	@Override
 	public void sendEmail(String to, String subject, String content) throws Exception {
 		if (!isProductEnvironment()) {
@@ -270,7 +279,7 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 		}
 		super.sendEmail(to, subject, content);
 	}
-	
+
 	@Override
 	public void sendEmailWithAttachment(String to, String subject, String content, List<BlobObject> attachments)
 			throws Exception {
@@ -279,7 +288,7 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 		}
 		super.sendEmailWithAttachment(to, subject, content, attachments);
 	}
-	
+
 	@Override
 	public void sendMessage(String dest, String fromWho, String template, Map<String, String> parameters)
 			throws Exception {
@@ -289,7 +298,7 @@ public class HisBizUserContextImpl extends HisUserContextImpl{
 		}
 		super.sendMessage(dest, fromWho, template, parameters);
 	}
-	
+
 	// 这个对象仅用于在开发环境中, 用cookie来模拟react-client的 JWT header. 因为开发环境使用的是普通的浏览器,不能在A
 	// href的header中设置值.
 	protected Cookie[] cookies;

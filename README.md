@@ -104,8 +104,10 @@ https://demo.doublechaintech.com/admin/his/#/home
  
 ```
 
-# 开发工具近期将以SaaS服务方式公开服务，敬请期待
+# 开发工具
 
-[下载手册了解更多](/doc/sysx-manual.pdf)
-<br/>
-<img src='/doc/manual.jpg'  width="300"/>
+请使用 https://github.com/doublechaintech/daas-start-kit/ 来定制你的医院管理系统。
+
+
+
+

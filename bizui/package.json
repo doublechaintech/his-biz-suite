@@ -45,7 +45,7 @@
     "path-to-regexp": "^2.1.0",
     "prop-types": "^15.5.10",
     "puppeteer": "^1.18.1",
-    "qs": "^6.5.0",
+    "qs": "^6.5.3",
     "rc-drawer-menu": "^0.5.0",
     "react": "^16.8.6",
     "react-container-query": "^0.9.1",
